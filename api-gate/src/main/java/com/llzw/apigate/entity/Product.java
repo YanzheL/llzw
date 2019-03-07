@@ -1,18 +1,16 @@
 package com.llzw.apigate.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -29,15 +27,16 @@ public class Product implements Serializable {
     @NonNull
     protected String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     @NonNull
     protected String introduction;
 
     @CreationTimestamp
-    protected LocalDateTime createdAt;
+    @Column(nullable = false, updatable = false)
+    protected Date createdAt;
 
     @UpdateTimestamp
-    protected LocalDateTime updatedAt;
+    protected Date updatedAt;
 
     @Column(nullable = false)
     @NonNull
@@ -45,7 +44,7 @@ public class Product implements Serializable {
 
     protected Integer maxDeliveryHours;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10)
     @NonNull
     protected String ca;
 
@@ -53,9 +52,8 @@ public class Product implements Serializable {
     @NonNull
     protected String caFile;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     @NonNull
     protected String caId;
-
 
 }

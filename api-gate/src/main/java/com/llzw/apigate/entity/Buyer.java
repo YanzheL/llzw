@@ -1,7 +1,9 @@
 package com.llzw.apigate.entity;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -10,18 +12,18 @@ import javax.persistence.OneToMany;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @EqualsAndHashCode(callSuper = true)
 public class Buyer extends User {
     private static final long serialVersionUID = 1L;
 
     @OneToMany(mappedBy = "owner")
-    private List<Address> addresses;
+    protected List<Address> addresses;
 
-    public Buyer(String username, String password, String nickname, String email, String phoneNumber, Set<IdType> identity_type, String identity_number) {
+    public Buyer(String username, String password, String nickname, String email, String phoneNumber, IdType identity_type, String identity_number) {
         super(username, password, nickname, email, phoneNumber, identity_type, identity_number);
     }
 

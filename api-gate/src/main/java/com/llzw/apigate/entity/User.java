@@ -1,18 +1,13 @@
 package com.llzw.apigate.entity;
 
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Set;
 
 @Entity
 @Data
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User implements UserDetails {
@@ -20,13 +15,14 @@ public abstract class User implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(length = 30)
     protected String username;
 
     @Column(nullable = false)
     @NonNull
     protected String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     @NonNull
     protected String nickname;
 
@@ -34,17 +30,16 @@ public abstract class User implements UserDetails {
     @NonNull
     protected String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     @NonNull
     protected String phoneNumber;
 
-    @ElementCollection
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10)
     @NonNull
-    protected Set<IdType> identity_type;
+    protected IdType identity_type;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     @NonNull
     protected String identity_number;
 
