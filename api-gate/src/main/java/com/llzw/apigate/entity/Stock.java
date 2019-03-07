@@ -1,18 +1,16 @@
 package com.llzw.apigate.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor
 public class Stock implements Serializable {
 
@@ -27,16 +25,17 @@ public class Stock implements Serializable {
     protected Product productId;
 
     @CreationTimestamp
-    protected LocalDateTime createdAt;
+    @Column(nullable = false, updatable = false)
+    protected Date createdAt;
 
     @UpdateTimestamp
-    protected LocalDateTime updatedAt;
+    protected Date updatedAt;
 
     @Column(nullable = false)
     @NonNull
-    protected LocalDateTime producedAt;
+    protected Date producedAt;
 
-    protected LocalDateTime inboundedAt;
+    protected Date inboundedAt;
 
     @Column(nullable = false)
     @NonNull
@@ -50,8 +49,10 @@ public class Stock implements Serializable {
     @NonNull
     protected Integer currentQuantity;
 
+    @Column(length = 50)
     protected String trackingId;
 
+    @Column(length = 50)
     protected String carrierName;
 }
 
