@@ -12,5 +12,4 @@ public class ApiGateApplicationTests {
     @Test
     public void contextLoads() {
     }
-
 }

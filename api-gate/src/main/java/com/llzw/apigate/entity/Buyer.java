@@ -23,7 +23,14 @@ public class Buyer extends User {
     @OneToMany(mappedBy = "owner")
     protected List<Address> addresses;
 
-    public Buyer(String username, String password, String nickname, String email, String phoneNumber, IdType identity_type, String identity_number) {
+    public Buyer(
+            String username,
+            String password,
+            String nickname,
+            String email,
+            String phoneNumber,
+            IdType identity_type,
+            String identity_number) {
         super(username, password, nickname, email, phoneNumber, identity_type, identity_number);
     }
 

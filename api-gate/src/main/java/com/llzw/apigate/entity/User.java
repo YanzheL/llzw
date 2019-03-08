@@ -43,11 +43,6 @@ public abstract class User implements UserDetails {
     @NonNull
     protected String identity_number;
 
-    enum IdType {
-        PRC_ID,
-        PASSPORT
-    }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -68,4 +63,8 @@ public abstract class User implements UserDetails {
         return true;
     }
 
+    enum IdType {
+        PRC_ID,
+        PASSPORT
+    }
 }

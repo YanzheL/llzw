@@ -55,5 +55,4 @@ public class Product implements Serializable {
     @Column(nullable = false, length = 50)
     @NonNull
     protected String caId;
-
 }

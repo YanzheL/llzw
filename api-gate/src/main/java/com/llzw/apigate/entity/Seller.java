@@ -21,7 +21,14 @@ public class Seller extends User {
     @NonNull
     protected Address contactAddress;
 
-    public Seller(String username, String password, String nickname, String email, String phoneNumber, IdType identity_type, String identity_number) {
+    public Seller(
+            String username,
+            String password,
+            String nickname,
+            String email,
+            String phoneNumber,
+            IdType identity_type,
+            String identity_number) {
         super(username, password, nickname, email, phoneNumber, identity_type, identity_number);
     }
 
@@ -29,6 +36,4 @@ public class Seller extends User {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.asList(new SimpleGrantedAuthority("ROLE_SELLER"));
     }
-
 }
-

@@ -55,4 +55,3 @@ public class Stock implements Serializable {
     @Column(length = 50)
     protected String carrierName;
 }
-
