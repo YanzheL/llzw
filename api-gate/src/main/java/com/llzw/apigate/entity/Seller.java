@@ -15,25 +15,25 @@ import java.util.Collection;
 @EqualsAndHashCode(callSuper = true)
 public class Seller extends User {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @Column(nullable = false)
-    @NonNull
-    protected Address contactAddress;
+  @Column(nullable = false)
+  @NonNull
+  protected Address contactAddress;
 
-    public Seller(
-            String username,
-            String password,
-            String nickname,
-            String email,
-            String phoneNumber,
-            IdType identity_type,
-            String identity_number) {
-        super(username, password, nickname, email, phoneNumber, identity_type, identity_number);
-    }
+  public Seller(
+      String username,
+      String password,
+      String nickname,
+      String email,
+      String phoneNumber,
+      IdType identity_type,
+      String identity_number) {
+    super(username, password, nickname, email, phoneNumber, identity_type, identity_number);
+  }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_SELLER"));
-    }
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return Arrays.asList(new SimpleGrantedAuthority("ROLE_SELLER"));
+  }
 }
