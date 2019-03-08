@@ -1,4 +1,6 @@
 language: java
 sudo: false
 script:
-  - api-gate/mvnw package -DskipTests
+  - cd api-gate
+  - ./mvnw install -DskipTests
+  - ./mvnw package -DskipTests
