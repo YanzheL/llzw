@@ -14,11 +14,12 @@ public class Address implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @Setter(AccessLevel.NONE)
   protected Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "owner_id")
-  protected Buyer owner;
+  protected Customer owner;
 
   @Column(nullable = false, length = 20)
   @NonNull

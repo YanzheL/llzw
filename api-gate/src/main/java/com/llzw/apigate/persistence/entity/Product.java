@@ -17,6 +17,7 @@ public class Product implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @Setter(AccessLevel.NONE)
   protected Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
