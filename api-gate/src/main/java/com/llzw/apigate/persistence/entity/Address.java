@@ -13,13 +13,13 @@ public class Address implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue
   @Setter(AccessLevel.NONE)
   protected Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "owner_id")
-  protected Customer owner;
+  protected User owner;
 
   @Column(nullable = false, length = 20)
   @NonNull

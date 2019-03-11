@@ -72,6 +72,9 @@ public class User implements UserDetails {
       inverseJoinColumns = @JoinColumn(name = "role_id"))
   protected Collection<Role> roles;
 
+  @OneToMany(mappedBy = "owner")
+  protected Collection<Address> addresses;
+
   @Override
   public boolean isAccountNonExpired() {
     return true;

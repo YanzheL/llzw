@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,8 +13,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor
-public class Stock implements Serializable {
-
+public class Order implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @Id
@@ -21,9 +21,7 @@ public class Stock implements Serializable {
   @Setter(AccessLevel.NONE)
   protected Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "product_id")
-  protected Product productId;
+  @NotNull protected Integer quantity;
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
@@ -31,27 +29,15 @@ public class Stock implements Serializable {
 
   @UpdateTimestamp protected Date updatedAt;
 
-  @Column(nullable = false)
-  @NonNull
-  protected Date producedAt;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "customer_id")
+  protected User customer;
 
-  protected Date inboundedAt;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "address_id")
+  protected Address address;
 
-  @Column(nullable = false)
-  @NonNull
-  protected Integer shelfLife;
-
-  @Column(nullable = false)
-  @NonNull
-  protected Integer totalQuantity;
-
-  @Column(nullable = false)
-  @NonNull
-  protected Integer currentQuantity;
-
-  @Column(length = 50)
-  protected String trackingId;
-
-  @Column(length = 50)
-  protected String carrierName;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "stock_id")
+  protected Stock stock;
 }
