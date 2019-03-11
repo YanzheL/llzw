@@ -22,7 +22,7 @@ public class Product implements Serializable {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "seller_id")
-  protected Seller seller;
+  protected User seller;
 
   @Column(nullable = false)
   @NonNull
