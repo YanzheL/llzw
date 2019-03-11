@@ -1,4 +1,4 @@
-package com.llzw.apigate.entity;
+package com.llzw.apigate.persistence.entity;
 
 import lombok.AccessLevel;
 import lombok.Data;

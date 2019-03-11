@@ -1,4 +1,4 @@
-package com.llzw.apigate.entity;
+package com.llzw.apigate.persistence.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,7 +12,8 @@ import java.util.Date;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor
-public class Product implements Serializable {
+public class Stock implements Serializable {
+
   private static final long serialVersionUID = 1L;
 
   @Id
@@ -20,16 +21,8 @@ public class Product implements Serializable {
   protected Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "seller_id")
-  protected Seller seller;
-
-  @Column(nullable = false)
-  @NonNull
-  protected String name;
-
-  @Column(nullable = false, columnDefinition = "TEXT")
-  @NonNull
-  protected String introduction;
+  @JoinColumn(name = "product_id")
+  protected Product productId;
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
@@ -39,19 +32,25 @@ public class Product implements Serializable {
 
   @Column(nullable = false)
   @NonNull
-  protected Float price;
+  protected Date producedAt;
 
-  protected Integer maxDeliveryHours;
-
-  @Column(nullable = false, length = 10)
-  @NonNull
-  protected String ca;
+  protected Date inboundedAt;
 
   @Column(nullable = false)
   @NonNull
-  protected String caFile;
+  protected Integer shelfLife;
 
-  @Column(nullable = false, length = 50)
+  @Column(nullable = false)
   @NonNull
-  protected String caId;
+  protected Integer totalQuantity;
+
+  @Column(nullable = false)
+  @NonNull
+  protected Integer currentQuantity;
+
+  @Column(length = 50)
+  protected String trackingId;
+
+  @Column(length = 50)
+  protected String carrierName;
 }
