@@ -21,6 +21,8 @@ public class Stock implements Serializable {
   @Setter(AccessLevel.NONE)
   protected Long id;
 
+  protected boolean valid;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "product_id")
   protected Product productId;
