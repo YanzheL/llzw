@@ -21,7 +21,7 @@ public class Order implements Serializable {
   @Setter(AccessLevel.NONE)
   protected Long id;
 
-  @NotNull protected Integer quantity;
+  @NotNull protected int quantity;
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
