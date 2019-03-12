@@ -40,7 +40,7 @@ public class Product implements Serializable {
 
   @Column(nullable = false)
   @NonNull
-  protected Float price;
+  protected float price;
 
   protected Integer maxDeliveryHours;
 

@@ -41,15 +41,15 @@ public class Stock implements Serializable {
 
   @Column(nullable = false)
   @NonNull
-  protected Integer shelfLife;
+  protected int shelfLife;
 
   @Column(nullable = false)
   @NonNull
-  protected Integer totalQuantity;
+  protected int totalQuantity;
 
   @Column(nullable = false)
   @NonNull
-  protected Integer currentQuantity;
+  protected int currentQuantity;
 
   @Column(length = 50)
   protected String trackingId;
