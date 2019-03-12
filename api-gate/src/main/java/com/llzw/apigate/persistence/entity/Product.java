@@ -20,6 +20,8 @@ public class Product implements Serializable {
   @Setter(AccessLevel.NONE)
   protected Long id;
 
+  protected boolean valid;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "seller_id")
   protected User seller;
