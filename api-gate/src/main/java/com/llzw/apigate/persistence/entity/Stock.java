@@ -21,6 +21,8 @@ public class Stock implements Serializable {
   @Setter(AccessLevel.NONE)
   protected Long id;
 
+  protected boolean valid;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "product_id")
   protected Product productId;
@@ -39,15 +41,15 @@ public class Stock implements Serializable {
 
   @Column(nullable = false)
   @NonNull
-  protected Integer shelfLife;
+  protected int shelfLife;
 
   @Column(nullable = false)
   @NonNull
-  protected Integer totalQuantity;
+  protected int totalQuantity;
 
   @Column(nullable = false)
   @NonNull
-  protected Integer currentQuantity;
+  protected int currentQuantity;
 
   @Column(length = 50)
   protected String trackingId;
