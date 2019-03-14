@@ -26,13 +26,13 @@ public class Privilege implements Serializable {
   @ManyToMany(mappedBy = "privileges", cascade = CascadeType.ALL)
   private Collection<Role> roles = new ArrayList<>();
 
+  public Privilege(PrivilegeType type) {
+    privilege = type;
+  }
+
   @Override
   public String toString() {
     return privilege.name();
-  }
-
-  public Privilege(PrivilegeType type) {
-    privilege = type;
   }
 
   public enum PrivilegeType {
