@@ -35,6 +35,14 @@ public class Role implements Serializable {
       inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
   protected Collection<Privilege> privileges = new ArrayList<>();
 
+  public Role(String role) {
+    this.role = RoleType.valueOf(role);
+  }
+
+  public Role(RoleType role) {
+    this.role = role;
+  }
+
   @Override
   public String toString() {
     return role.name();
@@ -45,7 +53,7 @@ public class Role implements Serializable {
   }
 
   public enum RoleType {
-    SELLER,
-    CUSTOMER
+    ROLE_SELLER,
+    ROLE_CUSTOMER
   }
 }

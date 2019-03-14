@@ -30,9 +30,7 @@ public class Product implements Serializable {
   @NonNull
   protected String name;
 
-  @Column(nullable = false, columnDefinition = "TEXT")
-  @NonNull
-  protected String introduction;
+  @Lob @NonNull protected String introduction;
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)

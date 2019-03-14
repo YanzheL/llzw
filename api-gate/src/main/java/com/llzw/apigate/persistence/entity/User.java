@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -70,10 +71,10 @@ public class User implements UserDetails {
   @JoinTable(
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "role_id"))
-  protected Collection<Role> roles;
+  protected Collection<Role> roles = new ArrayList<>();
 
   @OneToMany(mappedBy = "owner")
-  protected Collection<Address> addresses;
+  protected Collection<Address> addresses = new ArrayList<>();
 
   @Override
   public boolean isAccountNonExpired() {
