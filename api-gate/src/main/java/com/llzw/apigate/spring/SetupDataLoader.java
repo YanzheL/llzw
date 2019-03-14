@@ -1,5 +1,6 @@
 package com.llzw.apigate.spring;
 
+import com.google.common.collect.Lists;
 import com.llzw.apigate.persistence.dao.PrivilegeRepository;
 import com.llzw.apigate.persistence.dao.RoleRepository;
 import com.llzw.apigate.persistence.entity.Privilege;
@@ -65,9 +66,16 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     for (Map.Entry<RoleType, Collection<PrivilegeType>> entry : defaultRoleMapping.entrySet()) {
       RoleType role = entry.getKey();
+      Collection<Privilege> allPrivileges = Lists.newArrayList(privilegeRepository.findAll());
       Set<Privilege> privileges =
           entry.getValue().stream()
-              .map(type -> privilegeRepository.findByPrivilege(type).orElse(new Privilege(type)))
+              .map(
+                  type -> {
+                    for (Privilege p : allPrivileges) {
+                      if (p.getPrivilege() == type) return p;
+                    }
+                    return new Privilege(type);
+                  })
               .collect(Collectors.toSet());
       initRole(role, privileges);
     }
