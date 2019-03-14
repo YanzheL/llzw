@@ -30,4 +30,8 @@ public class StandardRestResponse<D> {
       final Object data, boolean success, HttpStatus status) {
     return new ResponseEntity<>(new StandardRestResponse<>(data, success), status);
   }
+
+  public static ResponseEntity<Object> getResponseEntity(final Object data) {
+    return ResponseEntity.ok(new StandardRestResponse<>(data, true));
+  }
 }
