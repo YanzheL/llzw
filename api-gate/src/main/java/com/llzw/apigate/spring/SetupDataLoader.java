@@ -24,27 +24,27 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
   static {
     defaultRoleMapping.put(
-        RoleType.SELLER,
+        RoleType.ROLE_SELLER,
         Arrays.asList(
-            PrivilegeType.CREATE_PRODUCT,
-            PrivilegeType.CREATE_STOCK,
-            PrivilegeType.READ_ORDER,
-            PrivilegeType.READ_PRODUCT,
-            PrivilegeType.READ_STOCK,
-            PrivilegeType.UPDATE_PRODUCT,
-            PrivilegeType.UPDATE_STOCK,
-            PrivilegeType.DELETE_ORDER,
-            PrivilegeType.DELETE_PRODUCT,
-            PrivilegeType.DELETE_STOCK,
-            PrivilegeType.MANAGE_PASSWORD));
+            PrivilegeType.OP_CREATE_PRODUCT,
+            PrivilegeType.OP_CREATE_STOCK,
+            PrivilegeType.OP_READ_ORDER,
+            PrivilegeType.OP_READ_PRODUCT,
+            PrivilegeType.OP_READ_STOCK,
+            PrivilegeType.OP_UPDATE_PRODUCT,
+            PrivilegeType.OP_UPDATE_STOCK,
+            PrivilegeType.OP_DELETE_ORDER,
+            PrivilegeType.OP_DELETE_PRODUCT,
+            PrivilegeType.OP_DELETE_STOCK,
+            PrivilegeType.OP_MANAGE_PASSWORD));
 
     defaultRoleMapping.put(
-        RoleType.CUSTOMER,
+        RoleType.ROLE_CUSTOMER,
         Arrays.asList(
-            PrivilegeType.CREATE_ORDER,
-            PrivilegeType.READ_ORDER,
-            PrivilegeType.READ_PRODUCT,
-            PrivilegeType.MANAGE_PASSWORD));
+            PrivilegeType.OP_CREATE_ORDER,
+            PrivilegeType.OP_READ_ORDER,
+            PrivilegeType.OP_READ_PRODUCT,
+            PrivilegeType.OP_MANAGE_PASSWORD));
   }
 
   private boolean alreadySetup = false;

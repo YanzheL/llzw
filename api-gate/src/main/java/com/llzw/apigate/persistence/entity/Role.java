@@ -53,7 +53,7 @@ public class Role implements Serializable {
   }
 
   public enum RoleType {
-    SELLER,
-    CUSTOMER
+    ROLE_SELLER,
+    ROLE_CUSTOMER
   }
 }
