@@ -20,14 +20,6 @@ import java.util.stream.Collectors;
 @Component
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
-  private boolean alreadySetup = false;
-
-  @Setter(onMethod_ = @Autowired)
-  private RoleRepository roleRepository;
-
-  @Setter(onMethod_ = @Autowired)
-  private PrivilegeRepository privilegeRepository;
-
   private static Map<RoleType, Collection<PrivilegeType>> defaultRoleMapping = new HashMap<>();
 
   static {
@@ -54,6 +46,14 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
             PrivilegeType.READ_PRODUCT,
             PrivilegeType.MANAGE_PASSWORD));
   }
+
+  private boolean alreadySetup = false;
+
+  @Setter(onMethod_ = @Autowired)
+  private RoleRepository roleRepository;
+
+  @Setter(onMethod_ = @Autowired)
+  private PrivilegeRepository privilegeRepository;
 
   // API
 
