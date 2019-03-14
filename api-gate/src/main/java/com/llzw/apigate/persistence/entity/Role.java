@@ -27,7 +27,7 @@ public class Role implements Serializable {
   protected RoleType role;
 
   @ManyToMany(mappedBy = "roles")
-  protected Collection<User> users;
+  protected Collection<User> users = new ArrayList<>();
 
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(
