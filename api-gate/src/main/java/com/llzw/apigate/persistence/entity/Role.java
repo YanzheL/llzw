@@ -39,6 +39,10 @@ public class Role implements Serializable {
     this.role = RoleType.valueOf(role);
   }
 
+  public Role(RoleType role) {
+    this.role = role;
+  }
+
   @Override
   public String toString() {
     return role.name();
