@@ -106,7 +106,7 @@ public class User implements UserDetails {
   }
 
   public Collection<String> getRoleNames() {
-    return roles.stream().map(Role::toString).collect(Collectors.toSet());
+    return roles.stream().map(Role::toString).collect(Collectors.toList());
   }
 
   public enum IdType {
