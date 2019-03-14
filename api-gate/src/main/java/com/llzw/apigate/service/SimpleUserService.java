@@ -4,6 +4,7 @@ import com.llzw.apigate.persistence.dao.UserRepository;
 import com.llzw.apigate.persistence.entity.Privilege;
 import com.llzw.apigate.persistence.entity.Role;
 import com.llzw.apigate.persistence.entity.User;
+import com.llzw.apigate.web.dto.RealNameVerificationDto;
 import com.llzw.apigate.web.dto.UserDto;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
@@ -105,6 +106,17 @@ public class SimpleUserService implements UserService {
         .filter(u -> !sessionRegistry.getAllSessions(u, false).isEmpty() && u instanceof User)
         .map(u -> (User) u)
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public void realNameVerification(
+      String username, RealNameVerificationDto realNameVerificationDto) {
+    Optional<User> userOptional = findUserByUsername(username);
+    userOptional.orElseThrow(() -> new RuntimeException("User doesn't exist"));
+    User user = userOptional.get();
+    BeanUtils.copyProperties(realNameVerificationDto, user);
+    user.setVerified(true);
+    userRepository.save(user);
   }
 
   private final Collection<? extends GrantedAuthority> getAuthorities(
