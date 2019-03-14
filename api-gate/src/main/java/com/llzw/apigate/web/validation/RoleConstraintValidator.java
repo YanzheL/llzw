@@ -1,19 +1,12 @@
 package com.llzw.apigate.web.validation;
 
 import com.google.common.base.Enums;
-import com.llzw.apigate.persistence.dao.RoleRepository;
 import com.llzw.apigate.persistence.entity.Role;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class RoleConstraintValidator implements ConstraintValidator<ValidPassword, String> {
-
-  private RoleRepository roleRepository;
-
-  public RoleConstraintValidator(RoleRepository roleRepository) {
-    this.roleRepository = roleRepository;
-  }
 
   @Override
   public void initialize(final ValidPassword arg0) {}
