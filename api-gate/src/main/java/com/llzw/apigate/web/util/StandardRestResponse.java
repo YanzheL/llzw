@@ -34,4 +34,8 @@ public class StandardRestResponse<D> {
   public static ResponseEntity<Object> getResponseEntity(final Object data) {
     return ResponseEntity.ok(new StandardRestResponse<>(data, true));
   }
+
+  public static ResponseEntity<Object> getResponseEntity(final Object data, boolean success) {
+    return ResponseEntity.ok(new StandardRestResponse<>(data, success));
+  }
 }
