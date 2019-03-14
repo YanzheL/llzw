@@ -3,6 +3,7 @@ package com.llzw.apigate.web.controller;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.UserService;
 import com.llzw.apigate.web.dto.RealNameVerificationDto;
+import com.llzw.apigate.web.dto.UpdatePasswordDto;
 import com.llzw.apigate.web.dto.UserDto;
 import com.llzw.apigate.web.util.StandardRestResponse;
 import lombok.Setter;
@@ -10,15 +11,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @RepositoryRestController
 @RequestMapping(value = "/users")
@@ -28,29 +29,44 @@ public class UserController {
   @Setter(onMethod_ = @Autowired)
   private UserService userService;
 
-  @PostMapping(value = "")
+  @PostMapping(value = "/register")
   public ResponseEntity register(@Valid UserDto userDto) {
     LOGGER.debug("Registering user account with information: {}", userDto);
-    userService.register(userDto);
-    return StandardRestResponse.getResponseEntity(null);
+    Collection<String> msgs = new ArrayList<>();
+    return StandardRestResponse.getResponseEntity(msgs, userService.register(userDto, msgs));
   }
 
-  @PatchMapping(value = "/{username}")
+  @PutMapping(value = "/realNameVerification")
   public ResponseEntity realNameVerification(
-      @Valid RealNameVerificationDto realNameVerificationDto,
-      @PathVariable("username") String username) {
-
+      @Valid RealNameVerificationDto realNameVerificationDto) {
     LOGGER.debug("Verifying user account with information: {}", realNameVerificationDto);
-    if (!isCurrentUser(username))
-      return StandardRestResponse.getResponseEntity(
-          "Verification user target doesn't match", false, HttpStatus.FORBIDDEN);
-    userService.realNameVerification(username, realNameVerificationDto);
-    return StandardRestResponse.getResponseEntity(null);
-  }
-
-  public static boolean isCurrentUser(String username) {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    return currentUser.getUsername().equals(username);
+    Collection<String> msgs = new ArrayList<>();
+    return StandardRestResponse.getResponseEntity(
+        msgs,
+        userService.realNameVerification(currentUser.getUsername(), realNameVerificationDto, msgs));
   }
+
+  @PutMapping(value = "/updatePassword")
+  public ResponseEntity updatePassword(@Valid UpdatePasswordDto updatePasswordDto) {
+
+    LOGGER.debug("Verifying user account with information: {}", updatePasswordDto);
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    Collection<String> msgs = new ArrayList<>();
+    return StandardRestResponse.getResponseEntity(
+        msgs,
+        userService.updateUserPassword(
+            currentUser.getUsername(),
+            updatePasswordDto.getOldPassword(),
+            updatePasswordDto.getNewPassword(),
+            msgs));
+  }
+
+  //  public static boolean isCurrentUser(String username) {
+  //    User currentUser =
+  //        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+  //    return currentUser.getUsername().equals(username);
+  //  }
 }

@@ -5,21 +5,20 @@ import com.llzw.apigate.web.dto.RealNameVerificationDto;
 import com.llzw.apigate.web.dto.UserDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import javax.persistence.EntityExistsException;
+import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService extends UserDetailsService {
 
-  User register(UserDto userDto) throws EntityExistsException;
+  boolean register(UserDto userDto, Collection<String> msgs);
 
-  Optional<User> findUserByUsername(String username);
+  boolean setUserPassword(String username, String password, Collection<String> msgs);
 
-  Optional<User> findUserByEmail(String email);
+  boolean updateUserPassword(
+      String username, String oldPassword, String newPassword, Collection<String> msgs);
 
-  boolean changeUserPassword(String username, String password);
-
-  void realNameVerification(String username, RealNameVerificationDto realNameVerificationDto);
+  boolean realNameVerification(
+      String username, RealNameVerificationDto realNameVerificationDto, Collection<String> msgs);
 
   List<User> getUsersFromSessionRegistry();
 }
