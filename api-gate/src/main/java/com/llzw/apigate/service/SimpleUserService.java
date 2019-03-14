@@ -2,7 +2,6 @@ package com.llzw.apigate.service;
 
 import com.llzw.apigate.persistence.dao.RoleRepository;
 import com.llzw.apigate.persistence.dao.UserRepository;
-import com.llzw.apigate.persistence.entity.Privilege;
 import com.llzw.apigate.persistence.entity.Role;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.RealNameVerificationDto;
@@ -20,7 +19,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityExistsException;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -82,7 +84,7 @@ public class SimpleUserService implements UserService {
         user.isAccountNonExpired(),
         user.isCredentialsNonExpired(),
         user.isAccountNonLocked(),
-        getAuthorities(user.getRoles()));
+        flattenAllAuthorities(user));
   }
 
   //  @Override
@@ -147,6 +149,17 @@ public class SimpleUserService implements UserService {
         msgs);
   }
 
+  private Collection<? extends GrantedAuthority> flattenAllAuthorities(User user) {
+    Collection<GrantedAuthority> all =
+        user.getRoles().stream()
+            .map(Role::getRole)
+            .map(Role.RoleType::name)
+            .map(SimpleGrantedAuthority::new)
+            .collect(Collectors.toList());
+    all.addAll(user.getAuthorities());
+    return all;
+  }
+
   private boolean applyToUser(String username, Predicate<User> consumer, Collection<String> msgs) {
     Optional<User> userOptional = userRepository.findByUsername(username);
     if (userOptional.isPresent()) {
@@ -158,32 +171,5 @@ public class SimpleUserService implements UserService {
       msgs.add("User doesn't exist");
       return false;
     }
-  }
-
-  private final Collection<? extends GrantedAuthority> getAuthorities(
-      final Collection<Role> roles) {
-    return getGrantedAuthorities(getPrivileges(roles));
-  }
-
-  private final Collection<Privilege.PrivilegeType> getPrivileges(final Collection<Role> roles) {
-    final Collection<Privilege.PrivilegeType> privileges = new HashSet<>();
-    final Collection<Privilege> collection = new ArrayList<>();
-    for (final Role role : roles) {
-      collection.addAll(role.getPrivileges());
-    }
-    for (final Privilege item : collection) {
-      privileges.add(item.getPrivilege());
-    }
-
-    return privileges;
-  }
-
-  private List<GrantedAuthority> getGrantedAuthorities(
-      Collection<Privilege.PrivilegeType> privileges) {
-    final List<GrantedAuthority> authorities = new ArrayList<>();
-    for (final Privilege.PrivilegeType privilege : privileges) {
-      authorities.add(new SimpleGrantedAuthority(privilege.name()));
-    }
-    return authorities;
   }
 }
