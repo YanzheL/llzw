@@ -1,6 +1,7 @@
 package com.llzw.apigate.web.dto;
 
 import com.llzw.apigate.web.validation.ValidPassword;
+import com.llzw.apigate.web.validation.ValidRole;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -25,7 +26,5 @@ public class UserDto {
   @Size(min = 5, max = 20, message = "Length should between 5 to 20")
   protected String phoneNumber;
 
-  @NotNull
-  @Size(min = 1, max = 20, message = "Length should between 1 to 20")
-  protected String role;
+  @ValidRole protected String role;
 }
