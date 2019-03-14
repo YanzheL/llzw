@@ -1,5 +1,6 @@
 package com.llzw.apigate.spring;
 
+import com.llzw.apigate.persistence.dao.PrivilegeRepository;
 import com.llzw.apigate.persistence.dao.RoleRepository;
 import com.llzw.apigate.persistence.entity.Privilege;
 import com.llzw.apigate.persistence.entity.Privilege.PrivilegeType;
@@ -12,10 +13,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -25,6 +23,9 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
   @Setter(onMethod_ = @Autowired)
   private RoleRepository roleRepository;
+
+  @Setter(onMethod_ = @Autowired)
+  private PrivilegeRepository privilegeRepository;
 
   private static Map<RoleType, Collection<PrivilegeType>> defaultRoleMapping = new HashMap<>();
 
@@ -64,18 +65,24 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     for (Map.Entry<RoleType, Collection<PrivilegeType>> entry : defaultRoleMapping.entrySet()) {
       RoleType role = entry.getKey();
-      Collection<Privilege> privileges =
-          entry.getValue().stream().map(Privilege::new).collect(Collectors.toList());
-      createRoleIfNotFound(role, privileges);
+      Set<Privilege> privileges =
+          entry.getValue().stream()
+              .map(type -> privilegeRepository.findByPrivilege(type).orElse(new Privilege(type)))
+              .collect(Collectors.toSet());
+      initRole(role, privileges);
     }
 
     alreadySetup = true;
   }
 
   @Transactional
-  protected void createRoleIfNotFound(RoleType type, final Collection<Privilege> privileges) {
+  protected void initRole(RoleType type, Set<Privilege> privileges) {
     Role role = roleRepository.findByRole(type).orElse(new Role(type));
-    role.setPrivileges(privileges);
+    Collection<Privilege> found = role.getPrivileges();
+    privileges.forEach(
+        p -> {
+          if (!found.contains(p)) found.add(p);
+        });
     roleRepository.save(role);
   }
 }
