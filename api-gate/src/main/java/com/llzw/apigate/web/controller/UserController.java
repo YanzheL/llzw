@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -49,6 +50,7 @@ public class UserController {
   }
 
   @PutMapping(value = "/updatePassword")
+  @PreAuthorize("hasAuthority('OP_MANAGE_PASSWORD')")
   public ResponseEntity updatePassword(@Valid UpdatePasswordDto updatePasswordDto) {
 
     LOGGER.debug("Verifying user account with information: {}", updatePasswordDto);
