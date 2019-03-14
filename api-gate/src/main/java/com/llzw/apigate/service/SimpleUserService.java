@@ -1,5 +1,6 @@
 package com.llzw.apigate.service;
 
+import com.llzw.apigate.persistence.dao.RoleRepository;
 import com.llzw.apigate.persistence.dao.UserRepository;
 import com.llzw.apigate.persistence.entity.Privilege;
 import com.llzw.apigate.persistence.entity.Role;
@@ -33,6 +34,9 @@ public class SimpleUserService implements UserService {
   private PasswordEncoder passwordEncoder;
 
   @Setter(onMethod_ = @Autowired)
+  private RoleRepository roleRepository;
+
+  @Setter(onMethod_ = @Autowired)
   private UserRepository userRepository;
 
   @Override
@@ -50,7 +54,11 @@ public class SimpleUserService implements UserService {
     final User user = new User();
     BeanUtils.copyProperties(userDto, user, "role", "password");
     user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-    user.setRoles(Collections.singletonList(new Role(userDto.getRole())));
+    Optional<Role> roleOptional =
+        roleRepository.findByRole(Role.RoleType.valueOf(userDto.getRole()));
+    if (!roleOptional.isPresent()) throw new RuntimeException("Role doesn't exist");
+    user.setRoles(Collections.singleton(roleOptional.get()));
+    user.setEnabled(true);
 
     return userRepository.save(user);
   }
@@ -124,9 +132,9 @@ public class SimpleUserService implements UserService {
     return getGrantedAuthorities(getPrivileges(roles));
   }
 
-  private final List<Privilege.PrivilegeType> getPrivileges(final Collection<Role> roles) {
-    final List<Privilege.PrivilegeType> privileges = new ArrayList<>();
-    final List<Privilege> collection = new ArrayList<>();
+  private final Collection<Privilege.PrivilegeType> getPrivileges(final Collection<Role> roles) {
+    final Collection<Privilege.PrivilegeType> privileges = new HashSet<>();
+    final Collection<Privilege> collection = new ArrayList<>();
     for (final Role role : roles) {
       collection.addAll(role.getPrivileges());
     }
@@ -138,7 +146,7 @@ public class SimpleUserService implements UserService {
   }
 
   private List<GrantedAuthority> getGrantedAuthorities(
-      final List<Privilege.PrivilegeType> privileges) {
+      Collection<Privilege.PrivilegeType> privileges) {
     final List<GrantedAuthority> authorities = new ArrayList<>();
     for (final Privilege.PrivilegeType privilege : privileges) {
       authorities.add(new SimpleGrantedAuthority(privilege.name()));
