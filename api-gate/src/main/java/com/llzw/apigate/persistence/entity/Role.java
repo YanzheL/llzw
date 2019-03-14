@@ -27,13 +27,17 @@ public class Role implements Serializable {
   protected RoleType role;
 
   @ManyToMany(mappedBy = "roles")
-  protected Collection<User> users = new ArrayList<>();
+  protected Collection<User> users;
 
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(
       joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
   protected Collection<Privilege> privileges = new ArrayList<>();
+
+  public Role(String role) {
+    this.role = RoleType.valueOf(role);
+  }
 
   @Override
   public String toString() {
