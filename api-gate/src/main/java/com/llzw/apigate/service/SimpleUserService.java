@@ -1,37 +1,38 @@
 package com.llzw.apigate.service;
 
 import com.llzw.apigate.persistence.dao.UserRepository;
+import com.llzw.apigate.persistence.entity.Privilege;
 import com.llzw.apigate.persistence.entity.Role;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.UserDto;
+import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityExistsException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class SimpleUserService implements UserService {
 
+  @Setter(onMethod_ = @Autowired)
   private SessionRegistry sessionRegistry;
-  private PasswordEncoder passwordEncoder;
-  private UserRepository userRepository;
 
-  @Autowired
-  public SimpleUserService(
-      SessionRegistry sessionRegistry,
-      PasswordEncoder passwordEncoder,
-      UserRepository userRepository) {
-    this.sessionRegistry = sessionRegistry;
-    this.passwordEncoder = passwordEncoder;
-    this.userRepository = userRepository;
-  }
+  @Setter(onMethod_ = @Autowired)
+  private PasswordEncoder passwordEncoder;
+
+  @Setter(onMethod_ = @Autowired)
+  private UserRepository userRepository;
 
   @Override
   public User register(UserDto userDto) throws EntityExistsException {
@@ -47,10 +48,33 @@ public class SimpleUserService implements UserService {
     }
     final User user = new User();
     BeanUtils.copyProperties(userDto, user, "role", "password");
-    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    user.setPassword(passwordEncoder.encode(userDto.getPassword()));
     user.setRoles(Collections.singletonList(new Role(userDto.getRole())));
 
     return userRepository.save(user);
+  }
+
+  @Override
+  public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+
+    try {
+      Optional<User> userOptional = findUserByUsername(username);
+      userOptional.orElseThrow(
+          () -> new UsernameNotFoundException("No user found with username: " + username));
+
+      User user = userOptional.get();
+
+      return new org.springframework.security.core.userdetails.User(
+          user.getUsername(),
+          user.getPassword(),
+          user.isEnabled(),
+          true,
+          true,
+          true,
+          getAuthorities(user.getRoles()));
+    } catch (final Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
@@ -81,5 +105,32 @@ public class SimpleUserService implements UserService {
         .filter(u -> !sessionRegistry.getAllSessions(u, false).isEmpty() && u instanceof User)
         .map(u -> (User) u)
         .collect(Collectors.toList());
+  }
+
+  private final Collection<? extends GrantedAuthority> getAuthorities(
+      final Collection<Role> roles) {
+    return getGrantedAuthorities(getPrivileges(roles));
+  }
+
+  private final List<Privilege.PrivilegeType> getPrivileges(final Collection<Role> roles) {
+    final List<Privilege.PrivilegeType> privileges = new ArrayList<>();
+    final List<Privilege> collection = new ArrayList<>();
+    for (final Role role : roles) {
+      collection.addAll(role.getPrivileges());
+    }
+    for (final Privilege item : collection) {
+      privileges.add(item.getPrivilege());
+    }
+
+    return privileges;
+  }
+
+  private List<GrantedAuthority> getGrantedAuthorities(
+      final List<Privilege.PrivilegeType> privileges) {
+    final List<GrantedAuthority> authorities = new ArrayList<>();
+    for (final Privilege.PrivilegeType privilege : privileges) {
+      authorities.add(new SimpleGrantedAuthority(privilege.name()));
+    }
+    return authorities;
   }
 }
