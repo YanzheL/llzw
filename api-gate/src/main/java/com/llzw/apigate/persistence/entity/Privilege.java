@@ -31,6 +31,10 @@ public class Privilege implements Serializable {
     return privilege.name();
   }
 
+  public Privilege(PrivilegeType type) {
+    privilege = type;
+  }
+
   public enum PrivilegeType {
     CREATE_ORDER,
     READ_ORDER,
