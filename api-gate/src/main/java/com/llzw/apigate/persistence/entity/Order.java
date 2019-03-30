@@ -40,4 +40,20 @@ public class Order implements Serializable {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "stock_id")
   protected Stock stock;
+
+  protected String trackingId;
+
+  protected String carrierName;
+
+  public boolean belongsToSeller(User seller) {
+    return stock.productId.seller.getUsername().equals(seller.getUsername());
+  }
+
+  public boolean belongsToUser(User user) {
+    return belongsToCustomer(user) || belongsToSeller(user);
+  }
+
+  public boolean belongsToCustomer(User customer) {
+    return customer.getUsername().equals(customer.getUsername());
+  }
 }
