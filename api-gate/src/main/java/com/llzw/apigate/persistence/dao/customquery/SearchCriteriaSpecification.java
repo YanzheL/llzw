@@ -1,4 +1,4 @@
-package com.llzw.apigate.persistence.dao.specification;
+package com.llzw.apigate.persistence.dao.customquery;
 
 import org.springframework.data.jpa.domain.Specification;
 
