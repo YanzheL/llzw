@@ -109,6 +109,14 @@ public class User implements UserDetails {
     return roles.stream().map(Role::toString).collect(Collectors.toList());
   }
 
+  public boolean hasRole(String name) {
+    return getRoleNames().contains(name);
+  }
+
+  public boolean hasRole(Role.RoleType type) {
+    return hasRole(type.name());
+  }
+
   public enum IdType {
     PRC_ID,
     PASSPORT
