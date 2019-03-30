@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Entity
 @Data
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 @AllArgsConstructor
 public class Order implements Serializable {
   private static final long serialVersionUID = 1L;
