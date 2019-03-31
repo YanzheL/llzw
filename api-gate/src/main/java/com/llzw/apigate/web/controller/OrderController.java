@@ -128,8 +128,8 @@ public class OrderController {
     order.setAddress(addressOptional.get());
     order.setCustomer(currentUser);
     order.setQuantity(orderDto.getQuantity());
-    orderRepository.save(order);
-    return StandardRestResponse.getResponseEntity(order, true, HttpStatus.CREATED);
+    Order saveOpResult = orderRepository.save(order);
+    return StandardRestResponse.getResponseEntity(saveOpResult, true, HttpStatus.CREATED);
   }
 
   // TODO: Can we generalize this?
