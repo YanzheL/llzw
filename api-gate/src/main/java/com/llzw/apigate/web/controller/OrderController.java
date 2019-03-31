@@ -62,8 +62,6 @@ public class OrderController {
       @RequestParam(value = "stock_id", required = false) Long stock_id,
       @RequestParam(value = "trackingId", required = false) String trackingId) {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
-    // TODO: currentUser maybe different from the entity obtained from database
-    // TODO: so user.belongsToUser() may not work
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     // Result orders may contain other user's order, so we should filter them out.
