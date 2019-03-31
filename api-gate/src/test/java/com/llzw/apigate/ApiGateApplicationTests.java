@@ -10,5 +10,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class ApiGateApplicationTests {
 
   @Test
-  public void contextLoads() {}
+  public void contextLoads() {
+  }
 }

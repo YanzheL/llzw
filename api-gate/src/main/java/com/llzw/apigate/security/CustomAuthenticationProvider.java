@@ -2,6 +2,7 @@ package com.llzw.apigate.security;
 
 import com.llzw.apigate.persistence.dao.UserRepository;
 import com.llzw.apigate.persistence.entity.User;
+import java.util.Optional;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -9,8 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-
-import java.util.Optional;
 
 // @Component
 public class CustomAuthenticationProvider extends DaoAuthenticationProvider {

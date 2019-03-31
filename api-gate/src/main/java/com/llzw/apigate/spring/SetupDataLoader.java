@@ -7,15 +7,18 @@ import com.llzw.apigate.persistence.entity.Privilege;
 import com.llzw.apigate.persistence.entity.Privilege.PrivilegeType;
 import com.llzw.apigate.persistence.entity.Role;
 import com.llzw.apigate.persistence.entity.Role.RoleType;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -72,7 +75,9 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
               .map(
                   type -> {
                     for (Privilege p : allPrivileges) {
-                      if (p.getPrivilege() == type) return p;
+                      if (p.getPrivilege() == type) {
+                        return p;
+                      }
                     }
                     return new Privilege(type);
                   })
@@ -89,7 +94,9 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     Collection<Privilege> found = role.getPrivileges();
     privileges.forEach(
         p -> {
-          if (!found.contains(p)) found.add(p);
+          if (!found.contains(p)) {
+            found.add(p);
+          }
         });
     roleRepository.save(role);
   }

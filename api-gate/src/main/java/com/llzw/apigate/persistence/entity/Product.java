@@ -1,18 +1,30 @@
 package com.llzw.apigate.persistence.entity;
 
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor
 public class Product implements Serializable {
+
   private static final long serialVersionUID = 1L;
 
   @Id
@@ -30,13 +42,16 @@ public class Product implements Serializable {
   @NonNull
   protected String name;
 
-  @Lob @NonNull protected String introduction;
+  @Lob
+  @NonNull
+  protected String introduction;
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
   protected Date createdAt;
 
-  @UpdateTimestamp protected Date updatedAt;
+  @UpdateTimestamp
+  protected Date updatedAt;
 
   @Column(nullable = false)
   @NonNull

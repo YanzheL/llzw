@@ -1,17 +1,31 @@
 package com.llzw.apigate.persistence.entity;
 
-import lombok.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.stream.Collectors;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -61,7 +75,8 @@ public class User implements UserDetails {
   @Column(nullable = false, updatable = false)
   protected Date createdAt;
 
-  @UpdateTimestamp protected Date updatedAt;
+  @UpdateTimestamp
+  protected Date updatedAt;
 
   protected boolean enabled;
 

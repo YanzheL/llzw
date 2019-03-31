@@ -6,6 +6,13 @@ import com.llzw.apigate.persistence.entity.Role;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.RealNameVerificationDto;
 import com.llzw.apigate.web.dto.UserDto;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import javax.persistence.EntityExistsException;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +24,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityExistsException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -165,7 +164,9 @@ public class SimpleUserService implements UserService {
     if (userOptional.isPresent()) {
       User found = userOptional.get();
       boolean success = consumer.test(found);
-      if (success) userRepository.save(found);
+      if (success) {
+        userRepository.save(found);
+      }
       return success;
     } else {
       msgs.add("User doesn't exist");
