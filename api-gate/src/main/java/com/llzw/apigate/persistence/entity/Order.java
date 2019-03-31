@@ -1,19 +1,29 @@
 package com.llzw.apigate.persistence.entity;
 
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Data
 @NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 @AllArgsConstructor
 public class Order implements Serializable {
+
   private static final long serialVersionUID = 1L;
 
   @Id
@@ -21,13 +31,15 @@ public class Order implements Serializable {
   @Setter(AccessLevel.NONE)
   protected Long id;
 
-  @NotNull protected int quantity;
+  @NotNull
+  protected int quantity;
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
   protected Date createdAt;
 
-  @UpdateTimestamp protected Date updatedAt;
+  @UpdateTimestamp
+  protected Date updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "customer_id")

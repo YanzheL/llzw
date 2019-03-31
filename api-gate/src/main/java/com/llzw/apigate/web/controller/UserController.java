@@ -6,6 +6,9 @@ import com.llzw.apigate.web.dto.RealNameVerificationDto;
 import com.llzw.apigate.web.dto.UpdatePasswordDto;
 import com.llzw.apigate.web.dto.UserDto;
 import com.llzw.apigate.web.util.StandardRestResponse;
+import java.util.ArrayList;
+import java.util.Collection;
+import javax.validation.Valid;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,13 +21,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Collection;
-
 @RepositoryRestController
 @RequestMapping(value = "/users")
 public class UserController {
+
   private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
   @Setter(onMethod_ = @Autowired)

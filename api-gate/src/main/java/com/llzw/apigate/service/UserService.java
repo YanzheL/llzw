@@ -3,10 +3,9 @@ package com.llzw.apigate.service;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.RealNameVerificationDto;
 import com.llzw.apigate.web.dto.UserDto;
-import org.springframework.security.core.userdetails.UserDetailsService;
-
 import java.util.Collection;
 import java.util.List;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
 

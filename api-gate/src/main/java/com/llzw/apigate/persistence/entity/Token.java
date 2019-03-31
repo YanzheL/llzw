@@ -1,18 +1,23 @@
 package com.llzw.apigate.persistence.entity;
 
+import java.util.Calendar;
+import java.util.Date;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.Calendar;
-import java.util.Date;
-
 @MappedSuperclass
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 public class Token {
+
   protected static final int EXPIRATION = 60 * 24;
 
   @Id

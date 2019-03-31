@@ -1,15 +1,15 @@
 package com.llzw.apigate.web.util;
 
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.UUID;
-
 @Data
 public class StandardRestResponse<D> {
+
   private D data;
 
   @Setter(AccessLevel.NONE)
