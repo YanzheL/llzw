@@ -1,4 +1,6 @@
-![Logo of the project](logo.png)
+<div align="center">
+  <img src="logo.png"><br><br>
+</div>
 
 # LLZW
 Simple full-stack shopping site powered by [Spring](https://spring.io/) and [Angular](https://angular.io/)
