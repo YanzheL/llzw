@@ -1,6 +1,9 @@
-![Logo of the project](https://raw.githubusercontent.com/jehna/readme-best-practices/master/sample-logo.png)
+<div align="center">
+  <img src="logo.png"><br><br>
+</div>
 
-# LLZW
+-----------------
+
 Simple full-stack shopping site powered by [Spring](https://spring.io/) and [Angular](https://angular.io/)
 
 This is a Spring demo site designated for beginners, not suitable for production.
@@ -47,8 +50,6 @@ Run
 java -jar target/*.jar
 ```
 
-
-
 ## Features
 
 * RESTful API Backend, integrated with spring security
@@ -60,10 +61,8 @@ java -jar target/*.jar
 
 ## Documentation
 
-- [API Documentation](https://yanzhel.github.io/llzw-docs)
+- [API Documentation](https://llzw.readthedocs.io)
 
 ## Licensing
-
-
 
 "The code in this project is licensed under MIT license."
