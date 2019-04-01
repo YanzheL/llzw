@@ -10,11 +10,10 @@ Welcome to LLZW's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   authentication
+   users
+   products
+   stocks
+   orders
+   addresses
+   generals
