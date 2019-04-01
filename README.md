@@ -2,7 +2,8 @@
   <img src="logo.png"><br><br>
 </div>
 
-# LLZW
+-----------------
+
 Simple full-stack shopping site powered by [Spring](https://spring.io/) and [Angular](https://angular.io/)
 
 This is a Spring demo site designated for beginners, not suitable for production.
