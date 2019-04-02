@@ -73,9 +73,7 @@ public class OrderController {
         allMatchingOrders.stream()
             .filter(o -> o.belongsToUser(currentUser))
             .collect(Collectors.toList());
-    return res.isEmpty()
-        ? StandardRestResponse.getResponseEntity(null, false, HttpStatus.NOT_FOUND)
-        : StandardRestResponse.getResponseEntity(res, true);
+    return StandardRestResponse.getResponseEntity(res);
   }
 
   @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
@@ -89,8 +87,10 @@ public class OrderController {
     }
     Order order = res.get();
     return order.belongsToUser(currentUser)
-        ? StandardRestResponse.getResponseEntity(order, true)
-        : StandardRestResponse.getResponseEntity(null, false, HttpStatus.FORBIDDEN);
+        ? StandardRestResponse.getResponseEntity(order)
+        : StandardRestResponse
+            .getResponseEntity("Current user does not have access to this order", false,
+                HttpStatus.FORBIDDEN);
   }
 
   @PreAuthorize("hasAuthority('OP_CREATE_ORDER')")
@@ -130,7 +130,7 @@ public class OrderController {
     return StandardRestResponse.getResponseEntity(saveOpResult, true, HttpStatus.CREATED);
   }
 
-  // TODO: Can we generalize this?
+  // TODO: It may lead to SQL injection.
   private Specification<Order> findByExample(
       String customer_id, Long address_id, Long stock_id, String trackingId) {
     List<SearchCriterion> criteria = new ArrayList<>();
