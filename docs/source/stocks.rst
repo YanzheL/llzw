@@ -1,6 +1,49 @@
 Stocks
 ******
 
+Stock Entity Definition
+=======================
+
+Properties
+----------
+
+==================  ========  ==============================
+Parameter           Type      Description
+==================  ========  ==============================
+id                  Integer   Order ID
+product_id          Integer   Parent product ID
+createdAt           Date      Creation time
+updatedAt           Date      Update time
+producedAt          Date      Production time
+inboundedAt         Date      Inbound time
+shelfLife           Integer   Shelf-Life of this stock
+totalQuantity       Integer   Total quantity of this stock
+currentQuantity     Integer   Current quantity of this stock
+trackingId          String    Shipment tracking id
+carrierName         String    Carrier name
+valid               Boolean   Valid flag
+==================  ========  ==============================
+
+Example JSON Representation
+---------------------------
+
+.. code:: json
+
+   {
+     "id": 1,
+     "product_id": 2333,
+     "createdAt": "2019-10-1 3:00 PM GMT+1:00",
+     "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
+     "producedAt": "2019-10-1 3:00 PM GMT+1:00",
+     "inboundedAt": "2019-10-1 3:00 PM GMT+1:00",
+     "shelfLife": 365,
+     "totalQuantity": 10000,
+     "currentQuantity": 6999,
+     "trackingId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+     "carrierName": "SF-Express",
+     "valid": true
+   }
+
 Get Stocks by Parameters
 ===========================
 
@@ -9,12 +52,10 @@ This endpoint retrieves all stocks that satisfy given parameters
 HTTP Request
 ------------
 
-``GET http://example.com/api/v1/stocks``
+``GET http://example.com/api/v2/stocks``
 
 Request Parameters
 ------------------
-
-Your should query with parameters from this list.
 
 =========== ======= ======== ======= ===============================
 Parameter   Type    Required Default Description
@@ -28,47 +69,16 @@ carrierName String  False    -       Carrier Name of this shipment
 valid       Boolean False    -       The status of this stock
 =========== ======= ======== ======= ===============================
 
+Response Parameters
+-------------------
+=========== ========= ===================================
+Parameter   Type      Description
+=========== ========= ===================================
+data        Stock[]   List of matching Stock objects
+=========== ========= ===================================
+
 ..  Attention::
     Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
-
-The response JSON structured like this, shows all stocks belongs to product ``2333``
-
-.. code:: json
-
-   {
-     "responseId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-     "sucess": true,
-     "data": [
-       {
-         "id": 1,
-         "valid": true,
-         "product_id": 2333,
-         "createdAt": "2019-10-1 3:00 PM GMT+1:00",
-         "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
-         "producedAt": "2019-10-1 3:00 PM GMT+1:00",
-         "inboundedAt": "2019-10-1 3:00 PM GMT+1:00",
-         "shelfLife": 365,
-         "totalQuantity": 10000,
-         "currentQuantity": 6999,
-         "trackingId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-         "carrierName": "SF-Express"
-       },
-       {
-         "id": 2,
-         "valid": true,
-         "product_id": 2333,
-         "createdAt": "2019-10-1 3:00 PM GMT+1:00",
-         "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
-         "producedAt": "2019-10-1 3:00 PM GMT+1:00",
-         "inboundedAt": "2019-10-1 3:00 PM GMT+1:00",
-         "shelfLife": 365,
-         "totalQuantity": 20000,
-         "currentQuantity": 7988,
-         "trackingId": "",
-         "carrierName": ""
-       }
-     ]
-   }
 
 Get a Specific Stock
 ====================
@@ -78,7 +88,7 @@ This endpoint retrieves a specific stock with id
 HTTP Request
 ------------
 
-``GET http://example.com/api/v1/stocks/<ID>``
+``GET http://example.com/api/v2/stocks/<ID>``
 
 Request Parameters
 ------------------
@@ -89,31 +99,16 @@ Parameter Type    Required Default Description
 ID        Integer True     -       The ID of the product to retrieve
 ========= ======= ======== ======= =================================
 
+Response Parameters
+-------------------
+=========== ========= ===================================
+Parameter   Type      Description
+=========== ========= ===================================
+data        Stock     The matching Stock object
+=========== ========= ===================================
+
 ..  Attention::
     Remember — You must be authenticated with ``SELLER`` role before using this API
-
-The response JSON structured like this:
-
-.. code:: json
-
-   {
-     "responseId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-     "sucess": true,
-     "data": {
-       "id": 1,
-       "valid": true,
-       "product_id": 2333,
-       "createdAt": "2019-10-1 3:00 PM GMT+1:00",
-       "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
-       "producedAt": "2019-10-1 3:00 PM GMT+1:00",
-       "inboundedAt": "2019-10-1 3:00 PM GMT+1:00",
-       "shelfLife": 365,
-       "totalQuantity": 20000,
-       "currentQuantity": 7988,
-       "trackingId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-       "carrierName": "SF-Express"
-     }
-   }
 
 Create a Stock
 ==============
@@ -123,7 +118,7 @@ This endpoint creates a new product.
 HTTP Request
 ------------
 
-``POST http://example.com/api/v1/stocks``
+``POST http://example.com/api/v2/stocks``
 
 Request Parameters
 ------------------
@@ -131,39 +126,24 @@ Request Parameters
 ============= ======= ======== ======= ===============================
 Parameter     Type    Required Default Description
 ============= ======= ======== ======= ===============================
-productId     String  True     -       ID of the product it belongs to
+productId     String  True     -       Parent product ID
 producedAt    String  True     -       The producing date
 shelfLife     Integer True     -       Shelf-Life of this stock
 totalQuantity Integer True     -       Total quantity of stock
-trackingId    String  False    NULL    Tracking ID of this shipment
-carrierName   String  False    NULL    Carrier Name of this shipment
+trackingId    String  False    null    Tracking ID of this shipment
+carrierName   String  False    null    Carrier Name of this shipment
 ============= ======= ======== ======= ===============================
+
+Response Parameters
+-------------------
+=========== ========= ===================================
+Parameter   Type      Description
+=========== ========= ===================================
+data        Stock     The created Stock object
+=========== ========= ===================================
 
 ..  Attention::
     Remember — You must be authenticated with ``SELLER`` role before using this API
-
-The response JSON structured like this:
-
-.. code:: json
-
-   {
-     "responseId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-     "sucess": true,
-     "data": {
-       "id": 1,
-       "valid": true,
-       "product_id": "ID_OF_THE_PRODUCT_IT_BELONGS_TO",
-       "createdAt": "2019-10-1 3:00 PM GMT+1:00",
-       "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
-       "producedAt": "2019-10-1 3:00 PM GMT+1:00",
-       "inboundedAt": "",
-       "shelfLife": 365,
-       "totalQuantity": 20000,
-       "currentQuantity": 7988,
-       "trackingId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-       "carrierName": "SF-Express"
-     }
-   }
 
 Invalidate a Specific Stock
 ===========================
@@ -176,7 +156,7 @@ It will NOT delete it from database.
 HTTP Request
 ------------
 
-``DELETE http://example.com/api/v1/stocks/<ID>``
+``DELETE http://example.com/api/v2/stocks/<ID>``
 
 Request Parameters
 ------------------
@@ -189,13 +169,3 @@ ID        The ID of the stock to invalidate
 
 ..  Attention::
     Remember — You must be authenticated with ``SELLER`` role before using this API
-
-The response JSON structured like this:
-
-.. code:: json
-
-   {
-     "responseId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-     "sucess": true,
-     "data": null
-   }

@@ -15,5 +15,7 @@ Welcome to LLZW's documentation!
    products
    stocks
    orders
+   payments
+   refunds
    addresses
    generals
