@@ -66,6 +66,6 @@ public class Order implements Serializable {
   }
 
   public boolean belongsToCustomer(User customer) {
-    return customer.getUsername().equals(customer.getUsername());
+    return this.customer.getUsername().equals(customer.getUsername());
   }
 }
