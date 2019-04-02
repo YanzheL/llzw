@@ -12,7 +12,7 @@ Current project status: **Still in development**
 
 ## Continuous build status
 
-| Branch     | Status                            |
+| Branch     | Status                                                    |
 | ---------- | --------------------------------------------------------- |
 | **master** | ![](https://travis-ci.org/YanzheL/llzw.svg?branch=master) |
 | **dev**    | ![](https://travis-ci.org/YanzheL/llzw.svg?branch=dev)    |
