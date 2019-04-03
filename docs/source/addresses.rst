@@ -116,7 +116,7 @@ Request Parameters
 ========= ====== ======== ======= =====================
 Parameter Type   Required Default Description
 ========= ====== ======== ======= =====================
-ownerId  String True     -       Username of the owner
+ownerId   String True     -       Username of the owner
 province  String True     -       Province
 city      String True     -       City
 district  String True     -       District

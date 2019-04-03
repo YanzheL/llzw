@@ -11,7 +11,7 @@ Properties
     Parameter       Type      Description
 ==================  ========  =========================================================================
 id                  Integer   Refund ID
-orderId            Integer   Order ID
+orderId             Integer   Order ID
 createdAt           Date      Creation time
 updatedAt           Date      Update time
 requester           String    Username of requester
@@ -62,7 +62,7 @@ Parameter   Type    Required Default Description
 =========== ======= ======== ======= =========================================================================
 page        Integer False    0       The page index from 0
 size        Integer False    20      Page size
-orderId    String  False    -       Order ID
+orderId     String  False    -       Order ID
 status      String  False    -       status, one of ['PROCESSING', 'DENIED', 'ISSUED', 'CANCELLED', 'PENDING']
 valid       Boolean False    -       Valid flag
 =========== ======= ======== ======= =========================================================================
@@ -95,7 +95,7 @@ Request Parameters
 ==================  ========  ========  =======  ===============================================
     Parameter        Type     Required  Default  Description
 ==================  ========  ========  =======  ===============================================
-orderId            Integer   True      -        ID of the order it belongs to
+orderId             Integer   True      -        ID of the order it belongs to
 reason              String    True      -        Reason of this refund
 amount              Float     True      -        Refund amount
 ==================  ========  ========  =======  ===============================================

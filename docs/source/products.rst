@@ -11,7 +11,7 @@ Properties
 Parameter           Type      Description
 ==================  ========  ============================
 id                  Integer   Order ID
-sellerId           String    Quantity of this order
+sellerId            String    Quantity of this order
 name                String    Name of this product
 introduction        String    Introduction of this product
 createdAt           Date      Creation time

@@ -14,9 +14,9 @@ id                  Integer   Order ID
 quantity            Integer   Quantity of this order
 createdAt           Date      Creation time
 updatedAt           Date      Update time
-customerId         String    Customer username who creates this order
-addressId          Integer   Destination address ID from address book
-stockId            Integer   The actual stock id of this order
+customerId          String    Customer username who creates this order
+addressId           Integer   Destination address ID from address book
+stockId             Integer   The actual stock id of this order
 trackingId          String    Shipment tracking id
 carrierName         String    Carrier name
 totalAmount         Float     Total amount

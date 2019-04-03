@@ -60,7 +60,7 @@ Request Parameters
 ==================  ========  ========  =======  =============================
 Parameter           Type      Required  Default  Description
 ==================  ========  ========  =======  =============================
-orderId            Integer   True      -        Parent Order ID
+orderId             Integer   True      -        Parent Order ID
 subject             String    True      -        Subject of this payment
 totalAmount         Float     True      -        Total Amount
 description         String    False     -        Description

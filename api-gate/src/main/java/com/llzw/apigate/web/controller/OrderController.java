@@ -57,9 +57,9 @@ public class OrderController {
   public ResponseEntity searchOrders(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
       @RequestParam(value = "size", required = false, defaultValue = "20") int size,
-      @RequestParam(value = "customer_id", required = false) String customer_id,
-      @RequestParam(value = "address_id", required = false) Long address_id,
-      @RequestParam(value = "stock_id", required = false) Long stock_id,
+      @RequestParam(value = "customerId", required = false) String customerId,
+      @RequestParam(value = "addressId", required = false) Long addressId,
+      @RequestParam(value = "stockId", required = false) Long stockId,
       @RequestParam(value = "trackingId", required = false) String trackingId) {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
     User currentUser =
@@ -67,7 +67,7 @@ public class OrderController {
     // Result orders may contain other user's order, so we should filter them out.
     List<Order> allMatchingOrders =
         orderRepository
-            .findAll(findByExample(customer_id, address_id, stock_id, trackingId), pageRequest)
+            .findAll(findByExample(customerId, addressId, stockId, trackingId), pageRequest)
             .getContent();
     List<Order> res =
         allMatchingOrders.stream()
@@ -99,12 +99,12 @@ public class OrderController {
   public ResponseEntity createOrder(@Valid OrderDto orderDto) {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    Optional<Product> productOptional = productRepository.findById(orderDto.getProduct_id());
+    Optional<Product> productOptional = productRepository.findById(orderDto.getProductId());
     if (!productOptional.isPresent()) {
       return StandardRestResponse.getResponseEntity(
           "Cannot find specified product", false, HttpStatus.NOT_FOUND);
     }
-    Optional<Address> addressOptional = addressRepository.findById(orderDto.getAddress_id());
+    Optional<Address> addressOptional = addressRepository.findById(orderDto.getAddressId());
     if (!addressOptional.isPresent()) {
       return StandardRestResponse.getResponseEntity(
           "Cannot find specified address", false, HttpStatus.NOT_FOUND);
@@ -132,16 +132,16 @@ public class OrderController {
 
   // TODO: It may lead to SQL injection.
   private Specification<Order> findByExample(
-      String customer_id, Long address_id, Long stock_id, String trackingId) {
+      String customerId, Long addressId, Long stockId, String trackingId) {
     List<SearchCriterion> criteria = new ArrayList<>();
-    if (customer_id != null) {
-      criteria.add(new SearchCriterion("customer_id", "=", customer_id));
+    if (customerId != null) {
+      criteria.add(new SearchCriterion("customerId", "=", customerId));
     }
-    if (address_id != null) {
-      criteria.add(new SearchCriterion("address_id", "=", address_id));
+    if (addressId != null) {
+      criteria.add(new SearchCriterion("addressId", "=", addressId));
     }
-    if (stock_id != null) {
-      criteria.add(new SearchCriterion("stock_id", "=", stock_id));
+    if (stockId != null) {
+      criteria.add(new SearchCriterion("stockId", "=", stockId));
     }
     if (trackingId != null) {
       criteria.add(new SearchCriterion("trackingId", "=", trackingId));
