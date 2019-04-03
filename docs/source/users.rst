@@ -4,16 +4,6 @@ Users
 Registration
 ============
 
-The response JSON structured like this
-
-.. code:: json
-
-   {
-     "responseId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-     "sucess": true,
-     "data": null
-   }
-
 This endpoint registers a new user.
 
 HTTP Request
@@ -34,10 +24,7 @@ phoneNumber String   True     -       min length = 5, max length = 20
 role        String   True     -       One of ['ROLE_SELLER', 'ROLE_CUSTOMER']
 =========== ======== ======== ======= ==========================================================================
 
-Real Name Verification
-======================
-
-The response JSON structured like this:
+The response JSON structured like this
 
 .. code:: json
 
@@ -46,6 +33,9 @@ The response JSON structured like this:
      "sucess": true,
      "data": null
    }
+
+Real Name Verification
+======================
 
 This endpoint provides real name verification details for a specific
 user.
@@ -67,12 +57,6 @@ firstName      String   True     -       min length = 1, max length = 20
 lastName       String   True     -       min length = 1, max length = 20
 ============== ======== ======== ======= =========================================================
 
-..  Attention::
-    Remember — You must be authenticated before using this API
-
-Update Password
-===============
-
 The response JSON structured like this:
 
 .. code:: json
@@ -82,6 +66,12 @@ The response JSON structured like this:
      "sucess": true,
      "data": null
    }
+
+..  Attention::
+    Remember — You must be authenticated before using this API
+
+Update Password
+===============
 
 This endpoint updates a specific user’s password
 
@@ -99,6 +89,16 @@ Parameter   Type   Required Default Description
 oldPassword String True     -       Current password
 newPassword String True     -       New password
 =========== ====== ======== ======= ================
+
+The response JSON structured like this:
+
+.. code:: json
+
+   {
+     "responseId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+     "sucess": true,
+     "data": null
+   }
 
 ..  Attention::
     Remember — You must be authenticated before using this API
