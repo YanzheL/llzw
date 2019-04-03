@@ -127,7 +127,7 @@ Request Parameters
 Parameter     Type    Required Default Description
 ============= ======= ======== ======= ===============================
 productId     String  True     -       Parent product ID
-producedAt    String  True     -       The producing date
+producedAt    Date    True     -       The producing date
 shelfLife     Integer True     -       Shelf-Life of this stock
 totalQuantity Integer True     -       Total quantity of stock
 trackingId    String  False    null    Tracking ID of this shipment

@@ -11,7 +11,7 @@ Properties
 Parameter  Type      Description
 =========  ========  =====================
 id         Integer   Address ID
-ownerId   String    Username of the owner
+ownerId    String    Username of the owner
 province   String    Province
 city       String    City
 district   String    District
@@ -84,7 +84,7 @@ Your should query with at least one parameter from this list.
 ========= ====== ======== ======= =====================
 Parameter Type   Required Default Description
 ========= ====== ======== ======= =====================
-ownerId  String False    -       Username of the owner
+ownerId   String False    -       Username of the owner
 ========= ====== ======== ======= =====================
 
 Response Parameters

@@ -11,10 +11,10 @@ Properties
 Parameter           Type      Description
 ==================  ========  =====================================================
 id                  Integer   Payment ID
-orderId            Integer   Parent Order ID
+orderId             Integer   Parent Order ID
 createdAt           Date      Creation time
 updatedAt           Date      Update time
-payerId            String    Username of payer
+payerId             String    Username of payer
 subject             String    Subject of this payment
 description         String    Description
 totalAmount         Float     Total amount
