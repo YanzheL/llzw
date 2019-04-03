@@ -83,8 +83,8 @@ Parameter   Type     Description
 data        Order[]  List of matching Order objects
 =========== ======== ==============================
 
-..  Attention::
-    Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
 
 Get a Specific Order
 ====================
@@ -113,8 +113,8 @@ Parameter   Type     Description
 data        Order    The matching Order object
 =========== ======== ==============================
 
-..  Attention::
-    Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
 
 Create an Order
 ===============
@@ -147,6 +147,30 @@ Parameter   Type     Description
 data        Order    The created Order object
 =========== ======== ==============================
 
-..  Attention::
-    Remember — You must be authenticated with ``CUSTOMER`` role before using this API
+.. Attention::
+   Remember — You must be authenticated with ``CUSTOMER`` role before using this API
+
+Invalidate a Specific Order
+===============
+
+This endpoint invalidate a specific order.
+
+HTTP Request
+------------
+
+``DELETE http://example.com/api/v2/orders/<id>``
+
+Request Parameters
+------------------
+
+========= =================================
+Parameter Description
+========= =================================
+ID        The ID of the order to invalidate
+========= =================================
+
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
+
+   You can only invalidate an order which has not been shipped.
 
