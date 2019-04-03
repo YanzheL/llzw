@@ -151,7 +151,7 @@ data        Order    The created Order object
    Remember — You must be authenticated with ``CUSTOMER`` role before using this API
 
 Invalidate a Specific Order
-===============
+===========================
 
 This endpoint invalidate a specific order.
 
