@@ -11,7 +11,7 @@ Properties
 Parameter           Type      Description
 ==================  ========  ============================
 id                  Integer   Order ID
-seller_id           String    Quantity of this order
+sellerId            String    Quantity of this order
 name                String    Name of this product
 introduction        String    Introduction of this product
 createdAt           Date      Creation time
@@ -29,7 +29,7 @@ Example JSON Representation
 
    {
      "id": 1,
-     "seller_id": "USERNAME_OF_SELLER",
+     "sellerId": "USERNAME_OF_SELLER",
      "name": "NAME_OF_THIS_PRODUCT",
      "introduction": "INTRODUCTION_OF_THIS_PRODUCT",
      "createdAt": "2019-10-1 3:00 PM GMT+1:00",

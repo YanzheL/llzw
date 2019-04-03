@@ -14,9 +14,9 @@ id                  Integer   Order ID
 quantity            Integer   Quantity of this order
 createdAt           Date      Creation time
 updatedAt           Date      Update time
-customer_id         String    Customer username who creates this order
-address_id          Integer   Destination address ID from address book
-stock_id            Integer   The actual stock id of this order
+customerId          String    Customer username who creates this order
+addressId           Integer   Destination address ID from address book
+stockId             Integer   The actual stock id of this order
 trackingId          String    Shipment tracking id
 carrierName         String    Carrier name
 totalAmount         Float     Total amount
@@ -37,9 +37,9 @@ Example JSON Representation
      "quantity": 2,
      "createdAt": "2019-10-1 3:00 PM GMT+1:00",
      "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
-     "customer_id": "FOO",
-     "address_id": 5,
-     "stock_id": 23333,
+     "customerId": "FOO",
+     "addressId": 5,
+     "stockId": 23333,
      "trackingId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
      "carrierName": "SF-Express",
      "totalAmount": 500.00,
@@ -68,10 +68,10 @@ Parameter   Type    Required Default Description
 =========== ======= ======== ======= =================================
 page        Integer False    0       The page index from 0
 size        Integer False    20      Page size
-customer_id String  False    -       Username of the customer
-address_id  Integer False    -       Destination address of this order
+customerId  String  False    -       Username of the customer
+addressId   Integer False    -       Destination address of this order
 trackingId  String  False    -       Tracking ID of a shipped order
-stock_id    Integer False    -       The stock ID it belongs to
+stockId     Integer False    -       The stock ID it belongs to
 valid       Boolean False    True    Valid flag
 =========== ======= ======== ======= =================================
 
@@ -83,8 +83,8 @@ Parameter   Type     Description
 data        Order[]  List of matching Order objects
 =========== ======== ==============================
 
-..  Attention::
-    Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
 
 Get a Specific Order
 ====================
@@ -113,8 +113,8 @@ Parameter   Type     Description
 data        Order    The matching Order object
 =========== ======== ==============================
 
-..  Attention::
-    Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
 
 Create an Order
 ===============
@@ -132,10 +132,10 @@ Request Parameters
 =========== ======= ======== ======= ========================================
 Parameter   Type    Required Default Description
 =========== ======= ======== ======= ========================================
-product_id  Integer True     -       ID of the product it belongs to
+productId   Integer True     -       ID of the product it belongs to
 quantity    Integer True     -       Quantity of this order
-customer_id String  True     -       Customer username who creates this order
-address_id  Integer True     -       Destination address ID from address book
+customerId  String  True     -       Customer username who creates this order
+addressId   Integer True     -       Destination address ID from address book
 remark      String  False    -       Remark
 =========== ======= ======== ======= ========================================
 
@@ -147,6 +147,30 @@ Parameter   Type     Description
 data        Order    The created Order object
 =========== ======== ==============================
 
-..  Attention::
-    Remember — You must be authenticated with ``CUSTOMER`` role before using this API
+.. Attention::
+   Remember — You must be authenticated with ``CUSTOMER`` role before using this API
+
+Invalidate a Specific Order
+===========================
+
+This endpoint invalidate a specific order.
+
+HTTP Request
+------------
+
+``DELETE http://example.com/api/v2/orders/<id>``
+
+Request Parameters
+------------------
+
+========= =================================
+Parameter Description
+========= =================================
+ID        The ID of the order to invalidate
+========= =================================
+
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
+
+   You can only invalidate an order which has not been shipped.
 

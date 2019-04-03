@@ -34,7 +34,7 @@ public class Stock implements Serializable {
   protected boolean valid;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "product_id")
+  @JoinColumn(name = "productId")
   protected Product productId;
 
   @CreationTimestamp

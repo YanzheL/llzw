@@ -11,7 +11,7 @@ Properties
 Parameter  Type      Description
 =========  ========  =====================
 id         Integer   Address ID
-owner_id   String    Username of the owner
+ownerId    String    Username of the owner
 province   String    Province
 city       String    City
 district   String    District
@@ -26,7 +26,7 @@ Example JSON Representation
 
    {
      "id": 1,
-     "owner_id": "FOO",
+     "ownerId": "FOO",
      "province": "Beijing",
      "city": "Beijing",
      "district": "Haidian",
@@ -84,7 +84,7 @@ Your should query with at least one parameter from this list.
 ========= ====== ======== ======= =====================
 Parameter Type   Required Default Description
 ========= ====== ======== ======= =====================
-owner_id  String False    -       Username of the owner
+ownerId   String False    -       Username of the owner
 ========= ====== ======== ======= =====================
 
 Response Parameters
@@ -116,7 +116,7 @@ Request Parameters
 ========= ====== ======== ======= =====================
 Parameter Type   Required Default Description
 ========= ====== ======== ======= =====================
-owner_id  String True     -       Username of the owner
+ownerId   String True     -       Username of the owner
 province  String True     -       Province
 city      String True     -       City
 district  String True     -       District

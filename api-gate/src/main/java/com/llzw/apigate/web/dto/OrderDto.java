@@ -8,11 +8,11 @@ import lombok.Data;
 public class OrderDto {
 
   @NotNull
-  protected Long product_id;
+  protected Long productId;
 
   @Positive
   protected int quantity;
 
   @NotNull
-  protected Long address_id;
+  protected Long addressId;
 }

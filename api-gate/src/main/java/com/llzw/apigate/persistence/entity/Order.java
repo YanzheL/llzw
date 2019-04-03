@@ -42,15 +42,15 @@ public class Order implements Serializable {
   protected Date updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "customer_id")
+  @JoinColumn(name = "customerId")
   protected User customer;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "address_id")
+  @JoinColumn(name = "addressId")
   protected Address address;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "stock_id")
+  @JoinColumn(name = "stockId")
   protected Stock stock;
 
   protected String trackingId;

@@ -84,8 +84,8 @@ public class User implements UserDetails {
 
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(
-      joinColumns = @JoinColumn(name = "user_id"),
-      inverseJoinColumns = @JoinColumn(name = "role_id"))
+      joinColumns = @JoinColumn(name = "userId"),
+      inverseJoinColumns = @JoinColumn(name = "roleId"))
   protected Collection<Role> roles = new ArrayList<>();
 
   @OneToMany(mappedBy = "owner")

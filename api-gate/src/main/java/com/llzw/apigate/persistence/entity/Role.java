@@ -43,8 +43,8 @@ public class Role implements Serializable {
 
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(
-      joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
+      joinColumns = @JoinColumn(name = "roleId", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "privilegeId", referencedColumnName = "id"))
   protected Collection<Privilege> privileges = new ArrayList<>();
 
   public Role(String role) {
