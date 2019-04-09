@@ -86,14 +86,14 @@ HTTP Request
 
 ``GET http://example.com/api/v2/products/<ID>``
 
-Request Parameters
-------------------
+Path Parameter
+--------------
 
-========= ======= ======== ======= =================================
-Parameter Type    Required Default Description
-========= ======= ======== ======= =================================
-ID        Integer True     -       The ID of the product to retrieve
-========= ======= ======== ======= =================================
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Product ID
+========= ======== ===========
 
 Response Parameters
 -------------------
