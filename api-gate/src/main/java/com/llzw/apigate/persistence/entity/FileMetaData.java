@@ -15,7 +15,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Data
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 @AllArgsConstructor
 public class FileMetaData implements Serializable {
 
