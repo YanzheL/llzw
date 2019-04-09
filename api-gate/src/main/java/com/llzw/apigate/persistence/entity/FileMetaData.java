@@ -30,6 +30,7 @@ public class FileMetaData implements Serializable {
   @Column(nullable = false, updatable = false)
   protected Date createdAt;
 
+  // SHA-256 Hash value, length = 64
   @Column(nullable = false, updatable = false, length = 64)
   protected String hash;
 
