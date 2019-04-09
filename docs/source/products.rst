@@ -14,6 +14,7 @@ id                  Integer   Order ID
 sellerId            String    Quantity of this order
 name                String    Name of this product
 introduction        String    Introduction of this product
+mainImageFiles      String[]  Hash values of product main images (max = 9). These files should be uploaded first. 
 createdAt           Date      Creation time
 updatedAt           Date      Update time
 price               Float     Price
@@ -33,11 +34,15 @@ Example JSON Representation
      "sellerId": "USERNAME_OF_SELLER",
      "name": "NAME_OF_THIS_PRODUCT",
      "introduction": "INTRODUCTION_OF_THIS_PRODUCT",
+     "mainImageFiles":[
+       "1dd4984b0d118569da8620fe67e7fd4bd2889bb316d5ee40ba914eb65f19107d"
+     ]
      "createdAt": "2019-10-1 3:00 PM GMT+1:00",
      "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
      "price": 10.00,
      "ca": "CNAS",
      "certId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+     "caFile": "28e51044f4a9cbae2bbd3d8a9d8c902ad1455d42208277ac4a913b003038a3dc",
      "valid": true
    }
 
