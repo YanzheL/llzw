@@ -10,7 +10,7 @@ Properties
 ==================  ========  ==============================
 Parameter           Type      Description
 ==================  ========  ==============================
-id                  Integer   Order ID
+id                  Integer   Stock ID
 productId           Integer   Parent product ID
 createdAt           Date      Creation time
 updatedAt           Date      Update time
@@ -45,7 +45,7 @@ Example JSON Representation
    }
 
 Get Stocks by Parameters
-===========================
+========================
 
 This endpoint retrieves all stocks that satisfy given parameters
 
