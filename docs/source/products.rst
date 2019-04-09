@@ -10,8 +10,8 @@ Properties
 ==================  ========  ==================================================================================================
 Parameter           Type      Description
 ==================  ========  ==================================================================================================
-id                  Integer   Order ID
-sellerId            String    Quantity of this order
+id                  Integer   Product ID
+sellerId            String    Username of seller
 name                String    Name of this product
 introduction        String    Introduction of this product
 mainImageFiles      String[]  Hash values of product main images (max = 9). These files should be uploaded first. 
