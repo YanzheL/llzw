@@ -35,8 +35,9 @@ Example JSON Representation
      "name": "NAME_OF_THIS_PRODUCT",
      "introduction": "INTRODUCTION_OF_THIS_PRODUCT",
      "mainImageFiles":[
-       "1dd4984b0d118569da8620fe67e7fd4bd2889bb316d5ee40ba914eb65f19107d"
-     ]
+       "1dd4984b0d118569da8620fe67e7fd4bd2889bb316d5ee40ba914eb65f19107d",
+       "d0673d4e73e191cc5ba3588f9eac52f7c15e4cba3fc3c229f47ea85d959f97b0"
+     ],
      "createdAt": "2019-10-1 3:00 PM GMT+1:00",
      "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
      "price": 10.00,
