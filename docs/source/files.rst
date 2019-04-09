@@ -100,16 +100,16 @@ This endpoint provides a direct access to the requested file.
 HTTP Request
 ------------
 
-``GET http://example.com/api/v2/files/<hash>``
+``GET http://example.com/api/v2/files/<HASH>``
 
-Request Parameters
-------------------
+Path Parameter
+--------------
 
-========= ======== ======== ======= ===========================================================================================================================
-Parameter Type     Required Default Description
-========= ======== ======== ======= ===========================================================================================================================
-hash      String   True     -       The SHA-256 hash value of a file object in server, which should be the same as the hash value returned from File-Upload API
-========= ======== ======== ======= ===========================================================================================================================
+========= ======== ===========================================================================================================================
+Parameter Required Description
+========= ======== ===========================================================================================================================
+HASH      True     The SHA-256 hash value of a file object in server, which should be the same as the hash value returned from File-Upload API
+========= ======== ===========================================================================================================================
 
 Delete a Specific File
 ======================
@@ -121,13 +121,13 @@ The file will be deleted from server once its ``referrenceCount`` reaches zero.
 HTTP Request
 ------------
 
-``DELETE http://example.com/api/v2/files/<hash>``
+``DELETE http://example.com/api/v2/files/<HASH>``
 
-Request Parameters
-------------------
+Path Parameter
+--------------
 
-========= ======== ======== ======= ===========================================================================================================================
-Parameter Type     Required Default Description
-========= ======== ======== ======= ===========================================================================================================================
-hash      String   True     -       The SHA-256 hash value of a file object in server, which should be the same as the hash value returned from File-Upload API
-========= ======== ======== ======= ===========================================================================================================================
+========= ======== ===========================================================================================================================
+Parameter Required Description
+========= ======== ===========================================================================================================================
+HASH      True     The SHA-256 hash value of a file object in server, which should be the same as the hash value returned from File-Upload API
+========= ======== ===========================================================================================================================

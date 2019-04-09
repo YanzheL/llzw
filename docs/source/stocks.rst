@@ -90,14 +90,14 @@ HTTP Request
 
 ``GET http://example.com/api/v2/stocks/<ID>``
 
-Request Parameters
-------------------
+Path Parameter
+--------------
 
-========= ======= ======== ======= =================================
-Parameter Type    Required Default Description
-========= ======= ======== ======= =================================
-ID        Integer True     -       The ID of the product to retrieve
-========= ======= ======== ======= =================================
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Stock ID
+========= ======== ===========
 
 Response Parameters
 -------------------
@@ -158,14 +158,14 @@ HTTP Request
 
 ``DELETE http://example.com/api/v2/stocks/<ID>``
 
-Request Parameters
-------------------
+Path Parameter
+--------------
 
-========= =================================
-Parameter Description
-========= =================================
-ID        The ID of the stock to invalidate
-========= =================================
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Stock ID
+========= ======== ===========
 
 ..  Attention::
     Remember — You must be authenticated with ``SELLER`` role before using this API

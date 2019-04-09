@@ -44,14 +44,14 @@ HTTP Request
 
 ``GET http://example.com/api/v2/addresses/<ID>``
 
-Request Parameters
-------------------
+Path Parameter
+--------------
 
-========= ======= ======== ======= =================================
-Parameter Type    Required Default Description
-========= ======= ======== ======= =================================
-ID        Integer True     -       The ID of the address to retrieve
-========= ======= ======== ======= =================================
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Address ID
+========= ======== ===========
 
 Response Parameters
 -------------------
@@ -61,10 +61,12 @@ Parameter   Type      Description
 data        Address   The matching Address object
 =========== ========= ===================================
 
-..  Attention::
-    Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API.
-    If you are ``SELLER``, then this address must belong to you or your customers.
-    If you are ``CUSTOMER``, then this address must belong to you.
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API.
+
+   If you are ``SELLER``, then this address must belong to you or your customers.
+
+   If you are ``CUSTOMER``, then this address must belong to you.
 
 Get Addresses by Parameters
 ==============================
@@ -95,10 +97,12 @@ Parameter   Type      Description
 data        Address[] List of matching Address objects
 =========== ========= ===================================
 
-..  Attention::
-    Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API.
-    If you are ``SELLER``, then this address must belong to you or your customers from your current orders.
-    If you are ``CUSTOMER``, then this address must belong to you.
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API.
+
+   If you are ``SELLER``, then this address must belong to you or your customers from your current orders.
+
+   If you are ``CUSTOMER``, then this address must belong to you.
 
 Create an Address
 =================

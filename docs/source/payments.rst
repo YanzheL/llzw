@@ -74,6 +74,6 @@ Parameter   Type      Description
 data        Payment   The created Payment object
 =========== ========= ==============================
 
-..  Attention::
-    Remember — You must be authenticated with ``CUSTOMER`` role before using this API
+.. Attention::
+   Remember — You must be authenticated with ``CUSTOMER`` role before using this API
 
