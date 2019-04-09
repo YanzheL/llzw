@@ -17,7 +17,7 @@ import lombok.Setter;
 
 @Entity
 @Data
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 @AllArgsConstructor
 public class Address implements Serializable {
 
@@ -29,8 +29,8 @@ public class Address implements Serializable {
   protected Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "owner_id")
-  protected User owner;
+  @JoinColumn(name = "ownerId")
+  protected User ownerId;
 
   @Column(nullable = false, length = 20)
   @NonNull

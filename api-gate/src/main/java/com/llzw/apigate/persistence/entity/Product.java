@@ -37,7 +37,7 @@ public class Product implements Serializable {
   protected boolean valid;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "seller_id")
+  @JoinColumn(name = "sellerId")
   protected User seller;
 
   @Column(nullable = false)
@@ -72,4 +72,5 @@ public class Product implements Serializable {
   @Column(nullable = false, length = 50)
   @NonNull
   protected String caId;
+
 }
