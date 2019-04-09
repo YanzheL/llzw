@@ -7,9 +7,9 @@ Product Entity Definition
 Properties
 ----------
 
-==================  ========  ============================
+==================  ========  ==================================================================================================
 Parameter           Type      Description
-==================  ========  ============================
+==================  ========  ==================================================================================================
 id                  Integer   Order ID
 sellerId            String    Quantity of this order
 name                String    Name of this product
@@ -19,8 +19,9 @@ updatedAt           Date      Update time
 price               Float     Price
 ca                  String    Certificate authority name
 certId              String    Qualification certificate id
+caFile              String    Certificate file hash value, this file should be uploaded first, and its type must be image or PDF
 valid               Boolean   Valid flag
-==================  ========  ============================
+==================  ========  ==================================================================================================
 
 Example JSON Representation
 ---------------------------
@@ -127,8 +128,8 @@ Parameter   Type      Description
 data        Product   The created Product object
 =========== ========= ===================================
 
-..  Attention::
-    Remember — You must be authenticated with ``SELLER`` role before using this API
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` role before using this API
 
 Invalidate a Specific Product
 =============================
@@ -152,5 +153,5 @@ Parameter Description
 ID        The ID of the product to invalidate
 ========= ===================================
 
-..  Attention::
-    Remember — You must be authenticated with ``SELLER`` role before using this API
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` role before using this API
