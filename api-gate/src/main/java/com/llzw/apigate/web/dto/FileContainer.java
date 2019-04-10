@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileContainer {
 
   @Getter
-  private MultipartFile multipartFile;
+  private MultipartFile file;
 
   private String mimeType;
 
@@ -17,7 +17,7 @@ public class FileContainer {
   public String getMimeType() throws IOException {
     if (!typeDetermined) {
       Tika tika = new Tika();
-      mimeType = tika.detect(multipartFile.getResource().getFile());
+      mimeType = tika.detect(file.getResource().getFile());
       typeDetermined = true;
     }
     return mimeType;
