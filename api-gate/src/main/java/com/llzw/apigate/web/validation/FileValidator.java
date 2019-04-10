@@ -65,7 +65,8 @@ public class FileValidator implements Validator {
         errors.reject("Invalid file size");
       }
     } catch (IOException e) {
-      errors.reject("IOException raised while processing file");
+      errors.reject(
+          String.format("IOException raised while processing file, message = %s", e.getMessage()));
     }
   }
 }
