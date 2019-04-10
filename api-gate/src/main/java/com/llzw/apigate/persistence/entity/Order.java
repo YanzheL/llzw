@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,7 +31,7 @@ public class Order implements Serializable {
   @Setter(AccessLevel.NONE)
   protected Long id;
 
-  @NotNull
+  @Positive
   protected int quantity;
 
   @CreationTimestamp
@@ -57,6 +57,18 @@ public class Order implements Serializable {
 
   protected String carrierName;
 
+  protected float totalAmount;
+
+  protected String remark;
+
+  protected Date shippingTime;
+
+  protected boolean deliveryConfirmed;
+
+  protected boolean paid;
+
+  protected boolean valid;
+
   public boolean belongsToSeller(User seller) {
     return stock.productId.seller.getUsername().equals(seller.getUsername());
   }
@@ -66,6 +78,6 @@ public class Order implements Serializable {
   }
 
   public boolean belongsToCustomer(User customer) {
-    return customer.getUsername().equals(customer.getUsername());
+    return this.customer.getUsername().equals(customer.getUsername());
   }
 }

@@ -4,8 +4,8 @@ import com.llzw.apigate.persistence.dao.AddressRepository;
 import com.llzw.apigate.persistence.dao.OrderRepository;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.dao.StockRepository;
-import com.llzw.apigate.persistence.dao.customquery.SearchCriterionSpecificationFactory;
 import com.llzw.apigate.persistence.dao.customquery.SearchCriterion;
+import com.llzw.apigate.persistence.dao.customquery.SearchCriterionSpecificationFactory;
 import com.llzw.apigate.persistence.entity.Address;
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Product;
@@ -57,9 +57,9 @@ public class OrderController {
   public ResponseEntity searchOrders(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
       @RequestParam(value = "size", required = false, defaultValue = "20") int size,
-      @RequestParam(value = "customer_id", required = false) String customer_id,
-      @RequestParam(value = "address_id", required = false) Long address_id,
-      @RequestParam(value = "stock_id", required = false) Long stock_id,
+      @RequestParam(value = "customerId", required = false) String customerId,
+      @RequestParam(value = "addressId", required = false) Long addressId,
+      @RequestParam(value = "stockId", required = false) Long stockId,
       @RequestParam(value = "trackingId", required = false) String trackingId) {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
     User currentUser =
@@ -67,15 +67,13 @@ public class OrderController {
     // Result orders may contain other user's order, so we should filter them out.
     List<Order> allMatchingOrders =
         orderRepository
-            .findAll(findByExample(customer_id, address_id, stock_id, trackingId), pageRequest)
+            .findAll(findByExample(customerId, addressId, stockId, trackingId), pageRequest)
             .getContent();
     List<Order> res =
         allMatchingOrders.stream()
             .filter(o -> o.belongsToUser(currentUser))
-              .collect(Collectors.toList());
-    return res.isEmpty()
-        ? StandardRestResponse.getResponseEntity(null, false, HttpStatus.NOT_FOUND)
-        : StandardRestResponse.getResponseEntity(res, true);
+            .collect(Collectors.toList());
+    return StandardRestResponse.getResponseEntity(res);
   }
 
   @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
@@ -89,8 +87,10 @@ public class OrderController {
     }
     Order order = res.get();
     return order.belongsToUser(currentUser)
-        ? StandardRestResponse.getResponseEntity(order, true)
-        : StandardRestResponse.getResponseEntity(null, false, HttpStatus.FORBIDDEN);
+        ? StandardRestResponse.getResponseEntity(order)
+        : StandardRestResponse
+            .getResponseEntity("Current user does not have access to this order", false,
+                HttpStatus.FORBIDDEN);
   }
 
   @PreAuthorize("hasAuthority('OP_CREATE_ORDER')")
@@ -130,18 +130,18 @@ public class OrderController {
     return StandardRestResponse.getResponseEntity(saveOpResult, true, HttpStatus.CREATED);
   }
 
-  // TODO: Can we generalize this?
+  // TODO: It may lead to SQL injection.
   private Specification<Order> findByExample(
-      String customer_id, Long address_id, Long stock_id, String trackingId) {
+      String customerId, Long addressId, Long stockId, String trackingId) {
     List<SearchCriterion> criteria = new ArrayList<>();
-    if (customer_id != null) {
-      criteria.add(new SearchCriterion("customer_id", "=", customer_id));
+    if (customerId != null) {
+      criteria.add(new SearchCriterion("customerId", "=", customerId));
     }
-    if (address_id != null) {
-      criteria.add(new SearchCriterion("address_id", "=", address_id));
+    if (addressId != null) {
+      criteria.add(new SearchCriterion("addressId", "=", addressId));
     }
-    if (stock_id != null) {
-      criteria.add(new SearchCriterion("stock_id", "=", stock_id));
+    if (stockId != null) {
+      criteria.add(new SearchCriterion("stockId", "=", stockId));
     }
     if (trackingId != null) {
       criteria.add(new SearchCriterion("trackingId", "=", trackingId));
