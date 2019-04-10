@@ -12,11 +12,14 @@ public class FileContainer {
   @Setter
   private MultipartFile file;
 
-  private String mimeType;
+  private String mimeType = "";
 
   private boolean typeDetermined;
 
   public String getMimeType() throws IOException {
+    if (file == null) {
+      throw new IOException("File cannot be null");
+    }
     if (!typeDetermined) {
       Tika tika = new Tika();
       mimeType = tika.detect(file.getInputStream());
