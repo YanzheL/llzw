@@ -31,11 +31,11 @@ public class FileMetaData implements Serializable {
   protected Date createdAt;
 
   // SHA-256 Hash value, length = 64
-  @Column(nullable = false, updatable = false, length = 64)
+  @Column(nullable = false, updatable = false, unique = true, length = 64)
   protected String hash;
 
   protected int referrenceCount;
 
-  @Column(nullable = false, updatable = false)
+  @Column(nullable = false, updatable = false, length = 30)
   protected String mimetype;
 }
