@@ -25,6 +25,6 @@ public interface FileStorageService {
    *
    * @param path The Unique-Identifier of a file resource.
    */
-  void delete(String path);
+  void delete(String path) throws IOException;
 
 }
