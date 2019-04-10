@@ -1,7 +1,7 @@
 package com.llzw.apigate.web.controller;
 
 import com.llzw.apigate.persistence.entity.FileMetaData;
-import com.llzw.apigate.service.StorageService;
+import com.llzw.apigate.service.FileStorageService;
 import com.llzw.apigate.web.dto.FileContainer;
 import com.llzw.apigate.web.util.StandardRestResponse;
 import com.llzw.apigate.web.validation.FileValidator;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class FileController {
 
   @Setter(onMethod_ = @Autowired)
-  private StorageService storageService;
+  private FileStorageService fileStorageService;
 
   @Setter(onMethod_ = @Autowired)
   private FileValidator fileValidator;
@@ -39,7 +39,7 @@ public class FileController {
   @PostMapping(value = "")
   public ResponseEntity upload(@Valid FileContainer fileContainer) {
     Collection<String> msgs = new ArrayList<>();
-    Optional<FileMetaData> serviceResult = storageService.save(fileContainer, msgs);
+    Optional<FileMetaData> serviceResult = fileStorageService.save(fileContainer, msgs);
     if (serviceResult.isPresent()) {
       return StandardRestResponse.getResponseEntity(serviceResult.get(), true, HttpStatus.CREATED);
     }

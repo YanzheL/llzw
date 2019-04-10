@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 
-public class UniqueHashStorageService implements StorageService {
+public class UniqueHashFileStorageService implements FileStorageService {
 
   @Value("${storage.basepath:storage}")
   private String basePath;
@@ -22,7 +22,7 @@ public class UniqueHashStorageService implements StorageService {
   @Setter(onMethod_ = @Autowired)
   private FileMetaDataRepository fileMetaDataRepository;
 
-  public UniqueHashStorageService() {
+  public UniqueHashFileStorageService() {
   }
 
   // File validation is already done in FileValidator, so we just save it now.

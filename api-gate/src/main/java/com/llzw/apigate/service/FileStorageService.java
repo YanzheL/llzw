@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Optional;
 import org.springframework.core.io.Resource;
 
-public interface StorageService {
+public interface FileStorageService {
 
   /**
    * Perform <tt>save</tt> operation on the target file. The actual action of <tt>save</tt> is
