@@ -2,14 +2,14 @@ package com.llzw.apigate.service;
 
 
 import com.llzw.apigate.persistence.entity.FileMetaData;
+import com.llzw.apigate.web.dto.FileContainer;
 import java.util.Collection;
 import java.util.Optional;
 import org.springframework.core.io.Resource;
-import org.springframework.web.multipart.MultipartFile;
 
 public interface StorageService {
 
-  Optional<FileMetaData> save(MultipartFile file, Collection<String> msgs);
+  Optional<FileMetaData> save(FileContainer file, Collection<String> msgs);
 
   Resource load(String path);
 

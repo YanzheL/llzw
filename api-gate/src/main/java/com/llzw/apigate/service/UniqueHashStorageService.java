@@ -4,16 +4,15 @@ import com.google.common.hash.Hashing;
 import com.google.common.io.Files;
 import com.llzw.apigate.persistence.dao.FileMetaDataRepository;
 import com.llzw.apigate.persistence.entity.FileMetaData;
+import com.llzw.apigate.web.dto.FileContainer;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Optional;
 import lombok.Setter;
-import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
-import org.springframework.web.multipart.MultipartFile;
 
 public class UniqueHashStorageService implements StorageService {
 
@@ -26,41 +25,25 @@ public class UniqueHashStorageService implements StorageService {
   public UniqueHashStorageService() {
   }
 
-  public static boolean validateMimeType(String type) {
-    return true;
-  }
-
+  // File validation is already done in FileValidator, so we just save it now.
   @Override
-  public Optional<FileMetaData> save(MultipartFile file, Collection<String> msgs) {
-    Resource resource = file.getResource();
-    if (!resource.isReadable()) {
-      msgs.add("Resource is not readable");
-      return Optional.empty();
-    }
-    File underlyingFile;
-    try {
-      underlyingFile = resource.getFile();
-    } catch (IOException e) {
-      msgs.add("IOException raised while reading file");
-      return Optional.empty();
-    }
+  public Optional<FileMetaData> save(FileContainer file, Collection<String> msgs) {
 
     try {
-      Tika tika = new Tika();
-      String mimeType = tika.detect(underlyingFile);
-      if (!validateMimeType(mimeType)) {
-        msgs.add("Invalid MIME type");
-        return Optional.empty();
-      }
+      File underlyingFile = file.getFile().getResource().getFile();
+      String mimeType = file.getMimeType();
       String hashCode = Files.hash(underlyingFile, Hashing.sha256()).toString();
       Optional<FileMetaData> fileMetaDataOptional = fileMetaDataRepository.findByHash(hashCode);
+      // If same file already exists, then we just return that file's metadata
       if (fileMetaDataOptional.isPresent()) {
         return fileMetaDataOptional;
       }
       FileMetaData metaData = new FileMetaData();
       metaData.setHash(hashCode);
       metaData.setMimetype(mimeType);
+      // Save file metadata to database
       FileMetaData saveResult = fileMetaDataRepository.save(metaData);
+      // Save file to filesystem
       Files.copy(underlyingFile, new File(basePath + File.separator + hashCode));
       return Optional.of(saveResult);
     } catch (IOException e) {
