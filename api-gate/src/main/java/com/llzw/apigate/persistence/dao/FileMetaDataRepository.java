@@ -9,5 +9,5 @@ public interface FileMetaDataRepository extends CrudRepository<FileMetaData, Lon
 
   Optional<FileMetaData> findByHash(String hash);
 
-  Stream<FileMetaData> findAllByReferrenceCountEquals(int count);
+  Stream<FileMetaData> findAllByReferenceCountEquals(int count);
 }
