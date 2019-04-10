@@ -30,7 +30,7 @@ public class Address implements Serializable {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "ownerId")
-  protected User ownerId;
+  protected User owner;
 
   @Column(nullable = false, length = 20)
   @NonNull

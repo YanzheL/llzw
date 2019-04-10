@@ -99,12 +99,12 @@ public class OrderController {
   public ResponseEntity createOrder(@Valid OrderDto orderDto) {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    Optional<Product> productOptional = productRepository.findById(orderDto.getProduct_id());
+    Optional<Product> productOptional = productRepository.findById(orderDto.getProductId());
     if (!productOptional.isPresent()) {
       return StandardRestResponse.getResponseEntity(
           "Cannot find specified product", false, HttpStatus.NOT_FOUND);
     }
-    Optional<Address> addressOptional = addressRepository.findById(orderDto.getAddress_id());
+    Optional<Address> addressOptional = addressRepository.findById(orderDto.getAddressId());
     if (!addressOptional.isPresent()) {
       return StandardRestResponse.getResponseEntity(
           "Cannot find specified address", false, HttpStatus.NOT_FOUND);

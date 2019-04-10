@@ -56,14 +56,14 @@ public class ProductController {
   /*
    * scan all products
    * */
-  @PostMapping(value = "")
+  @GetMapping(value = "")
   @Transactional          // transaction management
   public ResponseEntity scanProduct(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
       @RequestParam(value = "size", required = false, defaultValue = "20") int size,
       @RequestParam(value = "valid", required = false, defaultValue = "True") boolean valid) {
 
-    PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
+    PageRequest pageRequest = PageRequest.of(page, size,Sort.by("id").ascending());
     List<Product> allMatchingProducts = productRepository.findAll(pageRequest).getContent();
     return StandardRestResponse.getResponseEntity(allMatchingProducts, true, HttpStatus.CREATED);
   }
