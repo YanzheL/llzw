@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 
-public class SearchCriteriaSpecificationFactory {
+public class SearchCriterionSpecificationFactory {
 
   public static <T> List<Specification<T>> of(List<SearchCriterion> criteria) {
     List<Specification<T>> specifications = new ArrayList<>();
     for (SearchCriterion criterion : criteria) {
-      specifications.add(new SearchCriteriaSpecification<>(criterion));
+      specifications.add(new SearchCriterionSpecification<>(criterion));
     }
     return specifications;
   }

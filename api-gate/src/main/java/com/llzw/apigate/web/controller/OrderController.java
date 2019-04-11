@@ -4,8 +4,8 @@ import com.llzw.apigate.persistence.dao.AddressRepository;
 import com.llzw.apigate.persistence.dao.OrderRepository;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.dao.StockRepository;
-import com.llzw.apigate.persistence.dao.customquery.SearchCriteriaSpecificationFactory;
 import com.llzw.apigate.persistence.dao.customquery.SearchCriterion;
+import com.llzw.apigate.persistence.dao.customquery.SearchCriterionSpecificationFactory;
 import com.llzw.apigate.persistence.entity.Address;
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Product;
@@ -149,6 +149,6 @@ public class OrderController {
     if (trackingId != null) {
       criteria.add(new SearchCriterion("trackingId", "=", trackingId));
     }
-    return SearchCriteriaSpecificationFactory.and(criteria);
+    return SearchCriterionSpecificationFactory.and(criteria);
   }
 }

@@ -20,7 +20,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Data
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 @AllArgsConstructor
 public class Stock implements Serializable {
 
@@ -67,4 +67,11 @@ public class Stock implements Serializable {
 
   @Column(length = 50)
   protected String carrierName;
+
+//stock.productId.seller.getUsername().equals(seller.getUsername());库存对应的产品的商家的名称要对应库存卖家的名称
+ //库存的商品id要对应商品的id
+  public boolean belongsToProduct(Product product) {
+    return product.id.equals(productId.getId());
+  }
+
 }

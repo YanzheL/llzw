@@ -21,7 +21,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Data
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 @AllArgsConstructor
 public class Product implements Serializable {
 
@@ -32,6 +32,8 @@ public class Product implements Serializable {
   @Setter(AccessLevel.NONE)
   protected Long id;
 
+  @Setter()
+  @NonNull
   protected boolean valid;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -70,4 +72,5 @@ public class Product implements Serializable {
   @Column(nullable = false, length = 50)
   @NonNull
   protected String caId;
+
 }
