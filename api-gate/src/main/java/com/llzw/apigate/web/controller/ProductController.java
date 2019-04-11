@@ -40,7 +40,7 @@ public class ProductController {
    * create new product
    * */
   @PreAuthorize("hasAnyRole('SELLER')")
-  @PostMapping(value = "")
+  @PostMapping
   @Transactional          // transaction management
   public ResponseEntity createProduct(@Valid ProductCreateDto productCreateDto) {
     //将dto中商品的各种信息存入product中
@@ -56,14 +56,14 @@ public class ProductController {
   /*
    * scan all products
    * */
-  @GetMapping(value = "")
+  @GetMapping
   @Transactional          // transaction management
   public ResponseEntity scanProduct(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
       @RequestParam(value = "size", required = false, defaultValue = "20") int size,
       @RequestParam(value = "valid", required = false, defaultValue = "True") boolean valid) {
 
-    PageRequest pageRequest = PageRequest.of(page, size,Sort.by("id").ascending());
+    PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
     List<Product> allMatchingProducts = productRepository.findAll(pageRequest).getContent();
     return StandardRestResponse.getResponseEntity(allMatchingProducts, true, HttpStatus.CREATED);
   }
@@ -79,8 +79,8 @@ public class ProductController {
   }
 
   /*
-  * invalidate a specific product
-  * */
+   * invalidate a specific product
+   * */
   @DeleteMapping(value = "/{id}")
   @Transactional          // transaction management
   public ResponseEntity invalidateProductById(@PathVariable(value = "id") Long id) {
