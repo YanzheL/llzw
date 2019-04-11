@@ -6,26 +6,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-  //  @Autowired private MessageSource messages;
-
   public RestResponseEntityExceptionHandler() {
     super();
   }
 
-  @ExceptionHandler
-  protected ResponseEntity<Object> handle(Exception ex) {
-    return handle(ex, HttpStatus.BAD_REQUEST);
-  }
-
-  protected ResponseEntity<Object> handle(Exception ex, HttpStatus status) {
-    return StandardRestResponse.getResponseEntity(ex.getMessage(), false, status);
+  protected ResponseEntity<Object> handleAny(Exception ex, HttpStatus status) {
+    return StandardRestResponse.errorResponseEntity(ex, status);
   }
 
   @Override
@@ -35,6 +27,6 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
       HttpHeaders headers,
       HttpStatus status,
       WebRequest request) {
-    return handle(ex, status);
+    return handleAny(ex, status);
   }
 }

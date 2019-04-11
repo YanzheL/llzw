@@ -62,6 +62,9 @@ public class Privilege implements Serializable {
     OP_READ_STOCK,
     OP_UPDATE_STOCK,
     OP_DELETE_STOCK,
-    OP_MANAGE_PASSWORD
+    OP_MANAGE_PASSWORD,
+
+    OP_CREATE_FILE,
+    OP_DELETE_FILE
   }
 }
