@@ -39,7 +39,7 @@ public class ProductController {
   /*
    * create new product
    * */
-  @PreAuthorize("hasAnyRole('SELLER')")
+  @PreAuthorize("hasRole('SELLER')")
   @PostMapping
   @Transactional          // transaction management
   public ResponseEntity createProduct(@Valid ProductCreateDto productCreateDto) {
@@ -65,7 +65,7 @@ public class ProductController {
 
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
     List<Product> allMatchingProducts = productRepository.findAll(pageRequest).getContent();
-    return StandardRestResponse.getResponseEntity(allMatchingProducts, true, HttpStatus.CREATED);
+    return StandardRestResponse.getResponseEntity(allMatchingProducts);
   }
 
   /*
@@ -75,7 +75,9 @@ public class ProductController {
   @Transactional          // transaction management
   public ResponseEntity findProductById(@PathVariable(value = "id") Long id) {
     Optional<Product> res = productRepository.findById(id);
-    return StandardRestResponse.getResponseEntity(res, true, HttpStatus.CREATED);
+    return res.isPresent()
+        ? StandardRestResponse.getResponseEntity(res)
+        : StandardRestResponse.getResponseEntity(null, false, HttpStatus.NOT_FOUND);
   }
 
   /*
