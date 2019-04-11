@@ -6,7 +6,6 @@ import com.llzw.apigate.web.dto.FileDto;
 import com.llzw.apigate.web.util.StandardRestResponse;
 import com.llzw.apigate.web.validation.FileValidator;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -46,7 +45,7 @@ public class FileController {
     binder.setValidator(fileValidator);
   }
 
-  @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
+  @PreAuthorize("hasAuthority('OP_CREATE_FILE')")
   @PostMapping
   public ResponseEntity upload(@Valid FileDto fileDto) {
     Collection<String> msgs = new ArrayList<>();
@@ -61,7 +60,7 @@ public class FileController {
         : StandardRestResponse.getResponseEntity(msgs, false, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
-  @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
+  @PreAuthorize("hasAuthority('OP_DELETE_FILE')")
   @DeleteMapping(value = "/{hash}")
   public ResponseEntity delete(@PathVariable(value = "hash") String hash) {
     fileStorageService.delete(hash);
@@ -75,22 +74,19 @@ public class FileController {
    * so I gave it up.
    */
   @GetMapping(value = "/{hash}")
-  public void download(@PathVariable(value = "hash") String hash, HttpServletResponse response) {
-    try {
-      FileDto fileDto = fileStorageService.load(hash);
-      Resource containerResource = fileDto.getFile();
-      if (!fileDto.getFile().exists()) {
-        throw new IOException("File not found");
-      }
-      String mimeType = fileDto.getMimeType();
-      // copy it to response's OutputStream
-      response.setContentType(mimeType);
-      InputStream in = containerResource.getInputStream();
-      IOUtils.copy(in, response.getOutputStream());
-      response.flushBuffer();
-    } catch (IOException ex) {
-      throw new RuntimeException("IOError writing file to output stream");
+  public void download(@PathVariable(value = "hash") String hash, HttpServletResponse response)
+      throws IOException {
+    FileDto fileDto = fileStorageService.load(hash);
+    Resource resource = fileDto.getFile();
+    if (!fileDto.getFile().exists()) {
+      response.sendError(HttpServletResponse.SC_NOT_FOUND, "File not found");
+      return;
     }
+    String mimeType = fileDto.getMimeType();
+    // copy it to response's OutputStream
+    response.setContentType(mimeType);
+    IOUtils.copy(resource.getInputStream(), response.getOutputStream());
+    response.flushBuffer();
   }
 
 // This method is fucking not working as expected.

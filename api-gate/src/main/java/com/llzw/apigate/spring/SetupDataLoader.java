@@ -39,7 +39,9 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
             PrivilegeType.OP_DELETE_ORDER,
             PrivilegeType.OP_DELETE_PRODUCT,
             PrivilegeType.OP_DELETE_STOCK,
-            PrivilegeType.OP_MANAGE_PASSWORD));
+            PrivilegeType.OP_MANAGE_PASSWORD,
+            PrivilegeType.OP_CREATE_FILE,
+            PrivilegeType.OP_DELETE_FILE));
 
     defaultRoleMapping.put(
         RoleType.ROLE_CUSTOMER,
