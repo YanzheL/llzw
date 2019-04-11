@@ -2,21 +2,29 @@ package com.llzw.apigate.web.controller;
 
 import com.llzw.apigate.persistence.entity.FileMetaData;
 import com.llzw.apigate.service.FileStorageService;
-import com.llzw.apigate.web.dto.FileContainer;
+import com.llzw.apigate.web.dto.FileDto;
 import com.llzw.apigate.web.util.StandardRestResponse;
 import com.llzw.apigate.web.validation.FileValidator;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.Setter;
+import org.apache.tika.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,12 +48,11 @@ public class FileController {
 
   @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
   @PostMapping
-  public ResponseEntity upload(@Valid FileContainer fileContainer) {
-//    ResourceHttpRequestHandler
+  public ResponseEntity upload(@Valid FileDto fileDto) {
     Collection<String> msgs = new ArrayList<>();
     Optional<FileMetaData> serviceResult = null;
     try {
-      serviceResult = fileStorageService.save(fileContainer);
+      serviceResult = fileStorageService.save(fileDto);
     } catch (java.io.IOException e) {
       return StandardRestResponse.errorResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -53,5 +60,60 @@ public class FileController {
         ? StandardRestResponse.getResponseEntity(serviceResult.get(), true, HttpStatus.CREATED)
         : StandardRestResponse.getResponseEntity(msgs, false, HttpStatus.INTERNAL_SERVER_ERROR);
   }
+
+  @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
+  @DeleteMapping(value = "/{hash}")
+  public ResponseEntity delete(@PathVariable(value = "hash") String hash) {
+    fileStorageService.delete(hash);
+    return StandardRestResponse.getResponseEntity(null);
+  }
+
+  /**
+   * I know this is ugly, but it's the only way that worked for now. There is a 'better' way using
+   * <tt>ResponseEntity<Resource></tt> (see the next commented method), but it keeps throwing
+   * <tt>HttpMediaTypeNotAcceptableException</tt>. No solution found on StackOverflow and Google,
+   * so I gave it up.
+   */
+  @GetMapping(value = "/{hash}")
+  public void download(@PathVariable(value = "hash") String hash, HttpServletResponse response) {
+    try {
+      FileDto fileDto = fileStorageService.load(hash);
+      Resource containerResource = fileDto.getFile();
+      if (!fileDto.getFile().exists()) {
+        throw new IOException("File not found");
+      }
+      String mimeType = fileDto.getMimeType();
+      // copy it to response's OutputStream
+      response.setContentType(mimeType);
+      InputStream in = containerResource.getInputStream();
+      IOUtils.copy(in, response.getOutputStream());
+      response.flushBuffer();
+    } catch (IOException ex) {
+      throw new RuntimeException("IOError writing file to output stream");
+    }
+  }
+
+// This method is fucking not working as expected.
+//  @GetMapping(value = "/{hash}")
+//  public ResponseEntity<Resource> download(@PathVariable(value = "hash") String hash) {
+//    try {
+//      FileDto fileContainer = fileStorageService.load(hash);
+//      if (!fileContainer.getFile().exists()) {
+//        throw new IOException("File not found");
+//      }
+//      Resource containerResource = fileContainer.getFile();
+//      String mimeType = fileContainer.getMimeType();
+//      HttpHeaders headers = new HttpHeaders();
+////      headers.add(HttpHeaders.CONTENT_TYPE, mimeType);
+//      return ResponseEntity.ok()
+////          .headers(headers)
+//          .contentLength(fileContainer.getFile().contentLength())
+//          .contentType(MediaType.parseMediaType(mimeType))
+//          .body(new InputStreamResource(containerResource.getInputStream()));
+//    } catch (IOException e) {
+//      return ResponseEntity.notFound().build();
+////      return null;
+//    }
+//  }
 
 }

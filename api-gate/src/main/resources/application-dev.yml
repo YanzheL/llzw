@@ -14,8 +14,8 @@ spring:
     rest:
       base-path: /api/v1
 # If something weird happens in request mapping, you may need to uncomment this.
-#  resources:
-#    add-mappings: false
+  resources:
+    add-mappings: false
 
 logging:
   level:
