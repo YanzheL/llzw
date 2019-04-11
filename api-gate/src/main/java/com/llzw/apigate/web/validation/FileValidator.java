@@ -1,6 +1,6 @@
 package com.llzw.apigate.web.validation;
 
-import com.llzw.apigate.web.dto.FileContainer;
+import com.llzw.apigate.web.dto.FileDto;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,22 +37,22 @@ public class FileValidator implements Validator {
 
   @Override
   public boolean supports(Class<?> clazz) {
-    return FileContainer.class.isAssignableFrom(clazz);
+    return FileDto.class.isAssignableFrom(clazz);
   }
 
   @Override
   public void validate(Object target, Errors errors) {
-    FileContainer fileContainer = (FileContainer) target;
+    FileDto fileDto = (FileDto) target;
     boolean typeValid = false;
     boolean sizeValid = false;
     try {
-      String type = fileContainer.getMimeType();
+      String type = fileDto.getMimeType();
       for (Map.Entry<String, Long> entry : typeContrains.entrySet()) {
         if (!entry.getKey().equals(type)) {
           continue;
         }
         typeValid = true;
-        if (fileContainer.getFile().getSize() <= entry.getValue()) {
+        if (fileDto.getFile().contentLength() <= entry.getValue()) {
           sizeValid = true;
           break;
         }

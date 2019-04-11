@@ -2,10 +2,9 @@ package com.llzw.apigate.service;
 
 
 import com.llzw.apigate.persistence.entity.FileMetaData;
-import com.llzw.apigate.web.dto.FileContainer;
+import com.llzw.apigate.web.dto.FileDto;
 import java.io.IOException;
 import java.util.Optional;
-import org.springframework.core.io.Resource;
 
 public interface FileStorageService {
 
@@ -15,9 +14,9 @@ public interface FileStorageService {
    *
    * @param file The validated file container uploaded from client.
    */
-  Optional<FileMetaData> save(FileContainer file) throws IOException;
+  Optional<FileMetaData> save(FileDto file) throws IOException;
 
-  Resource load(String path);
+  FileDto load(String path) throws IOException;
 
   /**
    * Perform delete operation on the target file. The actual action of <tt>delete</tt> is
@@ -25,6 +24,6 @@ public interface FileStorageService {
    *
    * @param path The Unique-Identifier of a file resource.
    */
-  void delete(String path) throws IOException;
+  void delete(String path);
 
 }

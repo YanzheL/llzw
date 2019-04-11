@@ -12,7 +12,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.web.multipart.MultipartFile;
 //import org.springframework.web.multipart.MultipartFile;
 
-public class FileContainer {
+public class FileDto {
 
   @Getter
   private Resource file;
