@@ -35,6 +35,32 @@ public class SearchCriterionSpecificationFactory {
     return cur;
   }
 
+  /**
+   * Make JPA Specification from an example POJO.
+   * For example:
+   * <pre>
+   * class SimplePojo {
+   *   Type1 field1;
+   *   Type2 field2;
+   *   Type3 field3;
+   * }
+   * SimplePojo example = new SimplePojo();
+   * example.field1 = value1;
+   * example.field2 = value2;
+   * example.field3 = null;
+   * Specification specification = SearchCriterionSpecificationFactory.fromExample(example);
+   * </pre>
+   * The result specification will contains JPA query constrains similar to.
+   * <pre>
+   *   WHERE field1 = value1 AND field2 = value2
+   * </pre>
+   * Fields with {@code null} value will be ignored.
+   *
+   * @param obj The example POJO, it can be any POJO
+   * @param <T> Automatically inferred from caller.
+   * @param <D> Automatically inferred from obj.
+   * @return Constructed JPA Specification
+   */
   public static <T, D> Specification<T> fromExample(D obj) throws IllegalAccessException {
     List<SearchCriterion> criteria = new ArrayList<>();
     Class c = obj.getClass();
@@ -49,6 +75,28 @@ public class SearchCriterionSpecificationFactory {
     return and(criteria);
   }
 
+  /**
+   * Make JPA Specification from an example POJO with constrains.
+   * For example:
+   * <pre>
+   * SimplePojo example = new SimplePojo();
+   * example.field1 = value1;
+   * example.field2 = value2;
+   * example.field3 = value3;
+   * Map<String, String> constrains = new HashMap<>();
+   * constrains.put("field1", ">=");
+   * constrains.put("field2", "=");
+   * Specification specification = SearchCriterionSpecificationFactory.fromExample(example, constrains);
+   * </pre>
+   * The result specification will contains JPA query constrains similar to.
+   * <pre>
+   *   WHERE field1 >= value1 AND field2 = value2
+   * </pre>
+   * Fields with {@code null} value will be ignored.
+   *
+   * @param constraints field constrains map.
+   * @see SearchCriterionSpecificationFactory#fromExample(Object)
+   */
   public static <T, D> Specification<T> fromExample(D obj, Map<String, String> constraints)
       throws IllegalAccessException, NoSuchFieldException {
     List<SearchCriterion> criteria = new ArrayList<>();
