@@ -50,7 +50,7 @@ public class SearchCriterionSpecificationFactory {
    * example.field3 = null;
    * Specification specification = SearchCriterionSpecificationFactory.fromExample(example);
    * </pre>
-   * The result specification will contains JPA query constrains similar to.
+   * The result specification will contain JPA query constrains similar to:
    * <pre>
    *   WHERE field1 = value1 AND field2 = value2
    * </pre>
@@ -88,7 +88,7 @@ public class SearchCriterionSpecificationFactory {
    * constrains.put("field2", "=");
    * Specification specification = SearchCriterionSpecificationFactory.fromExample(example, constrains);
    * </pre>
-   * The result specification will contains JPA query constrains similar to.
+   * The result specification will contain JPA query constrains similar to:
    * <pre>
    *   WHERE field1 >= value1 AND field2 = value2
    * </pre>
