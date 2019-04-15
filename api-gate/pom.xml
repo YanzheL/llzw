@@ -116,7 +116,7 @@
     <dependency>
       <artifactId>tika-core</artifactId>
       <groupId>org.apache.tika</groupId>
-      <version>1.19.1</version>
+      <version>1.20</version>
     </dependency>
   </dependencies>
   <description>Demo project for Spring Boot</description>
