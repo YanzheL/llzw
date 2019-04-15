@@ -15,7 +15,7 @@ public class SpecificationFactory {
 //  Double field2;
 //  Float field3;
 
-  public static <D> Specification fromExample(D obj) throws IllegalAccessException {
+  public static <T, D> Specification<T> fromExample(D obj) throws IllegalAccessException {
     List<SearchCriterion> criteria = new ArrayList<>();
     Class c = obj.getClass();
     Field[] fields = c.getDeclaredFields();
@@ -29,7 +29,7 @@ public class SpecificationFactory {
     return SearchCriterionSpecificationFactory.and(criteria);
   }
 
-  public static <D> Specification fromExample(D obj, Map<String, String> constraints)
+  public static <T, D> Specification<T> fromExample(D obj, Map<String, String> constraints)
       throws IllegalAccessException, NoSuchFieldException {
     List<SearchCriterion> criteria = new ArrayList<>();
     Class c = obj.getClass();
