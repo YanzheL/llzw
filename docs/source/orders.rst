@@ -1,67 +1,90 @@
 Orders
 ******
 
+Order Entity Definition
+=======================
+
+Properties
+----------
+
+==================  ========  =============================================
+Parameter           Type      Description
+==================  ========  =============================================
+id                  Integer   Order ID
+quantity            Integer   Quantity of this order
+createdAt           Date      Creation time
+updatedAt           Date      Update time
+customerId          String    Customer username who creates this order
+addressId           Integer   Destination address ID from address book
+stockId             Integer   The actual stock id of this order
+trackingId          String    Shipment tracking id
+carrierName         String    Carrier name
+totalAmount         Float     Total amount
+remark              String    Addtional infomation of this order
+shippingTime        Date      The time of shipping
+deliveryConfirmed   Boolean   Whether the delivery is confirmed by customer
+paid                Boolean   Whether the order is paid
+valid               Boolean   Valid flag
+==================  ========  =============================================
+
+Example JSON Representation
+---------------------------
+
+.. code:: json
+
+   {
+     "id": 1,
+     "quantity": 2,
+     "createdAt": "2019-10-1 3:00 PM GMT+1:00",
+     "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
+     "customerId": "FOO",
+     "addressId": 5,
+     "stockId": 23333,
+     "trackingId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+     "carrierName": "SF-Express",
+     "totalAmount": 500.00,
+     "remark": null,
+     "shippingTime": "2019-10-1 3:00 PM GMT+1:00",
+     "deliveryConfirmed": false,
+     "paid": false,
+     "valid": true
+   }
+
 Get Orders by Parameters
-===========================
+========================
 
 This endpoint retrieves all orders that satisfy given parameters
 
 HTTP Request
 ------------
 
-``GET http://example.com/api/v1/orders``
+``GET http://example.com/api/v2/orders``
 
 Request Parameters
 ------------------
-
-Your should query with at least one parameter from this list.
 
 =========== ======= ======== ======= =================================
 Parameter   Type    Required Default Description
 =========== ======= ======== ======= =================================
 page        Integer False    0       The page index from 0
 size        Integer False    20      Page size
-customer_id String  False    -       Username of the customer
-address_id  Integer False    -       Destination address of this order
+customerId  String  False    -       Username of the customer
+addressId   Integer False    -       Destination address of this order
 trackingId  String  False    -       Tracking ID of a shipped order
-stock_id    Integer False    -       The stock ID it belongs to
+stockId     Integer False    -       The stock ID it belongs to
+valid       Boolean False    True    Valid flag
 =========== ======= ======== ======= =================================
 
-..  Attention::
-    Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
+Response Parameters
+-------------------
+=========== ======== ==============================
+Parameter   Type     Description
+=========== ======== ==============================
+data        Order[]  List of matching Order objects
+=========== ======== ==============================
 
-The response JSON structured like this, shows all orders belongs to customer ``FOO``
-
-.. code:: json
-
-   {
-     "responseId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-     "sucess": true,
-     "data": [
-       {
-         "id": 1,
-         "quantity": 2,
-         "createdAt": "2019-10-1 3:00 PM GMT+1:00",
-         "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
-         "customer_id": "FOO",
-         "address_id": 5,
-         "stock_id": 23333,
-         "trackingId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-         "carrierName": "SF-Express"
-       },
-       {
-         "id": 2,
-         "quantity": 5,
-         "createdAt": "2019-10-1 3:00 PM GMT+1:00",
-         "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
-         "customer_id": "FOO",
-         "address_id": 5,
-         "stock_id": 12345,
-         "trackingId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-         "carrierName": "SF-Express"
-       },
-     ]
-   }
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
 
 Get a Specific Order
 ====================
@@ -71,39 +94,27 @@ This endpoint retrieves a specific order
 HTTP Request
 ------------
 
-``GET http://example.com/api/v1/orders/<ID>``
+``GET http://example.com/api/v2/orders/<ID>``
 
-Request Parameters
-------------------
+Path Parameter
+--------------
 
-========= ======= ======== ======= ===============================
-Parameter Type    Required Default Description
-========= ======= ======== ======= ===============================
-ID        Integer True     -       The ID of the order to retrieve
-========= ======= ======== ======= ===============================
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Order ID
+========= ======== ===========
 
-..  Attention::
-    Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
+Response Parameters
+-------------------
+=========== ======== ==============================
+Parameter   Type     Description
+=========== ======== ==============================
+data        Order    The matching Order object
+=========== ======== ==============================
 
-The response JSON structured like this:
-
-.. code:: json
-
-   {
-     "responseId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-     "sucess": true,
-     "data": {
-       "id": 1,
-       "quantity": 5,
-       "createdAt": "2019-10-1 3:00 PM GMT+1:00",
-       "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
-       "customer_id": "USERNAME_OF_CUSTOMER",
-       "address_id": 5,
-       "stock_id": "ID_OF_THE_STOCK_IT_BELONGS_TO",
-       "trackingId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-       "carrierName": "SF-Express"
-     }
-   }
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
 
 Create an Order
 ===============
@@ -113,7 +124,7 @@ This endpoint creates a new order.
 HTTP Request
 ------------
 
-``POST http://example.com/api/v1/orders``
+``POST http://example.com/api/v2/orders``
 
 Request Parameters
 ------------------
@@ -121,31 +132,83 @@ Request Parameters
 =========== ======= ======== ======= ========================================
 Parameter   Type    Required Default Description
 =========== ======= ======== ======= ========================================
-product_id  Integer True     -       ID of the product it belongs to
+productId   Integer True     -       ID of the product it belongs to
 quantity    Integer True     -       Quantity of this order
-customer_id String  True     -       Customer username who creates this order
-address_id  Integer True     -       Destination address ID from address book
+customerId  String  True     -       Customer username who creates this order
+addressId   Integer True     -       Destination address ID from address book
+remark      String  False    -       Remark
 =========== ======= ======== ======= ========================================
 
-..  Attention::
-    Remember — You must be authenticated with ``CUSTOMER`` role before using this API
+Response Parameters
+-------------------
+=========== ======== ==============================
+Parameter   Type     Description
+=========== ======== ==============================
+data        Order    The created Order object
+=========== ======== ==============================
 
-The response JSON structured like this:
+.. Attention::
+   Remember — You must be authenticated with ``CUSTOMER`` role before using this API
 
-.. code:: json
+Cancel a Specific Order
+=======================
 
-   {
-     "responseId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-     "sucess": true,
-     "data": {
-       "id": 1,
-       "quantity": 5,
-       "createdAt": "2019-10-1 3:00 PM GMT+1:00",
-       "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
-       "customer_id": "USERNAME_OF_CUSTOMER",
-       "address_id": 5,
-       "stock_id": "ID_OF_THE_STOCK_IT_BELONGS_TO",
-       "trackingId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-       "carrierName": "SF-Express"
-     }
-   }
+This endpoint cancels a specific order.
+
+HTTP Request
+------------
+
+``DELETE http://example.com/api/v2/orders/<ID>``
+
+Path Parameter
+--------------
+
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Order ID
+========= ======== ===========
+
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
+
+   You can only cancel an order which has not been shipped.
+
+Delivery Confirmation
+=====================
+
+This endpoint confirms delivery of an order.
+
+HTTP Request
+------------
+
+``PATCH http://example.com/api/v2/orders/<ID>``
+
+Path Parameter
+--------------
+
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Order ID
+========= ======== ===========
+
+Request Parameters
+------------------
+
+=========== ======= ======== ======= ========================================
+Parameter   Type    Required Default Description
+=========== ======= ======== ======= ========================================
+action      String  True     -       Should be ``DELIVERY_CONFIRM``
+=========== ======= ======== ======= ========================================
+
+Response Parameters
+-------------------
+=========== ======== ==============================
+Parameter   Type     Description
+=========== ======== ==============================
+data        Order    The modified Order object
+=========== ======== ==============================
+
+.. Attention::
+   Remember — You must be authenticated with ``CUSTOMER`` role before using this API

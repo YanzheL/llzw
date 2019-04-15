@@ -9,31 +9,13 @@ All responses have same general structure
 Response Parameters
 -------------------
 
-+-------------+----------+----------------+-------------+-------------+
-| Parameter   | Type     | Required       | Default     | Description |
-+=============+==========+================+=============+=============+
-| responseId  | String   | True           | -           | The UUID of |
-|             |          |                |             | this        |
-|             |          |                |             | response    |
-+-------------+----------+----------------+-------------+-------------+
-| success     | Boolean  | True           | -           | The status  |
-|             |          |                |             | flag that   |
-|             |          |                |             | indicates   |
-|             |          |                |             | whether     |
-|             |          |                |             | your API    |
-|             |          |                |             | call is     |
-|             |          |                |             | success.    |
-+-------------+----------+----------------+-------------+-------------+
-| data        | Any      | True           | null        | The message |
-|             |          |                |             | body of     |
-|             |          |                |             | this        |
-|             |          |                |             | response,   |
-|             |          |                |             | which can   |
-|             |          |                |             | be any      |
-|             |          |                |             | object that |
-|             |          |                |             | supported   |
-|             |          |                |             | by JSON     |
-+-------------+----------+----------------+-------------+-------------+
+=========== ======== ======== ======= =================================================================================
+Parameter   Type     Required Default Description
+=========== ======== ======== ======= =================================================================================
+responseId  String   True     -       The UUID of this response
+success     Boolean  True     -       The status flag that indicates whether your API call is success
+data        Any      True     null    The message body of this response, which can be any object that supported by JSON
+=========== ======== ======== ======= =================================================================================
 
 The response JSON structured like this
 

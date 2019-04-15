@@ -1,9 +1,8 @@
 package com.llzw.apigate.persistence.dao;
 
 import com.llzw.apigate.persistence.entity.Privilege;
-import org.springframework.data.repository.CrudRepository;
-
 import java.util.Optional;
+import org.springframework.data.repository.CrudRepository;
 
 public interface PrivilegeRepository extends CrudRepository<Privilege, Long> {
 

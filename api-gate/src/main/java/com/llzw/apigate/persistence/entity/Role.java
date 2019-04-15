@@ -1,12 +1,24 @@
 package com.llzw.apigate.persistence.entity;
 
-import lombok.*;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
 
 @Entity
 @Data
@@ -31,9 +43,17 @@ public class Role implements Serializable {
 
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(
-      joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
+      joinColumns = @JoinColumn(name = "roleId", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "privilegeId", referencedColumnName = "id"))
   protected Collection<Privilege> privileges = new ArrayList<>();
+
+  public Role(String role) {
+    this.role = RoleType.valueOf(role);
+  }
+
+  public Role(RoleType role) {
+    this.role = role;
+  }
 
   @Override
   public String toString() {
@@ -45,7 +65,7 @@ public class Role implements Serializable {
   }
 
   public enum RoleType {
-    SELLER,
-    CUSTOMER
+    ROLE_SELLER,
+    ROLE_CUSTOMER
   }
 }
