@@ -4,6 +4,7 @@ import com.llzw.apigate.persistence.dao.AddressRepository;
 import com.llzw.apigate.persistence.dao.OrderRepository;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.dao.StockRepository;
+import com.llzw.apigate.persistence.dao.customquery.SearchCriterionSpecificationFactory;
 import com.llzw.apigate.persistence.entity.Address;
 import com.llzw.apigate.persistence.entity.AddressBean;
 import com.llzw.apigate.persistence.entity.Order;
@@ -12,7 +13,6 @@ import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.OrderCreateDto;
 import com.llzw.apigate.web.dto.OrderSearchDto;
-import com.llzw.apigate.web.util.SpecificationFactory;
 import com.llzw.apigate.web.util.StandardRestResponse;
 import java.util.List;
 import java.util.Optional;
@@ -66,7 +66,7 @@ public class OrderController {
     // Result orders may contain other user's order, so we should filter them out.
     List<Order> allMatchingOrders =
         orderRepository
-            .findAll(SpecificationFactory.fromExample(searchDto), pageRequest)
+            .findAll(SearchCriterionSpecificationFactory.fromExample(searchDto), pageRequest)
             .getContent();
     List<Order> res =
         allMatchingOrders.stream()
