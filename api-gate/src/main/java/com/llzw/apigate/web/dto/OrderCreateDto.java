@@ -5,7 +5,7 @@ import javax.validation.constraints.Positive;
 import lombok.Data;
 
 @Data
-public class OrderDto {
+public class OrderCreateDto {
 
   @NotNull
   protected Long productId;
