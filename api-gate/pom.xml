@@ -118,6 +118,12 @@
       <groupId>org.apache.tika</groupId>
       <version>1.20</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
+    <dependency>
+      <artifactId>alipay-sdk-java</artifactId>
+      <groupId>com.alipay.sdk</groupId>
+      <version>3.7.26.ALL</version>
+    </dependency>
   </dependencies>
   <description>Demo project for Spring Boot</description>
   <groupId>com.llzw</groupId>
