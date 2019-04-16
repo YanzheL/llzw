@@ -66,6 +66,7 @@ public class SearchCriterionSpecificationFactory {
     Class c = obj.getClass();
     Field[] fields = c.getDeclaredFields();
     for (Field field : fields) {
+      field.setAccessible(true);
       Object value = field.get(obj);
       if (value == null) {
         continue;
@@ -105,6 +106,7 @@ public class SearchCriterionSpecificationFactory {
       String fieldName = entry.getKey();
       String op = entry.getValue();
       Field field = c.getDeclaredField(fieldName);
+      field.setAccessible(true);
       Object value = field.get(obj);
       if (value == null) {
         continue;
