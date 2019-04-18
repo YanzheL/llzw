@@ -1,5 +1,6 @@
 package com.llzw.apigate.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -11,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,6 +38,10 @@ public class Payment implements Serializable {
   @JoinColumn(name = "orderId")
   protected Order order;
 
+  @JsonInclude
+  @Transient
+  protected String orderString;
+
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
   protected Date createdAt;
@@ -46,6 +53,7 @@ public class Payment implements Serializable {
   @JoinColumn(name = "payerId")
   protected User payer;
 
+  @NotNull
   @Column(nullable = false)
   protected String subject;
 
