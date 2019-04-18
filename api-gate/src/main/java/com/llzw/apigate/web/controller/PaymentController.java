@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,8 +63,8 @@ public class PaymentController {
    * @return New order string from vendor. Clients can use this order string to perform actual
    * payment action on vendor's website.
    */
-  @GetMapping("/retry")
-  public ResponseEntity retry(@RequestParam(value = "paymentId") Long paymentId)
+  @GetMapping("/retry/{id}")
+  public ResponseEntity retry(@PathVariable(value = "id") Long paymentId)
       throws ApiServiceException {
     Payment payment = paymentService.retry(paymentId);
     return StandardRestResponse
