@@ -9,6 +9,8 @@ import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.error.ApiServiceException;
 import com.llzw.apigate.service.error.PaymentException;
 import com.llzw.apigate.service.error.RequestedDependentObjectNotFoundException;
+import com.llzw.apigate.service.error.TradeNotFoundPaymentVendorException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
@@ -107,5 +109,30 @@ public class SimplePaymentService implements PaymentService {
     targetOrder.setPaid(true);
     paymentRepository.save(payment);
     return true;
+  }
+
+  public static Date calculateExpireDate(Date date, int minutes) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    calendar.add(Calendar.MINUTE, minutes);
+    return calendar.getTime();
+  }
+
+  @Override
+  public boolean verify(Payment payment) throws ApiServiceException {
+    try {
+      Map<String, String> result = vendor.query(payment.getOrder().getId());
+      String tradeStatue = result.get("trade_status");
+      if (tradeStatue.equals("TRADE_SUCCESS") || tradeStatue.equals("TRADE_FINISHED")) {
+        return true;
+      }
+    } catch (TradeNotFoundPaymentVendorException e) {
+      Date expire = calculateExpireDate(payment.getCreatedAt(), 15);
+      if (new Date().after(expire)) {
+        paymentRepository.delete(payment);
+      }
+      return false;
+    }
+    return false;
   }
 }

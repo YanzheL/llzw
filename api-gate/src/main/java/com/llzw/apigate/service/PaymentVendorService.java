@@ -10,4 +10,6 @@ public interface PaymentVendorService {
 
   boolean verifySignature(Map<String, String> params);
 
+  Map<String, String> query(Long orderId) throws ApiServiceException;
+
 }

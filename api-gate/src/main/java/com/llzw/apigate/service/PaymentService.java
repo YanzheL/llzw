@@ -14,4 +14,6 @@ public interface PaymentService {
 
   boolean verify(Map<String, String> params) throws ApiServiceException;
 
+  boolean verify(Payment payment) throws ApiServiceException;
+
 }
