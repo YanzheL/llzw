@@ -61,7 +61,7 @@ public class Product implements Serializable {
 
   protected Integer maxDeliveryHours;
 
-  @Column(nullable = false, length = 10)
+  @Column(nullable = false, length = 50)
   @NonNull
   protected String ca;
 
