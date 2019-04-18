@@ -1,6 +1,8 @@
 package com.llzw.apigate.service.error;
 
-public abstract class ApiServiceException extends Exception {
+public class ApiServiceException extends Exception {
+
+  private final String errorCode = "API";
 
   public ApiServiceException() {
   }
@@ -9,5 +11,7 @@ public abstract class ApiServiceException extends Exception {
     super(message);
   }
 
-  public abstract String getErrorCode();
+  public String getErrorCode() {
+    return errorCode;
+  }
 }

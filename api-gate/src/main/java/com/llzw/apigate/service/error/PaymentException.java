@@ -2,7 +2,7 @@ package com.llzw.apigate.service.error;
 
 public class PaymentException extends ApiServiceException {
 
-  private final String errorCode = "PAYMENT_EXCEPTION";
+  private final String errorCode = "PAYMENT_SERVICE";
 
   public PaymentException() {
   }
@@ -13,6 +13,6 @@ public class PaymentException extends ApiServiceException {
 
   @Override
   public String getErrorCode() {
-    return errorCode;
+    return super.getErrorCode() + "." + errorCode;
   }
 }

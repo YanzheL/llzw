@@ -13,6 +13,6 @@ public class RequestedDependentObjectNotFoundException extends ApiServiceExcepti
 
   @Override
   public String getErrorCode() {
-    return errorCode;
+    return super.getErrorCode() + "." + errorCode;
   }
 }
