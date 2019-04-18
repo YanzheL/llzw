@@ -92,6 +92,12 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <groupId>org.springframework.boot</groupId>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>junit</artifactId>
+          <groupId>junit</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <artifactId>spring-restdocs-mockmvc</artifactId>
@@ -99,9 +105,25 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <artifactId>junit-jupiter-api</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <artifactId>spring-security-test</artifactId>
       <groupId>org.springframework.security</groupId>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>junit</artifactId>
+          <groupId>junit</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <artifactId>passay</artifactId>

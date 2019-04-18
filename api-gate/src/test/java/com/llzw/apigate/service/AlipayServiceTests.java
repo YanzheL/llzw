@@ -1,20 +1,24 @@
 package com.llzw.apigate.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Payment;
+import com.llzw.apigate.service.error.TradeNotFoundPaymentVendorException;
 import java.lang.reflect.Field;
-import java.util.Map;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @SpringBootTest
 @ActiveProfiles("dev")
 //@SpringBootConfiguration
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 public class AlipayServiceTests {
 
   @Autowired
@@ -26,18 +30,24 @@ public class AlipayServiceTests {
     Order order = new Order();
     Field idField = Order.class.getDeclaredField("id");
     idField.setAccessible(true);
-    idField.set(order, 2L);
+    idField.set(order, 3L);
     payment.setOrder(order);
-    payment.setSubject("路虎");
-    payment.setTotalAmount(100000.1f);
-    payment.setDescription("dec test");
+    payment.setSubject("特斯拉");
+    payment.setTotalAmount(1200000);
+    payment.setDescription("这是一辆特斯拉");
     String orderString = alipayService.pay(payment);
     System.out.println(orderString);
   }
 
   @Test
   public void queryTest() throws Exception {
-    Map<String, String> body = alipayService.query(2L);
-    System.out.println(body);
+    assertEquals(
+        alipayService.query(2L).get("trade_status"),
+        "TRADE_SUCCESS"
+    );
+    assertThrows(
+        TradeNotFoundPaymentVendorException.class,
+        () -> alipayService.query(3L)
+    );
   }
 }
