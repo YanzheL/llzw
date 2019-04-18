@@ -21,6 +21,7 @@ totalAmount         Float     Total amount
 status              String    One of ['PENDING', 'CONFIRMED', 'TIMEOUT', 'INVALID']
 confirmedAt         Date      Payment confirmation time
 confirmed           Boolean   Whether the payment is confirmed by system
+orderString         String    Alipay redirect URL
 valid               Boolean   Valid flag
 ==================  ========  =====================================================
 
@@ -41,11 +42,76 @@ Example JSON Representation
      "status": "PENDING",
      "confirmedAt": null,
      "confirmed": true,
+     "orderString": "https://open.alipaydev.com/gateway.do?xxxxxxxxxx",
      "valid": true,
    }
 
+Get Related Payments for an Order
+=================================
+
+This endpoint retrieves all related payments for an order.
+
+HTTP Request
+------------
+
+``GET http://example.com/api/v2/payments``
+
+Request Parameters
+------------------
+
+==================  ========  ========  =======  =============================
+Parameter           Type      Required  Default  Description
+==================  ========  ========  =======  =============================
+orderId             Integer   True      -        Parent Order ID
+==================  ========  ========  =======  =============================
+
+Response Parameters
+-------------------
+=========== ========= ================================
+Parameter   Type      Description
+=========== ========= ================================
+data        Payment[] List of matching Payment objects
+=========== ========= ================================
+
+.. Attention::
+   Remember — You must be authenticated with ``CUSTOMER`` role before using this API
+
+   The requested order must belongs to you.
+
+Get a Specific Payment
+======================
+
+This endpoint retrieves a specific payment with id.
+
+HTTP Request
+------------
+
+``GET http://example.com/api/v2/payments/<ID>``
+
+Path Parameter
+--------------
+
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Payment ID
+========= ======== ===========
+
+Response Parameters
+-------------------
+=========== ========= ================================
+Parameter   Type      Description
+=========== ========= ================================
+data        Payment   The matching Payment object
+=========== ========= ================================
+
+.. Attention::
+   Remember — You must be authenticated with ``CUSTOMER`` role before using this API
+
+   The requested payment must belongs to you.
+
 Create a Payment
-=================
+================
 
 This endpoint creates a new payment.
 
@@ -62,7 +128,6 @@ Parameter           Type      Required  Default  Description
 ==================  ========  ========  =======  =============================
 orderId             Integer   True      -        Parent Order ID
 subject             String    True      -        Subject of this payment
-totalAmount         Float     True      -        Total Amount
 description         String    False     -        Description
 ==================  ========  ========  =======  =============================
 
@@ -76,4 +141,33 @@ data        Payment   The created Payment object
 
 .. Attention::
    Remember — You must be authenticated with ``CUSTOMER`` role before using this API
+
+   ``orderString`` will expire after 15 minutes.
+
+Retry Payment Action
+====================
+
+This endpoint creates a new payment.
+
+HTTP Request
+------------
+
+``GET http://example.com/api/v2/payments/retry``
+
+Request Parameters
+------------------
+
+==================  ========  ========  =======  =============================
+Parameter           Type      Required  Default  Description
+==================  ========  ========  =======  =============================
+paymentId           Integer   True      -        Payment ID
+==================  ========  ========  =======  =============================
+
+Response Parameters
+-------------------
+=========== ========= ==============================
+Parameter   Type      Description
+=========== ========= ==============================
+data        Payment   The created Payment object
+=========== ========= ==============================
 
