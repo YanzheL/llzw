@@ -7,6 +7,7 @@ import com.llzw.apigate.persistence.entity.Payment;
 import com.llzw.apigate.persistence.entity.Payment.PaymentStatusType;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.error.ApiServiceException;
+import com.llzw.apigate.service.error.PaymentException;
 import com.llzw.apigate.service.error.RequestedDependentObjectNotFoundException;
 import java.util.Date;
 import java.util.Map;
@@ -35,21 +36,39 @@ public class SimplePaymentService implements PaymentService {
 
   @Override
   public Payment create(User payer, Long orderId,
-      float totalAmount, String subject, String description)
+      String subject, String description)
       throws ApiServiceException {
     Optional<Order> orderOptional = orderRepository.findById(orderId);
     if (!orderOptional.isPresent()) {
       throw new RequestedDependentObjectNotFoundException(
           String.format("Order <%s> do not exist", orderId));
     }
+    Order targetOrder = orderOptional.get();
     Payment payment = new Payment();
     payment.setPayer(payer);
-    payment.setOrder(orderOptional.get());
+    payment.setOrder(targetOrder);
     payment.setSubject(subject);
     payment.setDescription(description);
-    payment.setTotalAmount(totalAmount);
+    payment.setTotalAmount(targetOrder.getTotalAmount());
     payment.setStatus(PaymentStatusType.PENDING);
     payment = paymentRepository.save(payment);
+    String orderString = vendor.pay(payment);
+    payment.setOrderString(orderString);
+    return payment;
+  }
+
+  @Override
+  public Payment retry(Long paymentId) throws ApiServiceException {
+    Optional<Payment> paymentOptional = paymentRepository.findById(paymentId);
+    if (!paymentOptional.isPresent()) {
+      throw new RequestedDependentObjectNotFoundException(
+          String.format("Target payment <%s> does not exist", paymentId));
+    }
+    Payment payment = paymentOptional.get();
+    if (payment.isConfirmed()) {
+      throw new PaymentException(
+          String.format("Target payment <%s> is already confirmed", paymentId));
+    }
     String orderString = vendor.pay(payment);
     payment.setOrderString(orderString);
     return payment;
@@ -68,6 +87,7 @@ public class SimplePaymentService implements PaymentService {
     String trade_status = params.get("trade_status");
 
     if (!(trade_status.equals("TRADE_SUCCESS") || trade_status.equals("TRADE_FINISHED"))) {
+      LOGGER.warn(String.format("Unexpected payment status <%s>", trade_status));
       return false;
     }
 
@@ -76,10 +96,15 @@ public class SimplePaymentService implements PaymentService {
       throw new RequestedDependentObjectNotFoundException("Target payment does not exist.");
     }
     Payment payment = paymentOptional.get();
+    Order targetOrder = payment.getOrder();
+    if (Math.abs(payment.getTotalAmount() - targetOrder.getTotalAmount()) > 0.001) {
+      throw new PaymentException("Payment amount mismatch");
+    }
     payment.setConfirmed(true);
     payment.setConfirmedAt(new Date());
     payment.setVendorTradeId(trade_no);
-    payment.getOrder().setPaid(true);
+    payment.setStatus(PaymentStatusType.CONFIRMED);
+    targetOrder.setPaid(true);
     paymentRepository.save(payment);
     return true;
   }

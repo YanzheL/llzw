@@ -13,6 +13,4 @@ public class PaymentCreateDto {
   protected String subject;
 
   protected String description;
-
-  protected float totalAmount;
 }

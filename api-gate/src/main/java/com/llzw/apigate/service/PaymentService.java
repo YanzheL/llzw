@@ -7,8 +7,10 @@ import java.util.Map;
 
 public interface PaymentService {
 
-  Payment create(User payer, Long orderId, float totalAmount,
+  Payment create(User payer, Long orderId,
       String subject, String description) throws ApiServiceException;
+
+  Payment retry(Long paymentId) throws ApiServiceException;
 
   boolean verify(Map<String, String> params) throws ApiServiceException;
 
