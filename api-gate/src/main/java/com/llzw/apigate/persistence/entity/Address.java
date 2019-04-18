@@ -50,4 +50,5 @@ public class Address implements Serializable {
 
   @Column(length = 6)
   protected String zip;
+
 }

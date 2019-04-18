@@ -68,10 +68,15 @@ public class Stock implements Serializable {
   @Column(length = 50)
   protected String carrierName;
 
-//stock.productId.seller.getUsername().equals(seller.getUsername());库存对应的产品的商家的名称要对应库存卖家的名称
- //库存的商品id要对应商品的id
-  public boolean belongsToProduct(Product product) {
-    return product.id.equals(productId.getId());
+  public boolean belongsToSeller(User seller) {
+    return productId.getSeller().equals(seller.getUsername());
   }
 
+  public boolean belongsToUser(User user) {
+    return belongsToCustomer(user) || belongsToSeller(user);
+  }
+
+  public boolean belongsToCustomer(User customer) {
+    return customer.getUsername().equals(customer.getUsername());
+  }
 }
