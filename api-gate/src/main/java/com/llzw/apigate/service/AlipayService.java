@@ -126,7 +126,7 @@ public class AlipayService implements PaymentVendorService {
         throw new TradeNotFoundPaymentVendorException(subCode);
       }
       throw new PaymentVendorException(subCode);
-    } catch (Exception e) {
+    } catch (AlipayApiException e) {
       throw new PaymentVendorException(e.getMessage());
     }
   }
