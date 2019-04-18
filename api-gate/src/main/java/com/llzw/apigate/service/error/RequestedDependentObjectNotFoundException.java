@@ -11,14 +11,6 @@ public class RequestedDependentObjectNotFoundException extends ApiServiceExcepti
     super(message);
   }
 
-  public RequestedDependentObjectNotFoundException(String message, Throwable cause) {
-    super(message, cause);
-  }
-
-  public RequestedDependentObjectNotFoundException(Throwable cause) {
-    super(cause);
-  }
-
   @Override
   public String getErrorCode() {
     return errorCode;

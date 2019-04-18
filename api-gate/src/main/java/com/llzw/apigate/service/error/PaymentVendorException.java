@@ -11,14 +11,6 @@ public class PaymentVendorException extends ApiServiceException {
     super(message);
   }
 
-  public PaymentVendorException(String message, Throwable cause) {
-    super(message, cause);
-  }
-
-  public PaymentVendorException(Throwable cause) {
-    super(cause);
-  }
-
   @Override
   public String getErrorCode() {
     return errorCode;

@@ -9,13 +9,5 @@ public abstract class ApiServiceException extends Exception {
     super(message);
   }
 
-  public ApiServiceException(String message, Throwable cause) {
-    super(message, cause);
-  }
-
-  public ApiServiceException(Throwable cause) {
-    super(cause);
-  }
-
   public abstract String getErrorCode();
 }
