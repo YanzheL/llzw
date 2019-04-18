@@ -14,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @SpringBootTest
-//@ActiveProfiles("dev")
 //@SpringBootConfiguration
 //@RunWith(SpringJUnit4ClassRunner.class)
 @ExtendWith(SpringExtension.class)
