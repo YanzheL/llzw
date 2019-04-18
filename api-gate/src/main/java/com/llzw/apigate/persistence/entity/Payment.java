@@ -66,6 +66,8 @@ public class Payment implements Serializable {
   @NonNull
   protected PaymentStatusType status;
 
+  protected String vendorTradeId;
+
   protected Date confirmedAt;
 
   protected boolean confirmed;
