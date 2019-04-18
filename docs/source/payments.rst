@@ -147,27 +147,27 @@ data        Payment   The created Payment object
 Retry Payment Action
 ====================
 
-This endpoint creates a new payment.
+This endpoint re-obtains ``orderString`` for a payment.
 
 HTTP Request
 ------------
 
-``GET http://example.com/api/v2/payments/retry``
+``GET http://example.com/api/v2/payments/retry/<ID>``
 
-Request Parameters
-------------------
+Path Parameter
+--------------
 
-==================  ========  ========  =======  =============================
-Parameter           Type      Required  Default  Description
-==================  ========  ========  =======  =============================
-paymentId           Integer   True      -        Payment ID
-==================  ========  ========  =======  =============================
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Payment ID
+========= ======== ===========
 
 Response Parameters
 -------------------
-=========== ========= ==============================
+=========== ========= ================================================
 Parameter   Type      Description
-=========== ========= ==============================
-data        Payment   The created Payment object
-=========== ========= ==============================
+=========== ========= ================================================
+data        Payment   The matching Payment object with new orderString
+=========== ========= ================================================
 
