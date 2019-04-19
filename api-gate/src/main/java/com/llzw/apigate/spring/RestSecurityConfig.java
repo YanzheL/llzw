@@ -60,11 +60,8 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
         .authenticationEntryPoint(restAuthenticationEntryPoint)
         .and()
         .authorizeRequests()
-        .antMatchers("/login*", "/logout*", "/api/v1/users/register", "/api/v1/product/**")
-        .permitAll()
-        .antMatchers(
-            "/api/v1/orders/**", "/api/v1/stocks/**", "/api/v1/addresses", "/api/v1/users/**")
-        .authenticated()
+//        .antMatchers("/login*", "/logout*", "/api/v1/users/register", "/api/v1/product/**")
+//        .permitAll()
         .and()
         .formLogin()
         .loginPage("/login") // 设

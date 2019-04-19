@@ -71,6 +71,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
   @Override
   @Transactional
+  synchronized
   public void onApplicationEvent(final ContextRefreshedEvent event) {
     if (alreadySetup) {
       return;

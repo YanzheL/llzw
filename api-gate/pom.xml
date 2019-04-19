@@ -109,13 +109,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <artifactId>junit-jupiter-api</artifactId>
       <groupId>org.junit.jupiter</groupId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <artifactId>junit-jupiter-engine</artifactId>
-      <groupId>org.junit.jupiter</groupId>
       <scope>test</scope>
     </dependency>
     <dependency>

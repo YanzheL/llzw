@@ -75,9 +75,15 @@ public class Stock implements Serializable {
   protected String carrierName;
 
   //stock.product.seller.getUsername().equals(seller.getUsername());库存对应的产品的商家的名称要对应库存卖家的名称
- //库存的商品id要对应商品的id
+  //库存的商品id要对应商品的id
   public boolean belongsToProduct(Product product) {
     return product.id.equals(this.product.getId());
   }
 
+  public boolean decreaseCurrentQuantity(int quantity) {
+    if (currentQuantity >= quantity) {
+      currentQuantity -= quantity;
+    }
+    return currentQuantity == 0;
+  }
 }
