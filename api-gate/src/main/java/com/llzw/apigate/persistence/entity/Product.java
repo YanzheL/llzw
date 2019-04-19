@@ -42,7 +42,7 @@ public class Product implements Serializable {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "sellerId")
-  @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+  @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
   @JsonIdentityReference(alwaysAsId = true)
   protected User seller;
 
@@ -64,8 +64,6 @@ public class Product implements Serializable {
   @Column(nullable = false)
   @NonNull
   protected float price;
-
-  protected Integer maxDeliveryHours;
 
   @Column(nullable = false, length = 50)
   @NonNull
