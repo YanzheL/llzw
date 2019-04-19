@@ -10,6 +10,7 @@ import com.llzw.apigate.persistence.entity.User;
 import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.Date;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -18,7 +19,8 @@ public class MockEntityFactory {
   public static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
   public static Address makeAddress(Long id, User owner, AddressBean addressBean) throws Exception {
-    Address address = (Address) addressBean;
+    Address address = new Address();
+    BeanUtils.copyProperties(addressBean, address);
     if (id != null) {
       setId(address, id);
     }
@@ -66,7 +68,7 @@ public class MockEntityFactory {
     return order;
   }
 
-  public static Stock makeStock(Long id, Product product)
+  public static Stock makeStock(Long id, Product product, Date inboundedAt)
       throws NoSuchFieldException, IllegalAccessException {
     Stock stock = new Stock();
     if (id != null) {
@@ -75,8 +77,9 @@ public class MockEntityFactory {
     stock.setProduct(product);
     stock.setProducedAt(new Date());
     stock.setShelfLife(365);
-    stock.setTotalQuantity(100);
-    stock.setCurrentQuantity(100);
+    stock.setTotalQuantity(100000);
+    stock.setCurrentQuantity(100000);
+    stock.setInboundedAt(inboundedAt);
 //    stock.setCreatedAt(new Date());
     stock.setValid(true);
     return stock;
