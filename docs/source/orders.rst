@@ -7,25 +7,25 @@ Order Entity Definition
 Properties
 ----------
 
-==================  ========  =============================================
-Parameter           Type      Description
-==================  ========  =============================================
-id                  Integer   Order ID
-quantity            Integer   Quantity of this order
-createdAt           Date      Creation time
-updatedAt           Date      Update time
-customer            String    Customer username who creates this order
-address             Address   Associated Address object of this order
-stock               Integer   The actual stock id of this order
-trackingId          String    Shipment tracking id
-carrierName         String    Carrier name
-totalAmount         Float     Total amount
-remark              String    Addtional infomation of this order
-shippingTime        Date      The time of shipping
-deliveryConfirmed   Boolean   Whether the delivery is confirmed by customer
-paid                Boolean   Whether the order is paid
-valid               Boolean   Valid flag
-==================  ========  =============================================
+================== =========== =============================================
+Parameter          Type        Description
+================== =========== =============================================
+id                 Integer     Order ID
+quantity           Integer     Quantity of this order
+createdAt          Date        Creation time
+updatedAt          Date        Update time
+customer           String      Customer username who creates this order
+address            AddressBean Associated Address object of this order
+stock              Integer     The actual stock id of this order
+trackingId         String      Shipment tracking id
+carrierName        String      Carrier name
+totalAmount        Float       Total amount
+remark             String      Addtional infomation of this order
+shippingTime       Date        The time of shipping
+deliveryConfirmed  Boolean     Whether the delivery is confirmed by customer
+paid               Boolean     Whether the order is paid
+valid              Boolean     Valid flag
+================== =========== =============================================
 
 Example JSON Representation
 ---------------------------
@@ -37,7 +37,7 @@ Example JSON Representation
      "quantity": 2,
      "createdAt": "2019-10-1 3:00 PM GMT+1:00",
      "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
-     "customerId": "FOO",
+     "customer": "FOO",
      "address": {
        "province": "Beijing",
        "city": "Beijing",
