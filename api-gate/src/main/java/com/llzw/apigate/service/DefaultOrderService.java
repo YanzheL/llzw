@@ -57,7 +57,7 @@ public class DefaultOrderService implements OrderService {
     Optional<Stock> stockOptional;
     try (Stream<Stock> validStocks =
         stockRepository
-            .findByProductIdAndInboundedAtNotNullAndCurrentQuantityGreaterThanEqualOrderByInboundedAt(
+            .findByProductAndInboundedAtNotNullAndCurrentQuantityGreaterThanEqualOrderByInboundedAt(
                 productOptional.get(), quantity)) {
       stockOptional = validStocks.findFirst();
     }

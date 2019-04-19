@@ -15,7 +15,7 @@ public interface StockRepository
   // SELECT * FROM stocks WHERE product == ?1 AND inbounded_at IS NOT NULL AND current_quantity >
   // ?2 ORDER BY inbounded_at
   Stream<Stock>
-  findByProductIdAndInboundedAtNotNullAndCurrentQuantityGreaterThanEqualOrderByInboundedAt(
+  findByProductAndInboundedAtNotNullAndCurrentQuantityGreaterThanEqualOrderByInboundedAt(
       Product product, int quantity);
 
   // SELECT * FROM stocks WHERE product == ?1 AND inbounded_at IS NULL ORDER BY inbounded_at
