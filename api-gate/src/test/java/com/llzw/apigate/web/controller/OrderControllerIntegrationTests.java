@@ -59,6 +59,21 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
 
   @WithUserDetails("test_user_customer_username_0")
   @Test
+  public void createOrderWithNonExistProductIdByCustomer() throws Exception {
+    MvcResult result = mvc.perform(
+        post("/api/v1/orders")
+            .param("productId", "100")
+            .param("quantity", "10")
+            .param("addressId", "1")
+    )
+        .andDo(print())
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.success").value(false))
+        .andReturn();
+  }
+
+  @WithUserDetails("test_user_customer_username_0")
+  @Test
   @Order(2)
   public void getOrderByCustomer() throws Exception {
     MvcResult result = mvc.perform(
@@ -73,21 +88,18 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
 
   @WithUserDetails("test_user_customer_username_0")
   @Test
-  @Order(3)
-  public void getNotExistOrderByCustomer() throws Exception {
+  public void getNonExistOrderByCustomer() throws Exception {
     MvcResult result = mvc.perform(
         get("/api/v1/orders/100")
     )
         .andDo(print())
         .andExpect(status().isNotFound())
         .andExpect(jsonPath("$.success").value(false))
-        .andExpect(jsonPath("$.error.type").isNotEmpty())
         .andReturn();
   }
 
   @Test
-  @Order(4)
-  public void getNotExistOrderByNoUser() throws Exception {
+  public void getNonExistOrderByNoUser() throws Exception {
     MvcResult result = mvc.perform(
         get("/api/v1/orders/100")
     )
