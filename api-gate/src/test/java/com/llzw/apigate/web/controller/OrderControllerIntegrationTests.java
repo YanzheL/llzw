@@ -1,6 +1,7 @@
 package com.llzw.apigate.web.controller;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -8,9 +9,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.llzw.apigate.ApiGateApplicationTests;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,6 +25,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @Transactional
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
 
   protected MockMvc mvc;
@@ -38,6 +43,7 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
 
   @WithUserDetails("test_user_customer_username_0")
   @Test
+  @Order(1)
   public void createOrderByCustomer() throws Exception {
     MvcResult result = mvc.perform(
         post("/api/v1/orders")
@@ -48,6 +54,47 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
         .andDo(print())
         .andExpect(status().isCreated())
         .andExpect(jsonPath("$.success").value(true))
+        .andReturn();
+  }
+
+  @WithUserDetails("test_user_customer_username_0")
+  @Test
+  @Order(2)
+  public void getOrderByCustomer() throws Exception {
+    MvcResult result = mvc.perform(
+        get("/api/v1/orders/1")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data.id").value(1L))
+        .andReturn();
+  }
+
+  @WithUserDetails("test_user_customer_username_0")
+  @Test
+  @Order(3)
+  public void getNotExistOrderByCustomer() throws Exception {
+    MvcResult result = mvc.perform(
+        get("/api/v1/orders/100")
+    )
+        .andDo(print())
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.success").value(false))
+        .andExpect(jsonPath("$.error.type").isNotEmpty())
+        .andReturn();
+  }
+
+  @Test
+  @Order(4)
+  public void getNotExistOrderByNoUser() throws Exception {
+    MvcResult result = mvc.perform(
+        get("/api/v1/orders/100")
+    )
+        .andDo(print())
+        .andExpect(status().isForbidden())
+        .andExpect(jsonPath("$.success").value(false))
+        .andExpect(jsonPath("$.error.type").isNotEmpty())
         .andReturn();
   }
 }
