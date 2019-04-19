@@ -24,8 +24,10 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class DefaultOrderService implements OrderService {
 
   @Setter(onMethod_ = @Autowired)
@@ -65,8 +67,11 @@ public class DefaultOrderService implements OrderService {
       throw new RequestedDependentObjectNotFoundException(
           "Cannot find an available stock specifies that quantity");
     }
+    Stock stock = stockOptional.get();
+    stock.decreaseCurrentQuantity(quantity);
+    stockRepository.save(stock);
     Order order = new Order();
-    order.setStock(stockOptional.get());
+    order.setStock(stock);
     order.setAddress(addressBean);
     order.setCustomer(customer);
     order.setQuantity(quantity);
