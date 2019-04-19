@@ -1,6 +1,6 @@
 package com.llzw.apigate.service.error;
 
-public class RequestedDependentObjectNotFoundException extends ApiServiceException {
+public class RequestedDependentObjectNotFoundException extends RestApiException {
 
   private final String errorCode = "REQUESTED_DEPENDENT_OBJECT_NOT_FOUND";
 

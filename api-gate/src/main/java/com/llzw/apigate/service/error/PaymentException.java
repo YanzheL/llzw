@@ -1,6 +1,6 @@
 package com.llzw.apigate.service.error;
 
-public class PaymentException extends ApiServiceException {
+public class PaymentException extends RestApiException {
 
   private final String errorCode = "PAYMENT_SERVICE";
 
