@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
@@ -21,7 +22,7 @@ public class Token {
   protected static final int EXPIRATION = 60 * 24;
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Setter(AccessLevel.NONE)
   protected Long id;
 

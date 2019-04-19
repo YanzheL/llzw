@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.MappedSuperclass;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -13,6 +14,7 @@ import lombok.NonNull;
 @Embeddable
 @Data
 @NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
+@AllArgsConstructor
 public class AddressBean implements Serializable {
 
   @Column(nullable = false, length = 20)

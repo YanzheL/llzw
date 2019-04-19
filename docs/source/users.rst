@@ -67,8 +67,8 @@ The response JSON structured like this:
      "data": null
    }
 
-..  Attention::
-    Remember — You must be authenticated before using this API
+.. Attention::
+   Remember — You must be authenticated before using this API
 
 Update Password
 ===============
@@ -100,5 +100,5 @@ The response JSON structured like this:
      "data": null
    }
 
-..  Attention::
-    Remember — You must be authenticated before using this API
+.. Attention::
+   Remember — You must be authenticated before using this API

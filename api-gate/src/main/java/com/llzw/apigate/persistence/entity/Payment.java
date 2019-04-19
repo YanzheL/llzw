@@ -7,12 +7,16 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,22 +30,21 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Data
 @NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 @AllArgsConstructor
-public class Stock implements Serializable {
-
-  private static final long serialVersionUID = 1L;
+public class Payment implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Setter(AccessLevel.NONE)
   protected Long id;
 
-  protected boolean valid;
-
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "product")
+  @JoinColumn(name = "orderId")
   @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
   @JsonIdentityReference(alwaysAsId = true)
-  protected Product product;
+  protected Order order;
+
+  @Transient
+  protected String orderString;
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
@@ -50,40 +53,37 @@ public class Stock implements Serializable {
   @UpdateTimestamp
   protected Date updatedAt;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "payerId")
+  @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
+  @JsonIdentityReference(alwaysAsId = true)
+  protected User payer;
+
+  @NotNull
   @Column(nullable = false)
+  protected String subject;
+
+  protected String description;
+
+  protected float totalAmount;
+
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false, length = 20)
   @NonNull
-  protected Date producedAt;
+  protected PaymentStatusType status;
 
-  protected Date inboundedAt;
+  protected String vendorTradeId;
 
-  @Column(nullable = false)
-  @NonNull
-  protected int shelfLife;
+  protected Date confirmedAt;
 
-  @Column(nullable = false)
-  @NonNull
-  protected int totalQuantity;
+  protected boolean confirmed;
 
-  @Column(nullable = false)
-  @NonNull
-  protected int currentQuantity;
+  protected boolean valid;
 
-  @Column(length = 50)
-  protected String trackingId;
-
-  @Column(length = 50)
-  protected String carrierName;
-
-  //stock.product.seller.getUsername().equals(seller.getUsername());库存对应的产品的商家的名称要对应库存卖家的名称
-  //库存的商品id要对应商品的id
-  public boolean belongsToProduct(Product product) {
-    return product.id.equals(this.product.getId());
-  }
-
-  public boolean decreaseCurrentQuantity(int quantity) {
-    if (currentQuantity >= quantity) {
-      currentQuantity -= quantity;
-    }
-    return currentQuantity == 0;
+  public enum PaymentStatusType {
+    PENDING,
+    CONFIRMED,
+    TIMEOUT,
+    INVALID
   }
 }

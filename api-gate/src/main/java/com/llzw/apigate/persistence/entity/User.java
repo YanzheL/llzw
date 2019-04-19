@@ -113,9 +113,23 @@ public class User implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
+    Collection<GrantedAuthority> all = getPrivilegesAsGrantedAuthorities();
+    all.addAll(getRolesAsGrantedAuthorities());
+    return all;
+  }
+
+  public Collection<GrantedAuthority> getPrivilegesAsGrantedAuthorities() {
     return roles.stream()
         .map(Role::getPrivilegeNames)
         .flatMap(Collection::stream)
+        .map(SimpleGrantedAuthority::new)
+        .collect(Collectors.toList());
+  }
+
+  public Collection<GrantedAuthority> getRolesAsGrantedAuthorities() {
+    return roles.stream()
+        .map(Role::getRole)
+        .map(Role.RoleType::name)
         .map(SimpleGrantedAuthority::new)
         .collect(Collectors.toList());
   }

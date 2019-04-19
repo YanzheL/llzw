@@ -11,7 +11,7 @@ Properties
 Parameter  Type      Description
 =========  ========  =====================
 id         Integer   Address ID
-ownerId    String    Username of the owner
+owner      String    Username of the owner
 province   String    Province
 city       String    City
 district   String    District
@@ -26,7 +26,7 @@ Example JSON Representation
 
    {
      "id": 1,
-     "ownerId": "FOO",
+     "owner": "FOO",
      "province": "Beijing",
      "city": "Beijing",
      "district": "Haidian",
