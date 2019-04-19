@@ -1,12 +1,16 @@
 package com.llzw.apigate;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.llzw.apigate.spring.AlipayProperties;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
+@EnableConfigurationProperties({AlipayProperties.class})
 public class ApiGateApplicationTests {
 
   @Test

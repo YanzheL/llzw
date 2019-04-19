@@ -17,5 +17,6 @@ Welcome to LLZW's documentation!
    orders
    payments
    refunds
+   files
    addresses
    generals

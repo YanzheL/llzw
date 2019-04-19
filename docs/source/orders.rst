@@ -96,14 +96,14 @@ HTTP Request
 
 ``GET http://example.com/api/v2/orders/<ID>``
 
-Request Parameters
-------------------
+Path Parameter
+--------------
 
-========= ======= ======== ======= ===============================
-Parameter Type    Required Default Description
-========= ======= ======== ======= ===============================
-ID        Integer True     -       The ID of the order to retrieve
-========= ======= ======== ======= ===============================
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Order ID
+========= ======== ===========
 
 Response Parameters
 -------------------
@@ -150,27 +150,65 @@ data        Order    The created Order object
 .. Attention::
    Remember — You must be authenticated with ``CUSTOMER`` role before using this API
 
-Invalidate a Specific Order
-===========================
+Cancel a Specific Order
+=======================
 
-This endpoint invalidate a specific order.
+This endpoint cancels a specific order.
 
 HTTP Request
 ------------
 
-``DELETE http://example.com/api/v2/orders/<id>``
+``DELETE http://example.com/api/v2/orders/<ID>``
 
-Request Parameters
-------------------
+Path Parameter
+--------------
 
-========= =================================
-Parameter Description
-========= =================================
-ID        The ID of the order to invalidate
-========= =================================
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Order ID
+========= ======== ===========
 
 .. Attention::
    Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
 
-   You can only invalidate an order which has not been shipped.
+   You can only cancel an order which has not been shipped.
 
+Delivery Confirmation
+=====================
+
+This endpoint confirms delivery of an order.
+
+HTTP Request
+------------
+
+``PATCH http://example.com/api/v2/orders/<ID>``
+
+Path Parameter
+--------------
+
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Order ID
+========= ======== ===========
+
+Request Parameters
+------------------
+
+=========== ======= ======== ======= ========================================
+Parameter   Type    Required Default Description
+=========== ======= ======== ======= ========================================
+action      String  True     -       Should be ``DELIVERY_CONFIRM``
+=========== ======= ======== ======= ========================================
+
+Response Parameters
+-------------------
+=========== ======== ==============================
+Parameter   Type     Description
+=========== ======== ==============================
+data        Order    The modified Order object
+=========== ======== ==============================
+
+.. Attention::
+   Remember — You must be authenticated with ``CUSTOMER`` role before using this API
