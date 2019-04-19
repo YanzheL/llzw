@@ -1,5 +1,8 @@
 package com.llzw.apigate.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -45,6 +48,8 @@ public class Order implements Serializable {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "customerId")
+  @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
+  @JsonIdentityReference(alwaysAsId = true)
   protected User customer;
 
   @Embedded
@@ -52,6 +57,8 @@ public class Order implements Serializable {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "stockId")
+  @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+  @JsonIdentityReference(alwaysAsId = true)
   protected Stock stock;
 
   protected String trackingId;
@@ -71,7 +78,7 @@ public class Order implements Serializable {
   protected boolean valid;
 
   public boolean belongsToSeller(User seller) {
-    return stock.productId.seller.getUsername().equals(seller.getUsername());
+    return stock.product.seller.getUsername().equals(seller.getUsername());
   }
 
   public boolean belongsToUser(User user) {

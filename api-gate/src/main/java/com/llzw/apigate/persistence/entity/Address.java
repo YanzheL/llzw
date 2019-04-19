@@ -1,5 +1,8 @@
 package com.llzw.apigate.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,5 +30,7 @@ public class Address extends AddressBean {
   @Setter
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "ownerId")
+  @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+  @JsonIdentityReference(alwaysAsId = true)
   protected User owner;
 }

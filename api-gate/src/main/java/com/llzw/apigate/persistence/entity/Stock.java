@@ -1,5 +1,8 @@
 package com.llzw.apigate.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -35,8 +38,10 @@ public class Stock implements Serializable {
   protected boolean valid;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "productId")
-  protected Product productId;
+  @JoinColumn(name = "product")
+  @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+  @JsonIdentityReference(alwaysAsId = true)
+  protected Product product;
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
@@ -69,10 +74,10 @@ public class Stock implements Serializable {
   @Column(length = 50)
   protected String carrierName;
 
-//stock.productId.seller.getUsername().equals(seller.getUsername());库存对应的产品的商家的名称要对应库存卖家的名称
+  //stock.product.seller.getUsername().equals(seller.getUsername());库存对应的产品的商家的名称要对应库存卖家的名称
  //库存的商品id要对应商品的id
   public boolean belongsToProduct(Product product) {
-    return product.id.equals(productId.getId());
+    return product.id.equals(this.product.getId());
   }
 
 }

@@ -1,6 +1,8 @@
 package com.llzw.apigate.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -37,9 +39,10 @@ public class Payment implements Serializable {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "orderId")
+  @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+  @JsonIdentityReference(alwaysAsId = true)
   protected Order order;
 
-  @JsonInclude
   @Transient
   protected String orderString;
 
@@ -52,6 +55,8 @@ public class Payment implements Serializable {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "payerId")
+  @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
+  @JsonIdentityReference(alwaysAsId = true)
   protected User payer;
 
   @NotNull
