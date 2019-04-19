@@ -5,6 +5,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.llzw.apigate.ApiGateApplicationTests;
@@ -13,9 +14,6 @@ import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.dao.StockRepository;
 import com.llzw.apigate.persistence.dao.UserRepository;
 import com.llzw.apigate.persistence.entity.Order;
-import com.llzw.apigate.persistence.entity.Product;
-import com.llzw.apigate.persistence.entity.Stock;
-import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.spring.MockEntityFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -50,33 +48,18 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
   @Autowired
   protected StockRepository stockRepository;
 
-  protected User mockUser;
-
-  protected Product mockProduct;
-
-  protected Stock mockStock;
-
-  protected Order mockOrder;
-
   @BeforeAll
   public void setup() throws Exception {
     mvc = MockMvcBuilders
         .webAppContextSetup(context)
         .apply(springSecurity())
         .build();
-    mockUser = userRepository.findByUsername("test_user_customer_username_0").get();
-    mockProduct = productRepository.findById(1L).get();
-    mockStock = MockEntityFactory.makeStock(
+    Order newOrder = MockEntityFactory.makeOrder(
         1L,
-        mockProduct
+        stockRepository.findById(1L).get(),
+        userRepository.findByUsername("test_user_customer_username_0").get()
     );
-    stockRepository.save(mockStock);
-    mockOrder = MockEntityFactory.makeOrder(
-        1L,
-        mockStock,
-        mockUser
-    );
-    orderRepository.save(mockOrder);
+    orderRepository.save(newOrder);
   }
 
   @WithUserDetails("test_user_customer_username_0")
@@ -90,6 +73,8 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
     )
         .andDo(print())
         .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data.orderString").isNotEmpty())
         .andReturn();
   }
 
@@ -103,6 +88,7 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
     )
         .andDo(print())
         .andExpect(status().isForbidden())
+        .andExpect(jsonPath("$.success").value(false))
         .andReturn();
   }
 
@@ -117,6 +103,7 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
     )
         .andDo(print())
         .andExpect(status().isForbidden())
+        .andExpect(jsonPath("$.success").value(false))
         .andReturn();
   }
 
@@ -127,6 +114,7 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
     )
         .andDo(print())
         .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.success").value(false))
         .andReturn();
   }
 }
