@@ -59,6 +59,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
   @Override
   @Transactional
+  synchronized
   public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
     if (alreadySetup) {
       return;
