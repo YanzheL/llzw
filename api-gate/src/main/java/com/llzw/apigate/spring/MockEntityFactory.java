@@ -1,5 +1,6 @@
 package com.llzw.apigate.spring;
 
+import com.llzw.apigate.persistence.entity.Address;
 import com.llzw.apigate.persistence.entity.AddressBean;
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Product;
@@ -16,16 +17,13 @@ public class MockEntityFactory {
 
   public static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-  public static AddressBean makeAddressBean(
-      String province, String city, String district, String address, String zip
-  ) {
-    return new AddressBean(
-        province,
-        city,
-        district,
-        address,
-        zip
-    );
+  public static Address makeAddress(Long id, User owner, AddressBean addressBean) throws Exception {
+    Address address = (Address) addressBean;
+    if (id != null) {
+      setId(address, id);
+    }
+    address.setOwner(owner);
+    return address;
   }
 
   public static Product makeTestProduct(Long id, int i, User seller) throws Exception {

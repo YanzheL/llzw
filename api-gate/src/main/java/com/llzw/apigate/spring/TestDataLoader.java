@@ -8,6 +8,8 @@ import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.dao.RoleRepository;
 import com.llzw.apigate.persistence.dao.StockRepository;
 import com.llzw.apigate.persistence.dao.UserRepository;
+import com.llzw.apigate.persistence.entity.Address;
+import com.llzw.apigate.persistence.entity.AddressBean;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.Role;
 import com.llzw.apigate.persistence.entity.Role.RoleType;
@@ -64,6 +66,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
       initUsers();
       initProducts();
       initStocks();
+      initAddresses();
       alreadySetup = true;
     } catch (Exception e) {
       e.printStackTrace();
@@ -96,7 +99,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
   private void initProducts() throws Exception {
     for (int i = 0; i < 10; ++i) {
       User seller = userRepository
-          .findByUsername(String.format("test_user_customer_username_%d", i))
+          .findByUsername(String.format("test_user_seller_username_%d", i))
           .orElseThrow(() -> new Exception("Test product seller not found"));
       productRepository.save(MockEntityFactory.makeTestProduct(null, i, seller));
     }
@@ -109,6 +112,43 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
       stockRepository.save(
           MockEntityFactory.makeStock(null, product)
       );
+    }
+  }
+
+  private void initAddresses() throws Exception {
+    for (int i = 0; i < 10; ++i) {
+      User seller = userRepository
+          .findByUsername(String.format("test_user_seller_username_%d", i))
+          .orElseThrow(() -> new Exception("Test product seller not found"));
+      Address address = MockEntityFactory.makeAddress(
+          null,
+          seller,
+          new AddressBean(
+              String.format("test_province_%d", i),
+              String.format("test_city_%d", i),
+              String.format("test_district_%d", i),
+              String.format("test_address_%d", i),
+              String.format("00000%d", i)
+          )
+      );
+      addressRepository.save(address);
+    }
+    for (int i = 0; i < 10; ++i) {
+      User customer = userRepository
+          .findByUsername(String.format("test_user_customer_username_%d", i))
+          .orElseThrow(() -> new Exception("Test product customer not found"));
+      Address address = MockEntityFactory.makeAddress(
+          null,
+          customer,
+          new AddressBean(
+              String.format("test_province_%d", i),
+              String.format("test_city_%d", i),
+              String.format("test_district_%d", i),
+              String.format("test_address_%d", i),
+              String.format("00000%d", i)
+          )
+      );
+      addressRepository.save(address);
     }
   }
 }
