@@ -3,6 +3,7 @@ package com.llzw.apigate.persistence.entity;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -45,9 +46,8 @@ public class Order implements Serializable {
   @JoinColumn(name = "customerId")
   protected User customer;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "addressId")
-  protected Address address;
+  @Embedded
+  protected AddressBean address;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "stockId")
