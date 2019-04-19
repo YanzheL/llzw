@@ -1,11 +1,15 @@
 package com.llzw.apigate.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -28,7 +32,7 @@ public class Product implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Setter(AccessLevel.NONE)
   protected Long id;
 
@@ -38,6 +42,8 @@ public class Product implements Serializable {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "sellerId")
+  @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
+  @JsonIdentityReference(alwaysAsId = true)
   protected User seller;
 
   @Column(nullable = false)
@@ -59,9 +65,7 @@ public class Product implements Serializable {
   @NonNull
   protected float price;
 
-  protected Integer maxDeliveryHours;
-
-  @Column(nullable = false, length = 10)
+  @Column(nullable = false, length = 50)
   @NonNull
   protected String ca;
 

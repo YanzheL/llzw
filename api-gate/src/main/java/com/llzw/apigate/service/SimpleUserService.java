@@ -16,8 +16,6 @@ import javax.persistence.EntityExistsException;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -74,27 +72,8 @@ public class SimpleUserService implements UserService {
     Optional<User> userOptional = userRepository.findByUsername(username);
     userOptional.orElseThrow(
         () -> new UsernameNotFoundException("No user found with username: " + username));
-    User user = userOptional.get();
-
-    return new org.springframework.security.core.userdetails.User(
-        user.getUsername(),
-        user.getPassword(),
-        user.isEnabled(),
-        user.isAccountNonExpired(),
-        user.isCredentialsNonExpired(),
-        user.isAccountNonLocked(),
-        flattenAllAuthorities(user));
+    return userOptional.get();
   }
-
-  //  @Override
-  //  public Optional<User> findUserByUsername(String username) {
-  //    return userRepository.findByUsername(username);
-  //  }
-  //
-  //  @Override
-  //  public Optional<User> findUserByEmail(String email) {
-  //    return userRepository.findByEmail(email);
-  //  }
 
   @Override
   public boolean setUserPassword(String username, String password, Collection<String> msgs) {
@@ -146,17 +125,6 @@ public class SimpleUserService implements UserService {
           return true;
         },
         msgs);
-  }
-
-  private Collection<? extends GrantedAuthority> flattenAllAuthorities(User user) {
-    Collection<GrantedAuthority> all =
-        user.getRoles().stream()
-            .map(Role::getRole)
-            .map(Role.RoleType::name)
-            .map(SimpleGrantedAuthority::new)
-            .collect(Collectors.toList());
-    all.addAll(user.getAuthorities());
-    return all;
   }
 
   private boolean applyToUser(String username, Predicate<User> consumer, Collection<String> msgs) {

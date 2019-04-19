@@ -2,5 +2,5 @@ language: java
 sudo: false
 script:
   - cd api-gate
-  - ./mvnw install -DskipTests
-  - ./mvnw package -DskipTests
+  - ./mvnw install -Dspring.profiles.active=test
+  - ./mvnw package -Dspring.profiles.active=test
