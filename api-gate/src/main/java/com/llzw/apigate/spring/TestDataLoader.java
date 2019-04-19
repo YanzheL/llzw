@@ -122,7 +122,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
   }
 
   private Stock makeTestStock(int i) throws Exception {
-    Product product = productRepository.findById(Long.valueOf(i)).orElseThrow(Exception::new);
+//    List<Product> all = Lists.newArrayList(productRepository.findAll());
+    Product product = productRepository.findById((long) (i + 1)).orElseThrow(Exception::new);
     Stock stock = new Stock();
     stock.setProductId(product);
     stock.setProducedAt(new Date());
