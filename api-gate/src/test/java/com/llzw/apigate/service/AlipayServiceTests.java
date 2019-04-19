@@ -17,12 +17,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-//@TestPropertySource("classpath:application-test.yml")
 @ContextConfiguration(
     classes = {AlipayService.class, AlipayProperties.class},
     initializers = ConfigFileApplicationContextInitializer.class
 )
-@EnableConfigurationProperties({AlipayProperties.class})
+@EnableConfigurationProperties
 public class AlipayServiceTests {
 
   @Autowired

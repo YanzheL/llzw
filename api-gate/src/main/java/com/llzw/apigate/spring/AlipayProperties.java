@@ -13,11 +13,9 @@ package com.llzw.apigate.spring;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 @Data
-@Configuration
 @ConfigurationProperties(prefix = "alipay")
 // Without this may cause NoUniqueBeanDefinitionException
 @Primary
