@@ -74,7 +74,7 @@ public class MockEntityFactory {
     if (id != null) {
       setId(stock, id);
     }
-    stock.setProductId(product);
+    stock.setProduct(product);
     stock.setProducedAt(new Date());
     stock.setShelfLife(365);
     stock.setTotalQuantity(100);
