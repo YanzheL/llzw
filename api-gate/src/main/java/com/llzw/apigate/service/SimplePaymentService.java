@@ -6,9 +6,9 @@ import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Payment;
 import com.llzw.apigate.persistence.entity.Payment.PaymentStatusType;
 import com.llzw.apigate.persistence.entity.User;
-import com.llzw.apigate.service.error.ApiServiceException;
 import com.llzw.apigate.service.error.PaymentException;
 import com.llzw.apigate.service.error.RequestedDependentObjectNotFoundException;
+import com.llzw.apigate.service.error.RestApiException;
 import com.llzw.apigate.service.error.TradeNotFoundPaymentVendorException;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,7 +39,7 @@ public class SimplePaymentService implements PaymentService {
   @Override
   public Payment create(User payer, Long orderId,
       String subject, String description)
-      throws ApiServiceException {
+      throws RestApiException {
     Optional<Order> orderOptional = orderRepository.findById(orderId);
     if (!orderOptional.isPresent()) {
       throw new RequestedDependentObjectNotFoundException(
@@ -60,7 +60,7 @@ public class SimplePaymentService implements PaymentService {
   }
 
   @Override
-  public Payment retry(Long paymentId) throws ApiServiceException {
+  public Payment retry(Long paymentId) throws RestApiException {
     Optional<Payment> paymentOptional = paymentRepository.findById(paymentId);
     if (!paymentOptional.isPresent()) {
       throw new RequestedDependentObjectNotFoundException(
@@ -77,7 +77,7 @@ public class SimplePaymentService implements PaymentService {
   }
 
   @Override
-  public boolean verify(Map<String, String> params) throws ApiServiceException {
+  public boolean verify(Map<String, String> params) throws RestApiException {
     if (!vendor.verifySignature(params)) {
       return false;
     }
@@ -119,7 +119,7 @@ public class SimplePaymentService implements PaymentService {
   }
 
   @Override
-  public boolean verify(Payment payment) throws ApiServiceException {
+  public boolean verify(Payment payment) throws RestApiException {
     try {
       Map<String, String> result = vendor.query(payment.getOrder().getId());
       String tradeStatue = result.get("trade_status");

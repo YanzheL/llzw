@@ -11,8 +11,8 @@ import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.llzw.apigate.persistence.entity.Payment;
-import com.llzw.apigate.service.error.ApiServiceException;
 import com.llzw.apigate.service.error.PaymentVendorException;
+import com.llzw.apigate.service.error.RestApiException;
 import com.llzw.apigate.service.error.TradeNotFoundPaymentVendorException;
 import com.llzw.apigate.spring.AlipayProperties;
 import java.util.HashMap;
@@ -83,7 +83,7 @@ public class AlipayService implements PaymentVendorService {
   }
 
   @Override
-  public Map<String, String> query(Long orderId) throws ApiServiceException {
+  public Map<String, String> query(Long orderId) throws RestApiException {
     AlipayTradeQueryRequest alipayRequest = new AlipayTradeQueryRequest();
     String outTradeNo = String.valueOf(orderId);
     AlipayTradeQueryModel model = new AlipayTradeQueryModel();

@@ -3,7 +3,7 @@ package com.llzw.apigate.web.controller;
 import com.llzw.apigate.persistence.entity.Payment;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.PaymentService;
-import com.llzw.apigate.service.error.ApiServiceException;
+import com.llzw.apigate.service.error.RestApiException;
 import com.llzw.apigate.web.dto.PaymentCreateDto;
 import com.llzw.apigate.web.util.StandardRestResponse;
 import java.util.Map;
@@ -43,7 +43,7 @@ public class PaymentController {
   @PreAuthorize("hasRole('CUSTOMER')")
   @PostMapping
   public ResponseEntity create(@Valid PaymentCreateDto paymentCreateDto)
-      throws ApiServiceException {
+      throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     Payment payment = paymentService
@@ -65,7 +65,7 @@ public class PaymentController {
    */
   @GetMapping("/retry/{id}")
   public ResponseEntity retry(@PathVariable(value = "id") Long paymentId)
-      throws ApiServiceException {
+      throws RestApiException {
     Payment payment = paymentService.retry(paymentId);
     return StandardRestResponse
         .getResponseEntity(payment.getOrderString(), true, HttpStatus.CREATED);
@@ -81,7 +81,7 @@ public class PaymentController {
   public void verify(@RequestParam Map<String, String> allRequestParams) {
     try {
       paymentService.verify(allRequestParams);
-    } catch (ApiServiceException e) {
+    } catch (RestApiException e) {
       LOGGER.warn(e.getErrorCode());
     }
   }
