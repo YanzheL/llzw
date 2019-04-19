@@ -6,17 +6,23 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Payment;
 import com.llzw.apigate.service.error.TradeNotFoundPaymentVendorException;
+import com.llzw.apigate.spring.AlipayProperties;
 import java.lang.reflect.Field;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@SpringBootTest
-//@SpringBootConfiguration
-//@RunWith(SpringJUnit4ClassRunner.class)
 @ExtendWith(SpringExtension.class)
+//@TestPropertySource("classpath:application-test.yml")
+@ContextConfiguration(
+    classes = {AlipayService.class, AlipayProperties.class},
+    initializers = ConfigFileApplicationContextInitializer.class
+)
+@EnableConfigurationProperties({AlipayProperties.class})
 public class AlipayServiceTests {
 
   @Autowired

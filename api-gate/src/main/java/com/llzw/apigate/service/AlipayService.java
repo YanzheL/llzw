@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,44 +27,25 @@ public class AlipayService implements PaymentVendorService {
 
   private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
-  @Value("${alipay.returnUrl}")
-  String returnUrl;
+  private AlipayProperties properties;
 
-  @Value("${alipay.notifyUrl}")
-  String notifyUrl;
+  private AlipayClient alipayClient;
 
-  String alipayPublicKey;
-
-  String signType;
-
-  String charset;
-
-  AlipayClient alipayClient;
-
-  public AlipayService(
-      @Value("${alipay.gatewayUrl}") String gatewayUrl,
-      @Value("${alipay.appId}") String appId,
-      @Value("${alipay.merchantPrivateKey}") String merchantPrivateKey,
-      @Value("${alipay.charset}") String charset,
-      @Value("${alipay.alipayPublicKey}") String alipayPublicKey,
-      @Value("${alipay.signType}") String signType
-  ) {
-    this.alipayPublicKey = alipayPublicKey;
-    this.charset = charset;
-    this.signType = signType;
-    //获得初始化的AlipayClient
+  @Autowired
+  public AlipayService(AlipayProperties properties) {
+    this.properties = properties;
     alipayClient = new DefaultAlipayClient(
-        gatewayUrl,
-        appId, merchantPrivateKey, "json", charset,
-        alipayPublicKey, signType
+        properties.gatewayUrl,
+        properties.appId, properties.merchantPrivateKey, "json", properties.charset,
+        properties.alipayPublicKey, properties.signType
     );
   }
 
   public String pay(Payment payment) throws PaymentVendorException {
     //设置请求参数
     AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
-    request.setReturnUrl(AlipayProperties.returnUrl);
-    request.setNotifyUrl(AlipayProperties.notifyUrl);
+    request.setReturnUrl(properties.returnUrl);
+    request.setNotifyUrl(properties.notifyUrl);
     //商户订单号，商户网站订单系统中唯一订单号，必填
     String outTradeNo = String.valueOf(payment.getOrder().getId());
     String totalAmount = String.valueOf(payment.getTotalAmount());
@@ -93,7 +74,7 @@ public class AlipayService implements PaymentVendorService {
   public boolean verifySignature(Map<String, String> params) {
     try {
       boolean signVerified = AlipaySignature
-          .rsaCheckV2(params, alipayPublicKey, charset, signType);
+          .rsaCheckV2(params, properties.alipayPublicKey, properties.charset, properties.signType);
       return signVerified;
     } catch (AlipayApiException e) {
       LOGGER.warn(e.getErrMsg());
