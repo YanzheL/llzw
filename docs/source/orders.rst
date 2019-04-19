@@ -14,9 +14,9 @@ id                  Integer   Order ID
 quantity            Integer   Quantity of this order
 createdAt           Date      Creation time
 updatedAt           Date      Update time
-customerId          String    Customer username who creates this order
-addressId           Integer   Destination address ID from address book
-stockId             Integer   The actual stock id of this order
+customer            String    Customer username who creates this order
+address             Address   Associated Address object of this order
+stock               Integer   The actual stock id of this order
 trackingId          String    Shipment tracking id
 carrierName         String    Carrier name
 totalAmount         Float     Total amount
@@ -38,8 +38,14 @@ Example JSON Representation
      "createdAt": "2019-10-1 3:00 PM GMT+1:00",
      "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
      "customerId": "FOO",
-     "addressId": 5,
-     "stockId": 23333,
+     "address": {
+       "province": "Beijing",
+       "city": "Beijing",
+       "district": "Haidian",
+       "address": "Jianguo Avenue",
+       "zip": "100000"
+     },
+     "stock": 23333,
      "trackingId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
      "carrierName": "SF-Express",
      "totalAmount": 500.00,

@@ -11,10 +11,10 @@ Properties
 Parameter           Type      Description
 ==================  ========  =====================================================
 id                  Integer   Payment ID
-orderId             Integer   Parent Order ID
+order               Integer   Parent Order ID
 createdAt           Date      Creation time
 updatedAt           Date      Update time
-payerId             String    Username of payer
+payer               String    Username of payer
 subject             String    Subject of this payment
 description         String    Description
 totalAmount         Float     Total amount
@@ -32,10 +32,10 @@ Example JSON Representation
 
    {
      "id": 1,
-     "orderId": 5,
+     "order": 5,
      "createdAt": "2019-10-1 3:00 PM GMT+1:00",
      "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
-     "payerId": "USERNAME_OF_CUSTOMER",
+     "payer": "USERNAME_OF_CUSTOMER",
      "subject": "Macbook Pro 2019 32G 1TB",
      "description": null,
      "totalAmount": 500.00,
