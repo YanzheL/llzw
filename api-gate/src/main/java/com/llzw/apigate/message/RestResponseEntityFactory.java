@@ -21,12 +21,14 @@ public class RestResponseEntityFactory {
     return new ResponseEntity<>(new RestApiResponse(true, data, null), status);
   }
 
-  public static ResponseEntity<Object> error(RestApiErrorMessage error, HttpStatus status) {
-    return new ResponseEntity<>(new RestApiResponse(false, null, error), status);
+  public static ResponseEntity<Object> error(RestApiErrorMessage error) {
+    return new ResponseEntity<>(
+        new RestApiResponse(false, null, error),
+        error.suggestHttpStatus()
+    );
   }
 
-  public static ResponseEntity<Object> error(RestApiErrorMessage error) {
-    return new ResponseEntity<>(new RestApiResponse(false, null, error),
-        error.suggestHttpStatus());
+  public static ResponseEntity<Object> error(RestApiErrorMessage error, HttpStatus status) {
+    return new ResponseEntity<>(new RestApiResponse(false, null, error), status);
   }
 }
