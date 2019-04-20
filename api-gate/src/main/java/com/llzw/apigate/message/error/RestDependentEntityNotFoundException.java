@@ -1,4 +1,4 @@
-package com.llzw.apigate.service.error;
+package com.llzw.apigate.message.error;
 
 import lombok.NoArgsConstructor;
 

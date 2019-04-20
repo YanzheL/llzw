@@ -1,6 +1,6 @@
-package com.llzw.apigate.web.util;
+package com.llzw.apigate.message;
 
-import com.llzw.apigate.service.error.RestApiErrorMessage;
+import com.llzw.apigate.message.error.RestApiErrorMessage;
 import java.util.Date;
 import java.util.UUID;
 import lombok.AccessLevel;
@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.Setter;
 
 @Data
-public class RestApiResponse {
+public class RestApiResponse implements RestApiResponseMessage {
 
   @Setter(AccessLevel.NONE)
   private String responseId = UUID.randomUUID().toString();

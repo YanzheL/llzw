@@ -1,6 +1,7 @@
 package com.llzw.apigate.web.controller;
 
-import com.llzw.apigate.web.util.StandardRestResponse;
+import com.llzw.apigate.message.error.RestApiException;
+import com.llzw.apigate.web.util.RestResponseFactory;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorController;
@@ -33,8 +34,8 @@ public class CustomServletErrorController extends AbstractErrorController {
   public ResponseEntity errorJson(HttpServletRequest request) {
     Map<String, Object> attrs = getErrorAttributes(request, false);
     HttpStatus status = getStatus(request);
-    return StandardRestResponse.errorResponseEntity(
-        new Exception((String) attrs.get("message")),
+    return RestResponseFactory.error(
+        new RestApiException((String) attrs.get("message")),
         status
     );
   }

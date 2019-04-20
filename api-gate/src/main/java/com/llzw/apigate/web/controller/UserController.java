@@ -5,7 +5,7 @@ import com.llzw.apigate.service.UserService;
 import com.llzw.apigate.web.dto.RealNameVerificationDto;
 import com.llzw.apigate.web.dto.UpdatePasswordDto;
 import com.llzw.apigate.web.dto.UserDto;
-import com.llzw.apigate.web.util.StandardRestResponse;
+import com.llzw.apigate.web.util.RestResponseFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.validation.Valid;
@@ -37,7 +37,8 @@ public class UserController {
   public ResponseEntity register(@Valid UserDto userDto) {
     LOGGER.debug("Registering user account with information: {}", userDto);
     Collection<String> msgs = new ArrayList<>();
-    return StandardRestResponse.getResponseEntity(msgs, userService.register(userDto, msgs));
+    userService.register(userDto, msgs);
+    return RestResponseFactory.success(msgs);
   }
 
   @PutMapping(value = "/realNameVerification")
@@ -47,9 +48,8 @@ public class UserController {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     Collection<String> msgs = new ArrayList<>();
-    return StandardRestResponse.getResponseEntity(
-        msgs,
-        userService.realNameVerification(currentUser.getUsername(), realNameVerificationDto, msgs));
+    userService.realNameVerification(currentUser.getUsername(), realNameVerificationDto, msgs);
+    return RestResponseFactory.success(msgs);
   }
 
   @PutMapping(value = "/updatePassword")
@@ -60,13 +60,12 @@ public class UserController {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     Collection<String> msgs = new ArrayList<>();
-    return StandardRestResponse.getResponseEntity(
-        msgs,
-        userService.updateUserPassword(
-            currentUser.getUsername(),
-            updatePasswordDto.getOldPassword(),
-            updatePasswordDto.getNewPassword(),
-            msgs));
+    userService.updateUserPassword(
+        currentUser.getUsername(),
+        updatePasswordDto.getOldPassword(),
+        updatePasswordDto.getNewPassword(),
+        msgs);
+    return RestResponseFactory.success(msgs);
   }
 
   //  public static boolean isCurrentUser(String username) {

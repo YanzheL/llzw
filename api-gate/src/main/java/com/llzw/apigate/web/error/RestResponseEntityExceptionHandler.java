@@ -1,11 +1,11 @@
 package com.llzw.apigate.web.error;
 
-import com.llzw.apigate.service.error.RestAccessDeniedException;
-import com.llzw.apigate.service.error.RestApiException;
-import com.llzw.apigate.service.error.RestDependentEntityNotFoundException;
-import com.llzw.apigate.service.error.RestEntityNotFoundException;
-import com.llzw.apigate.service.error.TradeNotFoundPaymentVendorException;
-import com.llzw.apigate.web.util.StandardRestResponse;
+import com.llzw.apigate.message.error.RestAccessDeniedException;
+import com.llzw.apigate.message.error.RestApiException;
+import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
+import com.llzw.apigate.message.error.RestEntityNotFoundException;
+import com.llzw.apigate.message.error.TradeNotFoundPaymentVendorException;
+import com.llzw.apigate.web.util.RestResponseFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +38,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
   protected ResponseEntity<Object> handleAny(Exception ex, HttpStatus status) {
     RestApiException apiException = new RestApiException(ex.getMessage());
-    return StandardRestResponse.errorResponseEntity(apiException, status);
+    return RestResponseFactory.error(apiException, status);
   }
 
   @ExceptionHandler({RestApiException.class})
@@ -53,8 +53,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     } else if (ex instanceof RestAccessDeniedException) {
       status = HttpStatus.FORBIDDEN;
     }
-    return StandardRestResponse
-        .errorResponseEntity(ex, status);
+    return RestResponseFactory.error(ex, status);
   }
 
   @Override

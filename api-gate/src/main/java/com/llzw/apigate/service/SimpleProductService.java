@@ -30,7 +30,7 @@ public class SimpleProductService implements ProductService {
   }
 
   /*
-  * make sure whether specific product exists
+   * success sure whether specific product exists
   * */
   private boolean applyToUser(Long id, Predicate<Product> product, Collection<String> msgs) {
     Optional<Product> productOptional = productRepository.findById(id);

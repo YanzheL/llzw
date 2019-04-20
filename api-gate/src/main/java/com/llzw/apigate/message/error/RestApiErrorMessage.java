@@ -1,4 +1,4 @@
-package com.llzw.apigate.service.error;
+package com.llzw.apigate.message.error;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;

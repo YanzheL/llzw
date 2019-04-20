@@ -1,9 +1,10 @@
 package com.llzw.apigate.web.controller;
 
+import com.llzw.apigate.message.error.RestInternalServerException;
 import com.llzw.apigate.persistence.entity.FileMetaData;
 import com.llzw.apigate.service.FileStorageService;
 import com.llzw.apigate.web.dto.FileDto;
-import com.llzw.apigate.web.util.StandardRestResponse;
+import com.llzw.apigate.web.util.RestResponseFactory;
 import com.llzw.apigate.web.validation.FileValidator;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,24 +48,21 @@ public class FileController {
 
   @PreAuthorize("hasAuthority('OP_CREATE_FILE')")
   @PostMapping
-  public ResponseEntity upload(@Valid FileDto fileDto) {
+  public ResponseEntity upload(@Valid FileDto fileDto) throws Exception {
     Collection<String> msgs = new ArrayList<>();
     Optional<FileMetaData> serviceResult = null;
-    try {
-      serviceResult = fileStorageService.save(fileDto);
-    } catch (java.io.IOException e) {
-      return StandardRestResponse.errorResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    serviceResult = fileStorageService.save(fileDto);
     return serviceResult.isPresent()
-        ? StandardRestResponse.getResponseEntity(serviceResult.get(), true, HttpStatus.CREATED)
-        : StandardRestResponse.getResponseEntity(msgs, false, HttpStatus.INTERNAL_SERVER_ERROR);
+        ? RestResponseFactory.success(serviceResult.get(), HttpStatus.CREATED)
+        : RestResponseFactory
+            .error(new RestInternalServerException(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   @PreAuthorize("hasAuthority('OP_DELETE_FILE')")
   @DeleteMapping(value = "/{hash}")
   public ResponseEntity delete(@PathVariable(value = "hash") String hash) {
     fileStorageService.delete(hash);
-    return StandardRestResponse.getResponseEntity(null);
+    return RestResponseFactory.success(null);
   }
 
   /**

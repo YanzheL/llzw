@@ -1,11 +1,11 @@
 package com.llzw.apigate.web.controller;
 
+import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.persistence.entity.Payment;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.PaymentService;
-import com.llzw.apigate.service.error.RestApiException;
 import com.llzw.apigate.web.dto.PaymentCreateDto;
-import com.llzw.apigate.web.util.StandardRestResponse;
+import com.llzw.apigate.web.util.RestResponseFactory;
 import java.util.Map;
 import javax.validation.Valid;
 import lombok.Setter;
@@ -53,7 +53,7 @@ public class PaymentController {
             paymentCreateDto.getSubject(),
             paymentCreateDto.getDescription()
         );
-    return StandardRestResponse.getResponseEntity(payment, true, HttpStatus.CREATED);
+    return RestResponseFactory.success(payment, HttpStatus.CREATED);
   }
 
   /**
@@ -67,8 +67,8 @@ public class PaymentController {
   public ResponseEntity retry(@PathVariable(value = "id") Long paymentId)
       throws RestApiException {
     Payment payment = paymentService.retry(paymentId);
-    return StandardRestResponse
-        .getResponseEntity(payment.getOrderString(), true, HttpStatus.CREATED);
+    return RestResponseFactory
+        .success(payment.getOrderString(), HttpStatus.CREATED);
   }
 
   /**
@@ -82,7 +82,7 @@ public class PaymentController {
     try {
       paymentService.verify(allRequestParams);
     } catch (RestApiException e) {
-      LOGGER.warn(e.getErrorCode());
+      LOGGER.warn(e.getType());
     }
   }
 }
