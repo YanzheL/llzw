@@ -4,11 +4,11 @@ import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @NoArgsConstructor
-public class RestAccessDeniedException extends RestSecurityException {
+public class RestTradeNotFoundPaymentVendorException extends RestPaymentVendorException {
 
-  private final static String type = "ACCESS_DENIED";
+  private final static String type = "TRADE_NOT_FOUND";
 
-  public RestAccessDeniedException(String message) {
+  public RestTradeNotFoundPaymentVendorException(String message) {
     super(message);
   }
 
@@ -19,6 +19,6 @@ public class RestAccessDeniedException extends RestSecurityException {
 
   @Override
   public HttpStatus suggestHttpStatus() {
-    return HttpStatus.FORBIDDEN;
+    return HttpStatus.NOT_FOUND;
   }
 }

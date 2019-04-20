@@ -1,8 +1,8 @@
 Generals
 ********
 
-Standard Response Format
-========================
+Standard Response Structure
+===========================
 
 All responses have same general structure
 
@@ -15,6 +15,7 @@ Parameter   Type     Required Default Description
 responseId  String   True     -       The UUID of this response
 success     Boolean  True     -       The status flag that indicates whether your API call is success
 data        Any      True     null    The message body of this response, which can be any object that supported by JSON
+error       Error    True     null    Associated Error object (if applicable)
 =========== ======== ======== ======= =================================================================================
 
 The response JSON structured like this
@@ -24,7 +25,43 @@ The response JSON structured like this
    {
      "responseId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
      "sucess": true,
-     "data": null
+     "data": null,
+     "error": null
+   }
+
+.. code:: json
+
+   {
+     "responseId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+     "sucess": false,
+     "data": null,
+     "error": {
+       "type": "API.SECURITY.ACCESS_DENIED",
+       "message": "Access Denied"
+     }
+   }
+
+Standard Error Definition
+=========================
+
+Properties
+----------
+
+=========== ======== ======== ======= =========================
+Parameter   Type     Required Default Description
+=========== ======== ======== ======= =========================
+type        String   True     -       Error Type
+message     String   True     -       Explanation of this error
+=========== ======== ======== ======= =========================
+
+Example JSON Representation
+---------------------------
+
+.. code:: json
+
+   {
+     "type": "API.SECURITY.ACCESS_DENIED",
+     "message": "Access Denied"
    }
 
 HTTP Status Codes

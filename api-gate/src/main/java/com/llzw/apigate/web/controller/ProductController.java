@@ -1,24 +1,21 @@
 package com.llzw.apigate.web.controller;
 
+import com.llzw.apigate.message.RestResponseEntityFactory;
+import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestEntityNotFoundException;
-import com.llzw.apigate.persistence.dao.ProductRepository;
-import com.llzw.apigate.persistence.entity.Product;
+import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.ProductService;
 import com.llzw.apigate.web.dto.ProductCreateDto;
-import com.llzw.apigate.web.util.RestResponseFactory;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 import javax.validation.Valid;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,75 +23,60 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@RepositoryRestController
+@RestController
+@BasePathAwareController
 @RequestMapping(value = "/products")
 public class ProductController {
 
   @Setter(onMethod_ = @Autowired)
-  private ProductRepository productRepository;
-
-  @Setter(onMethod_ = @Autowired)
   private ProductService productService;
 
-  /*
-   * create new product
-   * */
+  /**
+   * Create new product
+   */
   @PreAuthorize("hasRole('SELLER')")
   @PostMapping
   @Transactional          // transaction management
-  public ResponseEntity createProduct(@Valid ProductCreateDto productCreateDto) {
-    //将dto中商品的各种信息存入product中
-    Product product = new Product();
-    product.setName(productCreateDto.getProductName());
-    product.setIntroduction(productCreateDto.getIntroduction());
-    product.setPrice(productCreateDto.getPrice());
-    product.setCaId(productCreateDto.getCerId());
-    Product saveOpResult = productRepository.save(product);
-    return RestResponseFactory.success(saveOpResult, HttpStatus.CREATED);
+  public ResponseEntity create(@Valid ProductCreateDto productCreateDto) throws RestApiException {
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    return RestResponseEntityFactory
+        .success(productService.create(productCreateDto, currentUser), HttpStatus.CREATED);
   }
 
-  /*
-   * scan all products
-   * */
+  /**
+   * Search all products
+   */
   @GetMapping
-  @Transactional          // transaction management
-  public ResponseEntity scanProduct(
+  public ResponseEntity search(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
       @RequestParam(value = "size", required = false, defaultValue = "20") int size,
       @RequestParam(value = "valid", required = false, defaultValue = "True") boolean valid) {
-
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
-    List<Product> allMatchingProducts = productRepository.findAll(pageRequest).getContent();
-    return RestResponseFactory.success(allMatchingProducts);
+    return RestResponseEntityFactory.success(productService.findAll(pageRequest));
   }
 
-  /*
-   * search product by id
-   * */
+  /**
+   * Get product by id
+   */
   @GetMapping(value = "/{id}")
-  @Transactional          // transaction management
-  public ResponseEntity findProductById(@PathVariable(value = "id") Long id) {
-    Optional<Product> res = productRepository.findById(id);
-    return res.isPresent()
-        ? RestResponseFactory.success(res)
-        : RestResponseFactory.error(new RestEntityNotFoundException(), HttpStatus.NOT_FOUND);
+  public ResponseEntity get(@PathVariable(value = "id") Long id) throws RestApiException {
+    return RestResponseEntityFactory.success(
+        productService.findById(id).orElseThrow(() -> new RestEntityNotFoundException(
+            String.format("Product <%d> does not exist", id)
+        ))
+    );
   }
 
-  /*
-   * invalidate a specific product
-   * */
+  /**
+   * Invalidate a specific product
+   */
+  @PreAuthorize("hasRole('SELLER')")
   @DeleteMapping(value = "/{id}")
-  @Transactional          // transaction management
-  public ResponseEntity invalidateProductById(@PathVariable(value = "id") Long id) {
-
-//    LOGGER.debug("Verifying user account with information: {}", updatePasswordDto);
-//    Product currentUser =
-//        ((Product) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    Collection<String> msgs = new ArrayList<>();
-    productService.updateValid(id, msgs);
-    return RestResponseFactory.success(msgs);
+  @Transactional
+  public ResponseEntity invalidate(@PathVariable(value = "id") Long id) throws RestApiException {
+    return RestResponseEntityFactory.success(productService.updateValid(id));
   }
-
-
 }

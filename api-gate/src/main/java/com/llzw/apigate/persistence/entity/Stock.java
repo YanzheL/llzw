@@ -38,7 +38,7 @@ public class Stock implements Serializable {
   protected boolean valid;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "product")
+  @JoinColumn(name = "productId")
   @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
   @JsonIdentityReference(alwaysAsId = true)
   protected Product product;
@@ -74,10 +74,8 @@ public class Stock implements Serializable {
   @Column(length = 50)
   protected String carrierName;
 
-  //stock.product.seller.getUsername().equals(seller.getUsername());库存对应的产品的商家的名称要对应库存卖家的名称
-  //库存的商品id要对应商品的id
-  public boolean belongsToProduct(Product product) {
-    return product.id.equals(this.product.getId());
+  public boolean belongsToSeller(User seller) {
+    return product.getSeller().getUsername().equals(seller.getUsername());
   }
 
   public boolean decreaseCurrentQuantity(int quantity) {
