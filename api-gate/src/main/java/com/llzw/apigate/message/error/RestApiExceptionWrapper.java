@@ -2,8 +2,10 @@ package com.llzw.apigate.message.error;
 
 import java.util.HashMap;
 import java.util.Map;
+import javax.persistence.EntityExistsException;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindException;
 
 public class RestApiExceptionWrapper {
@@ -15,6 +17,8 @@ public class RestApiExceptionWrapper {
     mapping.put(ConversionNotSupportedException.class, RestInvalidParameterException.class);
     mapping.put(AccessDeniedException.class, RestAccessDeniedException.class);
     mapping.put(BindException.class, RestInvalidParameterException.class);
+    mapping.put(EntityExistsException.class, RestEntityExistsException.class);
+    mapping.put(UsernameNotFoundException.class, RestEntityNotFoundException.class);
   }
 
   private RestApiExceptionWrapper() {
