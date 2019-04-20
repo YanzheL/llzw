@@ -1,10 +1,11 @@
 package com.llzw.apigate.web.controller;
 
+import com.llzw.apigate.message.RestResponseEntityFactory;
+import com.llzw.apigate.message.error.RestEntityNotFoundException;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.service.ProductService;
 import com.llzw.apigate.web.dto.ProductCreateDto;
-import com.llzw.apigate.web.util.StandardRestResponse;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -50,7 +51,7 @@ public class ProductController {
     product.setPrice(productCreateDto.getPrice());
     product.setCaId(productCreateDto.getCerId());
     Product saveOpResult = productRepository.save(product);
-    return StandardRestResponse.getResponseEntity(saveOpResult, true, HttpStatus.CREATED);
+    return RestResponseEntityFactory.success(saveOpResult, HttpStatus.CREATED);
   }
 
   /*
@@ -65,7 +66,7 @@ public class ProductController {
 
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
     List<Product> allMatchingProducts = productRepository.findAll(pageRequest).getContent();
-    return StandardRestResponse.getResponseEntity(allMatchingProducts);
+    return RestResponseEntityFactory.success(allMatchingProducts);
   }
 
   /*
@@ -76,8 +77,8 @@ public class ProductController {
   public ResponseEntity findProductById(@PathVariable(value = "id") Long id) {
     Optional<Product> res = productRepository.findById(id);
     return res.isPresent()
-        ? StandardRestResponse.getResponseEntity(res)
-        : StandardRestResponse.getResponseEntity(null, false, HttpStatus.NOT_FOUND);
+        ? RestResponseEntityFactory.success(res)
+        : RestResponseEntityFactory.error(new RestEntityNotFoundException());
   }
 
   /*
@@ -91,11 +92,8 @@ public class ProductController {
 //    Product currentUser =
 //        ((Product) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     Collection<String> msgs = new ArrayList<>();
-    return StandardRestResponse.getResponseEntity(
-        msgs,
-        productService.updateValid(
-            id,
-            msgs));
+    productService.updateValid(id, msgs);
+    return RestResponseEntityFactory.success(msgs);
   }
 
 

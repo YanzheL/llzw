@@ -15,23 +15,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithUserDetails;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @Transactional
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
-
-  protected MockMvc mvc;
-
-  @Autowired
-  protected WebApplicationContext context;
 
   @BeforeAll
   public void setup() throws Exception {

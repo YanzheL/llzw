@@ -1,7 +1,7 @@
 package com.llzw.apigate.service;
 
+import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.persistence.entity.Payment;
-import com.llzw.apigate.service.error.RestApiException;
 import java.util.Map;
 
 public interface PaymentVendorService {
