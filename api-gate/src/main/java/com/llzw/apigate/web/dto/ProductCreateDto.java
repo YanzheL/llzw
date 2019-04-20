@@ -31,4 +31,7 @@ public class ProductCreateDto {
   @Size(min = 1, max = 50, message = "Length should between 1 to 50")
   protected String caId;
 
+  @NotNull
+  @Size(min = 1, max = 50, message = "Length should between 1 to 50")
+  protected String caFile;
 }
