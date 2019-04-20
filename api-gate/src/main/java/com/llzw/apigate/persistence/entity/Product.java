@@ -77,4 +77,7 @@ public class Product implements Serializable {
   @NonNull
   protected String caId;
 
+  public boolean belongsToSeller(User seller) {
+    return this.seller.getUsername().equals(seller.getUsername());
+  }
 }

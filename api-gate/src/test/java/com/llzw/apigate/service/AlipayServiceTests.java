@@ -3,9 +3,9 @@ package com.llzw.apigate.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.llzw.apigate.message.error.RestTradeNotFoundPaymentVendorException;
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Payment;
-import com.llzw.apigate.service.error.TradeNotFoundPaymentVendorException;
 import com.llzw.apigate.spring.AlipayProperties;
 import java.lang.reflect.Field;
 import org.junit.jupiter.api.Test;
@@ -49,7 +49,7 @@ public class AlipayServiceTests {
         "TRADE_SUCCESS"
     );
     assertThrows(
-        TradeNotFoundPaymentVendorException.class,
+        RestTradeNotFoundPaymentVendorException.class,
         () -> alipayService.query(3L)
     );
   }

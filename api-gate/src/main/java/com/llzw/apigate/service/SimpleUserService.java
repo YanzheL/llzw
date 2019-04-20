@@ -1,18 +1,18 @@
 package com.llzw.apigate.service;
 
+import com.llzw.apigate.message.error.RestApiException;
+import com.llzw.apigate.message.error.RestEntityExistsException;
+import com.llzw.apigate.message.error.RestEntityNotFoundException;
+import com.llzw.apigate.message.error.RestInvalidCredentialException;
 import com.llzw.apigate.persistence.dao.RoleRepository;
 import com.llzw.apigate.persistence.dao.UserRepository;
 import com.llzw.apigate.persistence.entity.Role;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.RealNameVerificationDto;
 import com.llzw.apigate.web.dto.UserDto;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import javax.persistence.EntityExistsException;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,65 +41,51 @@ public class SimpleUserService implements UserService {
 
   @Override
   @Transactional
-  public boolean register(UserDto userDto, Collection<String> msgs) throws EntityExistsException {
-    String username = userDto.getUsername();
-    String email = userDto.getEmail();
-    if (userRepository.findByEmail(email).isPresent()) {
-      msgs.add("There is an account with that email adress: " + userDto.getEmail());
-      return false;
+  public User register(UserDto dto) throws RestApiException {
+    String username = dto.getUsername();
+    String email = dto.getEmail();
+    if (userRepository.findByUsernameOrEmail(username, email).isPresent()) {
+      throw new RestEntityExistsException("There is an account with same username or email email");
     }
-    if (userRepository.findByUsername(username).isPresent()) {
-      msgs.add("There is an account with that username: " + userDto.getUsername());
-      return false;
-    }
+    Role role = roleRepository.findByRole(Role.RoleType.valueOf(dto.getRole())).orElseThrow(
+        () -> new RestEntityNotFoundException(
+            String.format("Role <%s> does not exist", dto.getRole())
+        )
+    );
     final User user = new User();
-    BeanUtils.copyProperties(userDto, user, "role", "password");
-    user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-    Optional<Role> roleOptional =
-        roleRepository.findByRole(Role.RoleType.valueOf(userDto.getRole()));
-    if (!roleOptional.isPresent()) {
-      msgs.add("Role doesn't exist");
-      return false;
-    }
-    user.setRoles(Collections.singleton(roleOptional.get()));
+    BeanUtils.copyProperties(dto, user, "role", "password");
+    user.setPassword(passwordEncoder.encode(dto.getPassword()));
+    user.setRoles(Collections.singleton(role));
     user.setEnabled(true);
-    userRepository.save(user);
-    return true;
+    return userRepository.save(user);
   }
 
   @Override
   public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-    Optional<User> userOptional = userRepository.findByUsername(username);
-    userOptional.orElseThrow(
-        () -> new UsernameNotFoundException("No user found with username: " + username));
-    return userOptional.get();
+    return userRepository.findByUsername(username).orElseThrow(
+        () -> new UsernameNotFoundException("No user found with username: " + username)
+    );
   }
 
   @Override
-  public boolean setUserPassword(String username, String password, Collection<String> msgs) {
-    return applyToUser(
-        username,
-        user -> {
-          user.setPassword(passwordEncoder.encode(password));
-          return true;
-        },
-        msgs);
+  public User setUserPassword(String username, String password)
+      throws RestApiException {
+    User user = userRepository.findByUsername(username)
+        .orElseThrow(() -> new RestEntityNotFoundException("User doesn't exist"));
+    user.setPassword(passwordEncoder.encode(password));
+    return userRepository.save(user);
   }
 
   @Override
-  public boolean updateUserPassword(
-      String username, String oldPassword, String newPassword, Collection<String> msgs) {
-    return applyToUser(
-        username,
-        user -> {
-          if (!user.getPassword().equals(passwordEncoder.encode(oldPassword))) {
-            msgs.add("Password doesn't match");
-            return false;
-          }
-          user.setPassword(passwordEncoder.encode(newPassword));
-          return true;
-        },
-        msgs);
+  public User updateUserPassword(String username, String oldPassword, String newPassword)
+      throws RestApiException {
+    User user = userRepository.findByUsername(username)
+        .orElseThrow(() -> new RestEntityNotFoundException("User doesn't exist"));
+    if (!user.getPassword().equals(passwordEncoder.encode(oldPassword))) {
+      throw new RestInvalidCredentialException("Password doesn't match");
+    }
+    user.setPassword(passwordEncoder.encode(newPassword));
+    return userRepository.save(user);
   }
 
   @Override
@@ -111,34 +97,15 @@ public class SimpleUserService implements UserService {
   }
 
   @Override
-  public boolean realNameVerification(
-      String username, RealNameVerificationDto realNameVerificationDto, Collection<String> msgs) {
-    return applyToUser(
-        username,
-        user -> {
-          BeanUtils.copyProperties(realNameVerificationDto, user);
-          if (user.isVerified()) {
-            msgs.add("User is already verified");
-            return false;
-          }
-          user.setVerified(true);
-          return true;
-        },
-        msgs);
-  }
-
-  private boolean applyToUser(String username, Predicate<User> consumer, Collection<String> msgs) {
-    Optional<User> userOptional = userRepository.findByUsername(username);
-    if (userOptional.isPresent()) {
-      User found = userOptional.get();
-      boolean success = consumer.test(found);
-      if (success) {
-        userRepository.save(found);
-      }
-      return success;
-    } else {
-      msgs.add("User doesn't exist");
-      return false;
+  public User realNameVerification(String username, RealNameVerificationDto dto)
+      throws RestApiException {
+    User user = userRepository.findByUsername(username)
+        .orElseThrow(() -> new RestEntityNotFoundException("User doesn't exist"));
+    if (user.isVerified()) {
+      return user;
     }
+    BeanUtils.copyProperties(dto, user);
+    user.setVerified(true);
+    return userRepository.save(user);
   }
 }

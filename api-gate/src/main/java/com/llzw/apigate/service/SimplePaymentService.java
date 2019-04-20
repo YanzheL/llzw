@@ -1,15 +1,15 @@
 package com.llzw.apigate.service;
 
+import com.llzw.apigate.message.error.RestApiException;
+import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
+import com.llzw.apigate.message.error.RestPaymentException;
+import com.llzw.apigate.message.error.RestTradeNotFoundPaymentVendorException;
 import com.llzw.apigate.persistence.dao.OrderRepository;
 import com.llzw.apigate.persistence.dao.PaymentRepository;
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Payment;
 import com.llzw.apigate.persistence.entity.Payment.PaymentStatusType;
 import com.llzw.apigate.persistence.entity.User;
-import com.llzw.apigate.service.error.PaymentException;
-import com.llzw.apigate.service.error.RequestedDependentObjectNotFoundException;
-import com.llzw.apigate.service.error.RestApiException;
-import com.llzw.apigate.service.error.TradeNotFoundPaymentVendorException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -36,13 +36,20 @@ public class SimplePaymentService implements PaymentService {
   @Setter(onMethod_ = @Autowired)
   OrderRepository orderRepository;
 
+  public static Date calculateExpireDate(Date date, int minutes) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    calendar.add(Calendar.MINUTE, minutes);
+    return calendar.getTime();
+  }
+
   @Override
   public Payment create(User payer, Long orderId,
       String subject, String description)
       throws RestApiException {
     Optional<Order> orderOptional = orderRepository.findById(orderId);
     if (!orderOptional.isPresent()) {
-      throw new RequestedDependentObjectNotFoundException(
+      throw new RestDependentEntityNotFoundException(
           String.format("Order <%s> do not exist", orderId));
     }
     Order targetOrder = orderOptional.get();
@@ -63,12 +70,12 @@ public class SimplePaymentService implements PaymentService {
   public Payment retry(Long paymentId) throws RestApiException {
     Optional<Payment> paymentOptional = paymentRepository.findById(paymentId);
     if (!paymentOptional.isPresent()) {
-      throw new RequestedDependentObjectNotFoundException(
+      throw new RestDependentEntityNotFoundException(
           String.format("Target payment <%s> does not exist", paymentId));
     }
     Payment payment = paymentOptional.get();
     if (payment.isConfirmed()) {
-      throw new PaymentException(
+      throw new RestPaymentException(
           String.format("Target payment <%s> is already confirmed", paymentId));
     }
     String orderString = vendor.pay(payment);
@@ -95,12 +102,12 @@ public class SimplePaymentService implements PaymentService {
 
     Optional<Payment> paymentOptional = paymentRepository.findByOrderId(orderId);
     if (!paymentOptional.isPresent()) {
-      throw new RequestedDependentObjectNotFoundException("Target payment does not exist.");
+      throw new RestDependentEntityNotFoundException("Target payment does not exist.");
     }
     Payment payment = paymentOptional.get();
     Order targetOrder = payment.getOrder();
     if (Math.abs(payment.getTotalAmount() - targetOrder.getTotalAmount()) > 0.001) {
-      throw new PaymentException("Payment amount mismatch");
+      throw new RestPaymentException("Payment amount mismatch");
     }
     payment.setConfirmed(true);
     payment.setConfirmedAt(new Date());
@@ -111,13 +118,6 @@ public class SimplePaymentService implements PaymentService {
     return true;
   }
 
-  public static Date calculateExpireDate(Date date, int minutes) {
-    Calendar calendar = Calendar.getInstance();
-    calendar.setTime(date);
-    calendar.add(Calendar.MINUTE, minutes);
-    return calendar.getTime();
-  }
-
   @Override
   public boolean verify(Payment payment) throws RestApiException {
     try {
@@ -126,7 +126,7 @@ public class SimplePaymentService implements PaymentService {
       if (tradeStatue.equals("TRADE_SUCCESS") || tradeStatue.equals("TRADE_FINISHED")) {
         return true;
       }
-    } catch (TradeNotFoundPaymentVendorException e) {
+    } catch (RestTradeNotFoundPaymentVendorException e) {
       Date expire = calculateExpireDate(payment.getCreatedAt(), 15);
       if (new Date().after(expire)) {
         paymentRepository.delete(payment);

@@ -1,12 +1,14 @@
 package com.llzw.apigate.web.controller;
 
-import com.llzw.apigate.OrderService;
+import com.llzw.apigate.message.RestResponseEntityFactory;
+import com.llzw.apigate.message.error.RestAccessDeniedException;
+import com.llzw.apigate.message.error.RestApiException;
+import com.llzw.apigate.message.error.RestEntityNotFoundException;
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.User;
-import com.llzw.apigate.service.error.RestApiException;
+import com.llzw.apigate.service.OrderService;
 import com.llzw.apigate.web.dto.OrderCreateDto;
 import com.llzw.apigate.web.dto.OrderSearchDto;
-import com.llzw.apigate.web.util.StandardRestResponse;
 import java.util.Optional;
 import javax.validation.Valid;
 import lombok.Setter;
@@ -26,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-// @RepositoryRestController
 @RestController
 @BasePathAwareController
 @RequestMapping(value = "/orders")
@@ -35,7 +36,7 @@ public class OrderController {
   @Setter(onMethod_ = @Autowired)
   private OrderService orderService;
 
-  @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
+  @PreAuthorize("hasAuthority('OP_READ_ORDER')")
   @GetMapping
   public ResponseEntity searchOrders(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
@@ -44,42 +45,44 @@ public class OrderController {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    return StandardRestResponse.getResponseEntity(
+    return RestResponseEntityFactory.success(
         orderService.search(searchDto, currentUser, pageRequest)
     );
   }
 
-  @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
+  @PreAuthorize("hasAuthority('OP_READ_ORDER')")
   @GetMapping(value = "/{id}")
   public ResponseEntity getOrder(@PathVariable(value = "id") Long id) {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     Optional<Order> result = orderService.get(id);
     if (!result.isPresent()) {
-      return StandardRestResponse.getResponseEntity(null, false, HttpStatus.NOT_FOUND);
+      return RestResponseEntityFactory.error(
+          new RestEntityNotFoundException(),
+          HttpStatus.NOT_FOUND
+      );
     }
     Order order = result.get();
-    return order.belongsToUser(currentUser)
-        ? StandardRestResponse.getResponseEntity(order)
-        : StandardRestResponse
-            .getResponseEntity("Current user does not have access to this order", false,
-                HttpStatus.FORBIDDEN);
+    if (!order.belongsToUser(currentUser)) {
+      return RestResponseEntityFactory.error(
+          new RestAccessDeniedException("Current user does not have access to this order"));
+    }
+    return RestResponseEntityFactory.success(order);
   }
 
   @PreAuthorize("hasAuthority('OP_CREATE_ORDER')")
-  @PostMapping(value = "")
+  @PostMapping
   @Transactional
   public ResponseEntity createOrder(@Valid OrderCreateDto orderCreateDto) throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    return StandardRestResponse.getResponseEntity(
+    return RestResponseEntityFactory.success(
         orderService.create(
             currentUser,
             orderCreateDto.getProductId(),
             orderCreateDto.getQuantity(),
             orderCreateDto.getAddressId()
         ),
-        true,
         HttpStatus.CREATED
     );
   }

@@ -26,31 +26,23 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent>, Ordered {
 
+  private static boolean alreadySetup = false;
   @Setter(onMethod_ = @Autowired)
   private AddressRepository addressRepository;
-
   @Setter(onMethod_ = @Autowired)
   private FileMetaDataRepository fileMetaDataRepository;
-
   @Setter(onMethod_ = @Autowired)
   private OrderRepository orderRepository;
-
   @Setter(onMethod_ = @Autowired)
   private PaymentRepository paymentRepository;
-
   @Setter(onMethod_ = @Autowired)
   private ProductRepository productRepository;
-
   @Setter(onMethod_ = @Autowired)
   private StockRepository stockRepository;
-
   @Setter(onMethod_ = @Autowired)
   private UserRepository userRepository;
-
   @Setter(onMethod_ = @Autowired)
   private RoleRepository roleRepository;
-
-  private static boolean alreadySetup = false;
 
   @Override
   public int getOrder() {
