@@ -7,8 +7,6 @@ import com.llzw.apigate.service.UserService;
 import com.llzw.apigate.web.dto.RealNameVerificationDto;
 import com.llzw.apigate.web.dto.UpdatePasswordDto;
 import com.llzw.apigate.web.dto.UserDto;
-import java.util.ArrayList;
-import java.util.Collection;
 import javax.validation.Valid;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-// @RepositoryRestController
 @RestController
 @BasePathAwareController
 @RequestMapping(value = "/users")
@@ -37,20 +34,18 @@ public class UserController {
   @PostMapping(value = "/register")
   public ResponseEntity register(@Valid UserDto userDto) throws RestApiException {
     LOGGER.debug("Registering user account with information: {}", userDto);
-    Collection<String> msgs = new ArrayList<>();
-    userService.register(userDto);
-    return RestResponseEntityFactory.success(msgs);
+    return RestResponseEntityFactory.success(userService.register(userDto));
   }
 
+  @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
   @PutMapping(value = "/realNameVerification")
   public ResponseEntity realNameVerification(
       @Valid RealNameVerificationDto realNameVerificationDto) throws RestApiException {
     LOGGER.debug("Verifying user account with information: {}", realNameVerificationDto);
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    Collection<String> msgs = new ArrayList<>();
-    userService.realNameVerification(currentUser.getUsername(), realNameVerificationDto);
-    return RestResponseEntityFactory.success(msgs);
+    return RestResponseEntityFactory.success(
+        userService.realNameVerification(currentUser.getUsername(), realNameVerificationDto));
   }
 
   @PutMapping(value = "/updatePassword")
@@ -60,18 +55,10 @@ public class UserController {
     LOGGER.debug("Verifying user account with information: {}", updatePasswordDto);
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    Collection<String> msgs = new ArrayList<>();
-    userService.updateUserPassword(
+    return RestResponseEntityFactory.success(userService.updateUserPassword(
         currentUser.getUsername(),
         updatePasswordDto.getOldPassword(),
-        updatePasswordDto.getNewPassword(),
-        msgs);
-    return RestResponseEntityFactory.success(msgs);
+        updatePasswordDto.getNewPassword()
+    ));
   }
-
-  //  public static boolean isCurrentUser(String username) {
-  //    User currentUser =
-  //        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-  //    return currentUser.getUsername().equals(username);
-  //  }
 }

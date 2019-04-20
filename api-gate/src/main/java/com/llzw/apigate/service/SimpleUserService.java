@@ -10,7 +10,6 @@ import com.llzw.apigate.persistence.entity.Role;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.RealNameVerificationDto;
 import com.llzw.apigate.web.dto.UserDto;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,7 +68,7 @@ public class SimpleUserService implements UserService {
   }
 
   @Override
-  public User setUserPassword(String username, String password, Collection<String> msgs)
+  public User setUserPassword(String username, String password)
       throws RestApiException {
     User user = userRepository.findByUsername(username)
         .orElseThrow(() -> new RestEntityNotFoundException("User doesn't exist"));
@@ -78,8 +77,7 @@ public class SimpleUserService implements UserService {
   }
 
   @Override
-  public User updateUserPassword(
-      String username, String oldPassword, String newPassword, Collection<String> msgs)
+  public User updateUserPassword(String username, String oldPassword, String newPassword)
       throws RestApiException {
     User user = userRepository.findByUsername(username)
         .orElseThrow(() -> new RestEntityNotFoundException("User doesn't exist"));

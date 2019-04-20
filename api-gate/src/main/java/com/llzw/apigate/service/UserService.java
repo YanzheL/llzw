@@ -4,7 +4,6 @@ import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.RealNameVerificationDto;
 import com.llzw.apigate.web.dto.UserDto;
-import java.util.Collection;
 import java.util.List;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -12,11 +11,11 @@ public interface UserService extends UserDetailsService {
 
   User register(UserDto userDto) throws RestApiException;
 
-  User setUserPassword(String username, String password, Collection<String> msgs)
+  User setUserPassword(String username, String password)
       throws RestApiException;
 
   User updateUserPassword(
-      String username, String oldPassword, String newPassword, Collection<String> msgs)
+      String username, String oldPassword, String newPassword)
       throws RestApiException;
 
   User realNameVerification(
