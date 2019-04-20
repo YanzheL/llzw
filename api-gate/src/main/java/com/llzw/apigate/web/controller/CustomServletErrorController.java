@@ -1,7 +1,7 @@
 package com.llzw.apigate.web.controller;
 
+import com.llzw.apigate.message.RestResponseFactory;
 import com.llzw.apigate.message.error.RestApiException;
-import com.llzw.apigate.web.util.RestResponseFactory;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorController;

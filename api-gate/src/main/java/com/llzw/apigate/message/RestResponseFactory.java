@@ -1,6 +1,5 @@
-package com.llzw.apigate.web.util;
+package com.llzw.apigate.message;
 
-import com.llzw.apigate.message.RestApiResponse;
 import com.llzw.apigate.message.error.RestApiErrorMessage;
 import lombok.Data;
 import org.springframework.http.HttpStatus;

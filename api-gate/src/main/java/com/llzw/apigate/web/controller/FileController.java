@@ -1,10 +1,10 @@
 package com.llzw.apigate.web.controller;
 
+import com.llzw.apigate.message.RestResponseFactory;
 import com.llzw.apigate.message.error.RestInternalServerException;
 import com.llzw.apigate.persistence.entity.FileMetaData;
 import com.llzw.apigate.service.FileStorageService;
 import com.llzw.apigate.web.dto.FileDto;
-import com.llzw.apigate.web.util.RestResponseFactory;
 import com.llzw.apigate.web.validation.FileValidator;
 import java.io.IOException;
 import java.util.ArrayList;

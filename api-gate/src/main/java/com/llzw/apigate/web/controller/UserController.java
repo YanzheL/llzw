@@ -1,11 +1,11 @@
 package com.llzw.apigate.web.controller;
 
+import com.llzw.apigate.message.RestResponseFactory;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.UserService;
 import com.llzw.apigate.web.dto.RealNameVerificationDto;
 import com.llzw.apigate.web.dto.UpdatePasswordDto;
 import com.llzw.apigate.web.dto.UserDto;
-import com.llzw.apigate.web.util.RestResponseFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.validation.Valid;

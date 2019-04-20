@@ -1,11 +1,11 @@
 package com.llzw.apigate.web.controller;
 
+import com.llzw.apigate.message.RestResponseFactory;
 import com.llzw.apigate.message.error.RestEntityNotFoundException;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.service.ProductService;
 import com.llzw.apigate.web.dto.ProductCreateDto;
-import com.llzw.apigate.web.util.RestResponseFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
