@@ -3,11 +3,11 @@ package com.llzw.apigate.message.error;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class TradeNotFoundPaymentVendorException extends PaymentVendorException {
+public class RestInvalidParameterException extends RestApiException {
 
-  private final static String type = "TRADE_NOT_FOUND";
+  private final static String type = "INVALID_PARAMETER";
 
-  public TradeNotFoundPaymentVendorException(String message) {
+  public RestInvalidParameterException(String message) {
     super(message);
   }
 

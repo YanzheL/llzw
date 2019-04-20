@@ -3,11 +3,11 @@ package com.llzw.apigate.message.error;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class PaymentException extends RestApiException {
+public class RestPaymentException extends RestApiException {
 
   private final static String type = "PAYMENT_SERVICE";
 
-  public PaymentException(String message) {
+  public RestPaymentException(String message) {
     super(message);
   }
 

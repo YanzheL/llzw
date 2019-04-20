@@ -1,6 +1,6 @@
 package com.llzw.apigate.web.controller;
 
-import com.llzw.apigate.message.RestResponseFactory;
+import com.llzw.apigate.message.RestResponseEntityFactory;
 import com.llzw.apigate.message.error.RestEntityNotFoundException;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.entity.Product;
@@ -51,7 +51,7 @@ public class ProductController {
     product.setPrice(productCreateDto.getPrice());
     product.setCaId(productCreateDto.getCerId());
     Product saveOpResult = productRepository.save(product);
-    return RestResponseFactory.success(saveOpResult, HttpStatus.CREATED);
+    return RestResponseEntityFactory.success(saveOpResult, HttpStatus.CREATED);
   }
 
   /*
@@ -66,7 +66,7 @@ public class ProductController {
 
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
     List<Product> allMatchingProducts = productRepository.findAll(pageRequest).getContent();
-    return RestResponseFactory.success(allMatchingProducts);
+    return RestResponseEntityFactory.success(allMatchingProducts);
   }
 
   /*
@@ -77,8 +77,8 @@ public class ProductController {
   public ResponseEntity findProductById(@PathVariable(value = "id") Long id) {
     Optional<Product> res = productRepository.findById(id);
     return res.isPresent()
-        ? RestResponseFactory.success(res)
-        : RestResponseFactory.error(new RestEntityNotFoundException(), HttpStatus.NOT_FOUND);
+        ? RestResponseEntityFactory.success(res)
+        : RestResponseEntityFactory.error(new RestEntityNotFoundException());
   }
 
   /*
@@ -93,7 +93,7 @@ public class ProductController {
 //        ((Product) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     Collection<String> msgs = new ArrayList<>();
     productService.updateValid(id, msgs);
-    return RestResponseFactory.success(msgs);
+    return RestResponseEntityFactory.success(msgs);
   }
 
 

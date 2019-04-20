@@ -1,6 +1,6 @@
 package com.llzw.apigate.web.controller;
 
-import com.llzw.apigate.message.RestResponseFactory;
+import com.llzw.apigate.message.RestResponseEntityFactory;
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.persistence.entity.Payment;
 import com.llzw.apigate.persistence.entity.User;
@@ -53,7 +53,7 @@ public class PaymentController {
             paymentCreateDto.getSubject(),
             paymentCreateDto.getDescription()
         );
-    return RestResponseFactory.success(payment, HttpStatus.CREATED);
+    return RestResponseEntityFactory.success(payment, HttpStatus.CREATED);
   }
 
   /**
@@ -67,7 +67,7 @@ public class PaymentController {
   public ResponseEntity retry(@PathVariable(value = "id") Long paymentId)
       throws RestApiException {
     Payment payment = paymentService.retry(paymentId);
-    return RestResponseFactory
+    return RestResponseEntityFactory
         .success(payment.getOrderString(), HttpStatus.CREATED);
   }
 

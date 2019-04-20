@@ -1,9 +1,9 @@
 package com.llzw.apigate.service;
 
-import com.llzw.apigate.message.error.PaymentException;
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
-import com.llzw.apigate.message.error.TradeNotFoundPaymentVendorException;
+import com.llzw.apigate.message.error.RestPaymentException;
+import com.llzw.apigate.message.error.RestTradeNotFoundPaymentVendorException;
 import com.llzw.apigate.persistence.dao.OrderRepository;
 import com.llzw.apigate.persistence.dao.PaymentRepository;
 import com.llzw.apigate.persistence.entity.Order;
@@ -68,7 +68,7 @@ public class SimplePaymentService implements PaymentService {
     }
     Payment payment = paymentOptional.get();
     if (payment.isConfirmed()) {
-      throw new PaymentException(
+      throw new RestPaymentException(
           String.format("Target payment <%s> is already confirmed", paymentId));
     }
     String orderString = vendor.pay(payment);
@@ -100,7 +100,7 @@ public class SimplePaymentService implements PaymentService {
     Payment payment = paymentOptional.get();
     Order targetOrder = payment.getOrder();
     if (Math.abs(payment.getTotalAmount() - targetOrder.getTotalAmount()) > 0.001) {
-      throw new PaymentException("Payment amount mismatch");
+      throw new RestPaymentException("Payment amount mismatch");
     }
     payment.setConfirmed(true);
     payment.setConfirmedAt(new Date());
@@ -126,7 +126,7 @@ public class SimplePaymentService implements PaymentService {
       if (tradeStatue.equals("TRADE_SUCCESS") || tradeStatue.equals("TRADE_FINISHED")) {
         return true;
       }
-    } catch (TradeNotFoundPaymentVendorException e) {
+    } catch (RestTradeNotFoundPaymentVendorException e) {
       Date expire = calculateExpireDate(payment.getCreatedAt(), 15);
       if (new Date().after(expire)) {
         paymentRepository.delete(payment);

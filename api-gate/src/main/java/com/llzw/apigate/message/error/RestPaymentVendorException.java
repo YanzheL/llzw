@@ -3,11 +3,11 @@ package com.llzw.apigate.message.error;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class InvalidRestParameterException extends RestApiException {
+public class RestPaymentVendorException extends RestApiException {
 
-  private final static String type = "INVALID_PARAMETER";
+  private final static String type = "PAYMENT_VENDOR_SERVICE";
 
-  public InvalidRestParameterException(String message) {
+  public RestPaymentVendorException(String message) {
     super(message);
   }
 

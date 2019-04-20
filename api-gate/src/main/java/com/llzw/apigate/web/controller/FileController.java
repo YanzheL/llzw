@@ -1,6 +1,6 @@
 package com.llzw.apigate.web.controller;
 
-import com.llzw.apigate.message.RestResponseFactory;
+import com.llzw.apigate.message.RestResponseEntityFactory;
 import com.llzw.apigate.message.error.RestInternalServerException;
 import com.llzw.apigate.persistence.entity.FileMetaData;
 import com.llzw.apigate.service.FileStorageService;
@@ -53,16 +53,16 @@ public class FileController {
     Optional<FileMetaData> serviceResult = null;
     serviceResult = fileStorageService.save(fileDto);
     return serviceResult.isPresent()
-        ? RestResponseFactory.success(serviceResult.get(), HttpStatus.CREATED)
-        : RestResponseFactory
-            .error(new RestInternalServerException(), HttpStatus.INTERNAL_SERVER_ERROR);
+        ? RestResponseEntityFactory.success(serviceResult.get(), HttpStatus.CREATED)
+        : RestResponseEntityFactory
+            .error(new RestInternalServerException());
   }
 
   @PreAuthorize("hasAuthority('OP_DELETE_FILE')")
   @DeleteMapping(value = "/{hash}")
   public ResponseEntity delete(@PathVariable(value = "hash") String hash) {
     fileStorageService.delete(hash);
-    return RestResponseFactory.success(null);
+    return RestResponseEntityFactory.success(null);
   }
 
   /**

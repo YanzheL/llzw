@@ -1,6 +1,6 @@
 package com.llzw.apigate.web.controller;
 
-import com.llzw.apigate.message.RestResponseFactory;
+import com.llzw.apigate.message.RestResponseEntityFactory;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.UserService;
 import com.llzw.apigate.web.dto.RealNameVerificationDto;
@@ -38,7 +38,7 @@ public class UserController {
     LOGGER.debug("Registering user account with information: {}", userDto);
     Collection<String> msgs = new ArrayList<>();
     userService.register(userDto, msgs);
-    return RestResponseFactory.success(msgs);
+    return RestResponseEntityFactory.success(msgs);
   }
 
   @PutMapping(value = "/realNameVerification")
@@ -49,7 +49,7 @@ public class UserController {
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     Collection<String> msgs = new ArrayList<>();
     userService.realNameVerification(currentUser.getUsername(), realNameVerificationDto, msgs);
-    return RestResponseFactory.success(msgs);
+    return RestResponseEntityFactory.success(msgs);
   }
 
   @PutMapping(value = "/updatePassword")
@@ -65,7 +65,7 @@ public class UserController {
         updatePasswordDto.getOldPassword(),
         updatePasswordDto.getNewPassword(),
         msgs);
-    return RestResponseFactory.success(msgs);
+    return RestResponseEntityFactory.success(msgs);
   }
 
   //  public static boolean isCurrentUser(String username) {

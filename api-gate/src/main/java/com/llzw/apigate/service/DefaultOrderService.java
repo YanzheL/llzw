@@ -1,8 +1,8 @@
 package com.llzw.apigate.service;
 
-import com.llzw.apigate.message.error.InvalidRestParameterException;
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
+import com.llzw.apigate.message.error.RestInvalidParameterException;
 import com.llzw.apigate.persistence.dao.AddressRepository;
 import com.llzw.apigate.persistence.dao.OrderRepository;
 import com.llzw.apigate.persistence.dao.ProductRepository;
@@ -90,7 +90,7 @@ public class DefaultOrderService implements OrderService {
           .filter(o -> o.belongsToUser(relatedUser))
           .collect(Collectors.toList());
     } catch (IllegalAccessException e) {
-      throw new InvalidRestParameterException(e.getMessage());
+      throw new RestInvalidParameterException(e.getMessage());
     }
   }
 
