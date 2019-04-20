@@ -1,23 +1,17 @@
 package com.llzw.apigate.service.error;
 
-import com.llzw.apigate.web.util.ApiErrorMessage;
+import lombok.NoArgsConstructor;
 
-public class RestApiException extends Exception {
+@NoArgsConstructor
+public class RestApiException extends Exception implements RestApiErrorMessage {
 
-  private final String errorCode = "API";
-
-  public RestApiException() {
-  }
+  private final static String type = "API";
 
   public RestApiException(String message) {
     super(message);
   }
 
-  public String getErrorCode() {
-    return errorCode;
-  }
-
-  public ApiErrorMessage getApiErrorMessage() {
-    return new ApiErrorMessage(getErrorCode(), getMessage());
+  public String getType() {
+    return type;
   }
 }

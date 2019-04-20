@@ -1,18 +1,18 @@
 package com.llzw.apigate.service.error;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class InvalidRestParameterException extends RestApiException {
 
-  private final String errorCode = "INVALID_PARAMETER";
-
-  public InvalidRestParameterException() {
-  }
+  private final static String type = "INVALID_PARAMETER";
 
   public InvalidRestParameterException(String message) {
     super(message);
   }
 
   @Override
-  public String getErrorCode() {
-    return super.getErrorCode() + "." + errorCode;
+  public String getType() {
+    return super.getType() + "." + type;
   }
 }

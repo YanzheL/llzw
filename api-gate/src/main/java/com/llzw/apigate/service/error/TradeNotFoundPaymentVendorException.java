@@ -1,18 +1,18 @@
 package com.llzw.apigate.service.error;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class TradeNotFoundPaymentVendorException extends PaymentVendorException {
 
-  private final String errorCode = "TRADE_NOT_FOUND";
-
-  public TradeNotFoundPaymentVendorException() {
-  }
+  private final static String type = "TRADE_NOT_FOUND";
 
   public TradeNotFoundPaymentVendorException(String message) {
     super(message);
   }
 
   @Override
-  public String getErrorCode() {
-    return super.getErrorCode() + "." + errorCode;
+  public String getType() {
+    return super.getType() + "." + type;
   }
 }

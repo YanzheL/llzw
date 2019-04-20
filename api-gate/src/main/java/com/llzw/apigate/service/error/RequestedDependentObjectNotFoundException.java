@@ -1,18 +1,18 @@
 package com.llzw.apigate.service.error;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class RequestedDependentObjectNotFoundException extends RestApiException {
 
-  private final String errorCode = "REQUESTED_DEPENDENT_OBJECT_NOT_FOUND";
-
-  public RequestedDependentObjectNotFoundException() {
-  }
+  private final static String type = "REQUESTED_DEPENDENT_OBJECT_NOT_FOUND";
 
   public RequestedDependentObjectNotFoundException(String message) {
     super(message);
   }
 
   @Override
-  public String getErrorCode() {
-    return super.getErrorCode() + "." + errorCode;
+  public String getType() {
+    return super.getType() + "." + type;
   }
 }

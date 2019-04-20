@@ -1,18 +1,18 @@
 package com.llzw.apigate.service.error;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class RestAccessDeniedException extends RestSecurityException {
 
-  private final String errorCode = "ACCESS_DENIED";
-
-  public RestAccessDeniedException() {
-  }
+  private final static String type = "ACCESS_DENIED";
 
   public RestAccessDeniedException(String message) {
     super(message);
   }
 
   @Override
-  public String getErrorCode() {
-    return super.getErrorCode() + "." + errorCode;
+  public String getType() {
+    return super.getType() + "." + type;
   }
 }

@@ -1,18 +1,18 @@
 package com.llzw.apigate.service.error;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class RestSecurityException extends RestApiException {
 
-  private final String errorCode = "SECURITY";
-
-  public RestSecurityException() {
-  }
+  private final static String type = "SECURITY";
 
   public RestSecurityException(String message) {
     super(message);
   }
 
   @Override
-  public String getErrorCode() {
-    return super.getErrorCode() + "." + errorCode;
+  public String getType() {
+    return super.getType() + "." + type;
   }
 }

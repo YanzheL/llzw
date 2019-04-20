@@ -36,7 +36,8 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
   }
 
   protected ResponseEntity<Object> handleAny(Exception ex, HttpStatus status) {
-    return StandardRestResponse.errorResponseEntity(ex, status);
+    RestApiException apiException = new RestApiException(ex.getMessage());
+    return StandardRestResponse.errorResponseEntity(apiException, status);
   }
 
   @ExceptionHandler({RestApiException.class})
@@ -50,7 +51,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
       status = HttpStatus.FORBIDDEN;
     }
     return StandardRestResponse
-        .errorResponseEntity(ex.getApiErrorMessage(), status);
+        .errorResponseEntity(ex, status);
   }
 
   @Override
