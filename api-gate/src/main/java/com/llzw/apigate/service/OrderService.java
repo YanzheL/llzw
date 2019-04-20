@@ -1,4 +1,4 @@
-package com.llzw.apigate;
+package com.llzw.apigate.service;
 
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.persistence.entity.Order;
