@@ -14,7 +14,7 @@ public class ProductCreateDto {
 
   @NotNull(message = "the name of the product can't be empty")
   @Size(min = 1, max = 30, message = "Length should between 1 to 30")
-  protected String productName;
+  protected String name;
 
   @NotNull(message = "introduction can't be empty")
   @Size(min = 1, max = 50, message = "Length should between 1 to 50")
@@ -29,6 +29,6 @@ public class ProductCreateDto {
 
   @NotNull
   @Size(min = 1, max = 50, message = "Length should between 1 to 50")
-  protected String cerId;
+  protected String caId;
 
 }
