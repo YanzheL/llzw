@@ -1,8 +1,9 @@
 package com.llzw.apigate.web.error;
 
-import com.llzw.apigate.service.error.RequestedDependentObjectNotFoundException;
 import com.llzw.apigate.service.error.RestAccessDeniedException;
 import com.llzw.apigate.service.error.RestApiException;
+import com.llzw.apigate.service.error.RestDependentEntityNotFoundException;
+import com.llzw.apigate.service.error.RestEntityNotFoundException;
 import com.llzw.apigate.service.error.TradeNotFoundPaymentVendorException;
 import com.llzw.apigate.web.util.StandardRestResponse;
 import org.springframework.http.HttpHeaders;
@@ -43,7 +44,9 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
   @ExceptionHandler({RestApiException.class})
   protected ResponseEntity<Object> handleRestApiException(RestApiException ex) {
     HttpStatus status = HttpStatus.BAD_REQUEST;
-    if (ex instanceof RequestedDependentObjectNotFoundException) {
+    if (ex instanceof RestDependentEntityNotFoundException) {
+      status = HttpStatus.NOT_FOUND;
+    } else if (ex instanceof RestEntityNotFoundException) {
       status = HttpStatus.NOT_FOUND;
     } else if (ex instanceof TradeNotFoundPaymentVendorException) {
       status = HttpStatus.NOT_FOUND;
