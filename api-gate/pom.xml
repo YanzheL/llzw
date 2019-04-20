@@ -58,6 +58,10 @@
       <version>8.0.15</version>
     </dependency>
     <dependency>
+      <artifactId>h2</artifactId>
+      <groupId>com.h2database</groupId>
+    </dependency>
+    <dependency>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
       <groupId>org.springframework.boot</groupId>
     </dependency>
@@ -92,6 +96,12 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <groupId>org.springframework.boot</groupId>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>junit</artifactId>
+          <groupId>junit</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <artifactId>spring-restdocs-mockmvc</artifactId>
@@ -99,9 +109,20 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <artifactId>spring-security-test</artifactId>
       <groupId>org.springframework.security</groupId>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>junit</artifactId>
+          <groupId>junit</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <artifactId>passay</artifactId>
@@ -117,6 +138,17 @@
       <artifactId>tika-core</artifactId>
       <groupId>org.apache.tika</groupId>
       <version>1.20</version>
+    </dependency>
+    <dependency>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <optional>false</optional>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
+    <dependency>
+      <artifactId>alipay-sdk-java</artifactId>
+      <groupId>com.alipay.sdk</groupId>
+      <version>3.7.26.ALL</version>
     </dependency>
   </dependencies>
   <description>Demo project for Spring Boot</description>

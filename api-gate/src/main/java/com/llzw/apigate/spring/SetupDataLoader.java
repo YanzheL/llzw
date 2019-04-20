@@ -17,11 +17,12 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
-public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
+public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent>, Ordered {
 
   private static Map<RoleType, Collection<PrivilegeType>> defaultRoleMapping = new HashMap<>();
 
@@ -52,7 +53,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
             PrivilegeType.OP_MANAGE_PASSWORD));
   }
 
-  private boolean alreadySetup = false;
+  private static boolean alreadySetup = false;
 
   @Setter(onMethod_ = @Autowired)
   private RoleRepository roleRepository;
@@ -62,8 +63,15 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
   // API
 
+
+  @Override
+  public int getOrder() {
+    return 0;
+  }
+
   @Override
   @Transactional
+  synchronized
   public void onApplicationEvent(final ContextRefreshedEvent event) {
     if (alreadySetup) {
       return;
