@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-// @RepositoryRestController
 @RestController
 @BasePathAwareController
 @RequestMapping(value = "/orders")
@@ -35,7 +34,7 @@ public class OrderController {
   @Setter(onMethod_ = @Autowired)
   private OrderService orderService;
 
-  @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
+  @PreAuthorize("hasAuthority('OP_READ_ORDER')")
   @GetMapping
   public ResponseEntity searchOrders(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
@@ -49,7 +48,7 @@ public class OrderController {
     );
   }
 
-  @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
+  @PreAuthorize("hasAuthority('OP_READ_ORDER')")
   @GetMapping(value = "/{id}")
   public ResponseEntity getOrder(@PathVariable(value = "id") Long id) {
     User currentUser =
@@ -67,7 +66,7 @@ public class OrderController {
   }
 
   @PreAuthorize("hasAuthority('OP_CREATE_ORDER')")
-  @PostMapping(value = "")
+  @PostMapping
   @Transactional
   public ResponseEntity createOrder(@Valid OrderCreateDto orderCreateDto) throws RestApiException {
     User currentUser =
