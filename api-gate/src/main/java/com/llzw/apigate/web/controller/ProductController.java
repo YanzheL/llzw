@@ -3,7 +3,6 @@ package com.llzw.apigate.web.controller;
 import com.llzw.apigate.message.RestResponseEntityFactory;
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestEntityNotFoundException;
-import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.ProductService;
 import com.llzw.apigate.web.dto.ProductCreateDto;
@@ -30,9 +29,6 @@ import org.springframework.web.bind.annotation.RestController;
 @BasePathAwareController
 @RequestMapping(value = "/products")
 public class ProductController {
-
-  @Setter(onMethod_ = @Autowired)
-  private ProductRepository productRepository;
 
   @Setter(onMethod_ = @Autowired)
   private ProductService productService;
