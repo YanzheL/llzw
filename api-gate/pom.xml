@@ -81,7 +81,6 @@
       <artifactId>spring-boot-starter-web</artifactId>
       <groupId>org.springframework.boot</groupId>
     </dependency>
-
     <dependency>
       <artifactId>spring-boot-devtools</artifactId>
       <groupId>org.springframework.boot</groupId>
@@ -149,6 +148,12 @@
       <artifactId>alipay-sdk-java</artifactId>
       <groupId>com.alipay.sdk</groupId>
       <version>3.7.26.ALL</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.linkedin.urls/url-detector -->
+    <dependency>
+      <artifactId>url-detector</artifactId>
+      <groupId>com.linkedin.urls</groupId>
+      <version>0.1.17</version>
     </dependency>
   </dependencies>
   <description>Demo project for Spring Boot</description>
