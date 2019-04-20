@@ -18,6 +18,8 @@ public interface FileStorageService {
 
   FileDto load(String path) throws IOException;
 
+  boolean increaseReferenceCount(String path);
+
   /**
    * Perform delete operation on the target file. The actual action of <tt>delete</tt> is
    * implementation-defined.
