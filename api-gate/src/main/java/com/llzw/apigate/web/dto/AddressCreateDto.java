@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class AddressDto {
+public class AddressCreateDto {
 
   @NotNull
   protected Long id;

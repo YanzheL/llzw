@@ -4,10 +4,9 @@ import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.ProductService;
+import com.llzw.apigate.service.error.RestApiException;
 import com.llzw.apigate.web.dto.ProductCreateDto;
 import com.llzw.apigate.web.util.StandardRestResponse;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -15,7 +14,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,8 +26,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@RepositoryRestController
+@RestController
+@BasePathAwareController
 @RequestMapping(value = "/products")
 public class ProductController {
 
@@ -38,9 +39,9 @@ public class ProductController {
   @Setter(onMethod_ = @Autowired)
   private ProductService productService;
 
-  /*
-   * create new product
-   * */
+  /**
+   * Create new product
+   */
   @PreAuthorize("hasRole('SELLER')")
   @PostMapping
   @Transactional          // transaction management
@@ -58,11 +59,10 @@ public class ProductController {
     return StandardRestResponse.getResponseEntity(saveOpResult, true, HttpStatus.CREATED);
   }
 
-  /*
-   * scan all products
-   * */
+  /**
+   * Search all products
+   */
   @GetMapping
-  @Transactional          // transaction management
   public ResponseEntity search(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
       @RequestParam(value = "size", required = false, defaultValue = "20") int size,
@@ -72,11 +72,10 @@ public class ProductController {
     return StandardRestResponse.getResponseEntity(allMatchingProducts);
   }
 
-  /*
-   * search product by id
-   * */
+  /**
+   * Get product by id
+   */
   @GetMapping(value = "/{id}")
-  @Transactional          // transaction management
   public ResponseEntity get(@PathVariable(value = "id") Long id) {
     Optional<Product> res = productRepository.findById(id);
     return res.isPresent()
@@ -84,22 +83,17 @@ public class ProductController {
         : StandardRestResponse.getResponseEntity(null, false, HttpStatus.NOT_FOUND);
   }
 
-  /*
-   * invalidate a specific product
-   * */
+  /**
+   * Invalidate a specific product
+   */
+  @PreAuthorize("hasRole('SELLER')")
   @DeleteMapping(value = "/{id}")
   @Transactional          // transaction management
-  public ResponseEntity invalidate(@PathVariable(value = "id") Long id) {
-
+  public ResponseEntity invalidate(@PathVariable(value = "id") Long id) throws RestApiException {
 //    LOGGER.debug("Verifying user account with information: {}", updatePasswordDto);
 //    Product currentUser =
 //        ((Product) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    Collection<String> msgs = new ArrayList<>();
-    return StandardRestResponse.getResponseEntity(
-        msgs,
-        productService.updateValid(
-            id,
-            msgs));
+    return StandardRestResponse.getResponseEntity(null, productService.updateValid(id));
   }
 
 

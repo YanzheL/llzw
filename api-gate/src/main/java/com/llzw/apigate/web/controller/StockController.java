@@ -20,7 +20,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,8 +31,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@RepositoryRestController
+@RestController
+@BasePathAwareController
 @RequestMapping(value = "/stocks")
 public class StockController {
 
@@ -42,9 +44,9 @@ public class StockController {
   @Setter(onMethod_ = @Autowired)
   private ProductRepository productRepository;
 
-  /*
-   * create a new stock
-   * */
+  /**
+   * Create a new stock
+   */
   @PreAuthorize("hasAnyRole('SELLER')")
   @PostMapping(value = "")
   @Transactional          // transaction management
@@ -65,9 +67,9 @@ public class StockController {
     return StandardRestResponse.getResponseEntity(saveOpResult, true, HttpStatus.CREATED);
   }
 
-  /*
-   * get stock by given parameters
-   * */
+  /**
+   * Search stocks by given parameters
+   */
   @PreAuthorize("hasRole('SELLER')")
   @GetMapping
   public ResponseEntity searchStock(
@@ -93,9 +95,9 @@ public class StockController {
     }
   }
 
-  /*
-   * get specific stock
-   * */
+  /**
+   * Get a specific stock
+   */
   @PreAuthorize("hasAnyRole('SELLER')")
   @GetMapping(value = "/{id}")
   public ResponseEntity getStock(@PathVariable(value = "id") Long id) {

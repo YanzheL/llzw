@@ -1,20 +1,18 @@
 package com.llzw.apigate.web.controller;
 
 import com.llzw.apigate.persistence.dao.AddressRepository;
-import com.llzw.apigate.persistence.dao.customquery.SearchCriterionSpecificationFactory;
 import com.llzw.apigate.persistence.entity.Address;
 import com.llzw.apigate.persistence.entity.User;
-import com.llzw.apigate.web.dto.AddressDto;
-import com.llzw.apigate.web.dto.AddressSearchDto;
+import com.llzw.apigate.web.dto.AddressCreateDto;
 import com.llzw.apigate.web.util.StandardRestResponse;
-import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,39 +23,39 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@RepositoryRestController
+@RestController
+@BasePathAwareController
 @RequestMapping(value = "/addresses")
 public class AddressController {
+
   @Setter(onMethod_ = @Autowired)
   private AddressRepository addressRepository;
 
-//  @Setter(onMethod_ = @Autowired)
-//  private UserService userService;
-
-  /*
-  * create addresses
-  * */
+  /**
+   * Create a new address
+   */
   @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
   @PostMapping(value = "")
   @Transactional
-  public ResponseEntity createAddress(@Valid AddressDto addressDto) {
+  public ResponseEntity createAddress(@Valid AddressCreateDto dto) {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-
     Address address = new Address();
     address.setOwner(currentUser);
-    address.setAddress(addressDto.getAddress());
-    address.setProvince(addressDto.getProvince());
-    address.setCity(addressDto.getCity());
-    address.setDistrict(addressDto.getDistrict());
-    address.setZip(addressDto.getZip());
+    address.setAddress(dto.getAddress());
+    address.setProvince(dto.getProvince());
+    address.setCity(dto.getCity());
+    address.setDistrict(dto.getDistrict());
+    address.setZip(dto.getZip());
     Address saveOpResult = addressRepository.save(address);
     return StandardRestResponse.getResponseEntity(saveOpResult, true, HttpStatus.CREATED);
   }
-  /*
-  * get a specific address
-  * */
+
+  /**
+   * Get a specific address
+   */
   @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
   @GetMapping(value = "/{id}")
   public ResponseEntity getSpecificAddress(@PathVariable(value = "id") Long id) {
@@ -69,21 +67,20 @@ public class AddressController {
     return StandardRestResponse.getResponseEntity(address, true);
   }
 
-  /*
-   * get a specific address by ownerId
-   * */
-  @PreAuthorize("hasAnyRole('CUSTOMER')")
-  @GetMapping(value = "")
+  /**
+   * Get a user's all addresses
+   */
+  @PreAuthorize("hasAnyRole('CUSTOMER','SELLER')")
+  @GetMapping
   public ResponseEntity getAddressByOwnerId(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
-      @RequestParam(value = "size", required = false, defaultValue = "20") int size,
-      AddressSearchDto searchDto) throws IllegalAccessException {
+      @RequestParam(value = "size", required = false, defaultValue = "20") int size) {
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
-    List<Address> allMatchingAddresses =
-        addressRepository
-            .findAll(SearchCriterionSpecificationFactory.fromExample(searchDto), pageRequest)
-            .getContent();
-    return StandardRestResponse.getResponseEntity(allMatchingAddresses);
+    return StandardRestResponse.getResponseEntity(
+        addressRepository.findAllByOwner(currentUser, pageRequest)
+            .collect(Collectors.toList())
+    );
   }
-
 }

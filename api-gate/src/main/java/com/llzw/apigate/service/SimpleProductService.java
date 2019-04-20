@@ -2,7 +2,8 @@ package com.llzw.apigate.service;
 
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.entity.Product;
-import java.util.Collection;
+import com.llzw.apigate.service.error.RequestedDependentObjectNotFoundException;
+import com.llzw.apigate.service.error.RestApiException;
 import java.util.Optional;
 import java.util.function.Predicate;
 import lombok.Setter;
@@ -18,32 +19,29 @@ public class SimpleProductService implements ProductService {
   private ProductRepository productRepository;
 
   @Override
-  public boolean updateValid(
-      Long id, Collection<String> msgs) {
+  public boolean updateValid(Long id) throws RestApiException {
     return applyToUser(
         id,
         product -> {
           product.setValid(false);
           return true;
-        },
-        msgs);
+        });
   }
 
   /*
-  * make sure whether specific product exists
-  * */
-  private boolean applyToUser(Long id, Predicate<Product> product, Collection<String> msgs) {
+   * make sure whether specific product exists
+   * */
+  private boolean applyToUser(Long id, Predicate<Product> product) throws RestApiException {
     Optional<Product> productOptional = productRepository.findById(id);
-    if (productOptional.isPresent()) {
-      Product found = productOptional.get();
-      boolean success = product.test(found);
-      if (success) {
-        productRepository.save(found);
-      }
-      return success;
-    } else {
-      msgs.add("Product doesn't exist");
-      return false;
+    if (!productOptional.isPresent()) {
+      throw new RequestedDependentObjectNotFoundException(
+          String.format("Product <%s> do not exist", id));
     }
+    Product found = productOptional.get();
+    boolean success = product.test(found);
+    if (success) {
+      productRepository.save(found);
+    }
+    return success;
   }
 }

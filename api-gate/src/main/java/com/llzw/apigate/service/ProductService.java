@@ -1,7 +1,8 @@
 package com.llzw.apigate.service;
 
-import java.util.Collection;
+import com.llzw.apigate.service.error.RestApiException;
 
 public interface ProductService {
-  boolean updateValid(Long id, Collection<String> msgs);
+
+  boolean updateValid(Long id) throws RestApiException;
 }
