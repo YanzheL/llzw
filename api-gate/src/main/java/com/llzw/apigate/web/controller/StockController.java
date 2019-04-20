@@ -2,15 +2,16 @@ package com.llzw.apigate.web.controller;
 
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.dao.StockRepository;
-import com.llzw.apigate.persistence.dao.customquery.SearchCriterion;
 import com.llzw.apigate.persistence.dao.customquery.SearchCriterionSpecificationFactory;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
+import com.llzw.apigate.service.error.InvalidRestParameterException;
+import com.llzw.apigate.service.error.RequestedDependentObjectNotFoundException;
+import com.llzw.apigate.service.error.RestApiException;
 import com.llzw.apigate.web.dto.StockCreateDto;
 import com.llzw.apigate.web.dto.StockSearchDto;
 import com.llzw.apigate.web.util.StandardRestResponse;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,7 +20,6 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,16 +48,14 @@ public class StockController {
   @PreAuthorize("hasAnyRole('SELLER')")
   @PostMapping(value = "")
   @Transactional          // transaction management
-  public ResponseEntity createStock(@Valid StockCreateDto stockCreateDto) {
-
-    Optional<Product> productOptional = productRepository.findById(stockCreateDto.getProductId().getId());
+  public ResponseEntity createStock(@Valid StockCreateDto stockCreateDto) throws RestApiException {
+    Optional<Product> productOptional = productRepository.findById(stockCreateDto.getProductId());
     if (!productOptional.isPresent()) {
-      return StandardRestResponse.getResponseEntity(
-          "Cannot find specified product", false, HttpStatus.NOT_FOUND);
+      throw new RequestedDependentObjectNotFoundException(
+          String.format("Product <%s> do not exist", stockCreateDto.getProductId()));
     }
-
     Stock stock = new Stock();
-    stock.setProductId(productOptional.get());
+    stock.setProduct(productOptional.get());
     stock.setProducedAt(stockCreateDto.getProducedAt());
     stock.setShelfLife(stockCreateDto.getShelfLife());
     stock.setTotalQuantity(stockCreateDto.getTotalQuantity());
@@ -70,34 +68,34 @@ public class StockController {
   /*
    * get stock by given parameters
    * */
-  @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
-  @GetMapping(value = "")
+  @PreAuthorize("hasRole('SELLER')")
+  @GetMapping
   public ResponseEntity searchStock(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
       @RequestParam(value = "size", required = false, defaultValue = "20") int size,
-      StockSearchDto searchDto)throws IllegalAccessException  {
+      StockSearchDto searchDto) throws RestApiException {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    //Optional<Product> productOptional = productRepository.findById(stockCreateDto.getProductId());
-    //get all stock by given parameters
-    List<Stock> allMatchingProducts =
-        stockRepository
-            .findAll(SearchCriterionSpecificationFactory.fromExample(searchDto), pageRequest)
-            .getContent();
-    // Results may contain other product's order, so we should filter them out.
-    List<Stock> res =
-        allMatchingProducts.stream()
-            .filter(o -> o.belongsToUser(currentUser))
-            .collect(Collectors.toList());
-    return res.isEmpty()
-        ? StandardRestResponse.getResponseEntity(null, false, HttpStatus.NOT_FOUND)
-        : StandardRestResponse.getResponseEntity(res, true);
+    try {
+      List<Stock> allMatch =
+          stockRepository
+              .findAll(SearchCriterionSpecificationFactory.fromExample(searchDto), pageRequest)
+              .getContent();
+      // Results may contain other user's stock, so we should filter them out.
+      List<Stock> res =
+          allMatch.stream()
+              .filter(o -> o.belongsToSeller(currentUser))
+              .collect(Collectors.toList());
+      return StandardRestResponse.getResponseEntity(res, true);
+    } catch (IllegalAccessException e) {
+      throw new InvalidRestParameterException(e.getMessage());
+    }
   }
 
   /*
-  * get specific stock
-  * */
+   * get specific stock
+   * */
   @PreAuthorize("hasAnyRole('SELLER')")
   @GetMapping(value = "/{id}")
   public ResponseEntity getStock(@PathVariable(value = "id") Long id) {
@@ -106,32 +104,7 @@ public class StockController {
       return StandardRestResponse.getResponseEntity(null, false, HttpStatus.NOT_FOUND);
     }
     Stock stock = res.get();
-    return StandardRestResponse.getResponseEntity(stock, true);
-  }
-
-  // TODO: Can we generalize this?
-  private Specification<Stock> findByExample(
-      Long productId, Long shelfLife, Long trackingId, String carrierName,Boolean valid) {
-    List<SearchCriterion> criteria = new ArrayList<>();
-    if (productId != null) {
-      criteria.add(new SearchCriterion("productId", "=", productId));
-    }
-    if (shelfLife != null) {
-      criteria.add(new SearchCriterion("shelfLife", "=", shelfLife));
-    }
-    if (trackingId != null) {
-      criteria.add(new SearchCriterion("trackingId", "=", trackingId));
-    }
-    if (carrierName != null) {
-      criteria.add(new SearchCriterion("carrierName", "=", carrierName));
-    }
-    //valid=true: the stock is valid
-    if (valid != null) {
-      criteria.add(new SearchCriterion("valid", "=", valid));
-    }
-
-
-    return SearchCriterionSpecificationFactory.and(criteria);
+    return StandardRestResponse.getResponseEntity(stock);
   }
 
   /*
