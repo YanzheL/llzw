@@ -1,6 +1,5 @@
 package com.llzw.apigate.web.dto;
 
-import com.llzw.apigate.persistence.entity.Product;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -10,7 +9,7 @@ import lombok.Data;
 public class StockCreateDto {
   @NotNull
   //@Size(min = 5, max = 30, message = "Length should between 5 to 30")
-  protected Product productId;
+  protected Long productId;
 
   @NotNull
   protected Date createdAt;
