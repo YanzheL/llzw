@@ -1,6 +1,7 @@
 package com.llzw.apigate.web.controller;
 
 import com.llzw.apigate.message.RestResponseEntityFactory;
+import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.UserService;
 import com.llzw.apigate.web.dto.RealNameVerificationDto;
@@ -34,28 +35,28 @@ public class UserController {
   private UserService userService;
 
   @PostMapping(value = "/register")
-  public ResponseEntity register(@Valid UserDto userDto) {
+  public ResponseEntity register(@Valid UserDto userDto) throws RestApiException {
     LOGGER.debug("Registering user account with information: {}", userDto);
     Collection<String> msgs = new ArrayList<>();
-    userService.register(userDto, msgs);
+    userService.register(userDto);
     return RestResponseEntityFactory.success(msgs);
   }
 
   @PutMapping(value = "/realNameVerification")
   public ResponseEntity realNameVerification(
-      @Valid RealNameVerificationDto realNameVerificationDto) {
+      @Valid RealNameVerificationDto realNameVerificationDto) throws RestApiException {
     LOGGER.debug("Verifying user account with information: {}", realNameVerificationDto);
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     Collection<String> msgs = new ArrayList<>();
-    userService.realNameVerification(currentUser.getUsername(), realNameVerificationDto, msgs);
+    userService.realNameVerification(currentUser.getUsername(), realNameVerificationDto);
     return RestResponseEntityFactory.success(msgs);
   }
 
   @PutMapping(value = "/updatePassword")
   @PreAuthorize("hasAuthority('OP_MANAGE_PASSWORD')")
-  public ResponseEntity updatePassword(@Valid UpdatePasswordDto updatePasswordDto) {
-
+  public ResponseEntity updatePassword(@Valid UpdatePasswordDto updatePasswordDto)
+      throws RestApiException {
     LOGGER.debug("Verifying user account with information: {}", updatePasswordDto);
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
