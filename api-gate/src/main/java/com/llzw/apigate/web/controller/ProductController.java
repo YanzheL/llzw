@@ -1,12 +1,13 @@
 package com.llzw.apigate.web.controller;
 
+import com.llzw.apigate.message.RestResponseEntityFactory;
+import com.llzw.apigate.message.error.RestApiException;
+import com.llzw.apigate.message.error.RestEntityNotFoundException;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.ProductService;
-import com.llzw.apigate.service.error.RestApiException;
 import com.llzw.apigate.web.dto.ProductCreateDto;
-import com.llzw.apigate.web.util.StandardRestResponse;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -56,7 +57,7 @@ public class ProductController {
     product.setPrice(productCreateDto.getPrice());
     product.setCaId(productCreateDto.getCaId());
     Product saveOpResult = productRepository.save(product);
-    return StandardRestResponse.getResponseEntity(saveOpResult, true, HttpStatus.CREATED);
+    return RestResponseEntityFactory.success(saveOpResult, HttpStatus.CREATED);
   }
 
   /**
@@ -69,7 +70,7 @@ public class ProductController {
       @RequestParam(value = "valid", required = false, defaultValue = "True") boolean valid) {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
     List<Product> allMatchingProducts = productRepository.findAll(pageRequest).getContent();
-    return StandardRestResponse.getResponseEntity(allMatchingProducts);
+    return RestResponseEntityFactory.success(allMatchingProducts);
   }
 
   /**
@@ -79,8 +80,8 @@ public class ProductController {
   public ResponseEntity get(@PathVariable(value = "id") Long id) {
     Optional<Product> res = productRepository.findById(id);
     return res.isPresent()
-        ? StandardRestResponse.getResponseEntity(res)
-        : StandardRestResponse.getResponseEntity(null, false, HttpStatus.NOT_FOUND);
+        ? RestResponseEntityFactory.success(res)
+        : RestResponseEntityFactory.error(new RestEntityNotFoundException());
   }
 
   /**
@@ -88,13 +89,8 @@ public class ProductController {
    */
   @PreAuthorize("hasRole('SELLER')")
   @DeleteMapping(value = "/{id}")
-  @Transactional          // transaction management
+  @Transactional
   public ResponseEntity invalidate(@PathVariable(value = "id") Long id) throws RestApiException {
-//    LOGGER.debug("Verifying user account with information: {}", updatePasswordDto);
-//    Product currentUser =
-//        ((Product) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    return StandardRestResponse.getResponseEntity(null, productService.updateValid(id));
+    return RestResponseEntityFactory.success(productService.updateValid(id));
   }
-
-
 }

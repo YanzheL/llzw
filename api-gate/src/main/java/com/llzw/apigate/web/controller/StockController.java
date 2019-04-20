@@ -1,17 +1,18 @@
 package com.llzw.apigate.web.controller;
 
+import com.llzw.apigate.message.RestResponseEntityFactory;
+import com.llzw.apigate.message.error.RestApiException;
+import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
+import com.llzw.apigate.message.error.RestEntityNotFoundException;
+import com.llzw.apigate.message.error.RestInvalidParameterException;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.dao.StockRepository;
 import com.llzw.apigate.persistence.dao.customquery.SearchCriterionSpecificationFactory;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
-import com.llzw.apigate.service.error.InvalidRestParameterException;
-import com.llzw.apigate.service.error.RequestedDependentObjectNotFoundException;
-import com.llzw.apigate.service.error.RestApiException;
 import com.llzw.apigate.web.dto.StockCreateDto;
 import com.llzw.apigate.web.dto.StockSearchDto;
-import com.llzw.apigate.web.util.StandardRestResponse;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,7 +54,7 @@ public class StockController {
   public ResponseEntity createStock(@Valid StockCreateDto stockCreateDto) throws RestApiException {
     Optional<Product> productOptional = productRepository.findById(stockCreateDto.getProductId());
     if (!productOptional.isPresent()) {
-      throw new RequestedDependentObjectNotFoundException(
+      throw new RestDependentEntityNotFoundException(
           String.format("Product <%s> do not exist", stockCreateDto.getProductId()));
     }
     Stock stock = new Stock();
@@ -64,7 +65,7 @@ public class StockController {
     stock.setTrackingId(stockCreateDto.getTrackingId());
     stock.setCarrierName(stockCreateDto.getCarrierName());
     Stock saveOpResult = stockRepository.save(stock);
-    return StandardRestResponse.getResponseEntity(saveOpResult, true, HttpStatus.CREATED);
+    return RestResponseEntityFactory.success(saveOpResult, HttpStatus.CREATED);
   }
 
   /**
@@ -75,23 +76,21 @@ public class StockController {
   public ResponseEntity searchStock(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
       @RequestParam(value = "size", required = false, defaultValue = "20") int size,
-      StockSearchDto searchDto) throws RestApiException {
+      StockSearchDto dto) throws RestApiException {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     try {
-      List<Stock> allMatch =
-          stockRepository
-              .findAll(SearchCriterionSpecificationFactory.fromExample(searchDto), pageRequest)
-              .getContent();
       // Results may contain other user's stock, so we should filter them out.
       List<Stock> res =
-          allMatch.stream()
+          stockRepository
+              .findAll(SearchCriterionSpecificationFactory.fromExample(dto), pageRequest)
+              .getContent().stream()
               .filter(o -> o.belongsToSeller(currentUser))
               .collect(Collectors.toList());
-      return StandardRestResponse.getResponseEntity(res, true);
+      return RestResponseEntityFactory.success(res);
     } catch (IllegalAccessException e) {
-      throw new InvalidRestParameterException(e.getMessage());
+      throw new RestInvalidParameterException(e.getMessage());
     }
   }
 
@@ -100,13 +99,12 @@ public class StockController {
    */
   @PreAuthorize("hasAnyRole('SELLER')")
   @GetMapping(value = "/{id}")
-  public ResponseEntity getStock(@PathVariable(value = "id") Long id) {
-    Optional<Stock> res = stockRepository.findById(id);
-    if (!res.isPresent()) {
-      return StandardRestResponse.getResponseEntity(null, false, HttpStatus.NOT_FOUND);
-    }
-    Stock stock = res.get();
-    return StandardRestResponse.getResponseEntity(stock);
+  public ResponseEntity getStock(@PathVariable(value = "id") Long id) throws RestApiException {
+    return RestResponseEntityFactory.success(
+        stockRepository.findById(id).orElseThrow(() -> new RestEntityNotFoundException(
+            String.format("Stock <%d> does not exist", id)
+        ))
+    );
   }
 
   /*

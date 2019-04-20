@@ -1,6 +1,8 @@
 package com.llzw.apigate.service;
 
-import com.llzw.apigate.OrderService;
+import com.llzw.apigate.message.error.RestApiException;
+import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
+import com.llzw.apigate.message.error.RestInvalidParameterException;
 import com.llzw.apigate.persistence.dao.AddressRepository;
 import com.llzw.apigate.persistence.dao.OrderRepository;
 import com.llzw.apigate.persistence.dao.ProductRepository;
@@ -12,9 +14,6 @@ import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
-import com.llzw.apigate.service.error.InvalidRestParameterException;
-import com.llzw.apigate.service.error.RequestedDependentObjectNotFoundException;
-import com.llzw.apigate.service.error.RestApiException;
 import com.llzw.apigate.web.dto.OrderSearchDto;
 import java.util.List;
 import java.util.Optional;
@@ -47,12 +46,12 @@ public class DefaultOrderService implements OrderService {
       throws RestApiException {
     Optional<Product> productOptional = productRepository.findById(productId);
     if (!productOptional.isPresent()) {
-      throw new RequestedDependentObjectNotFoundException(
+      throw new RestDependentEntityNotFoundException(
           String.format("Product <%s> do not exist", productId));
     }
     Optional<Address> addressOptional = addressRepository.findById(addressId);
     if (!addressOptional.isPresent()) {
-      throw new RequestedDependentObjectNotFoundException(
+      throw new RestDependentEntityNotFoundException(
           String.format("Address <%s> do not exist", addressId));
     }
     AddressBean addressBean = addressOptional.get();
@@ -64,7 +63,7 @@ public class DefaultOrderService implements OrderService {
       stockOptional = validStocks.findFirst();
     }
     if (!stockOptional.isPresent()) {
-      throw new RequestedDependentObjectNotFoundException(
+      throw new RestDependentEntityNotFoundException(
           "Cannot find an available stock specifies that quantity");
     }
     Stock stock = stockOptional.get();
@@ -91,7 +90,7 @@ public class DefaultOrderService implements OrderService {
           .filter(o -> o.belongsToUser(relatedUser))
           .collect(Collectors.toList());
     } catch (IllegalAccessException e) {
-      throw new InvalidRestParameterException(e.getMessage());
+      throw new RestInvalidParameterException(e.getMessage());
     }
   }
 

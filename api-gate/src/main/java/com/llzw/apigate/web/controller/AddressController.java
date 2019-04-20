@@ -1,11 +1,12 @@
 package com.llzw.apigate.web.controller;
 
+import com.llzw.apigate.message.RestResponseEntityFactory;
+import com.llzw.apigate.message.error.RestApiException;
+import com.llzw.apigate.message.error.RestEntityNotFoundException;
 import com.llzw.apigate.persistence.dao.AddressRepository;
 import com.llzw.apigate.persistence.entity.Address;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.AddressCreateDto;
-import com.llzw.apigate.web.util.StandardRestResponse;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.Setter;
@@ -50,7 +51,7 @@ public class AddressController {
     address.setDistrict(dto.getDistrict());
     address.setZip(dto.getZip());
     Address saveOpResult = addressRepository.save(address);
-    return StandardRestResponse.getResponseEntity(saveOpResult, true, HttpStatus.CREATED);
+    return RestResponseEntityFactory.success(saveOpResult, HttpStatus.CREATED);
   }
 
   /**
@@ -58,13 +59,13 @@ public class AddressController {
    */
   @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
   @GetMapping(value = "/{id}")
-  public ResponseEntity getSpecificAddress(@PathVariable(value = "id") Long id) {
-    Optional<Address> res = addressRepository.findById(id);
-    if (!res.isPresent()) {
-      return StandardRestResponse.getResponseEntity(null, false, HttpStatus.NOT_FOUND);
-    }
-    Address address = res.get();
-    return StandardRestResponse.getResponseEntity(address, true);
+  public ResponseEntity getSpecificAddress(@PathVariable(value = "id") Long id)
+      throws RestApiException {
+    return RestResponseEntityFactory.success(
+        addressRepository.findById(id).orElseThrow(() -> new RestEntityNotFoundException(
+            String.format("Address <%d> does not exist", id)
+        ))
+    );
   }
 
   /**
@@ -78,7 +79,7 @@ public class AddressController {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
-    return StandardRestResponse.getResponseEntity(
+    return RestResponseEntityFactory.success(
         addressRepository.findAllByOwner(currentUser, pageRequest)
             .collect(Collectors.toList())
     );

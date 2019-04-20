@@ -10,10 +10,10 @@ import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
+import com.llzw.apigate.message.error.RestApiException;
+import com.llzw.apigate.message.error.RestPaymentVendorException;
+import com.llzw.apigate.message.error.RestTradeNotFoundPaymentVendorException;
 import com.llzw.apigate.persistence.entity.Payment;
-import com.llzw.apigate.service.error.PaymentVendorException;
-import com.llzw.apigate.service.error.RestApiException;
-import com.llzw.apigate.service.error.TradeNotFoundPaymentVendorException;
 import com.llzw.apigate.spring.AlipayProperties;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +41,7 @@ public class AlipayService implements PaymentVendorService {
     );
   }
 
-  public String pay(Payment payment) throws PaymentVendorException {
+  public String pay(Payment payment) throws RestPaymentVendorException {
     //设置请求参数
     AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
     request.setReturnUrl(properties.returnUrl);
@@ -64,9 +64,9 @@ public class AlipayService implements PaymentVendorService {
       if (response.isSuccess()) {
         return response.getBody();
       }
-      throw new PaymentVendorException(response.getSubCode());
+      throw new RestPaymentVendorException(response.getSubCode());
     } catch (AlipayApiException e) {
-      throw new PaymentVendorException(e.getMessage());
+      throw new RestPaymentVendorException(e.getMessage());
     }
   }
 
@@ -104,11 +104,11 @@ public class AlipayService implements PaymentVendorService {
         map.put("trade_status", response.getTradeStatus());
         return map;
       } else if (subCode.equals("ACQ.TRADE_NOT_EXIST")) {
-        throw new TradeNotFoundPaymentVendorException(subCode);
+        throw new RestTradeNotFoundPaymentVendorException(subCode);
       }
-      throw new PaymentVendorException(subCode);
+      throw new RestPaymentVendorException(subCode);
     } catch (AlipayApiException e) {
-      throw new PaymentVendorException(e.getMessage());
+      throw new RestPaymentVendorException(e.getMessage());
     }
   }
 }

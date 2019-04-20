@@ -1,5 +1,6 @@
 package com.llzw.apigate.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -42,6 +43,7 @@ public class User implements UserDetails {
 
   @Column(nullable = false)
   @NonNull
+  @JsonIgnore
   protected String password;
 
   @Column(nullable = false, length = 100)
