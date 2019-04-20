@@ -36,6 +36,13 @@ public class SimplePaymentService implements PaymentService {
   @Setter(onMethod_ = @Autowired)
   OrderRepository orderRepository;
 
+  public static Date calculateExpireDate(Date date, int minutes) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    calendar.add(Calendar.MINUTE, minutes);
+    return calendar.getTime();
+  }
+
   @Override
   public Payment create(User payer, Long orderId,
       String subject, String description)
@@ -109,13 +116,6 @@ public class SimplePaymentService implements PaymentService {
     targetOrder.setPaid(true);
     paymentRepository.save(payment);
     return true;
-  }
-
-  public static Date calculateExpireDate(Date date, int minutes) {
-    Calendar calendar = Calendar.getInstance();
-    calendar.setTime(date);
-    calendar.add(Calendar.MINUTE, minutes);
-    return calendar.getTime();
   }
 
   @Override

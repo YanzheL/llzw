@@ -49,4 +49,8 @@ public class FileMetaData implements Serializable {
     }
     return referenceCount == 0;
   }
+
+  public int increaseReferenceCount() {
+    return ++referenceCount;
+  }
 }
