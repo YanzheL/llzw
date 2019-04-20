@@ -100,6 +100,17 @@ public class UniqueHashFileStorageService implements FileStorageService {
     }
   }
 
+  @Override
+  public boolean increaseReferenceCount(String path) {
+    Optional<FileMetaData> fileMetaDataOptional = fileMetaDataRepository.findByHash(path);
+    if (!fileMetaDataOptional.isPresent()) {
+      return false;
+    }
+    FileMetaData fileMetaData = fileMetaDataOptional.get();
+    fileMetaData.increaseReferenceCount();
+    return true;
+  }
+
   private void createBasePathIfNotExist() {
     if (!checked) {
       new File(basePath).mkdirs();
