@@ -11,7 +11,7 @@ Properties
     Parameter       Type      Description
 ==================  ========  ======================================================================================
 id                  Integer   Refund ID
-orderId             Integer   Order ID
+order               Integer   Order ID
 createdAt           Date      Creation time
 updatedAt           Date      Update time
 requester           String    Username of requester
@@ -34,7 +34,7 @@ Example JSON Representation
 
    {
      "id": 1,
-     "orderId": 5,
+     "order": 5,
      "createdAt": "2019-10-1 3:00 PM GMT+1:00",
      "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
      "requester": "USERNAME_OF_REFUND_ISSUER",
