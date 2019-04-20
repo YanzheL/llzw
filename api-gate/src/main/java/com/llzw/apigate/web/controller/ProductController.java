@@ -4,12 +4,9 @@ import com.llzw.apigate.message.RestResponseEntityFactory;
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestEntityNotFoundException;
 import com.llzw.apigate.persistence.dao.ProductRepository;
-import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.ProductService;
 import com.llzw.apigate.web.dto.ProductCreateDto;
-import java.util.List;
-import java.util.Optional;
 import javax.validation.Valid;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,18 +43,11 @@ public class ProductController {
   @PreAuthorize("hasRole('SELLER')")
   @PostMapping
   @Transactional          // transaction management
-  public ResponseEntity create(@Valid ProductCreateDto productCreateDto) {
+  public ResponseEntity create(@Valid ProductCreateDto productCreateDto) throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    //将dto中商品的各种信息存入product中
-    Product product = new Product();
-    product.setSeller(currentUser);
-    product.setName(productCreateDto.getName());
-    product.setIntroduction(productCreateDto.getIntroduction());
-    product.setPrice(productCreateDto.getPrice());
-    product.setCaId(productCreateDto.getCaId());
-    Product saveOpResult = productRepository.save(product);
-    return RestResponseEntityFactory.success(saveOpResult, HttpStatus.CREATED);
+    return RestResponseEntityFactory
+        .success(productService.create(productCreateDto, currentUser), HttpStatus.CREATED);
   }
 
   /**
@@ -69,19 +59,19 @@ public class ProductController {
       @RequestParam(value = "size", required = false, defaultValue = "20") int size,
       @RequestParam(value = "valid", required = false, defaultValue = "True") boolean valid) {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
-    List<Product> allMatchingProducts = productRepository.findAll(pageRequest).getContent();
-    return RestResponseEntityFactory.success(allMatchingProducts);
+    return RestResponseEntityFactory.success(productService.findAll(pageRequest));
   }
 
   /**
    * Get product by id
    */
   @GetMapping(value = "/{id}")
-  public ResponseEntity get(@PathVariable(value = "id") Long id) {
-    Optional<Product> res = productRepository.findById(id);
-    return res.isPresent()
-        ? RestResponseEntityFactory.success(res)
-        : RestResponseEntityFactory.error(new RestEntityNotFoundException());
+  public ResponseEntity get(@PathVariable(value = "id") Long id) throws RestApiException {
+    return RestResponseEntityFactory.success(
+        productService.findById(id).orElseThrow(() -> new RestEntityNotFoundException(
+            String.format("Product <%d> does not exist", id)
+        ))
+    );
   }
 
   /**
