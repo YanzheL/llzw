@@ -2,7 +2,6 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <artifactId>api-gate</artifactId>
   <build>
     <plugins>
       <plugin>
@@ -41,6 +40,24 @@
         </executions>
         <groupId>org.springframework.boot</groupId>
       </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <artifactId>junit-platform-surefire-provider</artifactId>
+            <groupId>org.junit.platform</groupId>
+            <version>1.3.2</version>
+          </dependency>
+        </dependencies>
+        <version>2.22.1</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.0</version>
+      </plugin>
+      <!--      <plugin>-->
+      <!--        <artifactId>maven-failsafe-plugin</artifactId>-->
+      <!--      </plugin>-->
     </plugins>
   </build>
   <dependencies>
@@ -51,15 +68,6 @@
     <dependency>
       <artifactId>spring-boot-starter-cache</artifactId>
       <groupId>org.springframework.boot</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>mysql-connector-java</artifactId>
-      <groupId>mysql</groupId>
-      <version>8.0.15</version>
-    </dependency>
-    <dependency>
-      <artifactId>h2</artifactId>
-      <groupId>com.h2database</groupId>
     </dependency>
     <dependency>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -87,11 +95,6 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <artifactId>lombok</artifactId>
-      <groupId>org.projectlombok</groupId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
       <artifactId>spring-boot-starter-test</artifactId>
       <groupId>org.springframework.boot</groupId>
       <scope>test</scope>
@@ -107,11 +110,19 @@
       <groupId>org.springframework.restdocs</groupId>
       <scope>test</scope>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
     <dependency>
-      <artifactId>junit-jupiter-engine</artifactId>
       <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.5.0-M1</version>
       <scope>test</scope>
     </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>org.junit.vintage</groupId>-->
+    <!--      <artifactId>junit-vintage-engine</artifactId>-->
+    <!--      <version>5.5.0-M1</version>-->
+    <!--      <scope>test</scope>-->
+    <!--    </dependency>-->
     <dependency>
       <artifactId>spring-security-test</artifactId>
       <groupId>org.springframework.security</groupId>
@@ -122,6 +133,25 @@
           <groupId>junit</groupId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <optional>false</optional>
+    </dependency>
+    <dependency>
+      <artifactId>lombok</artifactId>
+      <groupId>org.projectlombok</groupId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <artifactId>mysql-connector-java</artifactId>
+      <groupId>mysql</groupId>
+      <version>8.0.15</version>
+    </dependency>
+    <dependency>
+      <artifactId>h2</artifactId>
+      <groupId>com.h2database</groupId>
     </dependency>
     <dependency>
       <artifactId>passay</artifactId>
@@ -138,11 +168,6 @@
       <groupId>org.apache.tika</groupId>
       <version>1.20</version>
     </dependency>
-    <dependency>
-      <artifactId>spring-boot-configuration-processor</artifactId>
-      <groupId>org.springframework.boot</groupId>
-      <optional>false</optional>
-    </dependency>
     <!-- https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
     <dependency>
       <artifactId>alipay-sdk-java</artifactId>
@@ -156,9 +181,11 @@
       <version>0.1.17</version>
     </dependency>
   </dependencies>
+  <artifactId>api-gate</artifactId>
   <description>Demo project for Spring Boot</description>
   <groupId>com.llzw</groupId>
   <modelVersion>4.0.0</modelVersion>
+
   <name>api-gate</name>
 
   <parent>
@@ -188,6 +215,7 @@
     <guava.version>20.0</guava.version>
     <java.version>1.8</java.version>
     <passay.version>1.0</passay.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <repositories>
@@ -206,5 +234,4 @@
     </repository>
   </repositories>
   <version>0.0.1-SNAPSHOT</version>
-
 </project>
