@@ -19,6 +19,6 @@ public class RestEntityNotFoundException extends RestApiException {
 
   @Override
   public HttpStatus suggestHttpStatus() {
-    return HttpStatus.FORBIDDEN;
+    return HttpStatus.NOT_FOUND;
   }
 }
