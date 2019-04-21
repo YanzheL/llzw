@@ -1,15 +1,12 @@
 package com.llzw.apigate.web.controller;
 
 import com.llzw.apigate.message.RestResponseEntityFactory;
-import com.llzw.apigate.message.error.RestInternalServerException;
-import com.llzw.apigate.persistence.entity.FileMetaData;
+import com.llzw.apigate.message.error.RestApiException;
+import com.llzw.apigate.message.error.RestEntityNotFoundException;
 import com.llzw.apigate.service.FileStorageService;
 import com.llzw.apigate.web.dto.FileDto;
 import com.llzw.apigate.web.validation.FileValidator;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.Setter;
@@ -49,13 +46,7 @@ public class FileController {
   @PreAuthorize("hasAuthority('OP_CREATE_FILE')")
   @PostMapping
   public ResponseEntity upload(@Valid FileDto fileDto) throws Exception {
-    Collection<String> msgs = new ArrayList<>();
-    Optional<FileMetaData> serviceResult = null;
-    serviceResult = fileStorageService.save(fileDto);
-    return serviceResult.isPresent()
-        ? RestResponseEntityFactory.success(serviceResult.get(), HttpStatus.CREATED)
-        : RestResponseEntityFactory
-            .error(new RestInternalServerException());
+    return RestResponseEntityFactory.success(fileStorageService.save(fileDto), HttpStatus.CREATED);
   }
 
   @PreAuthorize("hasAuthority('OP_DELETE_FILE')")
@@ -73,18 +64,21 @@ public class FileController {
    */
   @GetMapping(value = "/{hash}")
   public void download(@PathVariable(value = "hash") String hash, HttpServletResponse response)
-      throws IOException {
-    FileDto fileDto = fileStorageService.load(hash);
-    Resource resource = fileDto.getFile();
-    if (!fileDto.getFile().exists()) {
-      response.sendError(HttpServletResponse.SC_NOT_FOUND, "File not found");
-      return;
+      throws RestApiException {
+    try {
+      FileDto fileDto = fileStorageService.load(hash);
+      Resource resource = fileDto.getFile();
+      if (!fileDto.getFile().exists()) {
+        throw new RestEntityNotFoundException(String.format("File <%s> does not exist", hash));
+      }
+      String mimeType = fileDto.getMimeType();
+      // copy it to response's OutputStream
+      response.setContentType(mimeType);
+      IOUtils.copy(resource.getInputStream(), response.getOutputStream());
+      response.flushBuffer();
+    } catch (IOException e) {
+      throw new RestApiException(e.getMessage());
     }
-    String mimeType = fileDto.getMimeType();
-    // copy it to response's OutputStream
-    response.setContentType(mimeType);
-    IOUtils.copy(resource.getInputStream(), response.getOutputStream());
-    response.flushBuffer();
   }
 
 // This method is fucking not working as expected.
