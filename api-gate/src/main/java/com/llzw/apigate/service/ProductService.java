@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface ProductService {
 
-  boolean updateValid(Long id) throws RestApiException;
+  boolean updateValid(Long id, User seller) throws RestApiException;
 
   Product create(ProductCreateDto dto, User seller) throws RestApiException;
 
