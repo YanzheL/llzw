@@ -58,7 +58,7 @@ public class UniqueHashFileStorageService implements FileStorageService {
       }
       FileMetaData metaData = new FileMetaData();
       metaData.setHash(hashCode);
-      metaData.setMimetype(mimeType);
+      metaData.setMimeType(mimeType);
       // Save file metadata to database
       metaData = fileMetaDataRepository.save(metaData);
       // Save file to filesystem

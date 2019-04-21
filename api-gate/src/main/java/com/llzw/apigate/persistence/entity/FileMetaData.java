@@ -38,7 +38,7 @@ public class FileMetaData implements Serializable {
   protected int referenceCount;
 
   @Column(nullable = false, updatable = false, length = 30)
-  protected String mimetype;
+  protected String mimeType;
 
   /**
    * @return Whether <tt>referenceCount</tt> reaches zero after this operation.
