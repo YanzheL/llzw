@@ -13,7 +13,8 @@ Response Parameters
 Parameter   Type     Required Default Description
 =========== ======== ======== ======= =================================================================================
 responseId  String   True     -       The UUID of this response
-success     Boolean  True     -       The status flag that indicates whether your API call is success
+timestamp   Date     True     -       Generation time of this response
+success     Boolean  True     -       The status flag which indicates whether your API call is success
 data        Any      True     null    The message body of this response, which can be any object that supported by JSON
 error       Error    True     null    Associated Error object (if applicable)
 =========== ======== ======== ======= =================================================================================
