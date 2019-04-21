@@ -2,6 +2,7 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <artifactId>api-gate</artifactId>
   <build>
     <plugins>
       <!--      <plugin>-->
@@ -137,10 +138,10 @@
     </dependency>
     <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>5.5.0-M1</version>
+      <groupId>org.junit.jupiter</groupId>
       <scope>test</scope>
+      <version>5.5.0-M1</version>
     </dependency>
     <!--    <dependency>-->
     <!--      <groupId>org.junit.vintage</groupId>-->
@@ -206,7 +207,6 @@
       <version>0.1.17</version>
     </dependency>
   </dependencies>
-  <artifactId>api-gate</artifactId>
   <description>Demo project for Spring Boot</description>
   <groupId>com.llzw</groupId>
   <modelVersion>4.0.0</modelVersion>

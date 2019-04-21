@@ -3,6 +3,8 @@ package com.llzw.apigate.service;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
 import com.google.common.io.ByteStreams;
+import com.llzw.apigate.message.error.RestApiException;
+import com.llzw.apigate.message.error.RestInternalServerException;
 import com.llzw.apigate.persistence.dao.FileMetaDataRepository;
 import com.llzw.apigate.persistence.entity.FileMetaData;
 import com.llzw.apigate.web.dto.FileDto;
@@ -44,30 +46,33 @@ public class UniqueHashFileStorageService implements FileStorageService {
 
   // File validation is already done in FileValidator, so we just save it now.
   @Override
-  public Optional<FileMetaData> save(FileDto file) throws IOException {
-    byte[] content = ByteStreams.toByteArray(file.getFile().getInputStream());
-    String mimeType = file.getMimeType();
-
-    String hashCode = hashFunction.hashBytes(content).toString();
-    Optional<FileMetaData> fileMetaDataOptional = fileMetaDataRepository.findByHash(hashCode);
-    // If same file already exists, then we just return that file's metadata
-    if (fileMetaDataOptional.isPresent()) {
-      return fileMetaDataOptional;
-    }
-    FileMetaData metaData = new FileMetaData();
-    metaData.setHash(hashCode);
-    metaData.setMimetype(mimeType);
-    // Save file metadata to database
-    FileMetaData saveResult = fileMetaDataRepository.save(metaData);
-    // Save file to filesystem
-    createBasePathIfNotExist();
-    try (OutputStream dst = new FileOutputStream(basePath + File.separator + hashCode)) {
-      dst.write(content);
-      return Optional.of(saveResult);
-    } catch (Exception e) {
-      // If something bad happened while writing file to filesystem, we should delete that metadata.
-      fileMetaDataRepository.delete(metaData);
-      throw e;
+  public FileMetaData save(FileDto file) throws RestApiException {
+    try {
+      byte[] content = ByteStreams.toByteArray(file.getFile().getInputStream());
+      String mimeType = file.getMimeType();
+      String hashCode = hashFunction.hashBytes(content).toString();
+      Optional<FileMetaData> fileMetaDataOptional = fileMetaDataRepository.findByHash(hashCode);
+      // If same file already exists, then we just return that file's metadata
+      if (fileMetaDataOptional.isPresent()) {
+        return fileMetaDataOptional.get();
+      }
+      FileMetaData metaData = new FileMetaData();
+      metaData.setHash(hashCode);
+      metaData.setMimetype(mimeType);
+      // Save file metadata to database
+      metaData = fileMetaDataRepository.save(metaData);
+      // Save file to filesystem
+      createBasePathIfNotExist();
+      try (OutputStream dst = new FileOutputStream(basePath + File.separator + hashCode)) {
+        dst.write(content);
+        return metaData;
+      } catch (Exception e) {
+        // If something bad happened while writing file to filesystem, we should delete that metadata.
+        fileMetaDataRepository.delete(metaData);
+        throw e;
+      }
+    } catch (IOException e) {
+      throw new RestInternalServerException(e.getMessage());
     }
   }
 
