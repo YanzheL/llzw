@@ -10,8 +10,8 @@ Properties
 ==================  ========  ==============================
 Parameter           Type      Description
 ==================  ========  ==============================
-id                  Integer   Order ID
-productId           Integer   Parent product ID
+id                  Integer   Stock ID
+product             Integer   Parent product ID
 createdAt           Date      Creation time
 updatedAt           Date      Update time
 producedAt          Date      Production time
@@ -31,7 +31,7 @@ Example JSON Representation
 
    {
      "id": 1,
-     "productId": 2333,
+     "product": 2333,
      "createdAt": "2019-10-1 3:00 PM GMT+1:00",
      "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
      "producedAt": "2019-10-1 3:00 PM GMT+1:00",
@@ -45,7 +45,7 @@ Example JSON Representation
    }
 
 Get Stocks by Parameters
-===========================
+========================
 
 This endpoint retrieves all stocks that satisfy given parameters
 
@@ -77,8 +77,8 @@ Parameter   Type      Description
 data        Stock[]   List of matching Stock objects
 =========== ========= ===================================
 
-..  Attention::
-    Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API
 
 Get a Specific Stock
 ====================
@@ -107,8 +107,8 @@ Parameter   Type      Description
 data        Stock     The matching Stock object
 =========== ========= ===================================
 
-..  Attention::
-    Remember — You must be authenticated with ``SELLER`` role before using this API
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` role before using this API
 
 Create a Stock
 ==============
@@ -142,8 +142,8 @@ Parameter   Type      Description
 data        Stock     The created Stock object
 =========== ========= ===================================
 
-..  Attention::
-    Remember — You must be authenticated with ``SELLER`` role before using this API
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` role before using this API
 
 Invalidate a Specific Stock
 ===========================
@@ -167,5 +167,5 @@ Parameter Required Description
 ID        True     Stock ID
 ========= ======== ===========
 
-..  Attention::
-    Remember — You must be authenticated with ``SELLER`` role before using this API
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` role before using this API

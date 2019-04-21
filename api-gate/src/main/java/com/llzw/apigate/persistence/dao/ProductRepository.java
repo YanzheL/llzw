@@ -7,4 +7,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface ProductRepository
     extends PagingAndSortingRepository<Product, Long>, JpaSpecificationExecutor<Product> {
 
+  //PagingAndSortingRepository继承CrudRepository，支持实现分页排序相关方法
 }

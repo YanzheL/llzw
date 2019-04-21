@@ -10,8 +10,8 @@ Properties
 ==================  ========  ==================================================================================================
 Parameter           Type      Description
 ==================  ========  ==================================================================================================
-id                  Integer   Order ID
-sellerId            String    Quantity of this order
+id                  Integer   Product ID
+seller              String    Username of seller
 name                String    Name of this product
 introduction        String    Introduction of this product
 mainImageFiles      String[]  Hash values of product main images (max = 9). These files should be uploaded first. 
@@ -31,7 +31,7 @@ Example JSON Representation
 
    {
      "id": 1,
-     "sellerId": "USERNAME_OF_SELLER",
+     "seller": "USERNAME_OF_SELLER",
      "name": "NAME_OF_THIS_PRODUCT",
      "introduction": "INTRODUCTION_OF_THIS_PRODUCT",
      "mainImageFiles":[

@@ -1,11 +1,14 @@
-package com.llzw.apigate.web.error;
+package com.llzw.apigate.spring;
 
-import com.llzw.apigate.web.util.StandardRestResponse;
+import com.llzw.apigate.message.RestResponseEntityFactory;
+import com.llzw.apigate.message.error.RestApiException;
+import com.llzw.apigate.message.error.RestApiExceptionWrapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -16,8 +19,21 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     super();
   }
 
+  @ExceptionHandler
+  protected ResponseEntity<Object> handleAny(Exception ex) {
+    return RestResponseEntityFactory.error(RestApiExceptionWrapper.wrap(ex));
+  }
+
   protected ResponseEntity<Object> handleAny(Exception ex, HttpStatus status) {
-    return StandardRestResponse.errorResponseEntity(ex, status);
+    return RestResponseEntityFactory.error(
+        RestApiExceptionWrapper.wrap(ex),
+        status
+    );
+  }
+
+  @ExceptionHandler({RestApiException.class})
+  protected ResponseEntity<Object> handleRestApiException(RestApiException ex) {
+    return RestResponseEntityFactory.error(ex);
   }
 
   @Override

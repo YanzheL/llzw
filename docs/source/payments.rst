@@ -11,14 +11,16 @@ Properties
 Parameter           Type      Description
 ==================  ========  =====================================================
 id                  Integer   Payment ID
-orderId             Integer   Parent Order ID
+order               Integer   Parent Order ID
+orderString         String    Alipay redirect URL
 createdAt           Date      Creation time
 updatedAt           Date      Update time
-payerId             String    Username of payer
+payer               String    Username of payer
 subject             String    Subject of this payment
 description         String    Description
 totalAmount         Float     Total amount
 status              String    One of ['PENDING', 'CONFIRMED', 'TIMEOUT', 'INVALID']
+vendorTradeId       String    Unique trade id from vendor.
 confirmedAt         Date      Payment confirmation time
 confirmed           Boolean   Whether the payment is confirmed by system
 valid               Boolean   Valid flag
@@ -30,22 +32,88 @@ Example JSON Representation
 .. code:: json
 
    {
-     "id": 1,
-     "orderId": 5,
-     "createdAt": "2019-10-1 3:00 PM GMT+1:00",
-     "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
-     "payerId": "USERNAME_OF_CUSTOMER",
-     "subject": "Macbook Pro 2019 32G 1TB",
-     "description": null,
-     "totalAmount": 500.00,
-     "status": "PENDING",
-     "confirmedAt": null,
-     "confirmed": true,
-     "valid": true,
+     "id" : 1,
+     "order" : 1,
+     "orderString" : "https://openapi.alipaydev.com/gateway.do?XXX=XXX",
+     "createdAt" : "2019-04-19T15:31:20.807+0000",
+     "updatedAt" : "2019-04-19T15:31:20.807+0000",
+     "payer" : "test_user_customer_username_0",
+     "subject" : "Test Subject",
+     "description" : "Test Description",
+     "totalAmount" : 1000.123,
+     "status" : "PENDING",
+     "vendorTradeId" : null,
+     "confirmedAt" : null,
+     "confirmed" : false,
+     "valid" : false
    }
 
+Get Related Payments for an Order
+=================================
+
+This endpoint retrieves all related payments for an order.
+
+HTTP Request
+------------
+
+``GET http://example.com/api/v2/payments``
+
+Request Parameters
+------------------
+
+==================  ========  ========  =======  =============================
+Parameter           Type      Required  Default  Description
+==================  ========  ========  =======  =============================
+orderId             Integer   True      -        Parent Order ID
+==================  ========  ========  =======  =============================
+
+Response Parameters
+-------------------
+=========== ========= ================================
+Parameter   Type      Description
+=========== ========= ================================
+data        Payment[] List of matching Payment objects
+=========== ========= ================================
+
+.. Attention::
+   Remember — You must be authenticated before using this API
+
+   The requested order must belongs to you.
+
+Get a Specific Payment
+======================
+
+This endpoint retrieves a specific payment with id.
+
+HTTP Request
+------------
+
+``GET http://example.com/api/v2/payments/<ID>``
+
+Path Parameter
+--------------
+
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Payment ID
+========= ======== ===========
+
+Response Parameters
+-------------------
+=========== ========= ================================
+Parameter   Type      Description
+=========== ========= ================================
+data        Payment   The matching Payment object
+=========== ========= ================================
+
+.. Attention::
+   Remember — You must be authenticated before using this API
+
+   The requested payment must belongs to you.
+
 Create a Payment
-=================
+================
 
 This endpoint creates a new payment.
 
@@ -62,7 +130,6 @@ Parameter           Type      Required  Default  Description
 ==================  ========  ========  =======  =============================
 orderId             Integer   True      -        Parent Order ID
 subject             String    True      -        Subject of this payment
-totalAmount         Float     True      -        Total Amount
 description         String    False     -        Description
 ==================  ========  ========  =======  =============================
 
@@ -76,4 +143,33 @@ data        Payment   The created Payment object
 
 .. Attention::
    Remember — You must be authenticated with ``CUSTOMER`` role before using this API
+
+   ``orderString`` will expire after 15 minutes.
+
+Retry Payment Action
+====================
+
+This endpoint re-obtains ``orderString`` for a payment.
+
+HTTP Request
+------------
+
+``GET http://example.com/api/v2/payments/retry/<ID>``
+
+Path Parameter
+--------------
+
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Payment ID
+========= ======== ===========
+
+Response Parameters
+-------------------
+=========== ========= ================================================
+Parameter   Type      Description
+=========== ========= ================================================
+data        Payment   The matching Payment object with new orderString
+=========== ========= ================================================
 

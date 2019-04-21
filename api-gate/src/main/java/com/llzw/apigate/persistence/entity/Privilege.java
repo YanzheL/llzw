@@ -31,7 +31,7 @@ public class Privilege implements Serializable {
   protected PrivilegeType privilege;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Setter(AccessLevel.NONE)
   private Long id;
 

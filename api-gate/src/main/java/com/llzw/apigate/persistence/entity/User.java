@@ -1,5 +1,6 @@
 package com.llzw.apigate.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -42,6 +43,7 @@ public class User implements UserDetails {
 
   @Column(nullable = false)
   @NonNull
+  @JsonIgnore
   protected String password;
 
   @Column(nullable = false, length = 100)
@@ -113,9 +115,23 @@ public class User implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
+    Collection<GrantedAuthority> all = getPrivilegesAsGrantedAuthorities();
+    all.addAll(getRolesAsGrantedAuthorities());
+    return all;
+  }
+
+  public Collection<GrantedAuthority> getPrivilegesAsGrantedAuthorities() {
     return roles.stream()
         .map(Role::getPrivilegeNames)
         .flatMap(Collection::stream)
+        .map(SimpleGrantedAuthority::new)
+        .collect(Collectors.toList());
+  }
+
+  public Collection<GrantedAuthority> getRolesAsGrantedAuthorities() {
+    return roles.stream()
+        .map(Role::getRole)
+        .map(Role.RoleType::name)
         .map(SimpleGrantedAuthority::new)
         .collect(Collectors.toList());
   }
