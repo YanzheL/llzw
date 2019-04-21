@@ -1,15 +1,12 @@
 package com.llzw.apigate.web.controller;
 
 import com.llzw.apigate.message.RestResponseEntityFactory;
-import com.llzw.apigate.message.error.RestAccessDeniedException;
 import com.llzw.apigate.message.error.RestApiException;
-import com.llzw.apigate.message.error.RestEntityNotFoundException;
-import com.llzw.apigate.persistence.entity.Order;
+import com.llzw.apigate.message.error.RestUnsupportedOperationException;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.OrderService;
 import com.llzw.apigate.web.dto.OrderCreateDto;
 import com.llzw.apigate.web.dto.OrderSearchDto;
-import java.util.Optional;
 import javax.validation.Valid;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +37,7 @@ public class OrderController {
 
   @PreAuthorize("hasAuthority('OP_READ_ORDER')")
   @GetMapping
-  public ResponseEntity searchOrders(
+  public ResponseEntity search(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
       @RequestParam(value = "size", required = false, defaultValue = "20") int size,
       OrderSearchDto searchDto) throws RestApiException {
@@ -52,28 +51,17 @@ public class OrderController {
 
   @PreAuthorize("hasAuthority('OP_READ_ORDER')")
   @GetMapping(value = "/{id}")
-  public ResponseEntity getOrder(@PathVariable(value = "id") Long id) {
+  public ResponseEntity get(@PathVariable(value = "id") Long id)
+      throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    Optional<Order> result = orderService.get(id);
-    if (!result.isPresent()) {
-      return RestResponseEntityFactory.error(
-          new RestEntityNotFoundException(),
-          HttpStatus.NOT_FOUND
-      );
-    }
-    Order order = result.get();
-    if (!order.belongsToUser(currentUser)) {
-      return RestResponseEntityFactory.error(
-          new RestAccessDeniedException("Current user does not have access to this order"));
-    }
-    return RestResponseEntityFactory.success(order);
+    return RestResponseEntityFactory.success(orderService.get(id, currentUser));
   }
 
   @PreAuthorize("hasAuthority('OP_CREATE_ORDER')")
   @PostMapping
   @Transactional
-  public ResponseEntity createOrder(@Valid OrderCreateDto orderCreateDto) throws RestApiException {
+  public ResponseEntity create(@Valid OrderCreateDto orderCreateDto) throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     return RestResponseEntityFactory.success(
@@ -84,6 +72,32 @@ public class OrderController {
             orderCreateDto.getAddressId()
         ),
         HttpStatus.CREATED
+    );
+  }
+
+  @PreAuthorize("hasAuthority('OP_DELETE_ORDER')")
+  @DeleteMapping(value = "/{id}")
+  public ResponseEntity cancel(@PathVariable(value = "id") Long id) throws RestApiException {
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    return RestResponseEntityFactory.success(
+        orderService.cancel(id, currentUser)
+    );
+  }
+
+  @PreAuthorize("hasRole('CUSTOMER')")
+  @PatchMapping(value = "/{id}")
+  public ResponseEntity deliveryConfirm(
+      @PathVariable(value = "id") Long id,
+      @RequestParam(value = "action") String action
+  ) throws RestApiException {
+    if (!action.equals("DELIVERY_CONFIRM")) {
+      throw new RestUnsupportedOperationException(String.format("Action <%s> unsupported", action));
+    }
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    return RestResponseEntityFactory.success(
+        orderService.deliveryConfirm(id, currentUser)
     );
   }
 }
