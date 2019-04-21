@@ -36,8 +36,7 @@ public class SearchCriterionSpecificationFactory {
   }
 
   /**
-   * Make JPA Specification from an example POJO.
-   * For example:
+   * Make JPA Specification from an example POJO. For example:
    * <pre>
    * class SimplePojo {
    *   Type1 field1;
@@ -77,8 +76,7 @@ public class SearchCriterionSpecificationFactory {
   }
 
   /**
-   * Make JPA Specification from an example POJO with constrains.
-   * For example:
+   * Make JPA Specification from an example POJO with constrains. For example:
    * <pre>
    * SimplePojo example = new SimplePojo();
    * example.field1 = value1;
