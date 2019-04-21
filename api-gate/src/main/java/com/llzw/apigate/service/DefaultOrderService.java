@@ -1,14 +1,16 @@
 package com.llzw.apigate.service;
 
+import com.llzw.apigate.message.error.RestAccessDeniedException;
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
+import com.llzw.apigate.message.error.RestEntityNotFoundException;
 import com.llzw.apigate.message.error.RestInvalidParameterException;
+import com.llzw.apigate.message.error.RestRejectedByEntityException;
 import com.llzw.apigate.persistence.dao.AddressRepository;
 import com.llzw.apigate.persistence.dao.OrderRepository;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.dao.StockRepository;
 import com.llzw.apigate.persistence.dao.customquery.SearchCriterionSpecificationFactory;
-import com.llzw.apigate.persistence.entity.Address;
 import com.llzw.apigate.persistence.entity.AddressBean;
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Product;
@@ -16,7 +18,6 @@ import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.OrderSearchDto;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.Setter;
@@ -44,36 +45,27 @@ public class DefaultOrderService implements OrderService {
   @Override
   public Order create(User customer, Long productId, int quantity, Long addressId)
       throws RestApiException {
-    Optional<Product> productOptional = productRepository.findById(productId);
-    if (!productOptional.isPresent()) {
-      throw new RestDependentEntityNotFoundException(
-          String.format("Product <%s> do not exist", productId));
-    }
-    Optional<Address> addressOptional = addressRepository.findById(addressId);
-    if (!addressOptional.isPresent()) {
-      throw new RestDependentEntityNotFoundException(
-          String.format("Address <%s> do not exist", addressId));
-    }
-    AddressBean addressBean = addressOptional.get();
-    Optional<Stock> stockOptional;
+    Product product = productRepository.findById(productId)
+        .orElseThrow(() -> new RestDependentEntityNotFoundException(
+            String.format("Product <%s> does not exist", productId)));
+    AddressBean addressBean = addressRepository.findById(addressId)
+        .orElseThrow(() -> new RestDependentEntityNotFoundException(
+            String.format("Address <%s> do not exist", addressId)));
+    Stock stock;
     try (Stream<Stock> validStocks =
         stockRepository
             .findByProductAndInboundedAtNotNullAndCurrentQuantityGreaterThanEqualOrderByInboundedAt(
-                productOptional.get(), quantity)) {
-      stockOptional = validStocks.findFirst();
+                product, quantity)) {
+      stock = validStocks.findFirst().orElseThrow(() -> new RestDependentEntityNotFoundException(
+          "Cannot find an available stock specifies that quantity"));
     }
-    if (!stockOptional.isPresent()) {
-      throw new RestDependentEntityNotFoundException(
-          "Cannot find an available stock specifies that quantity");
-    }
-    Stock stock = stockOptional.get();
     stock.decreaseCurrentQuantity(quantity);
-    stockRepository.save(stock);
     Order order = new Order();
-    order.setStock(stock);
+    order.setStock(stockRepository.save(stock));
     order.setAddress(addressBean);
     order.setCustomer(customer);
     order.setQuantity(quantity);
+    order.setValid(true);
     return orderRepository.save(order);
   }
 
@@ -82,11 +74,9 @@ public class DefaultOrderService implements OrderService {
       throws RestApiException {
     try {
       // Result orders may contain other user's order, so we should filter them out.
-      List<Order> allMatchingOrders =
-          orderRepository
-              .findAll(SearchCriterionSpecificationFactory.fromExample(example), pageable)
-              .getContent();
-      return allMatchingOrders.stream()
+      return orderRepository
+          .findAll(SearchCriterionSpecificationFactory.fromExample(example), pageable)
+          .getContent().stream()
           .filter(o -> o.belongsToUser(relatedUser))
           .collect(Collectors.toList());
     } catch (IllegalAccessException e) {
@@ -95,7 +85,34 @@ public class DefaultOrderService implements OrderService {
   }
 
   @Override
-  public Optional<Order> get(Long id) {
-    return orderRepository.findById(id);
+  public Order get(Long id, User relatedUser) throws RestApiException {
+    Order order = orderRepository.findById(id).orElseThrow(() -> new RestEntityNotFoundException(
+        String.format("Order <%s> does not exist", id)));
+    if (!order.belongsToUser(relatedUser)) {
+      throw new RestAccessDeniedException("Current user does not have access to this order");
+    }
+    return order;
+  }
+
+  @Override
+  public Order cancel(Long id, User relatedUser) throws RestApiException {
+    Order order = get(id, relatedUser);
+    if (order.getShippingTime() != null) {
+      throw new RestRejectedByEntityException(
+          String.format("Order <%d> has already been shipped", id));
+    }
+    order.setValid(false);
+    return orderRepository.save(order);
+  }
+
+  @Override
+  public Order deliveryConfirm(Long id, User relatedUser) throws RestApiException {
+    Order order = get(id, relatedUser);
+    if (order.isDeliveryConfirmed()) {
+      throw new RestRejectedByEntityException(
+          String.format("Order <%d> has already been confirmed", id));
+    }
+    order.setDeliveryConfirmed(true);
+    return orderRepository.save(order);
   }
 }

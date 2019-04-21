@@ -5,7 +5,6 @@ import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.OrderSearchDto;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.domain.Pageable;
 
 public interface OrderService {
@@ -16,5 +15,9 @@ public interface OrderService {
   List<Order> search(OrderSearchDto example, User relatedUser, Pageable pageable)
       throws RestApiException;
 
-  Optional<Order> get(Long id);
+  Order get(Long id, User relatedUser) throws RestApiException;
+
+  Order cancel(Long id, User relatedUser) throws RestApiException;
+
+  Order deliveryConfirm(Long id, User relatedUser) throws RestApiException;
 }
