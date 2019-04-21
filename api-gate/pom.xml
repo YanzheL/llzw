@@ -4,31 +4,56 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <build>
     <plugins>
-      <plugin>
-        <artifactId>asciidoctor-maven-plugin</artifactId>
-        <dependencies>
-          <dependency>
-            <artifactId>spring-restdocs-asciidoctor</artifactId>
-            <groupId>org.springframework.restdocs</groupId>
-            <version>${spring-restdocs.version}</version>
-          </dependency>
-        </dependencies>
-        <groupId>org.asciidoctor</groupId>
-        <!--                <executions>-->
-        <!--                    <execution>-->
-        <!--                        <id>generate-docs</id>-->
-        <!--                        <phase>prepare-package</phase>-->
-        <!--                        <goals>-->
-        <!--                            <goal>process-asciidoc</goal>-->
-        <!--                        </goals>-->
-        <!--                        <configuration>-->
-        <!--                            <backend>html</backend>-->
-        <!--                            <doctype>book</doctype>-->
-        <!--                        </configuration>-->
-        <!--                    </execution>-->
-        <!--                </executions>-->
-        <version>1.5.3</version>
-      </plugin>
+      <!--      <plugin>-->
+      <!--        <artifactId>maven-resources-plugin</artifactId>-->
+      <!--        <version>2.7</version>-->
+      <!--        <executions>-->
+      <!--          <execution>-->
+      <!--            <id>copy-resources</id>-->
+      <!--            <phase>prepare-package</phase>-->
+      <!--            <goals>-->
+      <!--              <goal>copy-resources</goal>-->
+      <!--            </goals>-->
+      <!--            <configuration>-->
+      <!--              <outputDirectory>-->
+      <!--                ${project.build.outputDirectory}/static/docs-->
+      <!--              </outputDirectory>-->
+      <!--              <resources>-->
+      <!--                <resource>-->
+      <!--                  <directory>-->
+      <!--                    ${project.build.directory}/generated-docs-->
+      <!--                  </directory>-->
+      <!--                </resource>-->
+      <!--              </resources>-->
+      <!--            </configuration>-->
+      <!--          </execution>-->
+      <!--        </executions>-->
+      <!--      </plugin>-->
+      <!--      <plugin>-->
+      <!--        <artifactId>asciidoctor-maven-plugin</artifactId>-->
+      <!--        <dependencies>-->
+      <!--          <dependency>-->
+      <!--            <artifactId>spring-restdocs-asciidoctor</artifactId>-->
+      <!--            <groupId>org.springframework.restdocs</groupId>-->
+      <!--            <version>${spring-restdocs.version}</version>-->
+      <!--          </dependency>-->
+      <!--        </dependencies>-->
+      <!--        <groupId>org.asciidoctor</groupId>-->
+      <!--        <executions>-->
+      <!--          <execution>-->
+      <!--            <id>generate-docs</id>-->
+      <!--            <phase>prepare-package</phase>-->
+      <!--            <goals>-->
+      <!--              <goal>process-asciidoc</goal>-->
+      <!--            </goals>-->
+      <!--            <configuration>-->
+      <!--              <backend>html</backend>-->
+      <!--              <doctype>book</doctype>-->
+      <!--            </configuration>-->
+      <!--          </execution>-->
+      <!--        </executions>-->
+      <!--        <version>1.5.3</version>-->
+      <!--      </plugin>-->
       <plugin>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <executions>
@@ -51,10 +76,10 @@
         </dependencies>
         <version>2.22.1</version>
       </plugin>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.0</version>
-      </plugin>
+      <!--      <plugin>-->
+      <!--        <artifactId>maven-compiler-plugin</artifactId>-->
+      <!--        <version>3.8.0</version>-->
+      <!--      </plugin>-->
       <!--      <plugin>-->
       <!--        <artifactId>maven-failsafe-plugin</artifactId>-->
       <!--      </plugin>-->
