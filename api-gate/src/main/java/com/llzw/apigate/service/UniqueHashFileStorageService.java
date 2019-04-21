@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class UniqueHashFileStorageService implements FileStorageService {
 
   private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+
+  public static final Pattern PATH_PATTERN = Pattern.compile("[a-z0-9]{64}");
 
   @Value("${storage.basepath:storage}")
   private String basePath;
@@ -85,12 +88,17 @@ public class UniqueHashFileStorageService implements FileStorageService {
 
   @Override
   public void delete(String path) {
-    Optional<FileMetaData> fileMetaDataOptional = fileMetaDataRepository.findByHash(path);
-    if (!fileMetaDataOptional.isPresent()) {
+    if (!PATH_PATTERN.matcher(path).matches()) {
       return;
     }
-    FileMetaData fileMetaData = fileMetaDataOptional.get();
     try {
+      Optional<FileMetaData> fileMetaDataOptional = fileMetaDataRepository.findByHash(path);
+      if (!fileMetaDataOptional.isPresent()) {
+        Path filePath = Paths.get(basePath + File.separator + path);
+        Files.deleteIfExists(filePath);
+        return;
+      }
+      FileMetaData fileMetaData = fileMetaDataOptional.get();
       if (fileMetaData.decreaseReferenceCount()) {
         // Reference count reaches zero, so we delete the underlying file.
         Path filePath = Paths.get(basePath + File.separator + fileMetaData.getHash());
@@ -107,6 +115,9 @@ public class UniqueHashFileStorageService implements FileStorageService {
 
   @Override
   public boolean increaseReferenceCount(String path) {
+    if (!PATH_PATTERN.matcher(path).matches()) {
+      return false;
+    }
     Optional<FileMetaData> fileMetaDataOptional = fileMetaDataRepository.findByHash(path);
     if (!fileMetaDataOptional.isPresent()) {
       return false;
