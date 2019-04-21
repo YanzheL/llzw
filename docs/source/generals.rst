@@ -24,6 +24,7 @@ The response JSON structured like this
 
    {
      "responseId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+     "timestamp":"2019-04-21T12:00:56.375+0000",
      "sucess": true,
      "data": null,
      "error": null
@@ -33,6 +34,7 @@ The response JSON structured like this
 
    {
      "responseId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+     "timestamp":"2019-04-21T12:00:56.375+0000",
      "sucess": false,
      "data": null,
      "error": {
