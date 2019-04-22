@@ -21,6 +21,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Data
@@ -50,6 +51,7 @@ public class Stock implements Serializable {
   @UpdateTimestamp
   protected Date updatedAt;
 
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   @Column(nullable = false)
   @NonNull
   protected Date producedAt;
