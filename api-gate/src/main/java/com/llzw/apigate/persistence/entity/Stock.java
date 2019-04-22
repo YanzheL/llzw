@@ -46,16 +46,19 @@ public class Stock implements Serializable {
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date createdAt;
 
   @UpdateTimestamp
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date updatedAt;
 
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   @Column(nullable = false)
   @NonNull
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date producedAt;
 
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date inboundedAt;
 
   @Column(nullable = false)

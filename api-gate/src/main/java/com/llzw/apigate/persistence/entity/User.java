@@ -24,6 +24,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -75,9 +76,11 @@ public class User implements UserDetails {
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date createdAt;
 
   @UpdateTimestamp
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date updatedAt;
 
   protected boolean enabled;

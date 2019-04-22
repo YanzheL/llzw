@@ -25,6 +25,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Data
@@ -48,9 +49,11 @@ public class Payment implements Serializable {
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date createdAt;
 
   @UpdateTimestamp
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -74,6 +77,7 @@ public class Payment implements Serializable {
 
   protected String vendorTradeId;
 
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date confirmedAt;
 
   protected boolean confirmed;

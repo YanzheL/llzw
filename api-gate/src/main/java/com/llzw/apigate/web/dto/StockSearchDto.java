@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class StockSearchDto {
 
-  Integer productId;
+  Long productId;
 
   Integer shelfLife;
 
