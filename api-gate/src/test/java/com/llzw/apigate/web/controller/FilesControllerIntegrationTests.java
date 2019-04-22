@@ -91,7 +91,6 @@ public class FilesControllerIntegrationTests extends ApiGateApplicationTests {
 
   @WithUserDetails("test_user_seller_username_0")
   @Test
-  @Order(1)
   public void uploadOtherFileBySeller() throws Exception {
     File file = new File("src/main/resources/application-dev.yml");
     MockMultipartFile multipartFile = new MockMultipartFile("file", file.getName(),
