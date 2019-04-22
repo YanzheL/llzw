@@ -8,15 +8,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.llzw.apigate.ApiGateApplicationTests;
-import java.util.Date;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -59,12 +54,12 @@ public class StockControllerIntegrationTests extends ApiGateApplicationTests {
   @Test
   public void getStock() throws Exception {
     MvcResult result = mvc.perform(
-        get("/api/v1/stocks/2")
+        get("/api/v1/stocks/1")
     )
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.success").value(true))
-        .andExpect(jsonPath("$.data.id").value(2L))
+        .andExpect(jsonPath("$.data.id").value(1L))
         .andReturn();
   }
 
