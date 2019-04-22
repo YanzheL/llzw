@@ -1,9 +1,9 @@
 package com.llzw.apigate.web.controller;
 
 import com.llzw.apigate.message.RestResponseEntityFactory;
+import com.llzw.apigate.message.error.RestAccessDeniedException;
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
-import com.llzw.apigate.message.error.RestEntityNotFoundException;
 import com.llzw.apigate.message.error.RestInvalidParameterException;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.dao.StockRepository;
@@ -13,7 +13,6 @@ import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.StockCreateDto;
 import com.llzw.apigate.web.dto.StockSearchDto;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -64,8 +63,8 @@ public class StockController {
     stock.setTotalQuantity(stockCreateDto.getTotalQuantity());
     stock.setTrackingId(stockCreateDto.getTrackingId());
     stock.setCarrierName(stockCreateDto.getCarrierName());
-    Stock saveOpResult = stockRepository.save(stock);
-    return RestResponseEntityFactory.success(saveOpResult, HttpStatus.CREATED);
+    stock.setValid(true);
+    return RestResponseEntityFactory.success(stockRepository.save(stock), HttpStatus.CREATED);
   }
 
   /**
@@ -82,13 +81,11 @@ public class StockController {
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     try {
       // Results may contain other user's stock, so we should filter them out.
-      List<Stock> res =
-          stockRepository
-              .findAll(SearchCriterionSpecificationFactory.fromExample(dto), pageRequest)
-              .getContent().stream()
-              .filter(o -> o.belongsToSeller(currentUser))
-              .collect(Collectors.toList());
-      return RestResponseEntityFactory.success(res);
+      return RestResponseEntityFactory.success(stockRepository
+          .findAll(SearchCriterionSpecificationFactory.fromExample(dto), pageRequest)
+          .getContent().stream()
+          .filter(o -> o.belongsToSeller(currentUser))
+          .collect(Collectors.toList()));
     } catch (IllegalAccessException e) {
       throw new RestInvalidParameterException(e.getMessage());
     }
@@ -100,11 +97,15 @@ public class StockController {
   @PreAuthorize("hasAnyRole('SELLER')")
   @GetMapping(value = "/{id}")
   public ResponseEntity getStock(@PathVariable(value = "id") Long id) throws RestApiException {
-    return RestResponseEntityFactory.success(
-        stockRepository.findById(id).orElseThrow(() -> new RestEntityNotFoundException(
-            String.format("Stock <%d> does not exist", id)
-        ))
-    );
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    Stock stock = stockRepository.findById(id)
+        .orElseThrow(() -> new RestDependentEntityNotFoundException(
+            String.format("Stock <%s> does not exist", id)));
+    if (!stock.belongsToSeller(currentUser)) {
+      throw new RestAccessDeniedException("You do not have access to this entity");
+    }
+    return RestResponseEntityFactory.success(stock);
   }
 
   /*

@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 public class StockCreateDto {
+
   @NotNull
   //@Size(min = 5, max = 30, message = "Length should between 5 to 30")
   protected Long productId;

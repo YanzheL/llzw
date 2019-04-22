@@ -77,6 +77,8 @@ public class ProductController {
   @DeleteMapping(value = "/{id}")
   @Transactional
   public ResponseEntity invalidate(@PathVariable(value = "id") Long id) throws RestApiException {
-    return RestResponseEntityFactory.success(productService.updateValid(id));
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    return RestResponseEntityFactory.success(productService.updateValid(id, currentUser));
   }
 }

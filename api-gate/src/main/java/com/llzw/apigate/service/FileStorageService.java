@@ -1,10 +1,10 @@
 package com.llzw.apigate.service;
 
 
+import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.persistence.entity.FileMetaData;
 import com.llzw.apigate.web.dto.FileDto;
 import java.io.IOException;
-import java.util.Optional;
 
 public interface FileStorageService {
 
@@ -13,8 +13,9 @@ public interface FileStorageService {
    * implementation-defined.
    *
    * @param file The validated file container uploaded from client.
+   * @return
    */
-  Optional<FileMetaData> save(FileDto file) throws IOException;
+  FileMetaData save(FileDto file) throws RestApiException;
 
   FileDto load(String path) throws IOException;
 
