@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
 
+  // 创建一个用于测试的mvc客户端，然后这个mvc客户端可以用来发起请求
   @BeforeAll
   public void setup() throws Exception {
     mvc = MockMvcBuilders

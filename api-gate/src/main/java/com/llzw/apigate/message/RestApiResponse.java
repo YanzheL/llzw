@@ -6,6 +6,7 @@ import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 public class RestApiResponse implements RestApiResponseMessage {
@@ -14,6 +15,7 @@ public class RestApiResponse implements RestApiResponseMessage {
   private String responseId = UUID.randomUUID().toString();
 
   @Setter(AccessLevel.NONE)
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private Date timestamp;
 
   private boolean success;

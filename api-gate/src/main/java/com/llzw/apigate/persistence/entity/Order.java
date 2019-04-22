@@ -22,6 +22,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Data
@@ -41,9 +42,11 @@ public class Order implements Serializable {
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date createdAt;
 
   @UpdateTimestamp
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -69,6 +72,7 @@ public class Order implements Serializable {
 
   protected String remark;
 
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date shippingTime;
 
   protected boolean deliveryConfirmed;

@@ -13,6 +13,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @MappedSuperclass
 @Data
@@ -32,6 +33,7 @@ public class Token {
   @JoinColumn(nullable = false, name = "userId")
   protected User user;
 
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date expiryDate;
 
   public Token(final String token) {

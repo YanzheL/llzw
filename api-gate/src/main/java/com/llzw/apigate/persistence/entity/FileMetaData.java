@@ -13,6 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Data
@@ -29,6 +30,7 @@ public class FileMetaData implements Serializable {
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date createdAt;
 
   // SHA-256 Hash value, length = 64

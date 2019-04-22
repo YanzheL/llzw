@@ -4,6 +4,7 @@ import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 public class StockCreateDto {
@@ -13,16 +14,8 @@ public class StockCreateDto {
   protected Long productId;
 
   @NotNull
-  protected Date createdAt;
-
-  @NotNull
-  protected Date updatedAt;
-
-  @NotNull
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date producedAt;
-
-  @NotNull
-  protected Date inboundedAt;
 
   @NotNull
   protected Integer shelfLife;
@@ -42,7 +35,4 @@ public class StockCreateDto {
   @NotNull
   @Size(min = 5, max = 30, message = "Length should between 5 to 30")
   protected String carrierName;
-
-  @NotNull
-  protected Boolean valid;
 }
