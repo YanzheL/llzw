@@ -63,7 +63,7 @@ public class PaymentController {
    * @return New order string from vendor. Clients can use this order string to perform actual
    * payment action on vendor's website.
    */
-  @GetMapping("/retry/{id}")
+  @GetMapping("/retry/{id:\\d+}")
   public ResponseEntity retry(@PathVariable(value = "id") Long paymentId)
       throws RestApiException {
     Payment payment = paymentService.retry(paymentId);

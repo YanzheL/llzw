@@ -48,7 +48,7 @@ public class StockController {
    * Create a new stock
    */
   @PreAuthorize("hasAnyRole('SELLER')")
-  @PostMapping(value = "")
+  @PostMapping
   @Transactional          // transaction management
   public ResponseEntity createStock(@Valid StockCreateDto stockCreateDto) throws RestApiException {
     Optional<Product> productOptional = productRepository.findById(stockCreateDto.getProductId());
@@ -95,7 +95,7 @@ public class StockController {
    * Get a specific stock
    */
   @PreAuthorize("hasAnyRole('SELLER')")
-  @GetMapping(value = "/{id}")
+  @GetMapping(value = "/{id:\\d+}")
   public ResponseEntity getStock(@PathVariable(value = "id") Long id) throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());

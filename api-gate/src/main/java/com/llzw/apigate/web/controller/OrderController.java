@@ -50,7 +50,7 @@ public class OrderController {
   }
 
   @PreAuthorize("hasAuthority('OP_READ_ORDER')")
-  @GetMapping(value = "/{id}")
+  @GetMapping(value = "/{id:\\d+}")
   public ResponseEntity get(@PathVariable(value = "id") Long id)
       throws RestApiException {
     User currentUser =
@@ -76,7 +76,7 @@ public class OrderController {
   }
 
   @PreAuthorize("hasAuthority('OP_DELETE_ORDER')")
-  @DeleteMapping(value = "/{id}")
+  @DeleteMapping(value = "/{id:\\d+}")
   public ResponseEntity cancel(@PathVariable(value = "id") Long id) throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
@@ -86,7 +86,7 @@ public class OrderController {
   }
 
   @PreAuthorize("hasRole('CUSTOMER')")
-  @PatchMapping(value = "/{id}")
+  @PatchMapping(value = "/{id:\\d+}")
   public ResponseEntity deliveryConfirm(
       @PathVariable(value = "id") Long id,
       @RequestParam(value = "action") String action

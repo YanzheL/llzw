@@ -50,7 +50,7 @@ public class FileController {
   }
 
   @PreAuthorize("hasAuthority('OP_DELETE_FILE')")
-  @DeleteMapping(value = "/{hash}")
+  @DeleteMapping(value = "/{hash:[a-z0-9]{64}}")
   public ResponseEntity delete(@PathVariable(value = "hash") String hash) {
     fileStorageService.delete(hash);
     return RestResponseEntityFactory.success(null);
@@ -62,7 +62,7 @@ public class FileController {
    * <tt>HttpMediaTypeNotAcceptableException</tt>. No solution found on StackOverflow and Google,
    * so I gave it up.
    */
-  @GetMapping(value = "/{hash}")
+  @GetMapping(value = "/{hash:[a-z0-9]{64}}")
   public void download(@PathVariable(value = "hash") String hash, HttpServletResponse response)
       throws RestApiException {
     try {

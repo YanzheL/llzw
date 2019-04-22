@@ -61,7 +61,7 @@ public class ProductController {
   /**
    * Get product by id
    */
-  @GetMapping(value = "/{id}")
+  @GetMapping(value = "/{id:\\d+}")
   public ResponseEntity get(@PathVariable(value = "id") Long id) throws RestApiException {
     return RestResponseEntityFactory.success(
         productService.findById(id).orElseThrow(() -> new RestEntityNotFoundException(
@@ -74,7 +74,7 @@ public class ProductController {
    * Invalidate a specific product
    */
   @PreAuthorize("hasRole('SELLER')")
-  @DeleteMapping(value = "/{id}")
+  @DeleteMapping(value = "/{id:\\d+}")
   @Transactional
   public ResponseEntity invalidate(@PathVariable(value = "id") Long id) throws RestApiException {
     User currentUser =

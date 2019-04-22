@@ -39,7 +39,7 @@ public class AddressController {
    * Create a new address
    */
   @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
-  @PostMapping(value = "")
+  @PostMapping
   @Transactional
   public ResponseEntity createAddress(@Valid AddressCreateDto dto) {
     User currentUser =
@@ -58,7 +58,7 @@ public class AddressController {
    * Get a specific address
    */
   @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
-  @GetMapping(value = "/{id}")
+  @GetMapping(value = "/{id:\\d+}")
   public ResponseEntity getSpecificAddress(@PathVariable(value = "id") Long id)
       throws RestApiException {
     User currentUser =
