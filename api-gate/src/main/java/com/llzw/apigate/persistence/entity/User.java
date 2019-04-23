@@ -3,7 +3,6 @@ package com.llzw.apigate.persistence.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,30 +10,24 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
-@AllArgsConstructor
-@Inheritance(strategy = InheritanceType.JOINED)
-public class User implements UserDetails {
+public class User extends BaseEntity implements UserDetails {
 
   private static final long serialVersionUID = 1L;
 
@@ -73,15 +66,6 @@ public class User implements UserDetails {
   @Column(length = 10)
   @NonNull
   protected String lastName;
-
-  @CreationTimestamp
-  @Column(nullable = false, updatable = false)
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  protected Date createdAt;
-
-  @UpdateTimestamp
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  protected Date updatedAt;
 
   protected boolean enabled;
 

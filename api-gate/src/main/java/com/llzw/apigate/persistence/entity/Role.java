@@ -24,7 +24,6 @@ import lombok.Setter;
 @Entity
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
-// @AllArgsConstructor
 public class Role implements Serializable {
 
   private static final long serialVersionUID = 1L;

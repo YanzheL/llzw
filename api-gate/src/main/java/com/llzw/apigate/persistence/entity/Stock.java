@@ -3,7 +3,6 @@ package com.llzw.apigate.persistence.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,20 +13,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
-@AllArgsConstructor
-public class Stock implements Serializable {
+public class Stock extends BaseEntity {
 
   private static final long serialVersionUID = 1L;
 
@@ -43,15 +40,6 @@ public class Stock implements Serializable {
   @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
   @JsonIdentityReference(alwaysAsId = true)
   protected Product product;
-
-  @CreationTimestamp
-  @Column(nullable = false, updatable = false)
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  protected Date createdAt;
-
-  @UpdateTimestamp
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  protected Date updatedAt;
 
   @Column(nullable = false)
   @NonNull
