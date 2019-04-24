@@ -10,18 +10,18 @@ public class AddressCreateDto {
   @NotNull
   protected Long ownerId;
 
-  @Size(min = 2, max = 30, message = "Length should between 2 and 30")
+  @Size(min = 2, max = 30, message = "Length must between 2 and 30")
   protected String province;
 
-  @Size(min = 2, max = 30, message = "Length should between 2 and 30")
+  @Size(min = 2, max = 30, message = "Length must between 2 and 30")
   protected String city;
 
-  @Size(min = 2, max = 30, message = "Length should between 2 and 30")
+  @Size(min = 2, max = 30, message = "Length must between 2 and 30")
   protected String district;
 
-  @Size(min = 2, max = 100, message = "Length should between 2 and 100")
+  @Size(min = 2, max = 100, message = "Length must between 2 and 100")
   protected String address;
 
-  @Size(min = 2, max = 30, message = "Length should between 2 and 30")
+  @Size(min = 2, max = 30, message = "Length must between 2 and 30")
   protected String zip;
 }

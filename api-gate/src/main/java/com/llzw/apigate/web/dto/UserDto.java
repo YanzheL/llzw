@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class UserDto {
 
-  @Pattern(regexp = "[a-zA-Z]\\w{5,50}", message = "Username must fulfill regex pattern [a-zA-Z]\\w{5,50}")
+  @Pattern(regexp = "[a-zA-Z]\\w{5,50}", message = "Must match regex pattern [a-zA-Z]\\w{5,50}")
   protected String username;
 
   @ValidPassword
@@ -23,7 +23,7 @@ public class UserDto {
   @Email(message = "Invalid email")
   protected String email;
 
-  @Size(min = 5, max = 20, message = "Length must between 5 to 20")
+  @Size(min = 5, max = 20, message = "Length must between 5 and 20")
   @Digits(integer = 20, fraction = 0, message = "Content can only contain digits")
   protected String phoneNumber;
 

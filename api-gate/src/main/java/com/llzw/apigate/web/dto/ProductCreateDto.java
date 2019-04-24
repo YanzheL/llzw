@@ -23,14 +23,14 @@ public class ProductCreateDto {
   protected Float price;
 
   @NotNull
-  @Size(min = 1, max = 50, message = "Length should between 1 to 50")
+  @Size(min = 1, max = 50, message = "Length must between 1 and 50")
   protected String ca;
 
   @NotNull
-  @Size(min = 1, max = 50, message = "Length should between 1 to 50")
+  @Size(min = 1, max = 50, message = "Length must between 1 and 50")
   protected String caId;
 
   @NotNull
-  @Size(min = 64, max = 64, message = "Length should be 64")
+  @Size(min = 64, max = 64, message = "Length must be 64")
   protected String caFile;
 }

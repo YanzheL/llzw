@@ -14,19 +14,19 @@ public class StockCreateDto {
   @NotNull
   protected Long productId;
 
-  @PastOrPresent(message = "Date should be past or present")
+  @PastOrPresent(message = "Date must be past or present")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date producedAt;
 
-  @Positive(message = "shelfLife should be positive")
+  @Positive(message = "shelfLife must be positive")
   protected Integer shelfLife;
 
-  @Positive(message = "Quantity should be positive")
+  @Positive(message = "Quantity must be positive")
   protected Integer totalQuantity;
 
-  @Size(min = 5, max = 30, message = "Length should between 5 to 30")
+  @Size(min = 5, max = 30, message = "Length must between 5 and 30")
   protected String trackingId;
 
-  @Size(min = 5, max = 30, message = "Length should between 5 to 30")
+  @Size(min = 5, max = 30, message = "Length must between 5 and 30")
   protected String carrierName;
 }

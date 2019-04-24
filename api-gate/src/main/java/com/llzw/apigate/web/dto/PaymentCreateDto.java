@@ -10,7 +10,7 @@ public class PaymentCreateDto {
   @NotNull
   protected Long orderId;
 
-  @Size(min = 5, max = 100, message = "Length should between 5 and 100")
+  @Size(min = 5, max = 100, message = "Length must between 5 and 100")
   protected String subject;
 
   protected String description;
