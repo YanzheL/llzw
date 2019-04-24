@@ -81,4 +81,4 @@ java "-Dspring.profiles.active=test" -jar target/*.jar
 
 ## Licensing
 
-"The code in this project is licensed under MIT license."
+[Apache License 2.0](LICENSE)
