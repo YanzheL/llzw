@@ -27,6 +27,6 @@ public class StockCreateDto {
   @Size(min = 5, max = 30, message = "Length must between 5 and 30")
   protected String trackingId;
 
-  @Size(min = 5, max = 30, message = "Length must between 5 and 30")
+  @Size(min = 2, max = 30, message = "Length must between 2 and 30")
   protected String carrierName;
 }
