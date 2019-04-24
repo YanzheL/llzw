@@ -59,7 +59,7 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
   @Test
   public void createPaymentByCustomer() throws Exception {
     MvcResult result = mvc.perform(
-        post("/api/v1/payments")
+        post(apiBasePath + "/payments")
             .param("orderId", "1")
             .param("subject", "Test Subject")
             .param("description", "Test Description")
@@ -74,7 +74,7 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
   @Test
   public void createPaymentByNoUser() throws Exception {
     MvcResult result = mvc.perform(
-        post("/api/v1/payments")
+        post(apiBasePath + "/payments")
             .param("orderId", "1")
             .param("subject", "Test Subject")
             .param("description", "Test Description")
@@ -89,7 +89,7 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
   @Test
   public void createPaymentBySeller() throws Exception {
     MvcResult result = mvc.perform(
-        post("/api/v1/payments")
+        post(apiBasePath + "/payments")
             .param("orderId", "1")
             .param("subject", "Test Subject")
             .param("description", "Test Description")
@@ -103,7 +103,7 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
   @Test
   public void retryNotExistPaymentByNoUser() throws Exception {
     MvcResult result = mvc.perform(
-        get("/api/v1/payments/retry/200")
+        get(apiBasePath + "/payments/retry/200")
     )
         .andDo(print())
         .andExpect(status().isNotFound())

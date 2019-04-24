@@ -24,15 +24,13 @@ phoneNumber String   True     -       min length = 5, max length = 20
 role        String   True     -       One of ['ROLE_SELLER', 'ROLE_CUSTOMER']
 =========== ======== ======== ======= ==========================================================================
 
-The response JSON structured like this
-
-.. code:: json
-
-   {
-     "responseId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-     "sucess": true,
-     "data": null
-   }
+Response Parameters
+-------------------
+=========== ========= ===================================
+Parameter   Type      Description
+=========== ========= ===================================
+data        User      The created User object
+=========== ========= ===================================
 
 Real Name Verification
 ======================
@@ -57,15 +55,13 @@ firstName      String   True     -       min length = 1, max length = 20
 lastName       String   True     -       min length = 1, max length = 20
 ============== ======== ======== ======= =========================================================
 
-The response JSON structured like this:
-
-.. code:: json
-
-   {
-     "responseId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-     "sucess": true,
-     "data": null
-   }
+Response Parameters
+-------------------
+=========== ========= ===================================
+Parameter   Type      Description
+=========== ========= ===================================
+data        User      The modified User object
+=========== ========= ===================================
 
 .. Attention::
    Remember — You must be authenticated before using this API
@@ -90,15 +86,13 @@ oldPassword String True     -       Current password
 newPassword String True     -       New password
 =========== ====== ======== ======= ================
 
-The response JSON structured like this:
-
-.. code:: json
-
-   {
-     "responseId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-     "sucess": true,
-     "data": null
-   }
+Response Parameters
+-------------------
+=========== ========= ===================================
+Parameter   Type      Description
+=========== ========= ===================================
+data        User      The modified User object
+=========== ========= ===================================
 
 .. Attention::
    Remember — You must be authenticated before using this API

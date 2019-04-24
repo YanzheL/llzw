@@ -33,4 +33,8 @@ public class Address extends AddressBean {
   @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
   @JsonIdentityReference(alwaysAsId = true)
   protected User owner;
+
+  public boolean belongsToUser(User user) {
+    return owner.getUsername().equals(user.getUsername());
+  }
 }

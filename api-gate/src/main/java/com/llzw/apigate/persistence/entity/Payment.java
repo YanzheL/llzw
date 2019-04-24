@@ -3,7 +3,6 @@ package com.llzw.apigate.persistence.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,19 +17,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
-@AllArgsConstructor
-public class Payment implements Serializable {
+public class Payment extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,13 +43,6 @@ public class Payment implements Serializable {
 
   @Transient
   protected String orderString;
-
-  @CreationTimestamp
-  @Column(nullable = false, updatable = false)
-  protected Date createdAt;
-
-  @UpdateTimestamp
-  protected Date updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "payerId")
@@ -74,6 +65,7 @@ public class Payment implements Serializable {
 
   protected String vendorTradeId;
 
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date confirmedAt;
 
   protected boolean confirmed;

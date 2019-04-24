@@ -3,6 +3,7 @@ package com.llzw.apigate.service;
 import com.linkedin.urls.Url;
 import com.linkedin.urls.detection.UrlDetector;
 import com.linkedin.urls.detection.UrlDetectorOptions;
+import com.llzw.apigate.message.error.RestAccessDeniedException;
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
 import com.llzw.apigate.message.error.RestEntityNotFoundException;
@@ -36,10 +37,13 @@ public class SimpleProductService implements ProductService {
   private String apiBasePath;
 
   @Override
-  public boolean updateValid(Long id) throws RestApiException {
+  public boolean updateValid(Long id, User seller) throws RestApiException {
     Product product = productRepository.findById(id)
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
-            String.format("Product <%s> do not exist", id)));
+            String.format("Product <%s> does not exist", id)));
+    if (!product.belongsToSeller(seller)) {
+      throw new RestAccessDeniedException("You do not have access to this entity");
+    }
     product.setValid(false);
     productRepository.save(product);
     return true;

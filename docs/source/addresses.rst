@@ -130,4 +130,3 @@ zip       String False    000000  Zip code
 
 ..  Attention::
     Remember — You must be authenticated with the user you specified before using this API
-
