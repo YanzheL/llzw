@@ -4,16 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -71,14 +72,14 @@ public class User extends BaseEntity implements UserDetails {
 
   protected boolean verified;
 
-  @ManyToMany(cascade = CascadeType.ALL)
+  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JoinTable(
       joinColumns = @JoinColumn(name = "userId"),
       inverseJoinColumns = @JoinColumn(name = "roleId"))
   protected Collection<Role> roles = new ArrayList<>();
 
-  @OneToMany(mappedBy = "owner")
-  protected Collection<Address> addresses = new ArrayList<>();
+//  @OneToMany(mappedBy = "owner")
+//  protected Collection<Address> addresses = new ArrayList<>();
 
   @Override
   public boolean isAccountNonExpired() {
@@ -102,33 +103,22 @@ public class User extends BaseEntity implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    Collection<GrantedAuthority> all = getPrivilegesAsGrantedAuthorities();
-    all.addAll(getRolesAsGrantedAuthorities());
-    return all;
-  }
-
-  public Collection<GrantedAuthority> getPrivilegesAsGrantedAuthorities() {
-    return roles.stream()
-        .map(Role::getPrivilegeNames)
-        .flatMap(Collection::stream)
+    return Stream
+        .concat(getPrivilegesAsGrantedAuthorities(), getRoleNames())
         .map(SimpleGrantedAuthority::new)
         .collect(Collectors.toList());
   }
 
-  public Collection<GrantedAuthority> getRolesAsGrantedAuthorities() {
-    return roles.stream()
-        .map(Role::getRole)
-        .map(Role.RoleType::name)
-        .map(SimpleGrantedAuthority::new)
-        .collect(Collectors.toList());
+  public Stream<String> getPrivilegesAsGrantedAuthorities() {
+    return roles.stream().flatMap(Role::getPrivilegeNames);
   }
 
-  public Collection<String> getRoleNames() {
-    return roles.stream().map(Role::toString).collect(Collectors.toList());
+  public Stream<String> getRoleNames() {
+    return roles.stream().map(Role::toString);
   }
 
   public boolean hasRole(String name) {
-    return getRoleNames().contains(name);
+    return getRoleNames().anyMatch(o -> o.equals(name));
   }
 
   public boolean hasRole(Role.RoleType type) {

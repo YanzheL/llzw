@@ -40,7 +40,6 @@ public class SimpleUserService implements UserService {
   private UserRepository userRepository;
 
   @Override
-  @Transactional
   public User register(UserDto dto) throws RestApiException {
     String username = dto.getUsername();
     String email = dto.getEmail();

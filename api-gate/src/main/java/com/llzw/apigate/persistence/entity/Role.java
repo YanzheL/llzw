@@ -3,12 +3,13 @@ package com.llzw.apigate.persistence.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,7 +42,7 @@ public class Role implements Serializable {
   @ManyToMany(mappedBy = "roles")
   protected Collection<User> users = new ArrayList<>();
 
-  @ManyToMany(cascade = CascadeType.ALL)
+  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JoinTable(
       joinColumns = @JoinColumn(name = "roleId", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "privilegeId", referencedColumnName = "id"))
@@ -60,8 +61,8 @@ public class Role implements Serializable {
     return role.name();
   }
 
-  public Collection<String> getPrivilegeNames() {
-    return privileges.stream().map(Privilege::toString).collect(Collectors.toList());
+  public Stream<String> getPrivilegeNames() {
+    return privileges.stream().map(Privilege::toString);
   }
 
   public enum RoleType {
