@@ -18,7 +18,7 @@ public class UserDto {
   protected String password;
 
   @Size(max = 100, message = "Length cannot exceed 100")
-  protected String nickname;
+  protected String nickname = "";
 
   @Email(message = "Invalid email")
   protected String email;

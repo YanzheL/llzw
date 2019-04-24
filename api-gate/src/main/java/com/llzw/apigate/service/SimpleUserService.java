@@ -42,6 +42,7 @@ public class SimpleUserService implements UserService {
   @Override
   public User register(UserDto dto) throws RestApiException {
     String username = dto.getUsername();
+    String nickname = dto.getNickname();
     String email = dto.getEmail();
     if (userRepository.findByUsernameOrEmail(username, email).isPresent()) {
       throw new RestEntityExistsException("There is an account with same username or email email");
@@ -52,7 +53,8 @@ public class SimpleUserService implements UserService {
         )
     );
     final User user = new User();
-    BeanUtils.copyProperties(dto, user, "role", "password");
+    BeanUtils.copyProperties(dto, user, "role", "password", "nickname");
+    user.setNickname(nickname.isEmpty() ? username : nickname);
     user.setPassword(passwordEncoder.encode(dto.getPassword()));
     user.setRoles(Collections.singleton(role));
     user.setEnabled(true);
