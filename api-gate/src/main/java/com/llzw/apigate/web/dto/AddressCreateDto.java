@@ -1,30 +1,27 @@
 package com.llzw.apigate.web.dto;
 
-import com.llzw.apigate.persistence.entity.User;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.Data;
 
 @Data
 public class AddressCreateDto {
 
   @NotNull
-  protected Long id;
+  protected Long ownerId;
 
-  @NotNull
-  protected User ownerId;
-
-  @NotNull
+  @Size(min = 2, max = 30, message = "Length should between 2 and 30")
   protected String province;
 
-  @NotNull
+  @Size(min = 2, max = 30, message = "Length should between 2 and 30")
   protected String city;
 
-  @NotNull
+  @Size(min = 2, max = 30, message = "Length should between 2 and 30")
   protected String district;
 
-  @NotNull
+  @Size(min = 2, max = 100, message = "Length should between 2 and 100")
   protected String address;
 
-  @NotNull
+  @Size(min = 2, max = 30, message = "Length should between 2 and 30")
   protected String zip;
 }
