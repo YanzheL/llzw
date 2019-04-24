@@ -54,7 +54,7 @@ public class SimpleUserService implements UserService {
     );
     final User user = new User();
     BeanUtils.copyProperties(dto, user, "role", "password", "nickname");
-    user.setNickname(nickname.isEmpty() ? username : nickname);
+    user.setNickname(nickname == null || nickname.isEmpty() ? username : nickname);
     user.setPassword(passwordEncoder.encode(dto.getPassword()));
     user.setRoles(Collections.singleton(role));
     user.setEnabled(true);
