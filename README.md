@@ -20,10 +20,20 @@ Current project status: **Still in development**
 
 ## Prerequisites
 
-- **OpenJDK:** 8 or later
+- **JRE Runtime:** 8 or later
 - **MySQL:** 8 or later, running on [localhost:3306](localhost:3306),  otherwise you should modify related information in [application-dev.yml](api-gate/src/main/resources/application-dev.yml)
 
 ## Getting Started
+
+Two options
+
+#### Use Prebuilt JAR Package
+
+Follow the intructions on [Release Page](https://github.com/YanzheL/llzw/releases)
+
+#### From Source
+
+To compile the source, you need a valid JDK environment with version 8 or later.
 
 Clone this project
 
@@ -47,7 +57,13 @@ Build the package
 Run
 
 ```shell
-java -jar target/*.jar
+java "-Dspring.profiles.active=dev" -jar target/*.jar
+```
+
+You may also run the test version with in-memory database if you do not have an external database.
+
+```shell
+java "-Dspring.profiles.active=test" -jar target/*.jar
 ```
 
 ## Features
