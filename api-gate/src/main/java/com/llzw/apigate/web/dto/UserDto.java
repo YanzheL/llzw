@@ -1,9 +1,9 @@
 package com.llzw.apigate.web.dto;
 
+import com.llzw.apigate.web.validation.ValidEmail;
 import com.llzw.apigate.web.validation.ValidPassword;
 import com.llzw.apigate.web.validation.ValidRole;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import lombok.Data;
@@ -20,7 +20,7 @@ public class UserDto {
   @Size(max = 100, message = "Length cannot exceed 100")
   protected String nickname = "";
 
-  @Email(message = "Invalid email")
+  @ValidEmail(message = "Invalid email")
   protected String email;
 
   @Size(min = 5, max = 20, message = "Length must between 5 and 20")
