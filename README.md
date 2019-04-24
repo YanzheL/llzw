@@ -79,6 +79,6 @@ java "-Dspring.profiles.active=test" -jar target/*.jar
 
 - [API Documentation](https://llzw.readthedocs.io)
 
-## Licensing
+## License
 
 [Apache License 2.0](LICENSE)
