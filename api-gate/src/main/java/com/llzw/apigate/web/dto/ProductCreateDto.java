@@ -17,21 +17,20 @@ public class ProductCreateDto {
   protected String name;
 
   @NotNull(message = "introduction can't be empty")
-  @Size(min = 1, max = 50, message = "Length should between 1 to 50")
   protected String introduction;
 
   @NotNull(message = "price can't be empty")
   protected Float price;
 
   @NotNull
-  @Size(min = 1, max = 50, message = "Length should between 1 to 50")
-  protected Float ca;
+  @Size(min = 1, max = 50, message = "Length must between 1 and 50")
+  protected String ca;
 
   @NotNull
-  @Size(min = 1, max = 50, message = "Length should between 1 to 50")
+  @Size(min = 1, max = 50, message = "Length must between 1 and 50")
   protected String caId;
 
   @NotNull
-  @Size(min = 1, max = 50, message = "Length should between 1 to 50")
+  @Size(min = 64, max = 64, message = "Length must be 64")
   protected String caFile;
 }

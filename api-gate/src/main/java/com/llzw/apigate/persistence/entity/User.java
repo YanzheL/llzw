@@ -1,5 +1,6 @@
 package com.llzw.apigate.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -76,10 +77,8 @@ public class User extends BaseEntity implements UserDetails {
   @JoinTable(
       joinColumns = @JoinColumn(name = "userId"),
       inverseJoinColumns = @JoinColumn(name = "roleId"))
+  @JsonIgnore
   protected Collection<Role> roles = new ArrayList<>();
-
-//  @OneToMany(mappedBy = "owner")
-//  protected Collection<Address> addresses = new ArrayList<>();
 
   @Override
   public boolean isAccountNonExpired() {
@@ -102,6 +101,7 @@ public class User extends BaseEntity implements UserDetails {
   }
 
   @Override
+  @JsonIgnore
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return Stream
         .concat(getPrivilegeNames(), getRoleNames())
@@ -109,10 +109,12 @@ public class User extends BaseEntity implements UserDetails {
         .collect(Collectors.toList());
   }
 
+  @JsonIgnore
   public Stream<String> getPrivilegeNames() {
     return roles.stream().flatMap(Role::getPrivilegeNames);
   }
 
+  @JsonGetter("roles")
   public Stream<String> getRoleNames() {
     return roles.stream().map(Role::toString);
   }

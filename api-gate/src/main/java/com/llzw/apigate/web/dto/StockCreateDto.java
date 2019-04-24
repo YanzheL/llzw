@@ -2,6 +2,8 @@ package com.llzw.apigate.web.dto;
 
 import java.util.Date;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -10,29 +12,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class StockCreateDto {
 
   @NotNull
-  //@Size(min = 5, max = 30, message = "Length should between 5 to 30")
   protected Long productId;
 
-  @NotNull
+  @PastOrPresent(message = "Date must be past or present")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   protected Date producedAt;
 
-  @NotNull
+  @Positive(message = "shelfLife must be positive")
   protected Integer shelfLife;
 
-  @NotNull
-  @Size(min = 5, max = 30, message = "Length should between 5 to 30")
+  @Positive(message = "Quantity must be positive")
   protected Integer totalQuantity;
 
-  @NotNull
-  @Size(min = 5, max = 30, message = "Length should between 5 to 30")
-  protected String currentQuantity;
-
-  @NotNull
-  @Size(min = 5, max = 30, message = "Length should between 5 to 30")
+  @Size(min = 5, max = 30, message = "Length must between 5 and 30")
   protected String trackingId;
 
-  @NotNull
-  @Size(min = 5, max = 30, message = "Length should between 5 to 30")
+  @Size(min = 2, max = 30, message = "Length must between 2 and 30")
   protected String carrierName;
 }
