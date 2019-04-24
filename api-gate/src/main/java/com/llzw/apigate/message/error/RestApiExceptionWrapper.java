@@ -3,6 +3,7 @@ package com.llzw.apigate.message.error;
 import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.EntityExistsException;
+import javax.validation.ConstraintViolationException;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,6 +20,7 @@ public class RestApiExceptionWrapper {
     mapping.put(BindException.class, RestInvalidParameterException.class);
     mapping.put(EntityExistsException.class, RestEntityExistsException.class);
     mapping.put(UsernameNotFoundException.class, RestEntityNotFoundException.class);
+    mapping.put(ConstraintViolationException.class, RestInvalidParameterException.class);
   }
 
   private RestApiExceptionWrapper() {
