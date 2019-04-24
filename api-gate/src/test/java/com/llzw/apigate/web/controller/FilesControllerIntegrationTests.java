@@ -34,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class FilesControllerIntegrationTests extends ApiGateApplicationTests {
 
   @BeforeAll
-  public void setup() throws Exception {
+  public void setup() {
     mvc = MockMvcBuilders
         .webAppContextSetup(context)
         .apply(springSecurity())

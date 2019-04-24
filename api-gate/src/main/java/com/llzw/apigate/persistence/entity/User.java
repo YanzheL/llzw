@@ -104,12 +104,12 @@ public class User extends BaseEntity implements UserDetails {
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return Stream
-        .concat(getPrivilegesAsGrantedAuthorities(), getRoleNames())
+        .concat(getPrivilegeNames(), getRoleNames())
         .map(SimpleGrantedAuthority::new)
         .collect(Collectors.toList());
   }
 
-  public Stream<String> getPrivilegesAsGrantedAuthorities() {
+  public Stream<String> getPrivilegeNames() {
     return roles.stream().flatMap(Role::getPrivilegeNames);
   }
 
