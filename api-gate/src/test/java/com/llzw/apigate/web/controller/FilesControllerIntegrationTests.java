@@ -50,7 +50,6 @@ public class FilesControllerIntegrationTests extends ApiGateApplicationTests {
         "multipart/form-data",
         new FileInputStream(file));
     mvc.perform(multipart(apiBasePath + "/files").file(multipartFile))
-        .andDo(print())
         .andExpect(status().isCreated())
         .andExpect(jsonPath("$.success").value(true))
         .andExpect(jsonPath("$.data.hash").isNotEmpty())
@@ -109,7 +108,6 @@ public class FilesControllerIntegrationTests extends ApiGateApplicationTests {
     mvc.perform(
         get(apiBasePath
             + "/files/b0339ffc5e42a813380a0da98b1a0fdf449195a430f497b041b80dfe98915e29"))
-        .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.IMAGE_PNG_VALUE))
     ;
