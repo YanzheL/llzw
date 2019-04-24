@@ -79,6 +79,6 @@ java "-Dspring.profiles.active=test" -jar target/*.jar
 
 - [API Documentation](https://llzw.readthedocs.io)
 
-## Licensing
+## License
 
-"The code in this project is licensed under MIT license."
+[Apache License 2.0](LICENSE)
