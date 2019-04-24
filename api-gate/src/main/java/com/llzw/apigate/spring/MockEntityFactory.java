@@ -89,7 +89,7 @@ public class MockEntityFactory {
     User user = new User();
     user.setUsername(String.format("%s_username_%d", prefix, id));
     user.setPassword(
-        passwordEncoder.encode(String.format("%s_password_%d", prefix, id)));
+        passwordEncoder.encode(String.format("%s_PASSWORD_%d", prefix, id)));
     user.setNickname(String.format("%s_nickname_%d", prefix, id));
     user.setEmail(String.format("%s_email_%d@test.org", prefix, id));
     user.setPhoneNumber(String.format("1860000000%d", id));
