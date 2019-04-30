@@ -18,6 +18,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
+import org.springframework.transaction.annotation.Transactional;
 
 @Entity
 @Data
@@ -66,6 +67,7 @@ public class Product extends BaseEntity {
   @NonNull
   protected String caId;
 
+  @Transactional
   public boolean belongsToSeller(User seller) {
     return this.seller.getUsername().equals(seller.getUsername());
   }

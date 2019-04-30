@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.transaction.annotation.Transactional;
 
 @Entity
 @Data
@@ -67,6 +68,7 @@ public class Stock extends BaseEntity {
   @Column(length = 50)
   protected String carrierName;
 
+  @Transactional
   public boolean belongsToSeller(User seller) {
     return product.getSeller().getUsername().equals(seller.getUsername());
   }
