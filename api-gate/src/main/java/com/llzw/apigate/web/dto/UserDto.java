@@ -3,29 +3,28 @@ package com.llzw.apigate.web.dto;
 import com.llzw.apigate.web.validation.ValidEmail;
 import com.llzw.apigate.web.validation.ValidPassword;
 import com.llzw.apigate.web.validation.ValidRole;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import lombok.Data;
 
 @Data
 public class UserDto {
 
-  @NotNull
-  @Size(min = 5, max = 30, message = "Length should between 5 to 30")
+  @Pattern(regexp = "[a-zA-Z]\\w{5,50}", message = "Must match regex pattern [a-zA-Z]\\w{5,50}")
   protected String username;
 
   @ValidPassword
   protected String password;
 
-  @NotNull
-  @Size(min = 5, max = 100, message = "Length should between 5 to 100")
+  @Size(max = 100, message = "Length cannot exceed 100")
   protected String nickname;
 
-  @ValidEmail
+  @ValidEmail(message = "Invalid email")
   protected String email;
 
-  @NotNull
-  @Size(min = 5, max = 20, message = "Length should between 5 to 20")
+  @Size(min = 5, max = 20, message = "Length must between 5 and 20")
+  @Digits(integer = 20, fraction = 0, message = "Content can only contain digits")
   protected String phoneNumber;
 
   @ValidRole

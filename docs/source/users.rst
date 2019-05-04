@@ -17,7 +17,7 @@ Request Parameters
 =========== ======== ======== ======= ==========================================================================
 Parameter   Type     Required Default Description
 =========== ======== ======== ======= ==========================================================================
-username    String   True     -       Username
+username    String   True     -       Username with pattern [a-zA-Z]\w{5,50}
 password    String   True     -       At least 1 upper case, 1 lower  case, 1 digit and 1 symbol, min length = 8
 email       String   True     -       min length = 5, max length = 100
 phoneNumber String   True     -       min length = 5, max length = 20

@@ -2,6 +2,7 @@ package com.llzw.apigate.spring;
 
 import com.llzw.apigate.security.CustomAuthenticationProvider;
 import com.llzw.apigate.security.RestAuthenticationEntryPoint;
+import java.util.Collections;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -49,9 +53,21 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
     auth.authenticationProvider(authProvider());
   }
 
+  @Bean
+  CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(Collections.singletonList("*"));
+    configuration.setAllowedMethods(Collections.singletonList("*"));
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+  }
+
   @Override
   protected void configure(final HttpSecurity http) throws Exception {
-    http.csrf()
+    http.cors()
+        .and()
+        .csrf()
         .disable()
         .authorizeRequests()
         .and()

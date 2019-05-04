@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 //@TestMethodOrder(MethodStocker.OrderAnnotation.class)
 public class StockControllerIntegrationTests extends ApiGateApplicationTests {
+
   // 创建一个用于测试的mvc客户端，然后这个mvc客户端可以用来发起请求
   @BeforeAll
   public void setup() {
@@ -60,6 +61,19 @@ public class StockControllerIntegrationTests extends ApiGateApplicationTests {
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.success").value(true))
         .andExpect(jsonPath("$.data.id").value(1L))
+        .andReturn();
+  }
+
+  @WithUserDetails("test_user_seller_username_0")
+  @Test
+  public void getStocks() throws Exception {
+    MvcResult result = mvc.perform(
+        get("/api/v1/stocks")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data.length()").value(2L))
         .andReturn();
   }
 
