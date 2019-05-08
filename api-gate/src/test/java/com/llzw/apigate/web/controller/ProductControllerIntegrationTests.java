@@ -2,6 +2,7 @@ package com.llzw.apigate.web.controller;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -30,27 +31,26 @@ public class ProductControllerIntegrationTests extends ApiGateApplicationTests {
         .build();
   }
 
-//  @WithUserDetails("test_user_seller_username_0")
-//  @Test
-//  //@Order(1) //定义了组件的加载顺序
-//  public void createProduct() throws Exception {
-//
-//    MvcResult result = mvc.perform(
-//        post("/api/v1/products")
-//            .param("name", "auto test 1")
-//            .param("introduction", "Hello world")//new Date().toString())
-//            .param("price", "1234.56")
-//            .param("ca", "321532135")
-//            .param("caId", "1111")
-//            .param("caFile", "b0339ffc5e42a813380a0da98b1a0fdf449195a430f497b041b80dfe98915e29")
-//    )
-//        .andDo(print())
-//        .andExpect(status().isCreated())
-//        .andExpect(jsonPath("$.success").value(true))
-//        .andReturn();
-//  }
-
   @WithUserDetails("test_user_seller_username_0")
+  @Test
+  //@Order(1) //定义了组件的加载顺序
+  public void createProduct() throws Exception {
+
+    MvcResult result = mvc.perform(
+        post("/api/v1/products")
+            .param("name", "auto test 1")
+            .param("introduction", "Hello world")//new Date().toString())
+            .param("price", "1234.56")
+            .param("ca", "321532135")
+            .param("caId", "1111")
+            .param("caFile", "b0339ffc5e42a813380a0da98b1a0fdf449195a430f497b041b80dfe98915e29")
+    )
+        .andDo(print())
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.success").value(false))
+        .andReturn();
+  }
+
   @Test
   public void getProducts() throws Exception {
     MvcResult result = mvc.perform(
@@ -59,36 +59,20 @@ public class ProductControllerIntegrationTests extends ApiGateApplicationTests {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.success").value(true))
-//        .andExpect(jsonPath("$.data.id").value(1L))
+        .andExpect(jsonPath("$.data").isArray())
         .andReturn();
   }
 
-  @WithUserDetails("test_user_seller_username_0")
   @Test
-  public void getStocks() throws Exception {
+  public void getProduct() throws Exception {
     MvcResult result = mvc.perform(
-        get("/api/v1/stocks")
+        get("/api/v1/products/1")
     )
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.success").value(true))
-        .andExpect(jsonPath("$.data.length()").value(2L))
+        .andExpect(jsonPath("$.data.id").value(1L))
         .andReturn();
   }
-
-  @WithUserDetails("test_user_seller_username_0")
-  @Test
-  public void searchStockByProductand() throws Exception {
-    MvcResult result = mvc.perform(
-        get("/api/v1/stocks")
-            .param("productId", "1")
-    )
-        .andDo(print())
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$.success").value(true))
-        .andExpect(jsonPath("$.data").isNotEmpty())
-        .andReturn();
-  }
-
 
 }
