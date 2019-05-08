@@ -1,5 +1,8 @@
 package com.llzw.apigate.spring;
 
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
@@ -31,6 +34,11 @@ public class RestWebConfig implements WebMvcConfigurer {
         .allowedOrigins("*")
         .allowedHeaders("*")
         .allowedMethods("*");
+  }
+
+  @Bean
+  public Module datatypeHibernateModule() {
+    return new Hibernate5Module();
   }
 
 //  @Bean
