@@ -4,7 +4,9 @@ import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
 import com.google.common.io.ByteStreams;
 import com.llzw.apigate.message.error.RestApiException;
+import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
 import com.llzw.apigate.message.error.RestInternalServerException;
+import com.llzw.apigate.message.error.RestInvalidParameterException;
 import com.llzw.apigate.persistence.dao.FileMetaDataRepository;
 import com.llzw.apigate.persistence.entity.FileMetaData;
 import com.llzw.apigate.web.dto.FileDto;
@@ -80,15 +82,34 @@ public class UniqueHashFileStorageService implements FileStorageService {
   }
 
   @Override
-  public FileDto load(String path) throws IOException {
-    FileDto container = new FileDto();
-    container.setFileFromPath(basePath + File.separator + path);
-    return container;
+  public FileDto load(String path) throws RestApiException {
+    if (!isAcceptablePath(path)) {
+      throw new RestInvalidParameterException(
+          String.format("Invalid path <%s>", path)
+      );
+    }
+    try {
+      FileDto container = new FileDto();
+      container.setFileFromPath(basePath + File.separator + path);
+      return container;
+    } catch (IOException e) {
+      throw new RestInternalServerException(e.getMessage());
+    }
+  }
+
+  @Override
+  public boolean exists(String path) {
+    return fileMetaDataRepository.findByHash(path).isPresent();
+  }
+
+  @Override
+  public boolean isAcceptablePath(String path) {
+    return PATH_PATTERN.matcher(path).matches();
   }
 
   @Override
   public void delete(String path) {
-    if (!PATH_PATTERN.matcher(path).matches()) {
+    if (!isAcceptablePath(path)) {
       return;
     }
     try {
@@ -114,17 +135,12 @@ public class UniqueHashFileStorageService implements FileStorageService {
   }
 
   @Override
-  public boolean increaseReferenceCount(String path) {
-    if (!PATH_PATTERN.matcher(path).matches()) {
-      return false;
-    }
-    Optional<FileMetaData> fileMetaDataOptional = fileMetaDataRepository.findByHash(path);
-    if (!fileMetaDataOptional.isPresent()) {
-      return false;
-    }
-    FileMetaData fileMetaData = fileMetaDataOptional.get();
+  public void increaseReferenceCount(String path) throws RestApiException {
+    FileMetaData fileMetaData = fileMetaDataRepository.findByHash(path)
+        .orElseThrow(() -> new RestDependentEntityNotFoundException(
+            String.format("File <%s> does not exist", path)));
     fileMetaData.increaseReferenceCount();
-    return true;
+    fileMetaDataRepository.save(fileMetaData);
   }
 
   private void createBasePathIfNotExist() {
