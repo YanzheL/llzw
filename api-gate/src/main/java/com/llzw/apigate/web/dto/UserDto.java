@@ -29,4 +29,7 @@ public class UserDto {
 
   @ValidRole
   protected String role;
+
+  @Size(max = 200, message = "Length cannot exceed 200")
+  protected String avatar;
 }

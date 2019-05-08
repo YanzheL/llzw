@@ -50,6 +50,8 @@ public class User extends BaseEntity implements UserDetails {
   @NonNull
   protected String email;
 
+  protected String avatar;
+
   @Column(nullable = false, length = 20)
   @NonNull
   protected String phoneNumber;
