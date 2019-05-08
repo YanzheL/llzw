@@ -11,14 +11,8 @@ public class ProductSearchDto {
 
   protected String introduction;
 
-  @Size(max = 50, message = "Length must not exceed 50")
-  protected String ca;
-
-  @Size(max = 50, message = "Length must not exceed 50")
-  protected String caId;
-
   @Size(max = 100, message = "Length must not exceed 100")
-  protected String searchString;
+  protected String global;
 
   protected boolean valid = true;
 }

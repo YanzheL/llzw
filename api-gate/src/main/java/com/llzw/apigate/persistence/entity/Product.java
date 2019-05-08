@@ -20,8 +20,12 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 import org.springframework.transaction.annotation.Transactional;
 
+@Indexed
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -47,6 +51,7 @@ public class Product extends BaseEntity {
 
   @Column(nullable = false)
   @NonNull
+  @Field(termVector = TermVector.YES)
   protected String name;
 
   @ElementCollection
@@ -54,6 +59,7 @@ public class Product extends BaseEntity {
 
   @Lob
   @NonNull
+  @Field(termVector = TermVector.YES)
   protected String introduction;
 
   @Column(nullable = false)

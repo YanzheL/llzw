@@ -10,11 +10,13 @@ import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.ProductCreateDto;
+import com.llzw.apigate.web.dto.ProductSearchDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,8 +101,24 @@ public class SimpleProductService implements ProductService {
   }
 
   @Override
-  public List<Product> findAll(Pageable pageable) {
-    return productRepository.findAll(pageable).getContent();
+  public List<Product> search(Pageable pageable, ProductSearchDto dto) throws RestApiException {
+    String nameQueryString = dto.getName();
+    String introductionQueryString = dto.getName();
+    String global = dto.getGlobal();
+    List<Product> result;
+    if (global != null) {
+      result = productRepository.searchByNameOrIntroductionWithCustomQuery(global);
+    } else if (nameQueryString != null) {
+      result = productRepository.searchByNameWithCustomQuery(nameQueryString);
+    } else if (introductionQueryString != null) {
+      result = productRepository.searchByIntroductionWithCustomQuery(introductionQueryString);
+    } else {
+      result = productRepository.findAll(pageable).getContent();
+    }
+    if (!dto.isValid()) {
+      result = result.stream().filter(Product::isValid).collect(Collectors.toList());
+    }
+    return result;
   }
 
   /**

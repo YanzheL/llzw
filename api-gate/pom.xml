@@ -222,6 +222,12 @@
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <version>2.9.8</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-search-orm -->
+    <dependency>
+      <artifactId>hibernate-search-orm</artifactId>
+      <groupId>org.hibernate</groupId>
+      <version>5.11.1.Final</version>
+    </dependency>
   </dependencies>
   <description>Demo project for Spring Boot</description>
   <groupId>com.llzw</groupId>
