@@ -15,6 +15,8 @@ public interface ProductService {
 
   Product create(ProductCreateDto dto, User seller) throws RestApiException;
 
+  Product update(ProductCreateDto dto, Long id, User seller) throws RestApiException;
+
   Optional<Product> findById(Long id);
 
   List<Product> findAll(Pageable pageable);

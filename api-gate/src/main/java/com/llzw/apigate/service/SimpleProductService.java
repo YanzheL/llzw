@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.Setter;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
@@ -58,12 +59,37 @@ public class SimpleProductService implements ProductService {
     }
     Product product = new Product();
     product.setSeller(seller);
-    product.setName(dto.getName());
-    product.setIntroduction(dto.getIntroduction());
-    product.setPrice(dto.getPrice());
-    product.setCaId(dto.getCaId());
     product.setValid(true);
-    product.setCaFile(dto.getCaFile());
+    BeanUtils.copyProperties(dto, product);
+//    product.setName(dto.getName());
+//    product.setIntroduction(dto.getIntroduction());
+//    product.setPrice(dto.getPrice());
+//    product.setCaId(dto.getCaId());
+//    product.setCaFile(dto.getCaFile());
+    List<String> mainImageFiles = dto.getMainImageFiles();
+    if (mainImageFiles != null) {
+      mainImageFiles.stream()
+          .filter(fileStorageService::isAcceptablePath)
+          .forEach(fileStorageService::increaseReferenceCount);
+    }
+    return productRepository.save(product);
+  }
+
+  @Override
+  public Product update(ProductCreateDto dto, Long id, User seller) throws RestApiException {
+    Product product = productRepository.findById(id)
+        .orElseThrow(() -> new RestDependentEntityNotFoundException(
+            String.format("Product <%s> does not exist", id)));
+    if (!product.belongsToSeller(seller)) {
+      throw new RestAccessDeniedException("You do not have access to this entity");
+    }
+    List<String> oldMainImageFiles = product.getMainImageFiles();
+    List<String> newMainImageFiles = dto.getMainImageFiles();
+    oldMainImageFiles.stream().filter(o -> !newMainImageFiles.contains(o))
+        .forEach(fileStorageService::delete);
+    newMainImageFiles.stream().filter(o -> !oldMainImageFiles.contains(o))
+        .forEach(fileStorageService::increaseReferenceCount);
+    BeanUtils.copyProperties(dto, product);
     return productRepository.save(product);
   }
 
