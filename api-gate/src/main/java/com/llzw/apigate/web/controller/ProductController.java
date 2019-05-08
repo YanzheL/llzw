@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +47,18 @@ public class ProductController {
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     return RestResponseEntityFactory
         .success(productService.create(productCreateDto, currentUser), HttpStatus.CREATED);
+  }
+
+  @PreAuthorize("hasRole('SELLER')")
+  @PatchMapping(value = "/{id:\\d+}")
+  public ResponseEntity update(
+      @PathVariable(value = "id") Long id,
+      @Valid ProductCreateDto productCreateDto
+  ) throws RestApiException {
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    return RestResponseEntityFactory
+        .success(productService.update(productCreateDto, id, currentUser));
   }
 
   /**
