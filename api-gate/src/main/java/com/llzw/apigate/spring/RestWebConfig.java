@@ -4,10 +4,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@EnableWebMvc
 public class RestWebConfig implements WebMvcConfigurer {
 
   @Override
@@ -24,7 +26,23 @@ public class RestWebConfig implements WebMvcConfigurer {
 
   @Override
   public void addCorsMappings(CorsRegistry registry) {
-    registry.addMapping("/**");
+    registry
+        .addMapping("/**")
+        .allowedOrigins("*")
+        .allowedHeaders("*")
+        .allowedMethods("*");
   }
+
+//  @Bean
+//  CorsConfigurationSource corsConfigurationSource() {
+//    CorsConfiguration configuration = new CorsConfiguration();
+//    configuration.setAllowedOrigins(Collections.singletonList("*"));
+//    configuration.setAllowedMethods(Collections.singletonList("*"));
+//
+//    configuration.setExposedHeaders(Collections.singletonList(HttpHeaders.LOCATION));
+//    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//    source.registerCorsConfiguration("/**", configuration);
+//    return source;
+//  }
 
 }
