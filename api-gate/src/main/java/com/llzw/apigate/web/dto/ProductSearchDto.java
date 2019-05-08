@@ -19,4 +19,6 @@ public class ProductSearchDto {
 
   @Size(max = 100, message = "Length must not exceed 100")
   protected String searchString;
+
+  protected boolean valid = true;
 }
