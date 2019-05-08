@@ -108,10 +108,11 @@ public class SimpleProductService implements ProductService {
     List<Product> result;
     if (global != null) {
       result = productRepository.searchByNameOrIntroductionWithCustomQuery(global);
-    } else if (nameQueryString != null) {
-      result = productRepository.searchByNameWithCustomQuery(nameQueryString);
-    } else if (introductionQueryString != null) {
-      result = productRepository.searchByIntroductionWithCustomQuery(introductionQueryString);
+    } else if (nameQueryString != null || introductionQueryString != null) {
+      Product example = new Product();
+      example.setName(nameQueryString);
+      example.setIntroduction(introductionQueryString);
+      result = productRepository.searchByExample(example);
     } else {
       result = productRepository.findAll(pageable).getContent();
     }

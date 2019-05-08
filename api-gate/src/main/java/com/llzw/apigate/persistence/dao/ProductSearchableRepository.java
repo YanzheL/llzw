@@ -11,5 +11,6 @@ public interface ProductSearchableRepository {
 
   List<Product> searchByNameOrIntroductionWithCustomQuery(String text);
 
+  List<Product> searchByExample(Object example);
 
 }
