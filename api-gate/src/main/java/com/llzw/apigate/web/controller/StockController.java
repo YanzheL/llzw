@@ -7,7 +7,7 @@ import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
 import com.llzw.apigate.message.error.RestInvalidParameterException;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.dao.StockRepository;
-import com.llzw.apigate.persistence.dao.customquery.SearchCriterionSpecificationFactory;
+import com.llzw.apigate.persistence.dao.customquery.JpaSearchSpecificationFactory;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
@@ -84,7 +84,7 @@ public class StockController {
     try {
       // Results may contain other user's stock, so we should filter them out.
       return RestResponseEntityFactory.success(stockRepository
-          .findAll(SearchCriterionSpecificationFactory.fromExample(dto), pageRequest)
+          .findAll(JpaSearchSpecificationFactory.fromExample(dto), pageRequest)
           .getContent().stream()
           .filter(o -> o.belongsToSeller(currentUser))
           .collect(Collectors.toList()));

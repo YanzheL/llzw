@@ -10,7 +10,7 @@ import com.llzw.apigate.persistence.dao.AddressRepository;
 import com.llzw.apigate.persistence.dao.OrderRepository;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.dao.StockRepository;
-import com.llzw.apigate.persistence.dao.customquery.SearchCriterionSpecificationFactory;
+import com.llzw.apigate.persistence.dao.customquery.JpaSearchSpecificationFactory;
 import com.llzw.apigate.persistence.entity.AddressBean;
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Product;
@@ -75,7 +75,7 @@ public class DefaultOrderService implements OrderService {
     try {
       // Result orders may contain other user's order, so we should filter them out.
       return orderRepository
-          .findAll(SearchCriterionSpecificationFactory.fromExample(example), pageable)
+          .findAll(JpaSearchSpecificationFactory.fromExample(example), pageable)
           .getContent().stream()
           .filter(o -> o.belongsToUser(relatedUser))
           .collect(Collectors.toList());
