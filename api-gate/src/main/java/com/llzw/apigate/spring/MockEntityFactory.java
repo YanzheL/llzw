@@ -34,8 +34,8 @@ public class MockEntityFactory {
       setId(product, id);
     }
     product.setSeller(seller);
-    product.setName(String.format("test_product_name_%d", i));
-    product.setIntroduction(String.format("test_product_introduction_%d", i));
+    product.setName(String.format("Apple Macbook Pro 2019 256G %d", i));
+    product.setIntroduction(String.format("A brand new Macbook %d", i));
     product.setPrice(i + 10000);
     product.setCa(String.format("test_product_ca_%d", i));
     product.setCaFile(String.format("test_product_caFile_%d", i));

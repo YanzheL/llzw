@@ -55,6 +55,7 @@ public class ProductControllerIntegrationTests extends ApiGateApplicationTests {
   public void getProducts() throws Exception {
     MvcResult result = mvc.perform(
         get("/api/v1/products")
+            .param("global", "Macbook 4")
     )
         .andDo(print())
         .andExpect(status().isOk())
