@@ -6,7 +6,6 @@ import com.linkedin.urls.detection.UrlDetectorOptions;
 import com.llzw.apigate.message.error.RestAccessDeniedException;
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
-import com.llzw.apigate.message.error.RestEntityNotFoundException;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.User;
@@ -51,17 +50,11 @@ public class SimpleProductService implements ProductService {
 
   @Override
   public Product create(ProductCreateDto dto, User seller) throws RestApiException {
-    if (!fileStorageService.increaseReferenceCount(dto.getCaFile())) {
-      throw new RestEntityNotFoundException(
-          String.format("CA file <%s> does not exist", dto.getCaFile()));
-    }
+    fileStorageService.increaseReferenceCount(dto.getCaFile());
     String introduction = dto.getIntroduction();
     List<String> paths = searchFilePaths(introduction);
     for (String path : paths) {
-      if (!fileStorageService.increaseReferenceCount(path)) {
-        throw new RestEntityNotFoundException(
-            String.format("Referenced file <%s> does not exist", path));
-      }
+      fileStorageService.increaseReferenceCount(path);
     }
     Product product = new Product();
     product.setSeller(seller);
