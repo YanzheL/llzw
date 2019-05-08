@@ -1,6 +1,5 @@
 package com.llzw.apigate.web.dto;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Data;
 
@@ -12,7 +11,6 @@ public class ProductSearchDto {
 
   protected String introduction;
 
-  @NotNull
   @Size(max = 50, message = "Length must not exceed 50")
   protected String ca;
 
