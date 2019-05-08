@@ -10,6 +10,10 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
         globally_quoted_identifiers: true
+        search:
+          default:
+            directory_provider: filesystem
+            indexBase: /tmp
   data:
     rest:
       base-path: /api/v1

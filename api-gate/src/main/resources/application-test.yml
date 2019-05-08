@@ -10,18 +10,16 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
         globally_quoted_identifiers: true
+        search:
+          default:
+            directory_provider: ram
+            indexBase: /tmp
   data:
     rest:
       base-path: /api/v1
   # If something weird happens in request mapping, you may need to uncomment this.
   resources:
     add-mappings: false
-
-hibernate:
-  search:
-    default:
-      directory_provider: filesystem
-      indexBase: /tmp
 
 
 alipay:
