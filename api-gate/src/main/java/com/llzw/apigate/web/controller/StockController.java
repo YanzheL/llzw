@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @BasePathAwareController
 @RequestMapping(value = "/stocks")
+@Transactional
 public class StockController {
 
   @Setter(onMethod_ = @Autowired)
@@ -51,7 +52,6 @@ public class StockController {
    */
   @PreAuthorize("hasAnyRole('SELLER')")
   @PostMapping
-  @Transactional          // transaction management
   public ResponseEntity createStock(@Valid StockCreateDto stockCreateDto) throws RestApiException {
     Optional<Product> productOptional = productRepository.findById(stockCreateDto.getProductId());
     if (!productOptional.isPresent()) {

@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @BasePathAwareController
 @RequestMapping(value = "/addresses")
+@Transactional
 public class AddressController {
 
   @Setter(onMethod_ = @Autowired)
@@ -42,7 +43,6 @@ public class AddressController {
    */
   @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
   @PostMapping
-  @Transactional
   public ResponseEntity createAddress(@Valid AddressCreateDto dto) {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
