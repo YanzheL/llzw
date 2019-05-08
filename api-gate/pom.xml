@@ -77,13 +77,6 @@
         </dependencies>
         <version>2.22.1</version>
       </plugin>
-      <!--      <plugin>-->
-      <!--        <artifactId>maven-compiler-plugin</artifactId>-->
-      <!--        <version>3.8.0</version>-->
-      <!--      </plugin>-->
-      <!--      <plugin>-->
-      <!--        <artifactId>maven-failsafe-plugin</artifactId>-->
-      <!--      </plugin>-->
     </plugins>
   </build>
   <dependencies>
@@ -258,6 +251,7 @@
     <java.version>1.8</java.version>
     <passay.version>1.0</passay.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+<!--    <tool.proguard.version>6.0.3</tool.proguard.version>-->
   </properties>
 
   <repositories>
