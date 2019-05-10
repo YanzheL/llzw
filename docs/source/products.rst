@@ -60,18 +60,21 @@ HTTP Request
 Request Parameters
 ------------------
 
-================ ======== ======== ======= =============================================================================================
+================ ======== ======== ======= ========================================================================================================
 Parameter        Type     Required Default Description
-================ ======== ======== ======= =============================================================================================
+================ ======== ======== ======= ========================================================================================================
 page             Integer  False    0       The page index from 0
 size             Integer  False    20      Page size
-valid            Boolean  False    True    Valid flag
+valid            Boolean  False    True    Result products should be valid or invalid.
 name             String   False    -       Name of this product. This field is matched in fuzzy mode
 introduction     String   False    -       Introduction of this product. This field is matched in fuzzy mode
-ca               String   False    -       Certificate authority name
-certId           String   False    -       Qualification certificate id
-searchString     String   False    -       Any product that contains this searchString in its name or introduction field will be matched
-================ ======== ======== ======= =============================================================================================
+global           String   False    -       Any product that contains this global search criterion in its name or introduction field will be matched
+================ ======== ======== ======= ========================================================================================================
+
+.. Note::
+   The ``name`` and ``introduction`` fields will be ignored if ``global`` field is present.
+   These two fields can be both present, which means to match products that have the similar content on ``name`` and ``introduction`` field with the provided value.
+
 
 Response Parameters
 -------------------
@@ -144,6 +147,10 @@ data        Product   The created Product object
 .. Attention::
    Remember — You must be authenticated with ``SELLER`` role before using this API
 
+.. Note::
+   In this case, you are going to submit a list of objects, which means that you may need to prepare your request in JSON format.
+   The order of ``mainImageFiles`` will be preserved.
+
 Update a Specific Product
 =========================
 
@@ -181,11 +188,14 @@ mainImageFiles   String[] False    -       Main image URLs for this product, whi
 .. Attention::
    Remember — You must be authenticated with ``SELLER`` role before using this API
 
+.. Note::
+   In this case, you are going to submit a list of objects, which means that you may need to prepare your request in JSON format.
+   The order of ``mainImageFiles`` will be updated to the same as you requested (if present).
+
 Invalidate a Specific Product
 =============================
 
-This endpoint invalidates a specific product, so all stocks of this
-product will no longer be in the queue for sale.
+This endpoint invalidates a specific product, so all stocks of this product will no longer be in the queue for sale.
 
 It will NOT delete it from database.
 
