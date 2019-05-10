@@ -6,7 +6,7 @@
 
 Simple full-stack shopping site powered by [Spring](https://spring.io/) and [Angular](https://angular.io/)
 
-This is a Spring demo site designated for beginners, which is also my course project of Software Engineering.
+This is a Spring demo site designated for beginners, which is also my course project of ***Software Engineering*** at HIT.
 
 Current project status: **Still in development**
 
