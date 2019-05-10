@@ -13,7 +13,7 @@ public class RestWebConfig implements WebMvcConfigurer {
   @Override
   public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
     configurer
-        .defaultContentType(MediaType.APPLICATION_JSON_UTF8)
+        .defaultContentType(MediaType.APPLICATION_JSON)
         .favorPathExtension(false);
   }
 
@@ -24,7 +24,10 @@ public class RestWebConfig implements WebMvcConfigurer {
 
   @Override
   public void addCorsMappings(CorsRegistry registry) {
-    registry.addMapping("/**");
+    registry
+        .addMapping("/**")
+        .allowedOrigins("*")
+        .allowedHeaders("*")
+        .allowedMethods("*");
   }
-
 }

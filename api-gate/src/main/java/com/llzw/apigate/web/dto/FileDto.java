@@ -32,6 +32,11 @@ public class FileDto {
     this.file = new UrlResource(p.toUri());
   }
 
+  /**
+   * Lazy detect MIME type
+   *
+   * @return MIME type of file
+   */
   public String getMimeType() throws IOException {
     if (file == null) {
       throw new IOException("File cannot be null");

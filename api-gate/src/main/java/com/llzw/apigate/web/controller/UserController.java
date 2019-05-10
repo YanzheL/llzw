@@ -7,6 +7,7 @@ import com.llzw.apigate.service.UserService;
 import com.llzw.apigate.web.dto.RealNameVerificationDto;
 import com.llzw.apigate.web.dto.UpdatePasswordDto;
 import com.llzw.apigate.web.dto.UserDto;
+import com.llzw.apigate.web.dto.UserPatchDto;
 import javax.validation.Valid;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -18,6 +19,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,5 +67,25 @@ public class UserController {
         updatePasswordDto.getOldPassword(),
         updatePasswordDto.getNewPassword()
     ));
+  }
+
+  @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
+  @GetMapping(value = "/me")
+  public ResponseEntity getCurrentUserInfo() {
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    return RestResponseEntityFactory.success(
+        currentUser
+    );
+  }
+
+  @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
+  @PatchMapping(value = "/me")
+  public ResponseEntity updateCurrentUserInfo(@Valid UserPatchDto dto) throws RestApiException {
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    return RestResponseEntityFactory.success(
+        userService.updateInfo(currentUser.getUsername(), dto)
+    );
   }
 }

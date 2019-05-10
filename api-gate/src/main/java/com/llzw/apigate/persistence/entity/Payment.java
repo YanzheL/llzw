@@ -2,6 +2,7 @@ package com.llzw.apigate.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.util.Date;
 import javax.persistence.Column;
@@ -42,6 +43,7 @@ public class Payment extends BaseEntity {
   protected Order order;
 
   @Transient
+  @JsonProperty
   protected String orderString;
 
   @ManyToOne(fetch = FetchType.LAZY)

@@ -1,5 +1,6 @@
 package com.llzw.apigate.web.dto;
 
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Data;
@@ -21,6 +22,9 @@ public class ProductCreateDto {
 
   @NotNull(message = "price can't be empty")
   protected Float price;
+
+  @Size(max = 9, message = "Length of images should not exceed 9")
+  protected List<String> mainImageFiles;
 
   @NotNull
   @Size(min = 1, max = 50, message = "Length must between 1 and 50")

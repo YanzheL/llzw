@@ -3,7 +3,9 @@ package com.llzw.apigate.persistence.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,8 +20,12 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 import org.springframework.transaction.annotation.Transactional;
 
+@Indexed
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -45,10 +51,15 @@ public class Product extends BaseEntity {
 
   @Column(nullable = false)
   @NonNull
+  @Field(termVector = TermVector.YES)
   protected String name;
+
+  @ElementCollection
+  protected List<String> mainImageFiles;
 
   @Lob
   @NonNull
+  @Field(termVector = TermVector.YES)
   protected String introduction;
 
   @Column(nullable = false)

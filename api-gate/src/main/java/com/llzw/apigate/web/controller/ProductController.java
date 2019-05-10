@@ -6,6 +6,7 @@ import com.llzw.apigate.message.error.RestEntityNotFoundException;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.ProductService;
 import com.llzw.apigate.web.dto.ProductCreateDto;
+import com.llzw.apigate.web.dto.ProductSearchDto;
 import javax.validation.Valid;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +50,18 @@ public class ProductController {
         .success(productService.create(productCreateDto, currentUser), HttpStatus.CREATED);
   }
 
+  @PreAuthorize("hasRole('SELLER')")
+  @PatchMapping(value = "/{id:\\d+}")
+  public ResponseEntity update(
+      @PathVariable(value = "id") Long id,
+      @Valid ProductCreateDto productCreateDto
+  ) throws RestApiException {
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    return RestResponseEntityFactory
+        .success(productService.update(productCreateDto, id, currentUser));
+  }
+
   /**
    * Search all products
    */
@@ -55,9 +69,9 @@ public class ProductController {
   public ResponseEntity search(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
       @RequestParam(value = "size", required = false, defaultValue = "20") int size,
-      @RequestParam(value = "valid", required = false, defaultValue = "True") boolean valid) {
+      @Valid ProductSearchDto productSearchDto) {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
-    return RestResponseEntityFactory.success(productService.findAll(pageRequest));
+    return RestResponseEntityFactory.success(productService.search(pageRequest, productSearchDto));
   }
 
   /**

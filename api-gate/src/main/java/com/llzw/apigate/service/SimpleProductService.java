@@ -6,17 +6,19 @@ import com.linkedin.urls.detection.UrlDetectorOptions;
 import com.llzw.apigate.message.error.RestAccessDeniedException;
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
-import com.llzw.apigate.message.error.RestEntityNotFoundException;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.ProductCreateDto;
+import com.llzw.apigate.web.dto.ProductSearchDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import lombok.Setter;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
@@ -51,26 +53,45 @@ public class SimpleProductService implements ProductService {
 
   @Override
   public Product create(ProductCreateDto dto, User seller) throws RestApiException {
-    if (!fileStorageService.increaseReferenceCount(dto.getCaFile())) {
-      throw new RestEntityNotFoundException(
-          String.format("CA file <%s> does not exist", dto.getCaFile()));
-    }
+    fileStorageService.increaseReferenceCount(dto.getCaFile());
     String introduction = dto.getIntroduction();
     List<String> paths = searchFilePaths(introduction);
     for (String path : paths) {
-      if (!fileStorageService.increaseReferenceCount(path)) {
-        throw new RestEntityNotFoundException(
-            String.format("Referenced file <%s> does not exist", path));
-      }
+      fileStorageService.increaseReferenceCount(path);
     }
     Product product = new Product();
     product.setSeller(seller);
-    product.setName(dto.getName());
-    product.setIntroduction(dto.getIntroduction());
-    product.setPrice(dto.getPrice());
-    product.setCaId(dto.getCaId());
     product.setValid(true);
-    product.setCaFile(dto.getCaFile());
+    BeanUtils.copyProperties(dto, product);
+//    product.setName(dto.getName());
+//    product.setIntroduction(dto.getIntroduction());
+//    product.setPrice(dto.getPrice());
+//    product.setCaId(dto.getCaId());
+//    product.setCaFile(dto.getCaFile());
+    List<String> mainImageFiles = dto.getMainImageFiles();
+    if (mainImageFiles != null) {
+      mainImageFiles.stream()
+          .filter(fileStorageService::isAcceptablePath)
+          .forEach(fileStorageService::increaseReferenceCount);
+    }
+    return productRepository.save(product);
+  }
+
+  @Override
+  public Product update(ProductCreateDto dto, Long id, User seller) throws RestApiException {
+    Product product = productRepository.findById(id)
+        .orElseThrow(() -> new RestDependentEntityNotFoundException(
+            String.format("Product <%s> does not exist", id)));
+    if (!product.belongsToSeller(seller)) {
+      throw new RestAccessDeniedException("You do not have access to this entity");
+    }
+    List<String> oldMainImageFiles = product.getMainImageFiles();
+    List<String> newMainImageFiles = dto.getMainImageFiles();
+    oldMainImageFiles.stream().filter(o -> !newMainImageFiles.contains(o))
+        .forEach(fileStorageService::delete);
+    newMainImageFiles.stream().filter(o -> !oldMainImageFiles.contains(o))
+        .forEach(fileStorageService::increaseReferenceCount);
+    BeanUtils.copyProperties(dto, product);
     return productRepository.save(product);
   }
 
@@ -80,8 +101,25 @@ public class SimpleProductService implements ProductService {
   }
 
   @Override
-  public List<Product> findAll(Pageable pageable) {
-    return productRepository.findAll(pageable).getContent();
+  public List<Product> search(Pageable pageable, ProductSearchDto dto) throws RestApiException {
+    String nameQueryString = dto.getName();
+    String introductionQueryString = dto.getName();
+    String global = dto.getGlobal();
+    List<Product> result;
+    if (global != null) {
+      result = productRepository.searchByNameOrIntroductionWithCustomQuery(global);
+    } else if (nameQueryString != null || introductionQueryString != null) {
+      Product example = new Product();
+      example.setName(nameQueryString);
+      example.setIntroduction(introductionQueryString);
+      result = productRepository.searchByExample(example);
+    } else {
+      result = productRepository.findAll(pageable).getContent();
+    }
+    if (!dto.isValid()) {
+      result = result.stream().filter(Product::isValid).collect(Collectors.toList());
+    }
+    return result;
   }
 
   /**

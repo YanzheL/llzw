@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @BasePathAwareController
 @RequestMapping(value = "/orders")
+@Transactional
 public class OrderController {
 
   @Setter(onMethod_ = @Autowired)
@@ -62,7 +63,6 @@ public class OrderController {
 
   @PreAuthorize("hasAuthority('OP_CREATE_ORDER')")
   @PostMapping
-  @Transactional
   public ResponseEntity create(@Valid OrderCreateDto orderCreateDto) throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());

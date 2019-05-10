@@ -14,7 +14,7 @@ id                  Integer   Product ID
 seller              String    Username of seller
 name                String    Name of this product
 introduction        String    Introduction of this product
-mainImageFiles      String[]  Hash values of product main images (max = 9). These files should be uploaded first. 
+mainImageFiles      String[]  Hash values of product main images (max = 9). These files should be uploaded first.
 createdAt           Date      Creation time
 updatedAt           Date      Update time
 price               Float     Price
@@ -47,8 +47,8 @@ Example JSON Representation
      "valid": true
    }
 
-Get All Products
-================
+Search Products by Parameters
+=============================
 
 This endpoint retrieves all products.
 
@@ -60,13 +60,21 @@ HTTP Request
 Request Parameters
 ------------------
 
-========= ======= ======== ======= =====================
-Parameter Type    Required Default Description
-========= ======= ======== ======= =====================
-page      Integer False    0       The page index from 0
-size      Integer False    20      Page size
-valid     Boolean False    True    Valid flag
-========= ======= ======== ======= =====================
+================ ======== ======== ======= ========================================================================================================
+Parameter        Type     Required Default Description
+================ ======== ======== ======= ========================================================================================================
+page             Integer  False    0       The page index from 0
+size             Integer  False    20      Page size
+valid            Boolean  False    True    Result products should be valid or invalid.
+name             String   False    -       Name of this product. This field is matched in fuzzy mode
+introduction     String   False    -       Introduction of this product. This field is matched in fuzzy mode
+global           String   False    -       Any product that contains this global search criterion in its name or introduction field will be matched
+================ ======== ======== ======= ========================================================================================================
+
+.. Note::
+   The ``name`` and ``introduction`` fields will be ignored if ``global`` field is present.
+   These two fields can be both present, which means to match products that have the similar content on ``name`` and ``introduction`` field with the provided value.
+
 
 Response Parameters
 -------------------
@@ -116,15 +124,17 @@ HTTP Request
 Request Parameters
 ------------------
 
-================ ======= ======== ======= ==========================================
-Parameter        Type    Required Default Description
-================ ======= ======== ======= ==========================================
-name             String  True     -       Name of this product
-introduction     String  True     -       Introduction of this product
-price            Float   True     -       Price of this product
-ca               String  True     -       Certificate authority name
-certId           String  True     -       Qualification certificate id
-================ ======= ======== ======= ==========================================
+================ ======== ======== ======= ================================================================================================
+Parameter        Type     Required Default Description
+================ ======== ======== ======= ================================================================================================
+name             String   True     -       Name of this product
+introduction     String   True     -       Introduction of this product
+price            Float    True     -       Price of this product
+ca               String   True     -       Certificate authority name
+certId           String   True     -       Qualification certificate id
+caFile           String   True     -       Hash of uploaded CA file
+mainImageFiles   String[] False    -       Main image URLs for this product, which can be the HASH value of uploaded images. Max length = 9
+================ ======== ======== ======= ================================================================================================
 
 Response Parameters
 -------------------
@@ -137,11 +147,55 @@ data        Product   The created Product object
 .. Attention::
    Remember — You must be authenticated with ``SELLER`` role before using this API
 
+.. Note::
+   In this case, you are going to submit a list of objects, which means that you may need to prepare your request in JSON format.
+   The order of ``mainImageFiles`` will be preserved.
+
+Update a Specific Product
+=========================
+
+This endpoint updates infomation of a specific product.
+
+HTTP Request
+------------
+
+``PATCH http://example.com/api/v2/products/<ID>``
+
+Path Parameter
+--------------
+
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Product ID
+========= ======== ===========
+
+Request Parameters
+------------------
+
+================ ======== ======== ======= ================================================================================================
+Parameter        Type     Required Default Description
+================ ======== ======== ======= ================================================================================================
+name             String   False    -       Name of this product
+introduction     String   False    -       Introduction of this product
+price            Float    False    -       Price of this product
+ca               String   False    -       Certificate authority name
+certId           String   False    -       Qualification certificate id
+caFile           String   False    -       Hash of uploaded CA file
+mainImageFiles   String[] False    -       Main image URLs for this product, which can be the HASH value of uploaded images. Max length = 9
+================ ======== ======== ======= ================================================================================================
+
+.. Attention::
+   Remember — You must be authenticated with ``SELLER`` role before using this API
+
+.. Note::
+   In this case, you are going to submit a list of objects, which means that you may need to prepare your request in JSON format.
+   The order of ``mainImageFiles`` will be updated to the same as you requested (if present).
+
 Invalidate a Specific Product
 =============================
 
-This endpoint invalidates a specific product, so all stocks of this
-product will no longer be in the queue for sale.
+This endpoint invalidates a specific product, so all stocks of this product will no longer be in the queue for sale.
 
 It will NOT delete it from database.
 
@@ -150,14 +204,14 @@ HTTP Request
 
 ``DELETE http://example.com/api/v2/products/<ID>``
 
-Request Parameters
-------------------
+Path Parameter
+--------------
 
-========= ===================================
-Parameter Description
-========= ===================================
-ID        The ID of the product to invalidate
-========= ===================================
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Product ID
+========= ======== ===========
 
 .. Attention::
    Remember — You must be authenticated with ``SELLER`` role before using this API

@@ -10,6 +10,7 @@ import com.llzw.apigate.persistence.entity.Role;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.RealNameVerificationDto;
 import com.llzw.apigate.web.dto.UserDto;
+import com.llzw.apigate.web.dto.UserPatchDto;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,6 +39,9 @@ public class SimpleUserService implements UserService {
 
   @Setter(onMethod_ = @Autowired)
   private UserRepository userRepository;
+
+  @Setter(onMethod_ = @Autowired)
+  private FileStorageService fileStorageService;
 
   @Override
   public User register(UserDto dto) throws RestApiException {
@@ -107,6 +111,22 @@ public class SimpleUserService implements UserService {
     }
     BeanUtils.copyProperties(dto, user);
     user.setVerified(true);
+    return userRepository.save(user);
+  }
+
+  @Override
+  public User updateInfo(String username, UserPatchDto userPatchDto) throws RestApiException {
+    User user = userRepository.findByUsername(username)
+        .orElseThrow(() -> new RestEntityNotFoundException("User doesn't exist"));
+    String oldAvatar = user.getAvatar();
+    String newAvatar = userPatchDto.getAvatar();
+    if (newAvatar != null && fileStorageService.isAcceptablePath(oldAvatar)) {
+      fileStorageService.delete(oldAvatar);
+    }
+    BeanUtils.copyProperties(userPatchDto, user);
+    if (fileStorageService.isAcceptablePath(newAvatar)) {
+      fileStorageService.increaseReferenceCount(newAvatar);
+    }
     return userRepository.save(user);
   }
 }

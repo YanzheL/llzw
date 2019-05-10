@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -19,6 +20,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
@@ -138,6 +140,28 @@ public class UserControllerIntegrationTests extends ApiGateApplicationTests {
         .andExpect(jsonPath("$.error.message").value(containsString("nickname")))
     ;
     assertFalse(userRepository.findByUsername(username).isPresent());
+  }
+
+  @Test
+  public void getUserInfoByNoUser() throws Exception {
+    mvc.perform(
+        get(apiBasePath + "/users/me")
+    )
+        .andDo(print())
+        .andExpect(status().isForbidden())
+    ;
+  }
+
+  @WithUserDetails("test_user_seller_username_0")
+  @Test
+  public void getUserInfoBySeller() throws Exception {
+    mvc.perform(
+        get(apiBasePath + "/users/me")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.data.username").value("test_user_seller_username_0"))
+    ;
   }
 
   private ResultActions registerUser(
