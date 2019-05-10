@@ -6,11 +6,11 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
-public class SearchCriterionSpecification<T> implements Specification<T> {
+public class JpaSearchSpecification<T> implements Specification<T> {
 
-  SearchCriterion criterion;
+  JpaSearchCriterion criterion;
 
-  public SearchCriterionSpecification(SearchCriterion criterion) {
+  public JpaSearchSpecification(JpaSearchCriterion criterion) {
     this.criterion = criterion;
   }
 

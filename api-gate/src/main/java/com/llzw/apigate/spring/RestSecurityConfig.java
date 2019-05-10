@@ -2,6 +2,7 @@ package com.llzw.apigate.spring;
 
 import com.llzw.apigate.security.CustomAuthenticationProvider;
 import com.llzw.apigate.security.RestAuthenticationEntryPoint;
+import java.util.Arrays;
 import java.util.Collections;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,9 +57,10 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
   @Bean
   CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(Collections.singletonList("*"));
+    configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "*"));
     configuration.setAllowedMethods(Collections.singletonList("*"));
     configuration.setAllowedHeaders(Collections.singletonList("*"));
+    configuration.setAllowCredentials(true);
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", configuration);
     return source;
@@ -70,8 +72,8 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         .csrf()
         .disable()
-        .authorizeRequests()
-        .and()
+//        .authorizeRequests()
+//        .and()
         .exceptionHandling()
         //                .accessDeniedHandler(accessDeniedHandler)
         .authenticationEntryPoint(restAuthenticationEntryPoint)
@@ -88,7 +90,7 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
         .permitAll()
         .and()
         .sessionManagement()
-        .maximumSessions(1)
+        .maximumSessions(10)
         .sessionRegistry(sessionRegistry())
         .and()
         .sessionFixation()

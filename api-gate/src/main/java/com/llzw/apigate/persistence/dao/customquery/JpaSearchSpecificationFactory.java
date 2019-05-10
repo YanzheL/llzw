@@ -7,17 +7,17 @@ import java.util.Map;
 import org.springframework.data.jpa.domain.Specification;
 
 // TODO: It may lead to SQL injection.
-public class SearchCriterionSpecificationFactory {
+public class JpaSearchSpecificationFactory {
 
-  public static <T> List<Specification<T>> of(List<SearchCriterion> criteria) {
+  public static <T> List<Specification<T>> of(List<JpaSearchCriterion> criteria) {
     List<Specification<T>> specifications = new ArrayList<>();
-    for (SearchCriterion criterion : criteria) {
-      specifications.add(new SearchCriterionSpecification<>(criterion));
+    for (JpaSearchCriterion criterion : criteria) {
+      specifications.add(new JpaSearchSpecification<>(criterion));
     }
     return specifications;
   }
 
-  public static <T> Specification<T> and(List<SearchCriterion> criteria) {
+  public static <T> Specification<T> and(List<JpaSearchCriterion> criteria) {
     List<Specification<T>> specifications = of(criteria);
     Specification<T> cur = null;
     for (Specification<T> specification : specifications) {
@@ -26,7 +26,7 @@ public class SearchCriterionSpecificationFactory {
     return cur;
   }
 
-  public static <T> Specification<T> or(List<SearchCriterion> criteria) {
+  public static <T> Specification<T> or(List<JpaSearchCriterion> criteria) {
     List<Specification<T>> specifications = of(criteria);
     Specification<T> cur = null;
     for (Specification<T> specification : specifications) {
@@ -47,7 +47,7 @@ public class SearchCriterionSpecificationFactory {
    * example.field1 = value1;
    * example.field2 = value2;
    * example.field3 = null;
-   * Specification specification = SearchCriterionSpecificationFactory.fromExample(example);
+   * Specification specification = JpaSearchSpecificationFactory.fromExample(example);
    * </pre>
    * The result specification will contain JPA query constrains similar to:
    * <pre>
@@ -61,7 +61,7 @@ public class SearchCriterionSpecificationFactory {
    * @return Constructed JPA Specification
    */
   public static <T, D> Specification<T> fromExample(D obj) throws IllegalAccessException {
-    List<SearchCriterion> criteria = new ArrayList<>();
+    List<JpaSearchCriterion> criteria = new ArrayList<>();
     Class c = obj.getClass();
     Field[] fields = c.getDeclaredFields();
     for (Field field : fields) {
@@ -70,7 +70,7 @@ public class SearchCriterionSpecificationFactory {
       if (value == null) {
         continue;
       }
-      criteria.add(new SearchCriterion(field.getName(), "=", value.toString()));
+      criteria.add(new JpaSearchCriterion(field.getName(), "=", value.toString()));
     }
     return and(criteria);
   }
@@ -85,7 +85,7 @@ public class SearchCriterionSpecificationFactory {
    * Map<String, String> constrains = new HashMap<>();
    * constrains.put("field1", ">=");
    * constrains.put("field2", "=");
-   * Specification specification = SearchCriterionSpecificationFactory.fromExample(example, constrains);
+   * Specification specification = JpaSearchSpecificationFactory.fromExample(example, constrains);
    * </pre>
    * The result specification will contain JPA query constrains similar to:
    * <pre>
@@ -94,11 +94,11 @@ public class SearchCriterionSpecificationFactory {
    * Fields with {@code null} value will be ignored.
    *
    * @param constraints field constrains map.
-   * @see SearchCriterionSpecificationFactory#fromExample(Object)
+   * @see JpaSearchSpecificationFactory#fromExample(Object)
    */
   public static <T, D> Specification<T> fromExample(D obj, Map<String, String> constraints)
       throws IllegalAccessException, NoSuchFieldException {
-    List<SearchCriterion> criteria = new ArrayList<>();
+    List<JpaSearchCriterion> criteria = new ArrayList<>();
     Class c = obj.getClass();
     for (Map.Entry<String, String> entry : constraints.entrySet()) {
       String fieldName = entry.getKey();
@@ -109,7 +109,7 @@ public class SearchCriterionSpecificationFactory {
       if (value == null) {
         continue;
       }
-      criteria.add(new SearchCriterion(fieldName, op, value.toString()));
+      criteria.add(new JpaSearchCriterion(fieldName, op, value.toString()));
     }
     return and(criteria);
   }
@@ -123,7 +123,7 @@ public class SearchCriterionSpecificationFactory {
 //    constrains.put("field1", ">=");
 //    constrains.put("field2", "=");
 //    try {
-//      SearchCriterionSpecificationFactory f = new SearchCriterionSpecificationFactory();
+//      JpaSearchSpecificationFactory f = new JpaSearchSpecificationFactory();
 //      f.field1 = 1;
 //      f.field2 = 2.1;
 //      fromExample(f);

@@ -216,6 +216,18 @@
       <groupId>com.linkedin.urls</groupId>
       <version>0.1.17</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-hibernate5 -->
+    <dependency>
+      <artifactId>jackson-datatype-hibernate5</artifactId>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <version>2.9.8</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-search-orm -->
+    <dependency>
+      <artifactId>hibernate-search-orm</artifactId>
+      <groupId>org.hibernate</groupId>
+      <version>5.11.1.Final</version>
+    </dependency>
   </dependencies>
   <description>Demo project for Spring Boot</description>
   <groupId>com.llzw</groupId>
@@ -269,5 +281,5 @@
       <url>https://repo.spring.io/milestone</url>
     </repository>
   </repositories>
-  <version>0.2.2-SNAPSHOT</version>
+  <version>0.2.3-SNAPSHOT</version>
 </project>
