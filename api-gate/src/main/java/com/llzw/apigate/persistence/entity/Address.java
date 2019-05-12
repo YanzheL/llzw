@@ -29,7 +29,7 @@ public class Address extends AddressBean {
   @Getter
   @Setter
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "ownerId")
+  @JoinColumn(name = "owner")
   @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
   @JsonIdentityReference(alwaysAsId = true)
   protected User owner;

@@ -8,7 +8,7 @@ import lombok.Data;
 public class AddressCreateDto {
 
   @NotNull
-  protected Long ownerId;
+  protected String owner;
 
   @Size(min = 2, max = 30, message = "Length must between 2 and 30")
   protected String province;
