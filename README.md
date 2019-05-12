@@ -71,10 +71,6 @@ java "-Dspring.profiles.active=test" -jar target/*.jar
 * RESTful API Backend, integrated with spring security
 * Angular Single Page Application
 
-## Contributing
-
-
-
 ## Documentation
 
 - [API Documentation](https://llzw.readthedocs.io)
