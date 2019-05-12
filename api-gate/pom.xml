@@ -281,5 +281,5 @@
       <url>https://repo.spring.io/milestone</url>
     </repository>
   </repositories>
-  <version>0.2.3-SNAPSHOT</version>
+  <version>0.2.4-SNAPSHOT</version>
 </project>
