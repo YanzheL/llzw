@@ -41,7 +41,7 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
         post(apiBasePath + "/orders")
             .param("productId", "1")
             .param("quantity", "10")
-            .param("addressId", "1")
+            .param("addressId", "11")
     )
         .andDo(print())
         .andExpect(status().isCreated())
