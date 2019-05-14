@@ -24,6 +24,7 @@ public class Address extends AddressBean {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Setter(AccessLevel.NONE)
+  @Getter
   protected Long id;
 
   @Getter
