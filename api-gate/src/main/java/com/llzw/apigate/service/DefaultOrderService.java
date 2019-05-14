@@ -11,7 +11,7 @@ import com.llzw.apigate.persistence.dao.OrderRepository;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.dao.StockRepository;
 import com.llzw.apigate.persistence.dao.customquery.JpaSearchSpecificationFactory;
-import com.llzw.apigate.persistence.entity.AddressBean;
+import com.llzw.apigate.persistence.entity.Address;
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.Stock;
@@ -48,9 +48,12 @@ public class DefaultOrderService implements OrderService {
     Product product = productRepository.findById(productId)
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
             String.format("Product <%s> does not exist", productId)));
-    AddressBean addressBean = addressRepository.findById(addressId)
+    Address address = addressRepository.findById(addressId)
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
             String.format("Address <%s> do not exist", addressId)));
+    if (!address.belongsToUser(customer)) {
+      throw new RestAccessDeniedException("You do not have access to this entity");
+    }
     Stock stock;
     try (Stream<Stock> validStocks =
         stockRepository
@@ -62,7 +65,7 @@ public class DefaultOrderService implements OrderService {
     stock.decreaseCurrentQuantity(quantity);
     Order order = new Order();
     order.setStock(stockRepository.save(stock));
-    order.setAddress(addressBean);
+    order.setAddress(address);
     order.setCustomer(customer);
     order.setQuantity(quantity);
     order.setValid(true);
