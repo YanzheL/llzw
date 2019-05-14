@@ -34,7 +34,6 @@ public class AddressControllerIntegrationTests extends ApiGateApplicationTests {
   public void createAddress() throws Exception {
     MvcResult result = mvc.perform(
         post("/api/v1/addresses")
-            .param("owner", "test_user_seller_username_0")
             .param("province", "Guangdong")
             .param("city", "Shenzhen")
             .param("district", "Futian")
