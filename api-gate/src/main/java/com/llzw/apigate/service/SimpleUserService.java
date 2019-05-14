@@ -86,7 +86,7 @@ public class SimpleUserService implements UserService {
       throws RestApiException {
     User user = userRepository.findByUsername(username)
         .orElseThrow(() -> new RestEntityNotFoundException("User doesn't exist"));
-    if (!user.getPassword().equals(passwordEncoder.encode(oldPassword))) {
+    if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
       throw new RestInvalidCredentialException("Password doesn't match");
     }
     user.setPassword(passwordEncoder.encode(newPassword));
