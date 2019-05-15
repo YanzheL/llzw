@@ -111,6 +111,7 @@ public class ProductControllerIntegrationTests extends ApiGateApplicationTests {
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.success").value(true))
         .andExpect(jsonPath("$.data.id").value(createdProductId))
+        .andExpect(jsonPath("$.data.seller").isNotEmpty())
         .andExpect(jsonPath("$.data.mainImageFiles[0]").value(createdMainImageFile))
         .andReturn();
   }
