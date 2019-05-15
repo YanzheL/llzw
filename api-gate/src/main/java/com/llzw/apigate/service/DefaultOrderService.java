@@ -11,13 +11,14 @@ import com.llzw.apigate.persistence.dao.OrderRepository;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.dao.StockRepository;
 import com.llzw.apigate.persistence.dao.customquery.JpaSearchSpecificationFactory;
-import com.llzw.apigate.persistence.entity.AddressBean;
+import com.llzw.apigate.persistence.entity.Address;
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.OrderSearchDto;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.Setter;
@@ -43,14 +44,18 @@ public class DefaultOrderService implements OrderService {
   private StockRepository stockRepository;
 
   @Override
-  public Order create(User customer, Long productId, int quantity, Long addressId)
+  public Order create(User customer, Long productId, int quantity, Long addressId,
+      String remark)
       throws RestApiException {
     Product product = productRepository.findById(productId)
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
             String.format("Product <%s> does not exist", productId)));
-    AddressBean addressBean = addressRepository.findById(addressId)
+    Address address = addressRepository.findById(addressId)
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
             String.format("Address <%s> do not exist", addressId)));
+    if (!address.belongsToUser(customer)) {
+      throw new RestAccessDeniedException("You do not have access to this entity");
+    }
     Stock stock;
     try (Stream<Stock> validStocks =
         stockRepository
@@ -62,9 +67,11 @@ public class DefaultOrderService implements OrderService {
     stock.decreaseCurrentQuantity(quantity);
     Order order = new Order();
     order.setStock(stockRepository.save(stock));
-    order.setAddress(addressBean);
+    order.setAddress(address);
     order.setCustomer(customer);
+    order.setTotalAmount(product.getPrice());
     order.setQuantity(quantity);
+    order.setRemark(remark);
     order.setValid(true);
     return orderRepository.save(order);
   }
@@ -77,6 +84,7 @@ public class DefaultOrderService implements OrderService {
       return orderRepository
           .findAll(JpaSearchSpecificationFactory.fromExample(example), pageable)
           .getContent().stream()
+          .filter(o -> o.isValid() == example.isValid())
           .filter(o -> o.belongsToUser(relatedUser))
           .collect(Collectors.toList());
     } catch (IllegalAccessException e) {
@@ -85,9 +93,10 @@ public class DefaultOrderService implements OrderService {
   }
 
   @Override
-  public Order get(Long id, User relatedUser) throws RestApiException {
-    Order order = orderRepository.findById(id).orElseThrow(() -> new RestEntityNotFoundException(
-        String.format("Order <%s> does not exist", id)));
+  public Order get(String id, User relatedUser) throws RestApiException {
+    Order order = orderRepository.findById(UUID.fromString(id))
+        .orElseThrow(() -> new RestEntityNotFoundException(
+            String.format("Order <%s> does not exist", id)));
     if (!order.belongsToUser(relatedUser)) {
       throw new RestAccessDeniedException("Current user does not have access to this order");
     }
@@ -95,7 +104,7 @@ public class DefaultOrderService implements OrderService {
   }
 
   @Override
-  public Order cancel(Long id, User relatedUser) throws RestApiException {
+  public Order cancel(String id, User relatedUser) throws RestApiException {
     Order order = get(id, relatedUser);
     if (order.getShippingTime() != null) {
       throw new RestRejectedByEntityException(
@@ -106,7 +115,7 @@ public class DefaultOrderService implements OrderService {
   }
 
   @Override
-  public Order deliveryConfirm(Long id, User relatedUser) throws RestApiException {
+  public Order deliveryConfirm(String id, User relatedUser) throws RestApiException {
     Order order = get(id, relatedUser);
     if (order.isDeliveryConfirmed()) {
       throw new RestRejectedByEntityException(

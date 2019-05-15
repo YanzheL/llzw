@@ -1,5 +1,6 @@
 package com.llzw.apigate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class ApiGateApplicationTests {
 
   @Autowired
   protected WebApplicationContext context;
+
+  @Autowired
+  protected ObjectMapper objectMapper;
 
   protected MockMvc mvc;
 

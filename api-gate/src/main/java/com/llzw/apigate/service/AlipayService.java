@@ -83,9 +83,9 @@ public class AlipayService implements PaymentVendorService {
   }
 
   @Override
-  public Map<String, String> query(Long orderId) throws RestApiException {
+  public Map<String, String> query(String orderId) throws RestApiException {
     AlipayTradeQueryRequest alipayRequest = new AlipayTradeQueryRequest();
-    String outTradeNo = String.valueOf(orderId);
+    String outTradeNo = orderId;
     AlipayTradeQueryModel model = new AlipayTradeQueryModel();
     model.setOutTradeNo(outTradeNo);
     alipayRequest.setBizModel(model);

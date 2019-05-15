@@ -62,32 +62,19 @@ data        Address   The matching Address object
 =========== ========= ===================================
 
 .. Attention::
-   Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API.
+   Remember — You must be authenticated before using this API.
 
-   If you are ``SELLER``, then this address must belong to you or your customers.
+   The requested address must belong to you.
 
-   If you are ``CUSTOMER``, then this address must belong to you.
+Get Current User's Addresses
+============================
 
-Get Addresses by Parameters
-==============================
-
-This endpoint retrieves all orders that satisfy given parameters
+This endpoint retrieves all addresses of current user.
 
 HTTP Request
 ------------
 
 ``GET http://example.com/api/v2/addresses``
-
-Request Parameters
-------------------
-
-Your should query with at least one parameter from this list.
-
-========= ====== ======== ======= =====================
-Parameter Type   Required Default Description
-========= ====== ======== ======= =====================
-ownerId   String False    -       Username of the owner
-========= ====== ======== ======= =====================
 
 Response Parameters
 -------------------
@@ -98,11 +85,7 @@ data        Address[] List of matching Address objects
 =========== ========= ===================================
 
 .. Attention::
-   Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API.
-
-   If you are ``SELLER``, then this address must belong to you or your customers from your current orders.
-
-   If you are ``CUSTOMER``, then this address must belong to you.
+   Remember — You must be authenticated before using this API.
 
 Create an Address
 =================
@@ -120,7 +103,6 @@ Request Parameters
 ========= ====== ======== ======= =====================
 Parameter Type   Required Default Description
 ========= ====== ======== ======= =====================
-ownerId   String True     -       Username of the owner
 province  String True     -       Province
 city      String True     -       City
 district  String True     -       District
@@ -128,5 +110,5 @@ address   String True     -       Detailed address
 zip       String False    000000  Zip code
 ========= ====== ======== ======= =====================
 
-..  Attention::
-    Remember — You must be authenticated with the user you specified before using this API
+.. Attention::
+   Remember — You must be authenticated before using this API

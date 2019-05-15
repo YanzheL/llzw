@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -157,6 +158,20 @@ public class UserControllerIntegrationTests extends ApiGateApplicationTests {
   public void getUserInfoBySeller() throws Exception {
     mvc.perform(
         get(apiBasePath + "/users/me")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.data.username").value("test_user_seller_username_0"))
+    ;
+  }
+
+  @WithUserDetails("test_user_seller_username_0")
+  @Test
+  public void updateUserPassword() throws Exception {
+    mvc.perform(
+        put(apiBasePath + "/users/updatePassword")
+            .param("oldPassword", "test_user_seller_PASSWORD_0")
+            .param("newPassword", "test_new_PASSWORD_0")
     )
         .andDo(print())
         .andExpect(status().isOk())

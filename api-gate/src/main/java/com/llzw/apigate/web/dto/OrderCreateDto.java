@@ -15,4 +15,6 @@ public class OrderCreateDto {
 
   @NotNull
   protected Long addressId;
+
+  protected String remark;
 }

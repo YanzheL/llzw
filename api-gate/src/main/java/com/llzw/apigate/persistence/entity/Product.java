@@ -54,7 +54,7 @@ public class Product extends BaseEntity {
   @Field(termVector = TermVector.YES)
   protected String name;
 
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   protected List<String> mainImageFiles;
 
   @Lob

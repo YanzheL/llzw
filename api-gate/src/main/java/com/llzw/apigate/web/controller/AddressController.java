@@ -11,6 +11,7 @@ import com.llzw.apigate.web.dto.AddressCreateDto;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.Setter;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -48,11 +49,7 @@ public class AddressController {
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     Address address = new Address();
     address.setOwner(currentUser);
-    address.setAddress(dto.getAddress());
-    address.setProvince(dto.getProvince());
-    address.setCity(dto.getCity());
-    address.setDistrict(dto.getDistrict());
-    address.setZip(dto.getZip());
+    BeanUtils.copyProperties(dto, address);
     return RestResponseEntityFactory.success(addressRepository.save(address), HttpStatus.CREATED);
   }
 
@@ -79,7 +76,7 @@ public class AddressController {
    */
   @PreAuthorize("hasAnyRole('CUSTOMER','SELLER')")
   @GetMapping
-  public ResponseEntity getAddressByOwnerId(
+  public ResponseEntity getMyAddresses(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
       @RequestParam(value = "size", required = false, defaultValue = "20") int size) {
     User currentUser =

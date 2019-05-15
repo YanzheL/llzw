@@ -53,8 +53,8 @@ public class OrderController {
   }
 
   @PreAuthorize("hasAuthority('OP_READ_ORDER')")
-  @GetMapping(value = "/{id:\\d+}")
-  public ResponseEntity get(@PathVariable(value = "id") Long id)
+  @GetMapping(value = "/{id:[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}}")
+  public ResponseEntity get(@PathVariable(value = "id") String id)
       throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
@@ -71,15 +71,16 @@ public class OrderController {
             currentUser,
             orderCreateDto.getProductId(),
             orderCreateDto.getQuantity(),
-            orderCreateDto.getAddressId()
+            orderCreateDto.getAddressId(),
+            orderCreateDto.getRemark()
         ),
         HttpStatus.CREATED
     );
   }
 
   @PreAuthorize("hasAuthority('OP_DELETE_ORDER')")
-  @DeleteMapping(value = "/{id:\\d+}")
-  public ResponseEntity cancel(@PathVariable(value = "id") Long id) throws RestApiException {
+  @DeleteMapping(value = "/{id:[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}}")
+  public ResponseEntity cancel(@PathVariable(value = "id") String id) throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     return RestResponseEntityFactory.success(
@@ -88,9 +89,9 @@ public class OrderController {
   }
 
   @PreAuthorize("hasRole('CUSTOMER')")
-  @PatchMapping(value = "/{id:\\d+}")
+  @PatchMapping(value = "/{id:[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}}")
   public ResponseEntity deliveryConfirm(
-      @PathVariable(value = "id") Long id,
+      @PathVariable(value = "id") String id,
       @RequestParam(value = "action") String action
   ) throws RestApiException {
     if (!action.equals("DELIVERY_CONFIRM")) {

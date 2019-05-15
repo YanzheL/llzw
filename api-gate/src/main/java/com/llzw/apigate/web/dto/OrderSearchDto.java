@@ -6,12 +6,14 @@ import lombok.Data;
 @Data
 public class OrderSearchDto {
 
-  String customerId;
+  protected String customerId;
 
-  Long addressId;
+  protected Long addressId;
 
-  Long stockId;
+  protected Long stockId;
 
   @Size(max = 30, message = "Length cannot exceed 30")
-  String trackingId;
+  protected String trackingId;
+
+  protected boolean valid = true;
 }

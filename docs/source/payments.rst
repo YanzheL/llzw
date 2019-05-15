@@ -11,7 +11,7 @@ Properties
 Parameter           Type      Description
 ==================  ========  =====================================================
 id                  Integer   Payment ID
-order               Integer   Parent Order ID
+order               String    Parent Order ID
 orderString         String    Alipay redirect URL
 createdAt           Date      Creation time
 updatedAt           Date      Update time
@@ -33,7 +33,7 @@ Example JSON Representation
 
    {
      "id" : 1,
-     "order" : 1,
+     "order" : "c3beaaf0-ff02-4adf-b37c-ee41dbc20319",
      "orderString" : "https://openapi.alipaydev.com/gateway.do?XXX=XXX",
      "createdAt" : "2019-04-19T15:31:20.807+0000",
      "updatedAt" : "2019-04-19T15:31:20.807+0000",
@@ -64,7 +64,7 @@ Request Parameters
 ==================  ========  ========  =======  =============================
 Parameter           Type      Required  Default  Description
 ==================  ========  ========  =======  =============================
-orderId             Integer   True      -        Parent Order ID
+orderId             String    True      -        Parent Order ID
 ==================  ========  ========  =======  =============================
 
 Response Parameters
@@ -128,7 +128,7 @@ Request Parameters
 ==================  ========  ========  =======  =============================
 Parameter           Type      Required  Default  Description
 ==================  ========  ========  =======  =============================
-orderId             Integer   True      -        Parent Order ID
+orderId             String    True      -        Parent Order ID
 subject             String    True      -        Subject of this payment
 description         String    False     -        Description
 ==================  ========  ========  =======  =============================
