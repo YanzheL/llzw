@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.llzw.apigate.ApiGateApplicationTests;
 import com.llzw.apigate.message.RestApiResponse;
 import java.util.Map;
@@ -19,7 +18,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -29,9 +27,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
 
   protected UUID testUUID = UUID.randomUUID();
-
-  @Autowired
-  ObjectMapper objectMapper;
 
   // 创建一个用于测试的mvc客户端，然后这个mvc客户端可以用来发起请求
   @BeforeAll
