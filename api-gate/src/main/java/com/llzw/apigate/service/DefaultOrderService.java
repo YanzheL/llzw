@@ -18,6 +18,7 @@ import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.OrderSearchDto;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.Setter;
@@ -67,6 +68,7 @@ public class DefaultOrderService implements OrderService {
     order.setStock(stockRepository.save(stock));
     order.setAddress(address);
     order.setCustomer(customer);
+    order.setTotalAmount(product.getPrice());
     order.setQuantity(quantity);
     order.setValid(true);
     return orderRepository.save(order);
@@ -88,8 +90,9 @@ public class DefaultOrderService implements OrderService {
   }
 
   @Override
-  public Order get(Long id, User relatedUser) throws RestApiException {
-    Order order = orderRepository.findById(id).orElseThrow(() -> new RestEntityNotFoundException(
+  public Order get(String id, User relatedUser) throws RestApiException {
+    Order order = orderRepository.findById(UUID.fromString(id))
+        .orElseThrow(() -> new RestEntityNotFoundException(
         String.format("Order <%s> does not exist", id)));
     if (!order.belongsToUser(relatedUser)) {
       throw new RestAccessDeniedException("Current user does not have access to this order");
@@ -98,7 +101,7 @@ public class DefaultOrderService implements OrderService {
   }
 
   @Override
-  public Order cancel(Long id, User relatedUser) throws RestApiException {
+  public Order cancel(String id, User relatedUser) throws RestApiException {
     Order order = get(id, relatedUser);
     if (order.getShippingTime() != null) {
       throw new RestRejectedByEntityException(
@@ -109,7 +112,7 @@ public class DefaultOrderService implements OrderService {
   }
 
   @Override
-  public Order deliveryConfirm(Long id, User relatedUser) throws RestApiException {
+  public Order deliveryConfirm(String id, User relatedUser) throws RestApiException {
     Order order = get(id, relatedUser);
     if (order.isDeliveryConfirmed()) {
       throw new RestRejectedByEntityException(

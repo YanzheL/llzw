@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,10 +45,10 @@ public class SimplePaymentService implements PaymentService {
   }
 
   @Override
-  public Payment create(User payer, Long orderId,
+  public Payment create(User payer, String orderId,
       String subject, String description)
       throws RestApiException {
-    Optional<Order> orderOptional = orderRepository.findById(orderId);
+    Optional<Order> orderOptional = orderRepository.findById(UUID.fromString(orderId));
     if (!orderOptional.isPresent()) {
       throw new RestDependentEntityNotFoundException(
           String.format("Order <%s> do not exist", orderId));
@@ -121,7 +122,7 @@ public class SimplePaymentService implements PaymentService {
   @Override
   public boolean verify(Payment payment) throws RestApiException {
     try {
-      Map<String, String> result = vendor.query(payment.getOrder().getId());
+      Map<String, String> result = vendor.query(payment.getOrder().getId().toString());
       String tradeStatue = result.get("trade_status");
       if (tradeStatue.equals("TRADE_SUCCESS") || tradeStatue.equals("TRADE_FINISHED")) {
         return true;

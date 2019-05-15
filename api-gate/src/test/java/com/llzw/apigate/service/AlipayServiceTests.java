@@ -8,6 +8,7 @@ import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Payment;
 import com.llzw.apigate.spring.AlipayProperties;
 import java.lang.reflect.Field;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @EnableConfigurationProperties
 public class AlipayServiceTests {
 
+  protected UUID testUUID = UUID.randomUUID();
+
   @Autowired
   AlipayService alipayService;
 
@@ -33,7 +36,7 @@ public class AlipayServiceTests {
     Order order = new Order();
     Field idField = Order.class.getDeclaredField("id");
     idField.setAccessible(true);
-    idField.set(order, 3L);
+    idField.set(order, testUUID);
     payment.setOrder(order);
     payment.setSubject("特斯拉");
     payment.setTotalAmount(1200000);
@@ -45,12 +48,12 @@ public class AlipayServiceTests {
   @Test
   public void queryTest() throws Exception {
     assertEquals(
-        alipayService.query(2L).get("trade_status"),
+        alipayService.query(testUUID.toString()).get("trade_status"),
         "TRADE_SUCCESS"
     );
     assertThrows(
         RestTradeNotFoundPaymentVendorException.class,
-        () -> alipayService.query(3L)
+        () -> alipayService.query(testUUID.toString())
     );
   }
 }

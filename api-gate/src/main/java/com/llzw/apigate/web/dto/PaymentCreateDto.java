@@ -8,7 +8,7 @@ import lombok.Data;
 public class PaymentCreateDto {
 
   @NotNull
-  protected Long orderId;
+  protected String orderId;
 
   @Size(min = 5, max = 100, message = "Length must between 5 and 100")
   protected String subject;

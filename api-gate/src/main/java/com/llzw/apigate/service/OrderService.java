@@ -15,9 +15,9 @@ public interface OrderService {
   List<Order> search(OrderSearchDto example, User relatedUser, Pageable pageable)
       throws RestApiException;
 
-  Order get(Long id, User relatedUser) throws RestApiException;
+  Order get(String id, User relatedUser) throws RestApiException;
 
-  Order cancel(Long id, User relatedUser) throws RestApiException;
+  Order cancel(String id, User relatedUser) throws RestApiException;
 
-  Order deliveryConfirm(Long id, User relatedUser) throws RestApiException;
+  Order deliveryConfirm(String id, User relatedUser) throws RestApiException;
 }

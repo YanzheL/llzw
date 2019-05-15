@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface PaymentService {
 
-  Payment create(User payer, Long orderId,
+  Payment create(User payer, String orderId,
       String subject, String description) throws RestApiException;
 
   Payment retry(Long paymentId) throws RestApiException;
