@@ -19,9 +19,12 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 
+@Commit
 @TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
@@ -40,6 +43,7 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
   @WithUserDetails("test_user_customer_username_0")
   @Test
   @Order(1)
+  @Transactional
   @SuppressWarnings("unchecked")
   public void createOrderByCustomer() throws Exception {
     MvcResult result = mvc.perform(
