@@ -71,7 +71,8 @@ public class OrderController {
             currentUser,
             orderCreateDto.getProductId(),
             orderCreateDto.getQuantity(),
-            orderCreateDto.getAddressId()
+            orderCreateDto.getAddressId(),
+            orderCreateDto.getRemark()
         ),
         HttpStatus.CREATED
     );

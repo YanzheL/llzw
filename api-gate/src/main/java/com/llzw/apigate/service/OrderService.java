@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface OrderService {
 
-  Order create(User customer, Long productId, int quantity, Long addressId)
+  Order create(User customer, Long productId, int quantity, Long addressId, String remark)
       throws RestApiException;
 
   List<Order> search(OrderSearchDto example, User relatedUser, Pageable pageable)

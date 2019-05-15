@@ -44,7 +44,8 @@ public class DefaultOrderService implements OrderService {
   private StockRepository stockRepository;
 
   @Override
-  public Order create(User customer, Long productId, int quantity, Long addressId)
+  public Order create(User customer, Long productId, int quantity, Long addressId,
+      String remark)
       throws RestApiException {
     Product product = productRepository.findById(productId)
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
@@ -70,6 +71,7 @@ public class DefaultOrderService implements OrderService {
     order.setCustomer(customer);
     order.setTotalAmount(product.getPrice());
     order.setQuantity(quantity);
+    order.setRemark(remark);
     order.setValid(true);
     return orderRepository.save(order);
   }
@@ -93,7 +95,7 @@ public class DefaultOrderService implements OrderService {
   public Order get(String id, User relatedUser) throws RestApiException {
     Order order = orderRepository.findById(UUID.fromString(id))
         .orElseThrow(() -> new RestEntityNotFoundException(
-        String.format("Order <%s> does not exist", id)));
+            String.format("Order <%s> does not exist", id)));
     if (!order.belongsToUser(relatedUser)) {
       throw new RestAccessDeniedException("Current user does not have access to this order");
     }
