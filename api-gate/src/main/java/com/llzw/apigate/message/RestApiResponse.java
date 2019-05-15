@@ -9,25 +9,29 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
-public class RestApiResponse implements RestApiResponseMessage {
+public class RestApiResponse<T> implements RestApiResponseMessage {
 
   @Setter(AccessLevel.NONE)
-  private String responseId = UUID.randomUUID().toString();
+  protected String responseId = UUID.randomUUID().toString();
 
   @Setter(AccessLevel.NONE)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private Date timestamp;
+  protected Date timestamp;
 
-  private boolean success;
+  protected boolean success;
 
-  private Object data;
+  protected T data;
 
-  private RestApiErrorMessage error;
+  protected RestApiErrorMessage error;
 
-  public RestApiResponse(boolean success, Object data, RestApiErrorMessage error) {
+  public RestApiResponse() {
+    this.timestamp = new Date();
+  }
+
+  public RestApiResponse(boolean success, T data, RestApiErrorMessage error) {
+    this();
     this.success = success;
     this.data = data;
     this.error = error;
-    this.timestamp = new Date();
   }
 }
