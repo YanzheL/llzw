@@ -10,7 +10,7 @@ Properties
 ================== =========== =============================================
 Parameter          Type        Description
 ================== =========== =============================================
-id                 Integer     Order ID
+id                 String      Order ID
 quantity           Integer     Quantity of this order
 createdAt          Date        Creation time
 updatedAt          Date        Update time
@@ -33,7 +33,7 @@ Example JSON Representation
 .. code:: json
 
    {
-     "id": 1,
+     "id": "c3beaaf0-ff02-4adf-b37c-ee41dbc20319",
      "quantity": 2,
      "createdAt": "2019-10-1 3:00 PM GMT+1:00",
      "updatedAt": "2019-10-1 3:00 PM GMT+1:00",
