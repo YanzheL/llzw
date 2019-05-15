@@ -72,7 +72,7 @@ public class PaymentController {
       throws RestApiException {
     Payment payment = paymentService.retry(paymentId);
     return RestResponseEntityFactory
-        .success(payment.getOrderString(), HttpStatus.CREATED);
+        .success(payment.getOrderString());
   }
 
   /**
