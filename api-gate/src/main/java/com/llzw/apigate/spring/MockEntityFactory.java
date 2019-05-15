@@ -10,6 +10,7 @@ import com.llzw.apigate.persistence.entity.User;
 import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.Date;
+import java.util.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,7 +45,7 @@ public class MockEntityFactory {
     return product;
   }
 
-  public static Order makeOrder(Long id, Stock stock, User customer)
+  public static Order makeOrder(UUID id, Stock stock, User customer)
       throws NoSuchFieldException, IllegalAccessException {
     Order order = new Order();
     if (id != null) {
@@ -58,11 +59,11 @@ public class MockEntityFactory {
     order.setValid(true);
     order.setAddress(
         new AddressBean(
-            String.format("Province_%d", id),
-            String.format("City_%d", id),
-            String.format("District_%d", id),
-            String.format("Address_%d", id),
-            String.format("Zip_%d", id)
+            String.format("Province_%s", id.toString().subSequence(0, 4)),
+            String.format("City_%s", id.toString().subSequence(0, 4)),
+            String.format("District_%s", id.toString().subSequence(0, 4)),
+            String.format("Address_%s", id.toString().subSequence(0, 4)),
+            String.format("000000", id.toString().subSequence(0, 4))
         )
     );
     return order;
@@ -100,7 +101,7 @@ public class MockEntityFactory {
     return user;
   }
 
-  public static <T> void setId(T obj, long id)
+  public static <T, ID> void setId(T obj, ID id)
       throws NoSuchFieldException, IllegalAccessException {
     Field idField = obj.getClass().getDeclaredField("id");
     idField.setAccessible(true);

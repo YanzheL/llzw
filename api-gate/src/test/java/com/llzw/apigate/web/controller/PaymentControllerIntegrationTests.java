@@ -15,6 +15,7 @@ import com.llzw.apigate.persistence.dao.StockRepository;
 import com.llzw.apigate.persistence.dao.UserRepository;
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.spring.MockEntityFactory;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -41,6 +42,8 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
   @Autowired
   protected StockRepository stockRepository;
 
+  protected UUID testUUID = UUID.randomUUID();
+
   @BeforeAll
   public void setup() throws Exception {
     mvc = MockMvcBuilders
@@ -48,11 +51,11 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
         .apply(springSecurity())
         .build();
     Order newOrder = MockEntityFactory.makeOrder(
-        1L,
+        testUUID,
         stockRepository.findById(1L).get(),
         userRepository.findByUsername("test_user_customer_username_0").get()
     );
-    orderRepository.save(newOrder);
+    testUUID = orderRepository.save(newOrder).getId();
   }
 
   @WithUserDetails("test_user_customer_username_0")
@@ -60,7 +63,7 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
   public void createPaymentByCustomer() throws Exception {
     MvcResult result = mvc.perform(
         post(apiBasePath + "/payments")
-            .param("orderId", "1")
+            .param("orderId", testUUID.toString())
             .param("subject", "Test Subject")
             .param("description", "Test Description")
     )
@@ -75,7 +78,7 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
   public void createPaymentByNoUser() throws Exception {
     MvcResult result = mvc.perform(
         post(apiBasePath + "/payments")
-            .param("orderId", "1")
+            .param("orderId", testUUID.toString())
             .param("subject", "Test Subject")
             .param("description", "Test Description")
     )
@@ -90,7 +93,7 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
   public void createPaymentBySeller() throws Exception {
     MvcResult result = mvc.perform(
         post(apiBasePath + "/payments")
-            .param("orderId", "1")
+            .param("orderId", testUUID.toString())
             .param("subject", "Test Subject")
             .param("description", "Test Description")
     )

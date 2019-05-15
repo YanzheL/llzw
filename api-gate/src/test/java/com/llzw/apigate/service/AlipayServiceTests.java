@@ -1,6 +1,5 @@
 package com.llzw.apigate.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.llzw.apigate.message.error.RestTradeNotFoundPaymentVendorException;
@@ -47,10 +46,6 @@ public class AlipayServiceTests {
 
   @Test
   public void queryTest() throws Exception {
-    assertEquals(
-        alipayService.query(testUUID.toString()).get("trade_status"),
-        "TRADE_SUCCESS"
-    );
     assertThrows(
         RestTradeNotFoundPaymentVendorException.class,
         () -> alipayService.query(testUUID.toString())
