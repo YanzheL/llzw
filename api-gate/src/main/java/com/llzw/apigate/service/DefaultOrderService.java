@@ -84,6 +84,7 @@ public class DefaultOrderService implements OrderService {
       return orderRepository
           .findAll(JpaSearchSpecificationFactory.fromExample(example), pageable)
           .getContent().stream()
+          .filter(o -> o.isValid() == example.isValid())
           .filter(o -> o.belongsToUser(relatedUser))
           .collect(Collectors.toList());
     } catch (IllegalAccessException e) {
