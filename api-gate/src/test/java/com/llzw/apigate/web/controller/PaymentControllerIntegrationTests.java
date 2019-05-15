@@ -17,17 +17,21 @@ import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.spring.MockEntityFactory;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 @TestInstance(Lifecycle.PER_CLASS)
-@Transactional
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Commit
 public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
 
   @Autowired
@@ -60,6 +64,8 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
 
   @WithUserDetails("test_user_customer_username_0")
   @Test
+  @Transactional
+  @org.junit.jupiter.api.Order(1)
   public void createPaymentByCustomer() throws Exception {
     MvcResult result = mvc.perform(
         post(apiBasePath + "/payments")
@@ -111,6 +117,20 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
         .andDo(print())
         .andExpect(status().isNotFound())
         .andExpect(jsonPath("$.success").value(false))
+        .andReturn();
+  }
+
+  @WithUserDetails("test_user_customer_username_0")
+  @Test
+  @org.junit.jupiter.api.Order(2)
+  public void retryExistPaymentByCustomer() throws Exception {
+    MvcResult result = mvc.perform(
+        get(apiBasePath + "/payments/retry/1")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data").isNotEmpty())
         .andReturn();
   }
 }
