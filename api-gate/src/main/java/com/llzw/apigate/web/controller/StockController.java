@@ -30,6 +30,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,7 +53,8 @@ public class StockController {
    */
   @PreAuthorize("hasAnyRole('SELLER')")
   @PostMapping
-  public ResponseEntity createStock(@Valid StockCreateDto stockCreateDto) throws RestApiException {
+  public ResponseEntity createStock(@Valid @RequestBody StockCreateDto stockCreateDto)
+      throws RestApiException {
     Optional<Product> productOptional = productRepository.findById(stockCreateDto.getProductId());
     if (!productOptional.isPresent()) {
       throw new RestDependentEntityNotFoundException(
@@ -77,7 +79,7 @@ public class StockController {
   public ResponseEntity searchStock(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
       @RequestParam(value = "size", required = false, defaultValue = "20") int size,
-      StockSearchDto dto) throws RestApiException {
+      @RequestBody StockSearchDto dto) throws RestApiException {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());

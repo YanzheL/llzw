@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,7 +44,8 @@ public class ProductController {
    */
   @PreAuthorize("hasRole('SELLER')")
   @PostMapping
-  public ResponseEntity create(@Valid ProductCreateDto productCreateDto) throws RestApiException {
+  public ResponseEntity create(@Valid @RequestBody ProductCreateDto productCreateDto)
+      throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     return RestResponseEntityFactory
@@ -69,7 +71,7 @@ public class ProductController {
   public ResponseEntity search(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
       @RequestParam(value = "size", required = false, defaultValue = "20") int size,
-      @Valid ProductSearchDto productSearchDto) {
+      @Valid @RequestBody ProductSearchDto productSearchDto) {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
     return RestResponseEntityFactory.success(productService.search(pageRequest, productSearchDto));
   }
