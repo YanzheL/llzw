@@ -15,6 +15,7 @@ import com.llzw.apigate.persistence.dao.StockRepository;
 import com.llzw.apigate.persistence.dao.UserRepository;
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.spring.MockEntityFactory;
+import com.llzw.apigate.web.dto.PaymentCreateDto;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
@@ -23,6 +24,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.web.servlet.MvcResult;
@@ -67,11 +69,14 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
   @Transactional
   @org.junit.jupiter.api.Order(1)
   public void createPaymentByCustomer() throws Exception {
+    PaymentCreateDto dto = new PaymentCreateDto();
+    dto.setOrderId(testUUID.toString());
+    dto.setSubject("Test Subject");
+    dto.setDescription("Test Description");
     MvcResult result = mvc.perform(
         post(apiBasePath + "/payments")
-            .param("orderId", testUUID.toString())
-            .param("subject", "Test Subject")
-            .param("description", "Test Description")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(dto))
     )
         .andDo(print())
         .andExpect(status().isCreated())
@@ -82,11 +87,14 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
 
   @Test
   public void createPaymentByNoUser() throws Exception {
+    PaymentCreateDto dto = new PaymentCreateDto();
+    dto.setOrderId(testUUID.toString());
+    dto.setSubject("Test Subject");
+    dto.setDescription("Test Description");
     MvcResult result = mvc.perform(
         post(apiBasePath + "/payments")
-            .param("orderId", testUUID.toString())
-            .param("subject", "Test Subject")
-            .param("description", "Test Description")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(dto))
     )
         .andDo(print())
         .andExpect(status().isForbidden())
@@ -97,11 +105,14 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
   @WithUserDetails("test_user_seller_username_0")
   @Test
   public void createPaymentBySeller() throws Exception {
+    PaymentCreateDto dto = new PaymentCreateDto();
+    dto.setOrderId(testUUID.toString());
+    dto.setSubject("Test Subject");
+    dto.setDescription("Test Description");
     MvcResult result = mvc.perform(
         post(apiBasePath + "/payments")
-            .param("orderId", testUUID.toString())
-            .param("subject", "Test Subject")
-            .param("description", "Test Description")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(dto))
     )
         .andDo(print())
         .andExpect(status().isForbidden())

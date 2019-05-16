@@ -14,6 +14,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.llzw.apigate.ApiGateApplicationTests;
 import com.llzw.apigate.persistence.dao.UserRepository;
 import com.llzw.apigate.persistence.entity.User;
+import com.llzw.apigate.web.dto.UpdatePasswordDto;
+import com.llzw.apigate.web.dto.UserDto;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -168,10 +171,13 @@ public class UserControllerIntegrationTests extends ApiGateApplicationTests {
   @WithUserDetails("test_user_seller_username_0")
   @Test
   public void updateUserPassword() throws Exception {
+    UpdatePasswordDto dto = new UpdatePasswordDto();
+    dto.setOldPassword("test_user_seller_PASSWORD_0");
+    dto.setNewPassword("test_new_PASSWORD_0");
     mvc.perform(
         put(apiBasePath + "/users/updatePassword")
-            .param("oldPassword", "test_user_seller_PASSWORD_0")
-            .param("newPassword", "test_new_PASSWORD_0")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(dto))
     )
         .andDo(print())
         .andExpect(status().isOk())
@@ -186,14 +192,17 @@ public class UserControllerIntegrationTests extends ApiGateApplicationTests {
       String email,
       String phoneNumber, String role
   ) throws Exception {
+    UserDto dto = new UserDto();
+    dto.setUsername(username);
+    dto.setPassword(password);
+    dto.setNickname(nickname);
+    dto.setEmail(email);
+    dto.setPhoneNumber(phoneNumber);
+    dto.setRole(role);
     return mvc.perform(
         post(apiBasePath + "/users/register")
-            .param("username", username)
-            .param("password", password)
-            .param("nickname", nickname)
-            .param("email", email)
-            .param("phoneNumber", phoneNumber)
-            .param("role", role)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(dto))
     );
   }
 }
