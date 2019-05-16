@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.llzw.apigate.ApiGateApplicationTests;
 import com.llzw.apigate.message.RestApiResponse;
+import com.llzw.apigate.web.dto.OrderCreateDto;
 import java.util.Map;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.web.servlet.MvcResult;
@@ -46,11 +48,15 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
   @Transactional
   @SuppressWarnings("unchecked")
   public void createOrderByCustomer() throws Exception {
+    OrderCreateDto dto = new OrderCreateDto();
+    dto.setProductId(1L);
+    dto.setQuantity(10);
+    dto.setAddressId(11L);
+    dto.setRemark("Test");
     MvcResult result = mvc.perform(
         post(apiBasePath + "/orders")
-            .param("productId", "1")
-            .param("quantity", "10")
-            .param("addressId", "11")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(dto))
     )
         .andDo(print())
         .andExpect(status().isCreated())
@@ -65,11 +71,15 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
   @WithUserDetails("test_user_customer_username_0")
   @Test
   public void createOrderWithNonExistProductIdByCustomer() throws Exception {
+    OrderCreateDto dto = new OrderCreateDto();
+    dto.setProductId(100L);
+    dto.setQuantity(10);
+    dto.setAddressId(1L);
+    dto.setRemark("Test");
     mvc.perform(
         post(apiBasePath + "/orders")
-            .param("productId", "100")
-            .param("quantity", "10")
-            .param("addressId", "1")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(dto))
     )
         .andDo(print())
         .andExpect(status().isNotFound())

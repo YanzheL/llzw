@@ -8,10 +8,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.llzw.apigate.ApiGateApplicationTests;
+import com.llzw.apigate.web.dto.AddressCreateDto;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -32,13 +34,16 @@ public class AddressControllerIntegrationTests extends ApiGateApplicationTests {
   @WithUserDetails("test_user_seller_username_0")
   @Test
   public void createAddress() throws Exception {
+    AddressCreateDto dto = new AddressCreateDto();
+    dto.setProvince("Guangdong");
+    dto.setCity("Shenzhen");
+    dto.setDistrict("Futian");
+    dto.setAddress("Yi Tian Road");
+    dto.setZip("123456");
     MvcResult result = mvc.perform(
         post("/api/v1/addresses")
-            .param("province", "Guangdong")
-            .param("city", "Shenzhen")
-            .param("district", "Futian")
-            .param("address", "Yi Tian Road")
-            .param("zip", "123456")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(dto))
     )
         .andDo(print())
         .andExpect(status().isCreated())
