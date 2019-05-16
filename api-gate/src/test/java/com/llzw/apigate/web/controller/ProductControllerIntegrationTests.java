@@ -12,8 +12,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.llzw.apigate.ApiGateApplicationTests;
 import com.llzw.apigate.message.RestApiResponse;
 import com.llzw.apigate.service.FileStorageService;
+import com.llzw.apigate.web.dto.ProductCreateDto;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.AfterAll;
@@ -25,6 +27,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.annotation.Commit;
@@ -64,17 +67,19 @@ public class ProductControllerIntegrationTests extends ApiGateApplicationTests {
   @Transactional
   public void createProduct() throws Exception {
     uploadPngBySeller();
-
+    ProductCreateDto dto = new ProductCreateDto();
+    dto.setName("auto test 1");
+    dto.setIntroduction("Hello world");
+    dto.setMainImageFiles(Collections
+        .singletonList("b0339ffc5e42a813380a0da98b1a0fdf449195a430f497b041b80dfe98915e29"));
+    dto.setPrice(1234.56f);
+    dto.setCa("321532135");
+    dto.setCaFile("b0339ffc5e42a813380a0da98b1a0fdf449195a430f497b041b80dfe98915e29");
+    dto.setCaId("11111");
     MvcResult result = mvc.perform(
         post("/api/v1/products")
-            .param("name", "auto test 1")
-            .param("introduction", "Hello world")//new Date().toString())
-            .param("mainImageFiles",
-                "b0339ffc5e42a813380a0da98b1a0fdf449195a430f497b041b80dfe98915e29")
-            .param("price", "1234.56")
-            .param("ca", "321532135")
-            .param("caId", "1111")
-            .param("caFile", "b0339ffc5e42a813380a0da98b1a0fdf449195a430f497b041b80dfe98915e29")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(dto))
     )
         .andDo(print())
         .andExpect(status().isCreated())
