@@ -71,7 +71,7 @@ public class ProductController {
   public ResponseEntity search(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
       @RequestParam(value = "size", required = false, defaultValue = "20") int size,
-      @Valid @RequestBody ProductSearchDto productSearchDto) {
+      @Valid ProductSearchDto productSearchDto) {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
     return RestResponseEntityFactory.success(productService.search(pageRequest, productSearchDto));
   }

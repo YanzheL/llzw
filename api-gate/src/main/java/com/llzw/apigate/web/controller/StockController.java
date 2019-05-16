@@ -79,7 +79,7 @@ public class StockController {
   public ResponseEntity searchStock(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
       @RequestParam(value = "size", required = false, defaultValue = "20") int size,
-      @RequestBody StockSearchDto dto) throws RestApiException {
+      StockSearchDto dto) throws RestApiException {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
