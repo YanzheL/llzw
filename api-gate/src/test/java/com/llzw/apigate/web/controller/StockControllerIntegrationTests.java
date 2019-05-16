@@ -8,10 +8,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.llzw.apigate.ApiGateApplicationTests;
+import com.llzw.apigate.web.dto.StockCreateDto;
+import java.util.Date;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -35,15 +38,17 @@ public class StockControllerIntegrationTests extends ApiGateApplicationTests {
   @Test
   //@Order(1) //定义了组件的加载顺序
   public void createStock() throws Exception {
-
+    StockCreateDto dto = new StockCreateDto();
+    dto.setProductId(1L);
+    dto.setProducedAt(new Date());
+    dto.setShelfLife(120);
+    dto.setTotalQuantity(50);
+    dto.setTrackingId("123456");
+    dto.setCarrierName("SF-Express");
     MvcResult result = mvc.perform(
         post("/api/v1/stocks")
-            .param("productId", "1")
-            .param("producedAt", "2000-10-31T01:30:00.000-05:00")//new Date().toString())
-            .param("shelfLife", "120")
-            .param("totalQuantity", "50")
-            .param("trackingId", "1234567")
-            .param("carrierName", "运输公司")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(dto))
     )
         .andDo(print())
         .andExpect(status().isCreated())
