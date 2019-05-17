@@ -78,6 +78,10 @@ public class Product extends BaseEntity {
   @NonNull
   protected String caId;
 
+  protected String category;
+
+  protected String feature;
+
   @Transactional
   public boolean belongsToSeller(User seller) {
     return this.seller.getUsername().equals(seller.getUsername());

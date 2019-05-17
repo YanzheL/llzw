@@ -37,4 +37,10 @@ public class ProductCreateDto {
   @NotNull
   @Size(min = 64, max = 64, message = "Length must be 64")
   protected String caFile;
+
+  @Size(max = 255, message = "Length of category should not exceed 255")
+  protected String category;
+
+  @Size(max = 255, message = "Length of feature should not exceed 255")
+  protected String feature;
 }
