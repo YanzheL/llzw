@@ -1,0 +1,6 @@
+spring:
+  banner:
+    image:
+      location: logo.png
+      width: 60
+    location: MAIN.jar

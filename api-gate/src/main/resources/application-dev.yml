@@ -21,6 +21,8 @@ spring:
   # If something weird happens in request mapping, you may need to uncomment this.
   resources:
     add-mappings: false
+  profiles:
+    include: etc
 
 alipay:
   alipay-public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlKeI+QyAwSvgKY2j6i4vBo2lo8EvOHL/BrvWYWXIoDbzEKW3xhgEhkRRTdn7xdtNA/pIOS4Hmqo24GquFgZXGU2Jx9MxJDbqOG5maESB2P1G/TdaMK6KGKKvNQ6OVqG14o4lkCBmCFw8yfikF8oOD1fjxTpNAuC5KcdqBXe6ookeROFh/s+2BwQDW/hK6pERZSMjDnOVQxOhbmYMfSp2rCE+mDt4tGX+65d7Wvvbv/NC3z35v9lGHQoh8l+v9IJ+jkOf89RXBcDtz8btnb1My/H9g1LIm73Xb3eA/yqL4lrkvtal7TaUDar4Wl901Xltj70eQtyNSZyxF8igh2hwSQIDAQAB
@@ -35,7 +37,7 @@ logging:
     web: DEBUG
     org:
       hibernate:
-        SQL: DEBUG
+        SQL: INFO
 
 server:
   port: 8981
