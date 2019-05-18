@@ -60,7 +60,7 @@ This endpoint retrieves all products.
 HTTP Request
 ------------
 
-``GET http://example.com/api/v2/products``
+``GET http://example.com/api/v1/products``
 
 Request Parameters
 ------------------
@@ -99,7 +99,7 @@ This endpoint retrieves a specific product.
 HTTP Request
 ------------
 
-``GET http://example.com/api/v2/products/<ID>``
+``GET http://example.com/api/v1/products/<ID>``
 
 Path Parameter
 --------------
@@ -126,7 +126,7 @@ This endpoint creates a new product.
 HTTP Request
 ------------
 
-``POST http://example.com/api/v2/products``
+``POST http://example.com/api/v1/products``
 
 Request Parameters
 ------------------
@@ -168,7 +168,7 @@ This endpoint updates infomation of a specific product.
 HTTP Request
 ------------
 
-``PATCH http://example.com/api/v2/products/<ID>``
+``PATCH http://example.com/api/v1/products/<ID>``
 
 Path Parameter
 --------------
@@ -211,7 +211,7 @@ It will NOT delete it from database.
 HTTP Request
 ------------
 
-``DELETE http://example.com/api/v2/products/<ID>``
+``DELETE http://example.com/api/v1/products/<ID>``
 
 Path Parameter
 --------------

@@ -9,7 +9,7 @@ This endpoint registers a new user.
 HTTP Request
 ------------
 
-``POST http://example.com/api/v2/users/register``
+``POST http://example.com/api/v1/users/register``
 
 Request Parameters
 ------------------
@@ -42,7 +42,7 @@ This endpoint provides real name verification details for a specific user.
 HTTP Request
 ------------
 
-``PUT http://example.com/api/v2/users/realNameVerification``
+``PUT http://example.com/api/v1/users/realNameVerification``
 
 Request Parameters
 ------------------
@@ -75,7 +75,7 @@ This endpoint updates a specific user’s password
 HTTP Request
 ------------
 
-``PUT http://example.com/api/v2/users/updatePassword``
+``PUT http://example.com/api/v1/users/updatePassword``
 
 Request Parameters
 ------------------
@@ -106,7 +106,7 @@ This endpoint retrieves a user’s infomation
 HTTP Request
 ------------
 
-``GET http://example.com/api/v2/users/me``
+``GET http://example.com/api/v1/users/me``
 
 Response Parameters
 -------------------
@@ -127,7 +127,7 @@ This endpoint updates a user’s infomation
 HTTP Request
 ------------
 
-``PATCH http://example.com/api/v2/users/me``
+``PATCH http://example.com/api/v1/users/me``
 
 Request Parameters
 ------------------

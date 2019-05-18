@@ -70,7 +70,7 @@ This endpoint uploads a new file.
 HTTP Request
 ------------
 
-``POST http://example.com/api/v2/files``
+``POST http://example.com/api/v1/files``
 
 Request Parameters
 ------------------
@@ -100,7 +100,7 @@ This endpoint provides a direct access to the requested file.
 HTTP Request
 ------------
 
-``GET http://example.com/api/v2/files/<HASH>``
+``GET http://example.com/api/v1/files/<HASH>``
 
 Path Parameter
 --------------
@@ -121,7 +121,7 @@ The file will be deleted from server once its ``referrenceCount`` reaches zero.
 HTTP Request
 ------------
 
-``DELETE http://example.com/api/v2/files/<HASH>``
+``DELETE http://example.com/api/v1/files/<HASH>``
 
 Path Parameter
 --------------

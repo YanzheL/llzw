@@ -64,7 +64,7 @@ This endpoint retrieves all orders that satisfy given parameters
 HTTP Request
 ------------
 
-``GET http://example.com/api/v2/orders``
+``GET http://example.com/api/v1/orders``
 
 Request Parameters
 ------------------
@@ -100,7 +100,7 @@ This endpoint retrieves a specific order
 HTTP Request
 ------------
 
-``GET http://example.com/api/v2/orders/<ID>``
+``GET http://example.com/api/v1/orders/<ID>``
 
 Path Parameter
 --------------
@@ -130,7 +130,7 @@ This endpoint creates a new order.
 HTTP Request
 ------------
 
-``POST http://example.com/api/v2/orders``
+``POST http://example.com/api/v1/orders``
 
 Request Parameters
 ------------------
@@ -164,7 +164,7 @@ This endpoint cancels a specific order.
 HTTP Request
 ------------
 
-``DELETE http://example.com/api/v2/orders/<ID>``
+``DELETE http://example.com/api/v1/orders/<ID>``
 
 Path Parameter
 --------------
@@ -188,7 +188,7 @@ This endpoint confirms delivery of an order.
 HTTP Request
 ------------
 
-``PATCH http://example.com/api/v2/orders/<ID>``
+``PATCH http://example.com/api/v1/orders/<ID>``
 
 Path Parameter
 --------------

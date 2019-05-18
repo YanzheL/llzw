@@ -56,7 +56,7 @@ This endpoint retrieves all related payments for an order.
 HTTP Request
 ------------
 
-``GET http://example.com/api/v2/payments``
+``GET http://example.com/api/v1/payments``
 
 Request Parameters
 ------------------
@@ -88,7 +88,7 @@ This endpoint retrieves a specific payment with id.
 HTTP Request
 ------------
 
-``GET http://example.com/api/v2/payments/<ID>``
+``GET http://example.com/api/v1/payments/<ID>``
 
 Path Parameter
 --------------
@@ -120,7 +120,7 @@ This endpoint creates a new payment.
 HTTP Request
 ------------
 
-``POST http://example.com/api/v2/payments``
+``POST http://example.com/api/v1/payments``
 
 Request Parameters
 ------------------
@@ -154,7 +154,7 @@ This endpoint re-obtains ``orderString`` for a payment.
 HTTP Request
 ------------
 
-``GET http://example.com/api/v2/payments/retry/<ID>``
+``GET http://example.com/api/v1/payments/retry/<ID>``
 
 Path Parameter
 --------------
@@ -173,3 +173,37 @@ Parameter   Type      Description
 data        Payment   The matching Payment object with new orderString
 =========== ========= ================================================
 
+Verify Payment
+==============
+
+This endpoint performs payment verifification triggered by client.
+
+Usually, the system will verify a payment in three ways:
+
+1. Receive asynchronous verification message posted by third-party payment vendor.
+
+2. Query payment status positively as a scheduled task.
+
+3. Perform verification asked by client.
+
+HTTP Request
+------------
+
+``GET http://example.com/api/v1/payments/verify/<ID>``
+
+Path Parameter
+--------------
+
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Payment ID
+========= ======== ===========
+
+Response Parameters
+-------------------
+=========== ========= ================================================
+Parameter   Type      Description
+=========== ========= ================================================
+data        Boolean   The verification status
+=========== ========= ================================================
