@@ -15,4 +15,10 @@ public class ProductSearchDto {
   protected String global;
 
   protected boolean valid = true;
+
+  @Size(max = 255, message = "Length of category should not exceed 255")
+  protected String category;
+
+  @Size(max = 255, message = "Length of feature should not exceed 255")
+  protected String feature;
 }

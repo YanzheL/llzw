@@ -110,8 +110,7 @@ public class DefaultProductService implements ProductService {
       result = productRepository.searchByNameOrIntroductionWithCustomQuery(global);
     } else if (nameQueryString != null || introductionQueryString != null) {
       Product example = new Product();
-      example.setName(nameQueryString);
-      example.setIntroduction(introductionQueryString);
+      BeanUtils.copyProperties(dto, example, "global");
       result = productRepository.searchByExample(example);
     } else {
       result = productRepository.findAll(pageable).getContent();
