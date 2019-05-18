@@ -33,7 +33,10 @@ Example JSON Representation
 
    {
      "id": 1,
-     "seller": "USERNAME_OF_SELLER",
+     "seller": {
+       "username": "USERNAME_OF_SELLER",
+       "nickname": "NICKNAME_OF_SELLER"
+     },
      "name": "NAME_OF_THIS_PRODUCT",
      "introduction": "INTRODUCTION_OF_THIS_PRODUCT",
      "mainImageFiles":[
