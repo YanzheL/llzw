@@ -92,4 +92,9 @@ public class PaymentController {
       LOGGER.warn(e.getType());
     }
   }
+
+  @GetMapping("/verify/{id:\\d+}")
+  public ResponseEntity verify(@PathVariable(value = "id") Long id) throws RestApiException {
+    return RestResponseEntityFactory.success(paymentService.verify(id));
+  }
 }

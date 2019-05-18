@@ -69,15 +69,12 @@ public class DefaultPaymentService implements PaymentService {
 
   @Override
   public Payment retry(Long paymentId) throws RestApiException {
-    Optional<Payment> paymentOptional = paymentRepository.findById(paymentId);
-    if (!paymentOptional.isPresent()) {
-      throw new RestDependentEntityNotFoundException(
-          String.format("Target payment <%s> does not exist", paymentId));
-    }
-    Payment payment = paymentOptional.get();
+    Payment payment = paymentRepository.findById(paymentId)
+        .orElseThrow(() -> new RestDependentEntityNotFoundException(
+            String.format("Payment <%s> does not exist", paymentId)));
     if (payment.isConfirmed()) {
       throw new RestPaymentException(
-          String.format("Target payment <%s> is already confirmed", paymentId));
+          String.format("Payment <%s> is already confirmed", paymentId));
     }
     String orderString = vendor.pay(payment);
     payment.setOrderString(orderString);
@@ -100,12 +97,9 @@ public class DefaultPaymentService implements PaymentService {
       LOGGER.warn(String.format("Unexpected payment status <%s>", trade_status));
       return false;
     }
-
-    Optional<Payment> paymentOptional = paymentRepository.findByOrderId(orderId);
-    if (!paymentOptional.isPresent()) {
-      throw new RestDependentEntityNotFoundException("Target payment does not exist.");
-    }
-    Payment payment = paymentOptional.get();
+    Payment payment = paymentRepository.findByOrderId(orderId)
+        .orElseThrow(() -> new RestDependentEntityNotFoundException(
+            String.format("Target Payment for Order <%s> does not exist", orderId)));
     Order targetOrder = payment.getOrder();
     if (Math.abs(payment.getTotalAmount() - targetOrder.getTotalAmount()) > 0.001) {
       throw new RestPaymentException("Payment amount mismatch");
@@ -135,5 +129,13 @@ public class DefaultPaymentService implements PaymentService {
       return false;
     }
     return false;
+  }
+
+  @Override
+  public boolean verify(Long paymentId) throws RestApiException {
+    Payment payment = paymentRepository.findById(paymentId)
+        .orElseThrow(() -> new RestDependentEntityNotFoundException(
+            String.format("Payment <%s> does not exist", paymentId)));
+    return verify(payment);
   }
 }
