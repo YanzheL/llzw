@@ -108,6 +108,35 @@ public class ProductControllerIntegrationTests extends ApiGateApplicationTests {
 
   @Test
   @Order(2)
+  public void searchProductsByCategory() throws Exception {
+    MvcResult result = mvc.perform(
+        get("/api/v1/products")
+            .param("category", "food.meat")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data").isArray())
+        .andReturn();
+  }
+
+  @Test
+  @Order(2)
+  public void searchProductsByCategoryAndFeature() throws Exception {
+    MvcResult result = mvc.perform(
+        get("/api/v1/products")
+            .param("category", "food.meat")
+            .param("feature", "包邮")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data").isArray())
+        .andReturn();
+  }
+
+  @Test
+  @Order(2)
   public void getProduct() throws Exception {
     MvcResult result = mvc.perform(
         get("/api/v1/products/" + createdProductId)
