@@ -54,8 +54,8 @@ public class MockEntityFactory {
         "新鲜"
     );
     product.setSeller(seller);
-    product.setName(String.format("澳门特产 %d", i));
-    product.setIntroduction(String.format("澳门Morpheus酒店独家供应 %d", i));
+    product.setName(String.format("Macau Food %d", i));
+    product.setIntroduction(String.format("Welcome to Macau Morpheus Hotel! %d", i));
     product.setPrice(i + 10000);
     product.setCa(String.format("test_product_ca_%d", i));
     product.setCaFile(String.format("test_product_caFile_%d", i));
