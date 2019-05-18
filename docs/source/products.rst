@@ -13,7 +13,7 @@ Parameter           Type      Description
 id                  Integer   Product ID
 seller              String    Username of seller
 name                String    Name of this product
-introduction        String    Introduction of this product
+introduction        String    Introduction of this product. The content is defined by client's implementation.
 mainImageFiles      String[]  Hash values of product main images (max = 9). These files should be uploaded first.
 createdAt           Date      Creation time
 updatedAt           Date      Update time
@@ -21,6 +21,8 @@ price               Float     Price
 ca                  String    Certificate authority name
 certId              String    Qualification certificate id
 caFile              String    Certificate file hash value, this file should be uploaded first, and its type must be image or PDF
+category            String    Categories of this product, separated by dot.
+feature             String    Features. The content is defined by client's implementation.
 valid               Boolean   Valid flag
 ==================  ========  ==================================================================================================
 
@@ -66,14 +68,16 @@ Parameter        Type     Required Default Description
 page             Integer  False    0       The page index from 0
 size             Integer  False    20      Page size
 valid            Boolean  False    True    Result products should be valid or invalid.
-name             String   False    -       Name of this product. This field is matched in fuzzy mode
-introduction     String   False    -       Introduction of this product. This field is matched in fuzzy mode
+name             String   False    -       Name of this product. This field is matched in fuzzy mode.
+introduction     String   False    -       Introduction of this product. This field is matched in fuzzy mode.
+category         String   False    -       Categories of this product, separated by dot. This field is matched in fuzzy mode.
+feature          String   False    -       Features. This field is matched in fuzzy mode.
 global           String   False    -       Any product that contains this global search criterion in its name or introduction field will be matched
 ================ ======== ======== ======= ========================================================================================================
 
 .. Note::
-   The ``name`` and ``introduction`` fields will be ignored if ``global`` field is present.
-   These two fields can be both present, which means to match products that have the similar content on ``name`` and ``introduction`` field with the provided value.
+   The other fields will be ignored if ``global`` field is present.
+   All other fields except ``global`` can be matched in combination.
 
 
 Response Parameters
@@ -133,6 +137,8 @@ price            Float    True     -       Price of this product
 ca               String   True     -       Certificate authority name
 certId           String   True     -       Qualification certificate id
 caFile           String   True     -       Hash of uploaded CA file
+category         String   True     -       Categories of this product, separated by dot.
+feature          String   True     -       Features. The content is defined by client's implementation.
 mainImageFiles   String[] False    -       Main image URLs for this product, which can be the HASH value of uploaded images. Max length = 9
 ================ ======== ======== ======= ================================================================================================
 
