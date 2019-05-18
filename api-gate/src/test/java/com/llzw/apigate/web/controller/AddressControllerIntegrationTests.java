@@ -35,11 +35,11 @@ public class AddressControllerIntegrationTests extends ApiGateApplicationTests {
   @Test
   public void createAddress() throws Exception {
     AddressCreateDto dto = new AddressCreateDto();
-    dto.setProvince("Guangdong");
-    dto.setCity("Shenzhen");
-    dto.setDistrict("Futian");
-    dto.setAddress("Yi Tian Road");
-    dto.setZip("123456");
+    dto.setProvince("Macau");
+    dto.setCity("Macau");
+    dto.setDistrict("Taipa");
+    dto.setAddress("MUST, Avenida Wai Long");
+    dto.setZip("999078");
     MvcResult result = mvc.perform(
         post("/api/v1/addresses")
             .contentType(MediaType.APPLICATION_JSON)
