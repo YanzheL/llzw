@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class SimplePaymentService implements PaymentService {
+public class DefaultPaymentService implements PaymentService {
 
   private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 

@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class SimpleProductService implements ProductService {
+public class DefaultProductService implements ProductService {
 
   @Setter(onMethod_ = @Autowired)
   private ProductRepository productRepository;
