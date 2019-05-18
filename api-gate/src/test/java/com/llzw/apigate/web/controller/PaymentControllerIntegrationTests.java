@@ -144,4 +144,18 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
         .andExpect(jsonPath("$.data").isNotEmpty())
         .andReturn();
   }
+
+  @WithUserDetails("test_user_customer_username_0")
+  @Test
+  @org.junit.jupiter.api.Order(2)
+  public void verifyExistPaymentByCustomer() throws Exception {
+    MvcResult result = mvc.perform(
+        get(apiBasePath + "/payments/verify/1")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data").value(false))
+        .andReturn();
+  }
 }
