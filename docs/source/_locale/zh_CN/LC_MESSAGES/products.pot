@@ -1,0 +1,544 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2019, Yanzhe Lee, Xinye Wanyan
+# This file is distributed under the same license as the LLZW package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: LLZW \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-19 06:40-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../products.rst:2
+msgid "Products"
+msgstr ""
+
+#: ../../../products.rst:5
+msgid "Product Entity Definition"
+msgstr ""
+
+#: ../../../products.rst:8
+msgid "Properties"
+msgstr ""
+
+#: ../../../products.rst:11
+#: ../../../products.rst:74
+#: ../../../products.rst:94
+#: ../../../products.rst:113
+#: ../../../products.rst:121
+#: ../../../products.rst:140
+#: ../../../products.rst:156
+#: ../../../products.rst:182
+#: ../../../products.rst:191
+#: ../../../products.rst:225
+msgid "Parameter"
+msgstr ""
+
+#: ../../../products.rst:11
+#: ../../../products.rst:74
+#: ../../../products.rst:94
+#: ../../../products.rst:121
+#: ../../../products.rst:140
+#: ../../../products.rst:156
+#: ../../../products.rst:191
+msgid "Type"
+msgstr ""
+
+#: ../../../products.rst:11
+#: ../../../products.rst:74
+#: ../../../products.rst:94
+#: ../../../products.rst:113
+#: ../../../products.rst:121
+#: ../../../products.rst:140
+#: ../../../products.rst:156
+#: ../../../products.rst:182
+#: ../../../products.rst:191
+#: ../../../products.rst:225
+msgid "Description"
+msgstr ""
+
+#: ../../../products.rst:13
+msgid "id"
+msgstr ""
+
+#: ../../../products.rst:13
+#: ../../../products.rst:76
+#: ../../../products.rst:77
+msgid "Integer"
+msgstr ""
+
+#: ../../../products.rst:13
+#: ../../../products.rst:115
+#: ../../../products.rst:184
+#: ../../../products.rst:227
+msgid "Product ID"
+msgstr ""
+
+#: ../../../products.rst:14
+msgid "seller"
+msgstr ""
+
+#: ../../../products.rst:14
+#: ../../../products.rst:15
+#: ../../../products.rst:16
+#: ../../../products.rst:21
+#: ../../../products.rst:22
+#: ../../../products.rst:23
+#: ../../../products.rst:24
+#: ../../../products.rst:25
+#: ../../../products.rst:79
+#: ../../../products.rst:80
+#: ../../../products.rst:81
+#: ../../../products.rst:82
+#: ../../../products.rst:83
+#: ../../../products.rst:142
+#: ../../../products.rst:143
+#: ../../../products.rst:145
+#: ../../../products.rst:146
+#: ../../../products.rst:147
+#: ../../../products.rst:148
+#: ../../../products.rst:149
+#: ../../../products.rst:193
+#: ../../../products.rst:194
+#: ../../../products.rst:196
+#: ../../../products.rst:197
+#: ../../../products.rst:198
+msgid "String"
+msgstr ""
+
+#: ../../../products.rst:14
+msgid "Username of seller"
+msgstr ""
+
+#: ../../../products.rst:15
+#: ../../../products.rst:79
+#: ../../../products.rst:142
+#: ../../../products.rst:193
+msgid "name"
+msgstr ""
+
+#: ../../../products.rst:15
+#: ../../../products.rst:142
+#: ../../../products.rst:193
+msgid "Name of this product"
+msgstr ""
+
+#: ../../../products.rst:16
+#: ../../../products.rst:80
+#: ../../../products.rst:143
+#: ../../../products.rst:194
+msgid "introduction"
+msgstr ""
+
+#: ../../../products.rst:16
+msgid "Introduction of this product. The content is defined by client's implementation."
+msgstr ""
+
+#: ../../../products.rst:17
+#: ../../../products.rst:150
+#: ../../../products.rst:199
+msgid "mainImageFiles"
+msgstr ""
+
+#: ../../../products.rst:17
+#: ../../../products.rst:150
+#: ../../../products.rst:199
+msgid "String[]"
+msgstr ""
+
+#: ../../../products.rst:17
+msgid "Hash values of product main images (max = 9). These files should be uploaded first."
+msgstr ""
+
+#: ../../../products.rst:18
+msgid "createdAt"
+msgstr ""
+
+#: ../../../products.rst:18
+#: ../../../products.rst:19
+msgid "Date"
+msgstr ""
+
+#: ../../../products.rst:18
+msgid "Creation time"
+msgstr ""
+
+#: ../../../products.rst:19
+msgid "updatedAt"
+msgstr ""
+
+#: ../../../products.rst:19
+msgid "Update time"
+msgstr ""
+
+#: ../../../products.rst:20
+#: ../../../products.rst:144
+#: ../../../products.rst:195
+msgid "price"
+msgstr ""
+
+#: ../../../products.rst:20
+#: ../../../products.rst:144
+#: ../../../products.rst:195
+msgid "Float"
+msgstr ""
+
+#: ../../../products.rst:20
+msgid "Price"
+msgstr ""
+
+#: ../../../products.rst:21
+#: ../../../products.rst:145
+#: ../../../products.rst:196
+msgid "ca"
+msgstr ""
+
+#: ../../../products.rst:21
+#: ../../../products.rst:145
+#: ../../../products.rst:196
+msgid "Certificate authority name"
+msgstr ""
+
+#: ../../../products.rst:22
+#: ../../../products.rst:146
+#: ../../../products.rst:197
+msgid "certId"
+msgstr ""
+
+#: ../../../products.rst:22
+#: ../../../products.rst:146
+#: ../../../products.rst:197
+msgid "Qualification certificate id"
+msgstr ""
+
+#: ../../../products.rst:23
+#: ../../../products.rst:147
+#: ../../../products.rst:198
+msgid "caFile"
+msgstr ""
+
+#: ../../../products.rst:23
+msgid "Certificate file hash value, this file should be uploaded first, and its type must be image or PDF"
+msgstr ""
+
+#: ../../../products.rst:24
+#: ../../../products.rst:81
+#: ../../../products.rst:148
+msgid "category"
+msgstr ""
+
+#: ../../../products.rst:24
+#: ../../../products.rst:148
+msgid "Categories of this product, separated by dot."
+msgstr ""
+
+#: ../../../products.rst:25
+#: ../../../products.rst:82
+#: ../../../products.rst:149
+msgid "feature"
+msgstr ""
+
+#: ../../../products.rst:25
+#: ../../../products.rst:149
+msgid "Features. The content is defined by client's implementation."
+msgstr ""
+
+#: ../../../products.rst:26
+msgid "stat"
+msgstr ""
+
+#: ../../../products.rst:26
+msgid "ProductStat"
+msgstr ""
+
+#: ../../../products.rst:26
+msgid "Statistics Info for this product"
+msgstr ""
+
+#: ../../../products.rst:27
+#: ../../../products.rst:78
+msgid "valid"
+msgstr ""
+
+#: ../../../products.rst:27
+#: ../../../products.rst:78
+msgid "Boolean"
+msgstr ""
+
+#: ../../../products.rst:27
+msgid "Valid flag"
+msgstr ""
+
+#: ../../../products.rst:31
+msgid "Example JSON Representation"
+msgstr ""
+
+#: ../../../products.rst:61
+msgid "Search Products by Parameters"
+msgstr ""
+
+#: ../../../products.rst:63
+msgid "This endpoint retrieves all products."
+msgstr ""
+
+#: ../../../products.rst:66
+#: ../../../products.rst:105
+#: ../../../products.rst:132
+#: ../../../products.rst:174
+#: ../../../products.rst:217
+msgid "HTTP Request"
+msgstr ""
+
+#: ../../../products.rst:68
+msgid "``GET http://example.com/api/v1/products``"
+msgstr ""
+
+#: ../../../products.rst:71
+#: ../../../products.rst:137
+#: ../../../products.rst:188
+msgid "Request Parameters"
+msgstr ""
+
+#: ../../../products.rst:74
+#: ../../../products.rst:113
+#: ../../../products.rst:140
+#: ../../../products.rst:182
+#: ../../../products.rst:191
+#: ../../../products.rst:225
+msgid "Required"
+msgstr ""
+
+#: ../../../products.rst:74
+#: ../../../products.rst:140
+#: ../../../products.rst:191
+msgid "Default"
+msgstr ""
+
+#: ../../../products.rst:76
+msgid "page"
+msgstr ""
+
+#: ../../../products.rst:76
+#: ../../../products.rst:77
+#: ../../../products.rst:78
+#: ../../../products.rst:79
+#: ../../../products.rst:80
+#: ../../../products.rst:81
+#: ../../../products.rst:82
+#: ../../../products.rst:83
+#: ../../../products.rst:150
+#: ../../../products.rst:193
+#: ../../../products.rst:194
+#: ../../../products.rst:195
+#: ../../../products.rst:196
+#: ../../../products.rst:197
+#: ../../../products.rst:198
+#: ../../../products.rst:199
+msgid "False"
+msgstr ""
+
+#: ../../../products.rst:76
+msgid "0"
+msgstr ""
+
+#: ../../../products.rst:76
+msgid "The page index from 0"
+msgstr ""
+
+#: ../../../products.rst:77
+msgid "size"
+msgstr ""
+
+#: ../../../products.rst:77
+msgid "20"
+msgstr ""
+
+#: ../../../products.rst:77
+msgid "Page size"
+msgstr ""
+
+#: ../../../products.rst:78
+#: ../../../products.rst:115
+#: ../../../products.rst:142
+#: ../../../products.rst:143
+#: ../../../products.rst:144
+#: ../../../products.rst:145
+#: ../../../products.rst:146
+#: ../../../products.rst:147
+#: ../../../products.rst:148
+#: ../../../products.rst:149
+#: ../../../products.rst:184
+#: ../../../products.rst:227
+msgid "True"
+msgstr ""
+
+#: ../../../products.rst:78
+msgid "Result products should be valid or invalid."
+msgstr ""
+
+#: ../../../products.rst:79
+msgid "Name of this product. This field is matched in fuzzy mode."
+msgstr ""
+
+#: ../../../products.rst:80
+msgid "Introduction of this product. This field is matched in fuzzy mode."
+msgstr ""
+
+#: ../../../products.rst:81
+msgid "Categories of this product, separated by dot. This field is matched in fuzzy mode."
+msgstr ""
+
+#: ../../../products.rst:82
+msgid "Features. This field is matched in fuzzy mode."
+msgstr ""
+
+#: ../../../products.rst:83
+msgid "global"
+msgstr ""
+
+#: ../../../products.rst:83
+msgid "Any product that contains this global search criterion in its name or introduction field will be matched"
+msgstr ""
+
+#: ../../../products.rst:87
+msgid "The other fields will be ignored if ``global`` field is present. All other fields except ``global`` can be matched in combination."
+msgstr ""
+
+#: ../../../products.rst:92
+#: ../../../products.rst:119
+#: ../../../products.rst:154
+msgid "Response Parameters"
+msgstr ""
+
+#: ../../../products.rst:96
+#: ../../../products.rst:123
+#: ../../../products.rst:158
+msgid "data"
+msgstr ""
+
+#: ../../../products.rst:96
+msgid "Product[]"
+msgstr ""
+
+#: ../../../products.rst:96
+msgid "List of matching Product objects"
+msgstr ""
+
+#: ../../../products.rst:100
+msgid "Get a Specific Product"
+msgstr ""
+
+#: ../../../products.rst:102
+msgid "This endpoint retrieves a specific product."
+msgstr ""
+
+#: ../../../products.rst:107
+msgid "``GET http://example.com/api/v1/products/<ID>``"
+msgstr ""
+
+#: ../../../products.rst:110
+#: ../../../products.rst:179
+#: ../../../products.rst:222
+msgid "Path Parameter"
+msgstr ""
+
+#: ../../../products.rst:115
+#: ../../../products.rst:184
+#: ../../../products.rst:227
+msgid "ID"
+msgstr ""
+
+#: ../../../products.rst:123
+#: ../../../products.rst:158
+msgid "Product"
+msgstr ""
+
+#: ../../../products.rst:123
+msgid "The matching Product object"
+msgstr ""
+
+#: ../../../products.rst:127
+msgid "Create a Product"
+msgstr ""
+
+#: ../../../products.rst:129
+msgid "This endpoint creates a new product."
+msgstr ""
+
+#: ../../../products.rst:134
+msgid "``POST http://example.com/api/v1/products``"
+msgstr ""
+
+#: ../../../products.rst:143
+#: ../../../products.rst:194
+msgid "Introduction of this product"
+msgstr ""
+
+#: ../../../products.rst:144
+#: ../../../products.rst:195
+msgid "Price of this product"
+msgstr ""
+
+#: ../../../products.rst:147
+#: ../../../products.rst:198
+msgid "Hash of uploaded CA file"
+msgstr ""
+
+#: ../../../products.rst:150
+#: ../../../products.rst:199
+msgid "Main image URLs for this product, which can be the HASH value of uploaded images. Max length = 9"
+msgstr ""
+
+#: ../../../products.rst:158
+msgid "The created Product object"
+msgstr ""
+
+#: ../../../products.rst:162
+#: ../../../products.rst:203
+#: ../../../products.rst:231
+msgid "Remember — You must be authenticated with ``SELLER`` role before using this API"
+msgstr ""
+
+#: ../../../products.rst:165
+msgid "In this case, you are going to submit a list of objects, which means that you may need to prepare your request in JSON format. The order of ``mainImageFiles`` will be preserved."
+msgstr ""
+
+#: ../../../products.rst:169
+msgid "Update a Specific Product"
+msgstr ""
+
+#: ../../../products.rst:171
+msgid "This endpoint updates infomation of a specific product."
+msgstr ""
+
+#: ../../../products.rst:176
+msgid "``PATCH http://example.com/api/v1/products/<ID>``"
+msgstr ""
+
+#: ../../../products.rst:206
+msgid "In this case, you are going to submit a list of objects, which means that you may need to prepare your request in JSON format. The order of ``mainImageFiles`` will be updated to the same as you requested (if present)."
+msgstr ""
+
+#: ../../../products.rst:210
+msgid "Invalidate a Specific Product"
+msgstr ""
+
+#: ../../../products.rst:212
+msgid "This endpoint invalidates a specific product, so all stocks of this product will no longer be in the queue for sale."
+msgstr ""
+
+#: ../../../products.rst:214
+msgid "It will NOT delete it from database."
+msgstr ""
+
+#: ../../../products.rst:219
+msgid "``DELETE http://example.com/api/v1/products/<ID>``"
+msgstr ""
+

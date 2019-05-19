@@ -1,0 +1,424 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2019, Yanzhe Lee, Xinye Wanyan
+# This file is distributed under the same license as the LLZW package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: LLZW \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-19 06:40-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../payments.rst:2
+msgid "Payments"
+msgstr ""
+
+#: ../../../payments.rst:5
+msgid "Payment Entity Definition"
+msgstr ""
+
+#: ../../../payments.rst:8
+msgid "Properties"
+msgstr ""
+
+#: ../../../payments.rst:11
+#: ../../../payments.rst:65
+#: ../../../payments.rst:73
+#: ../../../payments.rst:97
+#: ../../../payments.rst:105
+#: ../../../payments.rst:129
+#: ../../../payments.rst:139
+#: ../../../payments.rst:163
+#: ../../../payments.rst:171
+#: ../../../payments.rst:198
+#: ../../../payments.rst:206
+msgid "Parameter"
+msgstr ""
+
+#: ../../../payments.rst:11
+#: ../../../payments.rst:65
+#: ../../../payments.rst:73
+#: ../../../payments.rst:105
+#: ../../../payments.rst:129
+#: ../../../payments.rst:139
+#: ../../../payments.rst:171
+#: ../../../payments.rst:206
+msgid "Type"
+msgstr ""
+
+#: ../../../payments.rst:11
+#: ../../../payments.rst:20
+#: ../../../payments.rst:65
+#: ../../../payments.rst:73
+#: ../../../payments.rst:97
+#: ../../../payments.rst:105
+#: ../../../payments.rst:129
+#: ../../../payments.rst:133
+#: ../../../payments.rst:139
+#: ../../../payments.rst:163
+#: ../../../payments.rst:171
+#: ../../../payments.rst:198
+#: ../../../payments.rst:206
+msgid "Description"
+msgstr ""
+
+#: ../../../payments.rst:13
+msgid "id"
+msgstr ""
+
+#: ../../../payments.rst:13
+msgid "Integer"
+msgstr ""
+
+#: ../../../payments.rst:13
+#: ../../../payments.rst:99
+#: ../../../payments.rst:165
+#: ../../../payments.rst:200
+msgid "Payment ID"
+msgstr ""
+
+#: ../../../payments.rst:14
+msgid "order"
+msgstr ""
+
+#: ../../../payments.rst:14
+#: ../../../payments.rst:15
+#: ../../../payments.rst:18
+#: ../../../payments.rst:19
+#: ../../../payments.rst:20
+#: ../../../payments.rst:22
+#: ../../../payments.rst:23
+#: ../../../payments.rst:67
+#: ../../../payments.rst:131
+#: ../../../payments.rst:132
+#: ../../../payments.rst:133
+msgid "String"
+msgstr ""
+
+#: ../../../payments.rst:14
+#: ../../../payments.rst:67
+#: ../../../payments.rst:131
+msgid "Parent Order ID"
+msgstr ""
+
+#: ../../../payments.rst:15
+msgid "orderString"
+msgstr ""
+
+#: ../../../payments.rst:15
+msgid "Alipay redirect URL"
+msgstr ""
+
+#: ../../../payments.rst:16
+msgid "createdAt"
+msgstr ""
+
+#: ../../../payments.rst:16
+#: ../../../payments.rst:17
+#: ../../../payments.rst:24
+msgid "Date"
+msgstr ""
+
+#: ../../../payments.rst:16
+msgid "Creation time"
+msgstr ""
+
+#: ../../../payments.rst:17
+msgid "updatedAt"
+msgstr ""
+
+#: ../../../payments.rst:17
+msgid "Update time"
+msgstr ""
+
+#: ../../../payments.rst:18
+msgid "payer"
+msgstr ""
+
+#: ../../../payments.rst:18
+msgid "Username of payer"
+msgstr ""
+
+#: ../../../payments.rst:19
+#: ../../../payments.rst:132
+msgid "subject"
+msgstr ""
+
+#: ../../../payments.rst:19
+#: ../../../payments.rst:132
+msgid "Subject of this payment"
+msgstr ""
+
+#: ../../../payments.rst:20
+#: ../../../payments.rst:133
+msgid "description"
+msgstr ""
+
+#: ../../../payments.rst:21
+msgid "totalAmount"
+msgstr ""
+
+#: ../../../payments.rst:21
+msgid "Float"
+msgstr ""
+
+#: ../../../payments.rst:21
+msgid "Total amount"
+msgstr ""
+
+#: ../../../payments.rst:22
+msgid "status"
+msgstr ""
+
+#: ../../../payments.rst:22
+msgid "One of ['PENDING', 'CONFIRMED', 'TIMEOUT', 'INVALID']"
+msgstr ""
+
+#: ../../../payments.rst:23
+msgid "vendorTradeId"
+msgstr ""
+
+#: ../../../payments.rst:23
+msgid "Unique trade id from vendor."
+msgstr ""
+
+#: ../../../payments.rst:24
+msgid "confirmedAt"
+msgstr ""
+
+#: ../../../payments.rst:24
+msgid "Payment confirmation time"
+msgstr ""
+
+#: ../../../payments.rst:25
+msgid "confirmed"
+msgstr ""
+
+#: ../../../payments.rst:25
+#: ../../../payments.rst:26
+#: ../../../payments.rst:208
+msgid "Boolean"
+msgstr ""
+
+#: ../../../payments.rst:25
+msgid "Whether the payment is confirmed by system"
+msgstr ""
+
+#: ../../../payments.rst:26
+msgid "valid"
+msgstr ""
+
+#: ../../../payments.rst:26
+msgid "Valid flag"
+msgstr ""
+
+#: ../../../payments.rst:30
+msgid "Example JSON Representation"
+msgstr ""
+
+#: ../../../payments.rst:52
+msgid "Get Related Payments for an Order"
+msgstr ""
+
+#: ../../../payments.rst:54
+msgid "This endpoint retrieves all related payments for an order."
+msgstr ""
+
+#: ../../../payments.rst:57
+#: ../../../payments.rst:89
+#: ../../../payments.rst:121
+#: ../../../payments.rst:155
+#: ../../../payments.rst:190
+msgid "HTTP Request"
+msgstr ""
+
+#: ../../../payments.rst:59
+msgid "``GET http://example.com/api/v1/payments``"
+msgstr ""
+
+#: ../../../payments.rst:62
+#: ../../../payments.rst:126
+msgid "Request Parameters"
+msgstr ""
+
+#: ../../../payments.rst:65
+#: ../../../payments.rst:97
+#: ../../../payments.rst:129
+#: ../../../payments.rst:163
+#: ../../../payments.rst:198
+msgid "Required"
+msgstr ""
+
+#: ../../../payments.rst:65
+#: ../../../payments.rst:129
+msgid "Default"
+msgstr ""
+
+#: ../../../payments.rst:67
+#: ../../../payments.rst:131
+msgid "orderId"
+msgstr ""
+
+#: ../../../payments.rst:67
+#: ../../../payments.rst:99
+#: ../../../payments.rst:131
+#: ../../../payments.rst:132
+#: ../../../payments.rst:165
+#: ../../../payments.rst:200
+msgid "True"
+msgstr ""
+
+#: ../../../payments.rst:71
+#: ../../../payments.rst:103
+#: ../../../payments.rst:137
+#: ../../../payments.rst:169
+#: ../../../payments.rst:204
+msgid "Response Parameters"
+msgstr ""
+
+#: ../../../payments.rst:75
+#: ../../../payments.rst:107
+#: ../../../payments.rst:141
+#: ../../../payments.rst:173
+#: ../../../payments.rst:208
+msgid "data"
+msgstr ""
+
+#: ../../../payments.rst:75
+msgid "Payment[]"
+msgstr ""
+
+#: ../../../payments.rst:75
+msgid "List of matching Payment objects"
+msgstr ""
+
+#: ../../../payments.rst:79
+#: ../../../payments.rst:111
+msgid "Remember — You must be authenticated before using this API"
+msgstr ""
+
+#: ../../../payments.rst:81
+msgid "The requested order must belongs to you."
+msgstr ""
+
+#: ../../../payments.rst:84
+msgid "Get a Specific Payment"
+msgstr ""
+
+#: ../../../payments.rst:86
+msgid "This endpoint retrieves a specific payment with id."
+msgstr ""
+
+#: ../../../payments.rst:91
+msgid "``GET http://example.com/api/v1/payments/<ID>``"
+msgstr ""
+
+#: ../../../payments.rst:94
+#: ../../../payments.rst:160
+#: ../../../payments.rst:195
+msgid "Path Parameter"
+msgstr ""
+
+#: ../../../payments.rst:99
+#: ../../../payments.rst:165
+#: ../../../payments.rst:200
+msgid "ID"
+msgstr ""
+
+#: ../../../payments.rst:107
+#: ../../../payments.rst:141
+#: ../../../payments.rst:173
+msgid "Payment"
+msgstr ""
+
+#: ../../../payments.rst:107
+msgid "The matching Payment object"
+msgstr ""
+
+#: ../../../payments.rst:113
+msgid "The requested payment must belongs to you."
+msgstr ""
+
+#: ../../../payments.rst:116
+msgid "Create a Payment"
+msgstr ""
+
+#: ../../../payments.rst:118
+msgid "This endpoint creates a new payment."
+msgstr ""
+
+#: ../../../payments.rst:123
+msgid "``POST http://example.com/api/v1/payments``"
+msgstr ""
+
+#: ../../../payments.rst:133
+msgid "False"
+msgstr ""
+
+#: ../../../payments.rst:141
+msgid "The created Payment object"
+msgstr ""
+
+#: ../../../payments.rst:145
+msgid "Remember — You must be authenticated with ``CUSTOMER`` role before using this API"
+msgstr ""
+
+#: ../../../payments.rst:147
+msgid "``orderString`` will expire after 15 minutes."
+msgstr ""
+
+#: ../../../payments.rst:150
+msgid "Retry Payment Action"
+msgstr ""
+
+#: ../../../payments.rst:152
+msgid "This endpoint re-obtains ``orderString`` for a payment."
+msgstr ""
+
+#: ../../../payments.rst:157
+msgid "``GET http://example.com/api/v1/payments/retry/<ID>``"
+msgstr ""
+
+#: ../../../payments.rst:173
+msgid "The matching Payment object with new orderString"
+msgstr ""
+
+#: ../../../payments.rst:177
+msgid "Verify Payment"
+msgstr ""
+
+#: ../../../payments.rst:179
+msgid "This endpoint performs payment verifification triggered by client."
+msgstr ""
+
+#: ../../../payments.rst:181
+msgid "Usually, the system will verify a payment in three ways:"
+msgstr ""
+
+#: ../../../payments.rst:183
+msgid "Receive asynchronous verification message posted by third-party payment vendor."
+msgstr ""
+
+#: ../../../payments.rst:185
+msgid "Query payment status positively as a scheduled task."
+msgstr ""
+
+#: ../../../payments.rst:187
+msgid "Perform verification asked by client."
+msgstr ""
+
+#: ../../../payments.rst:192
+msgid "``GET http://example.com/api/v1/payments/verify/<ID>``"
+msgstr ""
+
+#: ../../../payments.rst:208
+msgid "The verification status"
+msgstr ""
+

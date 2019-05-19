@@ -1,0 +1,425 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2019, Yanzhe Lee, Xinye Wanyan
+# This file is distributed under the same license as the LLZW package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: LLZW \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-19 06:40-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../stocks.rst:2
+msgid "Stocks"
+msgstr ""
+
+#: ../../../stocks.rst:5
+msgid "Stock Entity Definition"
+msgstr ""
+
+#: ../../../stocks.rst:8
+msgid "Properties"
+msgstr ""
+
+#: ../../../stocks.rst:11
+#: ../../../stocks.rst:61
+#: ../../../stocks.rst:75
+#: ../../../stocks.rst:97
+#: ../../../stocks.rst:105
+#: ../../../stocks.rst:127
+#: ../../../stocks.rst:140
+#: ../../../stocks.rst:165
+msgid "Parameter"
+msgstr ""
+
+#: ../../../stocks.rst:11
+#: ../../../stocks.rst:61
+#: ../../../stocks.rst:75
+#: ../../../stocks.rst:105
+#: ../../../stocks.rst:127
+#: ../../../stocks.rst:140
+msgid "Type"
+msgstr ""
+
+#: ../../../stocks.rst:11
+#: ../../../stocks.rst:61
+#: ../../../stocks.rst:75
+#: ../../../stocks.rst:97
+#: ../../../stocks.rst:105
+#: ../../../stocks.rst:127
+#: ../../../stocks.rst:140
+#: ../../../stocks.rst:165
+msgid "Description"
+msgstr ""
+
+#: ../../../stocks.rst:13
+msgid "id"
+msgstr ""
+
+#: ../../../stocks.rst:13
+#: ../../../stocks.rst:14
+#: ../../../stocks.rst:19
+#: ../../../stocks.rst:20
+#: ../../../stocks.rst:21
+#: ../../../stocks.rst:63
+#: ../../../stocks.rst:64
+#: ../../../stocks.rst:65
+#: ../../../stocks.rst:66
+#: ../../../stocks.rst:131
+#: ../../../stocks.rst:132
+msgid "Integer"
+msgstr ""
+
+#: ../../../stocks.rst:13
+#: ../../../stocks.rst:99
+#: ../../../stocks.rst:167
+msgid "Stock ID"
+msgstr ""
+
+#: ../../../stocks.rst:14
+msgid "product"
+msgstr ""
+
+#: ../../../stocks.rst:14
+#: ../../../stocks.rst:129
+msgid "Parent product ID"
+msgstr ""
+
+#: ../../../stocks.rst:15
+msgid "createdAt"
+msgstr ""
+
+#: ../../../stocks.rst:15
+#: ../../../stocks.rst:16
+#: ../../../stocks.rst:17
+#: ../../../stocks.rst:18
+#: ../../../stocks.rst:130
+msgid "Date"
+msgstr ""
+
+#: ../../../stocks.rst:15
+msgid "Creation time"
+msgstr ""
+
+#: ../../../stocks.rst:16
+msgid "updatedAt"
+msgstr ""
+
+#: ../../../stocks.rst:16
+msgid "Update time"
+msgstr ""
+
+#: ../../../stocks.rst:17
+#: ../../../stocks.rst:130
+msgid "producedAt"
+msgstr ""
+
+#: ../../../stocks.rst:17
+msgid "Production time"
+msgstr ""
+
+#: ../../../stocks.rst:18
+msgid "inboundedAt"
+msgstr ""
+
+#: ../../../stocks.rst:18
+msgid "Inbound time"
+msgstr ""
+
+#: ../../../stocks.rst:19
+#: ../../../stocks.rst:66
+#: ../../../stocks.rst:131
+msgid "shelfLife"
+msgstr ""
+
+#: ../../../stocks.rst:19
+#: ../../../stocks.rst:131
+msgid "Shelf-Life of this stock"
+msgstr ""
+
+#: ../../../stocks.rst:20
+#: ../../../stocks.rst:132
+msgid "totalQuantity"
+msgstr ""
+
+#: ../../../stocks.rst:20
+msgid "Total quantity of this stock"
+msgstr ""
+
+#: ../../../stocks.rst:21
+msgid "currentQuantity"
+msgstr ""
+
+#: ../../../stocks.rst:21
+msgid "Current quantity of this stock"
+msgstr ""
+
+#: ../../../stocks.rst:22
+#: ../../../stocks.rst:67
+#: ../../../stocks.rst:133
+msgid "trackingId"
+msgstr ""
+
+#: ../../../stocks.rst:22
+#: ../../../stocks.rst:23
+#: ../../../stocks.rst:67
+#: ../../../stocks.rst:68
+#: ../../../stocks.rst:129
+#: ../../../stocks.rst:133
+#: ../../../stocks.rst:134
+msgid "String"
+msgstr ""
+
+#: ../../../stocks.rst:22
+msgid "Shipment tracking id"
+msgstr ""
+
+#: ../../../stocks.rst:23
+#: ../../../stocks.rst:68
+#: ../../../stocks.rst:134
+msgid "carrierName"
+msgstr ""
+
+#: ../../../stocks.rst:23
+msgid "Carrier name"
+msgstr ""
+
+#: ../../../stocks.rst:24
+#: ../../../stocks.rst:69
+msgid "valid"
+msgstr ""
+
+#: ../../../stocks.rst:24
+#: ../../../stocks.rst:69
+msgid "Boolean"
+msgstr ""
+
+#: ../../../stocks.rst:24
+msgid "Valid flag"
+msgstr ""
+
+#: ../../../stocks.rst:28
+msgid "Example JSON Representation"
+msgstr ""
+
+#: ../../../stocks.rst:48
+msgid "Get Stocks by Parameters"
+msgstr ""
+
+#: ../../../stocks.rst:50
+msgid "This endpoint retrieves all stocks that satisfy given parameters"
+msgstr ""
+
+#: ../../../stocks.rst:53
+#: ../../../stocks.rst:89
+#: ../../../stocks.rst:119
+#: ../../../stocks.rst:157
+msgid "HTTP Request"
+msgstr ""
+
+#: ../../../stocks.rst:55
+msgid "``GET http://example.com/api/v1/stocks``"
+msgstr ""
+
+#: ../../../stocks.rst:58
+#: ../../../stocks.rst:124
+msgid "Request Parameters"
+msgstr ""
+
+#: ../../../stocks.rst:61
+#: ../../../stocks.rst:97
+#: ../../../stocks.rst:127
+#: ../../../stocks.rst:165
+msgid "Required"
+msgstr ""
+
+#: ../../../stocks.rst:61
+#: ../../../stocks.rst:127
+msgid "Default"
+msgstr ""
+
+#: ../../../stocks.rst:63
+msgid "page"
+msgstr ""
+
+#: ../../../stocks.rst:63
+#: ../../../stocks.rst:64
+#: ../../../stocks.rst:65
+#: ../../../stocks.rst:66
+#: ../../../stocks.rst:67
+#: ../../../stocks.rst:68
+#: ../../../stocks.rst:69
+#: ../../../stocks.rst:133
+#: ../../../stocks.rst:134
+msgid "False"
+msgstr ""
+
+#: ../../../stocks.rst:63
+msgid "0"
+msgstr ""
+
+#: ../../../stocks.rst:63
+msgid "The page index from 0"
+msgstr ""
+
+#: ../../../stocks.rst:64
+msgid "size"
+msgstr ""
+
+#: ../../../stocks.rst:64
+msgid "20"
+msgstr ""
+
+#: ../../../stocks.rst:64
+msgid "Page size"
+msgstr ""
+
+#: ../../../stocks.rst:65
+#: ../../../stocks.rst:129
+msgid "productId"
+msgstr ""
+
+#: ../../../stocks.rst:65
+msgid "ID of the product it belongs to"
+msgstr ""
+
+#: ../../../stocks.rst:66
+msgid "Shelf-Life of the stock"
+msgstr ""
+
+#: ../../../stocks.rst:67
+#: ../../../stocks.rst:133
+msgid "Tracking ID of this shipment"
+msgstr ""
+
+#: ../../../stocks.rst:68
+#: ../../../stocks.rst:134
+msgid "Carrier Name of this shipment"
+msgstr ""
+
+#: ../../../stocks.rst:69
+msgid "The status of this stock"
+msgstr ""
+
+#: ../../../stocks.rst:73
+#: ../../../stocks.rst:103
+#: ../../../stocks.rst:138
+msgid "Response Parameters"
+msgstr ""
+
+#: ../../../stocks.rst:77
+#: ../../../stocks.rst:107
+#: ../../../stocks.rst:142
+msgid "data"
+msgstr ""
+
+#: ../../../stocks.rst:77
+msgid "Stock[]"
+msgstr ""
+
+#: ../../../stocks.rst:77
+msgid "List of matching Stock objects"
+msgstr ""
+
+#: ../../../stocks.rst:81
+msgid "Remember — You must be authenticated with ``SELLER`` or ``CUSTOMER`` role before using this API"
+msgstr ""
+
+#: ../../../stocks.rst:84
+msgid "Get a Specific Stock"
+msgstr ""
+
+#: ../../../stocks.rst:86
+msgid "This endpoint retrieves a specific stock with id"
+msgstr ""
+
+#: ../../../stocks.rst:91
+msgid "``GET http://example.com/api/v1/stocks/<ID>``"
+msgstr ""
+
+#: ../../../stocks.rst:94
+#: ../../../stocks.rst:162
+msgid "Path Parameter"
+msgstr ""
+
+#: ../../../stocks.rst:99
+#: ../../../stocks.rst:167
+msgid "ID"
+msgstr ""
+
+#: ../../../stocks.rst:99
+#: ../../../stocks.rst:129
+#: ../../../stocks.rst:130
+#: ../../../stocks.rst:131
+#: ../../../stocks.rst:132
+#: ../../../stocks.rst:167
+msgid "True"
+msgstr ""
+
+#: ../../../stocks.rst:107
+#: ../../../stocks.rst:142
+msgid "Stock"
+msgstr ""
+
+#: ../../../stocks.rst:107
+msgid "The matching Stock object"
+msgstr ""
+
+#: ../../../stocks.rst:111
+#: ../../../stocks.rst:146
+#: ../../../stocks.rst:171
+msgid "Remember — You must be authenticated with ``SELLER`` role before using this API"
+msgstr ""
+
+#: ../../../stocks.rst:114
+msgid "Create a Stock"
+msgstr ""
+
+#: ../../../stocks.rst:116
+msgid "This endpoint creates a new product."
+msgstr ""
+
+#: ../../../stocks.rst:121
+msgid "``POST http://example.com/api/v1/stocks``"
+msgstr ""
+
+#: ../../../stocks.rst:130
+msgid "The producing date"
+msgstr ""
+
+#: ../../../stocks.rst:132
+msgid "Total quantity of stock"
+msgstr ""
+
+#: ../../../stocks.rst:133
+#: ../../../stocks.rst:134
+msgid "null"
+msgstr ""
+
+#: ../../../stocks.rst:142
+msgid "The created Stock object"
+msgstr ""
+
+#: ../../../stocks.rst:149
+msgid "Invalidate a Specific Stock"
+msgstr ""
+
+#: ../../../stocks.rst:151
+msgid "This endpoint invalidates a specific stock, so all items from this stock will no longer be in the queue for sale."
+msgstr ""
+
+#: ../../../stocks.rst:154
+msgid "It will NOT delete it from database."
+msgstr ""
+
+#: ../../../stocks.rst:159
+msgid "``DELETE http://example.com/api/v1/stocks/<ID>``"
+msgstr ""
+

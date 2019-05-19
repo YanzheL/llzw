@@ -35,6 +35,8 @@ extensions = [
     # 'recommonmark'
 ]
 
+locale_dirs = ['_locale']
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 

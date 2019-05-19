@@ -1,0 +1,301 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2019, Yanzhe Lee, Xinye Wanyan
+# This file is distributed under the same license as the LLZW package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: LLZW \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-19 06:40-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../generals.rst:2
+msgid "Generals"
+msgstr ""
+
+#: ../../../generals.rst:5
+msgid "Standard Response Structure"
+msgstr ""
+
+#: ../../../generals.rst:7
+msgid "All responses have same general structure"
+msgstr ""
+
+#: ../../../generals.rst:10
+msgid "Response Parameters"
+msgstr ""
+
+#: ../../../generals.rst:13
+#: ../../../generals.rst:54
+msgid "Parameter"
+msgstr ""
+
+#: ../../../generals.rst:13
+#: ../../../generals.rst:54
+msgid "Type"
+msgstr ""
+
+#: ../../../generals.rst:13
+#: ../../../generals.rst:54
+msgid "Required"
+msgstr ""
+
+#: ../../../generals.rst:13
+#: ../../../generals.rst:54
+msgid "Default"
+msgstr ""
+
+#: ../../../generals.rst:13
+#: ../../../generals.rst:54
+msgid "Description"
+msgstr ""
+
+#: ../../../generals.rst:15
+msgid "responseId"
+msgstr ""
+
+#: ../../../generals.rst:15
+#: ../../../generals.rst:56
+#: ../../../generals.rst:57
+msgid "String"
+msgstr ""
+
+#: ../../../generals.rst:15
+#: ../../../generals.rst:16
+#: ../../../generals.rst:17
+#: ../../../generals.rst:18
+#: ../../../generals.rst:19
+#: ../../../generals.rst:56
+#: ../../../generals.rst:57
+msgid "True"
+msgstr ""
+
+#: ../../../generals.rst:15
+msgid "The UUID of this response"
+msgstr ""
+
+#: ../../../generals.rst:16
+msgid "timestamp"
+msgstr ""
+
+#: ../../../generals.rst:16
+msgid "Date"
+msgstr ""
+
+#: ../../../generals.rst:16
+msgid "Generation time of this response"
+msgstr ""
+
+#: ../../../generals.rst:17
+msgid "success"
+msgstr ""
+
+#: ../../../generals.rst:17
+msgid "Boolean"
+msgstr ""
+
+#: ../../../generals.rst:17
+msgid "The status flag which indicates whether your API call is success"
+msgstr ""
+
+#: ../../../generals.rst:18
+msgid "data"
+msgstr ""
+
+#: ../../../generals.rst:18
+msgid "Any"
+msgstr ""
+
+#: ../../../generals.rst:18
+#: ../../../generals.rst:19
+msgid "null"
+msgstr ""
+
+#: ../../../generals.rst:18
+msgid "The message body of this response, which can be any object that supported by JSON"
+msgstr ""
+
+#: ../../../generals.rst:19
+msgid "error"
+msgstr ""
+
+#: ../../../generals.rst:19
+msgid "Error"
+msgstr ""
+
+#: ../../../generals.rst:19
+msgid "Associated Error object (if applicable)"
+msgstr ""
+
+#: ../../../generals.rst:22
+msgid "The response JSON structured like this"
+msgstr ""
+
+#: ../../../generals.rst:48
+msgid "Standard Error Definition"
+msgstr ""
+
+#: ../../../generals.rst:51
+msgid "Properties"
+msgstr ""
+
+#: ../../../generals.rst:56
+msgid "type"
+msgstr ""
+
+#: ../../../generals.rst:56
+msgid "Error Type"
+msgstr ""
+
+#: ../../../generals.rst:57
+msgid "message"
+msgstr ""
+
+#: ../../../generals.rst:57
+msgid "Explanation of this error"
+msgstr ""
+
+#: ../../../generals.rst:61
+msgid "Example JSON Representation"
+msgstr ""
+
+#: ../../../generals.rst:71
+msgid "HTTP Status Codes"
+msgstr ""
+
+#: ../../../generals.rst:74
+msgid "Success"
+msgstr ""
+
+#: ../../../generals.rst:77
+msgid "Success Code"
+msgstr ""
+
+#: ../../../generals.rst:77
+#: ../../../generals.rst:95
+msgid "Meaning"
+msgstr ""
+
+#: ../../../generals.rst:80
+msgid "200"
+msgstr ""
+
+#: ../../../generals.rst:80
+msgid "OK – Standard response for successful HTTP requests"
+msgstr ""
+
+#: ../../../generals.rst:82
+msgid "201"
+msgstr ""
+
+#: ../../../generals.rst:82
+msgid "Created – The request has been fulfilled, resulting in the creation of a new resource."
+msgstr ""
+
+#: ../../../generals.rst:85
+msgid "202"
+msgstr ""
+
+#: ../../../generals.rst:85
+msgid "Accepted — The request has been accepted for processing, but the processing has not been completed."
+msgstr ""
+
+#: ../../../generals.rst:90
+msgid "Errors"
+msgstr ""
+
+#: ../../../generals.rst:92
+msgid "The LLZW API uses the following error codes:"
+msgstr ""
+
+#: ../../../generals.rst:95
+msgid "Error Code"
+msgstr ""
+
+#: ../../../generals.rst:97
+msgid "400"
+msgstr ""
+
+#: ../../../generals.rst:97
+msgid "Bad Request – Your request is invalid."
+msgstr ""
+
+#: ../../../generals.rst:100
+msgid "401"
+msgstr ""
+
+#: ../../../generals.rst:100
+msgid "Unauthorized – Your are unauthorized."
+msgstr ""
+
+#: ../../../generals.rst:103
+msgid "403"
+msgstr ""
+
+#: ../../../generals.rst:103
+msgid "Forbidden — You do not have privilege to perform this request."
+msgstr ""
+
+#: ../../../generals.rst:107
+msgid "404"
+msgstr ""
+
+#: ../../../generals.rst:107
+msgid "Not Found – The specified kitten could not be found."
+msgstr ""
+
+#: ../../../generals.rst:110
+msgid "405"
+msgstr ""
+
+#: ../../../generals.rst:110
+msgid "Method Not Allowed – You tried to access a kitten with an invalid method."
+msgstr ""
+
+#: ../../../generals.rst:114
+msgid "406"
+msgstr ""
+
+#: ../../../generals.rst:114
+msgid "Not Acceptable – You requested a format that isn’t json."
+msgstr ""
+
+#: ../../../generals.rst:118
+msgid "410"
+msgstr ""
+
+#: ../../../generals.rst:118
+msgid "Gone – The object requested has been removed from our servers."
+msgstr ""
+
+#: ../../../generals.rst:122
+msgid "429"
+msgstr ""
+
+#: ../../../generals.rst:122
+msgid "Too Many Requests – You’re requesting too many kittens! Slow down!"
+msgstr ""
+
+#: ../../../generals.rst:126
+msgid "500"
+msgstr ""
+
+#: ../../../generals.rst:126
+msgid "Internal Server Error – We had a problem with our server. Try again later."
+msgstr ""
+
+#: ../../../generals.rst:130
+msgid "503"
+msgstr ""
+
+#: ../../../generals.rst:130
+msgid "Service Unavailable – We’re temporarily offline for maintenance. Please try again later."
+msgstr ""
+

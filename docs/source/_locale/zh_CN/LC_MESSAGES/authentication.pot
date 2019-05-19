@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2019, Yanzhe Lee, Xinye Wanyan
+# This file is distributed under the same license as the LLZW package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: LLZW \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-19 06:40-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../authentication.rst:2
+msgid "Authentication"
+msgstr ""
+
+#: ../../../authentication.rst:4
+msgid "This endpoint performs login action. After a successful login, the server will send you an authenticated COOKIE which represents all your privileges."
+msgstr "此接口执行登录操作。成功登录后，服务器将向您发送一个经过身份验证的COOKIE，它代表您的所有权限。"
+
+#: ../../../authentication.rst:6
+msgid "All your subsequent requests will inherit this identity."
+msgstr ""
+
+#: ../../../authentication.rst:9
+msgid "HTTP Request"
+msgstr ""
+
+#: ../../../authentication.rst:11
+msgid "``POST http://example.com/login``"
+msgstr ""
+
+#: ../../../authentication.rst:14
+msgid "Request Parameters"
+msgstr ""
+
+#: ../../../authentication.rst:17
+msgid "Parameter"
+msgstr ""
+
+#: ../../../authentication.rst:17
+msgid "Type"
+msgstr ""
+
+#: ../../../authentication.rst:17
+msgid "Required"
+msgstr ""
+
+#: ../../../authentication.rst:17
+msgid "Default"
+msgstr ""
+
+#: ../../../authentication.rst:17
+msgid "Description"
+msgstr ""
+
+#: ../../../authentication.rst:19
+msgid "username"
+msgstr ""
+
+#: ../../../authentication.rst:19
+#: ../../../authentication.rst:20
+msgid "String"
+msgstr ""
+
+#: ../../../authentication.rst:19
+#: ../../../authentication.rst:20
+msgid "True"
+msgstr ""
+
+#: ../../../authentication.rst:19
+msgid "Your username"
+msgstr ""
+
+#: ../../../authentication.rst:20
+msgid "password"
+msgstr ""
+
+#: ../../../authentication.rst:20
+msgid "Your password"
+msgstr ""
+
+#: ../../../authentication.rst:23
+msgid "The response JSON structured like this:"
+msgstr ""
+
