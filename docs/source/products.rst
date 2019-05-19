@@ -7,24 +7,25 @@ Product Entity Definition
 Properties
 ----------
 
-==================  ========  ==================================================================================================
-Parameter           Type      Description
-==================  ========  ==================================================================================================
-id                  Integer   Product ID
-seller              String    Username of seller
-name                String    Name of this product
-introduction        String    Introduction of this product. The content is defined by client's implementation.
-mainImageFiles      String[]  Hash values of product main images (max = 9). These files should be uploaded first.
-createdAt           Date      Creation time
-updatedAt           Date      Update time
-price               Float     Price
-ca                  String    Certificate authority name
-certId              String    Qualification certificate id
-caFile              String    Certificate file hash value, this file should be uploaded first, and its type must be image or PDF
-category            String    Categories of this product, separated by dot.
-feature             String    Features. The content is defined by client's implementation.
-valid               Boolean   Valid flag
-==================  ========  ==================================================================================================
+==================  ===========  ==================================================================================================
+Parameter           Type         Description
+==================  ===========  ==================================================================================================
+id                  Integer      Product ID
+seller              String       Username of seller
+name                String       Name of this product
+introduction        String       Introduction of this product. The content is defined by client's implementation.
+mainImageFiles      String[]     Hash values of product main images (max = 9). These files should be uploaded first.
+createdAt           Date         Creation time
+updatedAt           Date         Update time
+price               Float        Price
+ca                  String       Certificate authority name
+certId              String       Qualification certificate id
+caFile              String       Certificate file hash value, this file should be uploaded first, and its type must be image or PDF
+category            String       Categories of this product, separated by dot.
+feature             String       Features. The content is defined by client's implementation.
+stat                ProductStat  Statistics Info for this product
+valid               Boolean      Valid flag
+==================  ===========  ==================================================================================================
 
 Example JSON Representation
 ---------------------------
@@ -49,6 +50,10 @@ Example JSON Representation
      "ca": "CNAS",
      "certId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
      "caFile": "28e51044f4a9cbae2bbd3d8a9d8c902ad1455d42208277ac4a913b003038a3dc",
+     "stat"： {
+       "salesLastMonth": 100,
+       "currentStocks": 9999
+     },
      "valid": true
    }
 
