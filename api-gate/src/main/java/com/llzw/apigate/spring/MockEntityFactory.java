@@ -4,6 +4,7 @@ import com.llzw.apigate.persistence.entity.Address;
 import com.llzw.apigate.persistence.entity.AddressBean;
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Product;
+import com.llzw.apigate.persistence.entity.ProductStat;
 import com.llzw.apigate.persistence.entity.Role;
 import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
@@ -53,6 +54,7 @@ public class MockEntityFactory {
         "促销",
         "新鲜"
     );
+    product.setStat(new ProductStat());
     product.setSeller(seller);
     product.setName(String.format("Macau Food %d", i));
     product.setIntroduction(String.format("Welcome to Macau Morpheus Hotel! %d", i));

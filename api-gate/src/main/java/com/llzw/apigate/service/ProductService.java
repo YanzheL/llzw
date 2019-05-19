@@ -21,4 +21,6 @@ public interface ProductService {
   Optional<Product> findById(Long id);
 
   List<Product> search(Pageable pageable, ProductSearchDto example) throws RestApiException;
+
+  Product save(Product product);
 }

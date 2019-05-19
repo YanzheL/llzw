@@ -2,8 +2,10 @@ package com.llzw.apigate.service;
 
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.persistence.entity.Order;
+import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.OrderSearchDto;
+import java.util.Date;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 
@@ -20,4 +22,6 @@ public interface OrderService {
   Order cancel(String id, User relatedUser) throws RestApiException;
 
   Order deliveryConfirm(String id, User relatedUser) throws RestApiException;
+
+  int countOrdersAfter(Product product, Date date);
 }

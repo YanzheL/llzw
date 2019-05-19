@@ -15,6 +15,7 @@ import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.OrderSearchDto;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -57,8 +58,9 @@ public class DefaultOrderService implements OrderService {
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
             "Cannot find an available stock specifies that quantity"));
     stock.decreaseCurrentQuantity(quantity);
+    stock = stockService.save(stock);
     Order order = new Order();
-    order.setStock(stockService.save(stock));
+    order.setStock(stock);
     order.setAddress(address);
     order.setCustomer(customer);
     order.setTotalAmount(product.getPrice());
@@ -115,5 +117,10 @@ public class DefaultOrderService implements OrderService {
     }
     order.setDeliveryConfirmed(true);
     return orderRepository.save(order);
+  }
+
+  @Override
+  public int countOrdersAfter(Product product, Date date) {
+    return orderRepository.countAllByStock_ProductAndCreatedAtAfter(product, date);
   }
 }

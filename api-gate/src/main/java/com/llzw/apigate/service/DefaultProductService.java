@@ -37,6 +37,9 @@ public class DefaultProductService implements ProductService {
   @Setter(onMethod_ = @Autowired)
   private FileStorageService fileStorageService;
 
+  @Setter(onMethod_ = @Autowired)
+  protected ProductStatisticsService productStatisticsService;
+
   @Value("${spring.data.rest.base-path}")
   private String apiBasePath;
 
@@ -65,11 +68,7 @@ public class DefaultProductService implements ProductService {
     product.setSeller(seller);
     product.setValid(true);
     BeanUtils.copyProperties(dto, product);
-//    product.setName(dto.getName());
-//    product.setIntroduction(dto.getIntroduction());
-//    product.setPrice(dto.getPrice());
-//    product.setCaId(dto.getCaId());
-//    product.setCaFile(dto.getCaFile());
+    product.setStat(new ProductStat());
     List<String> mainImageFiles = dto.getMainImageFiles();
     if (mainImageFiles != null) {
       mainImageFiles.stream()
@@ -99,7 +98,9 @@ public class DefaultProductService implements ProductService {
 
   @Override
   public Optional<Product> findById(Long id) {
-    return productRepository.findById(id);
+    Optional<Product> product = productRepository.findById(id);
+    product.ifPresent(productStatisticsService::updateStat);
+    return product;
   }
 
   @Override
@@ -120,6 +121,7 @@ public class DefaultProductService implements ProductService {
     if (!dto.isValid()) {
       result = result.stream().filter(Product::isValid).collect(Collectors.toList());
     }
+    result.forEach(productStatisticsService::updateStat);
     return result;
   }
 
@@ -148,12 +150,8 @@ public class DefaultProductService implements ProductService {
     }
   }
 
-  private void updateStats(Product product) {
-    ProductStat stat = product.getStat();
-    if (!stat.isOutDated()) {
-      return;
-    }
-
-
+  @Override
+  public Product save(Product product) {
+    return productRepository.save(product);
   }
 }

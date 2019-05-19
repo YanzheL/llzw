@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -91,6 +92,9 @@ public class Product extends BaseEntity {
   protected String category;
 
   protected String feature;
+
+  @Embedded
+  protected ProductStat stat;
 
   public boolean belongsToSeller(User seller) {
     return this.seller.getUsername().equals(seller.getUsername());
