@@ -22,7 +22,7 @@ project = 'LLZW'
 copyright = '2019, Yanzhe Lee, Xinye Wanyan'
 author = 'Yanzhe Lee, Xinye Wanyan'
 
-language = 'en'
+language = ['en', 'zh_CN']
 
 # -- General configuration ---------------------------------------------------
 

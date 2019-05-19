@@ -26,10 +26,10 @@ msgstr "此接口执行登录操作。成功登录后，服务器将向您发送
 
 #: ../../../authentication.rst:6
 msgid "All your subsequent requests will inherit this identity."
-msgstr ""
+msgstr "你的所有后续请求都将继承此身份。"
 
 #: ../../../authentication.rst:9
-msgid "HTTP Request"
+msgid "HTTP 请求"
 msgstr ""
 
 #: ../../../authentication.rst:11
