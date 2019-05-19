@@ -8,6 +8,7 @@ import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.entity.Product;
+import com.llzw.apigate.persistence.entity.ProductStat;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.ProductCreateDto;
 import com.llzw.apigate.web.dto.ProductSearchDto;
@@ -145,5 +146,14 @@ public class DefaultProductService implements ProductService {
     } catch (Exception e) {
       return Collections.emptyList();
     }
+  }
+
+  private void updateStats(Product product) {
+    ProductStat stat = product.getStat();
+    if (!stat.isOutDated()) {
+      return;
+    }
+
+
   }
 }

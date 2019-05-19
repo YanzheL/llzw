@@ -1,20 +1,11 @@
 package com.llzw.apigate.web.controller;
 
 import com.llzw.apigate.message.RestResponseEntityFactory;
-import com.llzw.apigate.message.error.RestAccessDeniedException;
 import com.llzw.apigate.message.error.RestApiException;
-import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
-import com.llzw.apigate.message.error.RestInvalidParameterException;
-import com.llzw.apigate.persistence.dao.ProductRepository;
-import com.llzw.apigate.persistence.dao.StockRepository;
-import com.llzw.apigate.persistence.dao.customquery.JpaSearchSpecificationFactory;
-import com.llzw.apigate.persistence.entity.Product;
-import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
+import com.llzw.apigate.service.StockService;
 import com.llzw.apigate.web.dto.StockCreateDto;
 import com.llzw.apigate.web.dto.StockSearchDto;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +36,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class StockController {
 
   @Setter(onMethod_ = @Autowired)
-  private StockRepository stockRepository;
-
-  @Setter(onMethod_ = @Autowired)
-  private ProductRepository productRepository;
+  private StockService stockService;
 
   /**
    * Create a new stock
@@ -57,20 +45,16 @@ public class StockController {
   @PostMapping
   public ResponseEntity createStock(@Valid @RequestBody StockCreateDto stockCreateDto)
       throws RestApiException {
-    Optional<Product> productOptional = productRepository.findById(stockCreateDto.getProductId());
-    if (!productOptional.isPresent()) {
-      throw new RestDependentEntityNotFoundException(
-          String.format("Product <%s> do not exist", stockCreateDto.getProductId()));
-    }
-    Stock stock = new Stock();
-    stock.setProduct(productOptional.get());
-    stock.setProducedAt(stockCreateDto.getProducedAt());
-    stock.setShelfLife(stockCreateDto.getShelfLife());
-    stock.setTotalQuantity(stockCreateDto.getTotalQuantity());
-    stock.setTrackingId(stockCreateDto.getTrackingId());
-    stock.setCarrierName(stockCreateDto.getCarrierName());
-    stock.setValid(true);
-    return RestResponseEntityFactory.success(stockRepository.save(stock), HttpStatus.CREATED);
+    return RestResponseEntityFactory.success(
+        stockService.create(
+            stockCreateDto.getProductId(),
+            stockCreateDto.getProducedAt(),
+            stockCreateDto.getShelfLife(),
+            stockCreateDto.getTotalQuantity(),
+            stockCreateDto.getTrackingId(),
+            stockCreateDto.getCarrierName()
+        ), HttpStatus.CREATED
+    );
   }
 
   /**
@@ -85,16 +69,9 @@ public class StockController {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    try {
-      // Results may contain other user's stock, so we should filter them out.
-      return RestResponseEntityFactory.success(stockRepository
-          .findAll(JpaSearchSpecificationFactory.fromExample(dto), pageRequest)
-          .getContent().stream()
-          .filter(o -> o.belongsToSeller(currentUser))
-          .collect(Collectors.toList()));
-    } catch (IllegalAccessException e) {
-      throw new RestInvalidParameterException(e.getMessage());
-    }
+    return RestResponseEntityFactory.success(
+        stockService.search(currentUser, dto, pageRequest)
+    );
   }
 
   /**
@@ -105,30 +82,6 @@ public class StockController {
   public ResponseEntity getStock(@PathVariable(value = "id") Long id) throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    Stock stock = stockRepository.findById(id)
-        .orElseThrow(() -> new RestDependentEntityNotFoundException(
-            String.format("Stock <%s> does not exist", id)));
-    if (!stock.belongsToSeller(currentUser)) {
-      throw new RestAccessDeniedException("You do not have access to this entity");
-    }
-    return RestResponseEntityFactory.success(stock);
+    return RestResponseEntityFactory.success(stockService.findById(currentUser, id));
   }
-
-  /*
-   * invalidate a specific product
-   * */
-//  @DeleteMapping(value = "/{id}")
-//  @Transactional          // transaction management
-//  public ResponseEntity invalidateStockById(@PathVariable(value = "id") Long id) {
-//
-////    LOGGER.debug("Verifying user account with information: {}", updatePasswordDto);
-////    Product currentUser =
-////        ((Product) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-//    Collection<String> msgs = new ArrayList<>();
-//    return StandardRestResponse.getResponseEntity(
-//        msgs,
-//        stockService.updateValid(
-//            id,
-//            msgs));
-//  }
 }
