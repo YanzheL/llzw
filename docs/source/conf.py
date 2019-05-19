@@ -22,7 +22,7 @@ project = 'LLZW'
 copyright = '2019, Yanzhe Lee, Xinye Wanyan'
 author = 'Yanzhe Lee, Xinye Wanyan'
 
-language = ['en', 'zh_CN']
+language = 'en'
 
 # -- General configuration ---------------------------------------------------
 
@@ -35,7 +35,7 @@ extensions = [
     # 'recommonmark'
 ]
 
-locale_dirs = ['_locale']
+# locale_dirs = ['_locale']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
