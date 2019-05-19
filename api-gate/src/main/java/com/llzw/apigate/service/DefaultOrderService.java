@@ -8,8 +8,6 @@ import com.llzw.apigate.message.error.RestInvalidParameterException;
 import com.llzw.apigate.message.error.RestRejectedByEntityException;
 import com.llzw.apigate.persistence.dao.AddressRepository;
 import com.llzw.apigate.persistence.dao.OrderRepository;
-import com.llzw.apigate.persistence.dao.ProductRepository;
-import com.llzw.apigate.persistence.dao.StockRepository;
 import com.llzw.apigate.persistence.dao.customquery.JpaSearchSpecificationFactory;
 import com.llzw.apigate.persistence.entity.Address;
 import com.llzw.apigate.persistence.entity.Order;
@@ -17,10 +15,10 @@ import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.OrderSearchDto;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -35,19 +33,19 @@ public class DefaultOrderService implements OrderService {
   private OrderRepository orderRepository;
 
   @Setter(onMethod_ = @Autowired)
-  private ProductRepository productRepository;
+  private ProductService productService;
 
   @Setter(onMethod_ = @Autowired)
   private AddressRepository addressRepository;
 
   @Setter(onMethod_ = @Autowired)
-  private StockRepository stockRepository;
+  private StockService stockService;
 
   @Override
   public Order create(User customer, Long productId, int quantity, Long addressId,
       String remark)
       throws RestApiException {
-    Product product = productRepository.findById(productId)
+    Product product = productService.findById(productId)
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
             String.format("Product <%s> does not exist", productId)));
     Address address = addressRepository.findById(addressId)
@@ -56,17 +54,13 @@ public class DefaultOrderService implements OrderService {
     if (!address.belongsToUser(customer)) {
       throw new RestAccessDeniedException("You do not have access to this entity");
     }
-    Stock stock;
-    try (Stream<Stock> validStocks =
-        stockRepository
-            .findByProductAndInboundedAtNotNullAndCurrentQuantityGreaterThanEqualOrderByInboundedAt(
-                product, quantity)) {
-      stock = validStocks.findFirst().orElseThrow(() -> new RestDependentEntityNotFoundException(
-          "Cannot find an available stock specifies that quantity"));
-    }
+    Stock stock = stockService.getAvailableStockForProduct(product, quantity)
+        .orElseThrow(() -> new RestDependentEntityNotFoundException(
+            "Cannot find an available stock specifies that quantity"));
     stock.decreaseCurrentQuantity(quantity);
+    stock = stockService.save(stock);
     Order order = new Order();
-    order.setStock(stockRepository.save(stock));
+    order.setStock(stock);
     order.setAddress(address);
     order.setCustomer(customer);
     order.setTotalAmount(product.getPrice());
@@ -123,5 +117,10 @@ public class DefaultOrderService implements OrderService {
     }
     order.setDeliveryConfirmed(true);
     return orderRepository.save(order);
+  }
+
+  @Override
+  public int countOrdersAfter(Product product, Date date) {
+    return orderRepository.countAllByStock_ProductAndCreatedAtAfter(product, date);
   }
 }

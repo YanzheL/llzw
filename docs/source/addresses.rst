@@ -42,7 +42,7 @@ This endpoint retrieves a specific address
 HTTP Request
 ------------
 
-``GET http://example.com/api/v2/addresses/<ID>``
+``GET http://example.com/api/v1/addresses/<ID>``
 
 Path Parameter
 --------------
@@ -74,7 +74,7 @@ This endpoint retrieves all addresses of current user.
 HTTP Request
 ------------
 
-``GET http://example.com/api/v2/addresses``
+``GET http://example.com/api/v1/addresses``
 
 Response Parameters
 -------------------
@@ -95,7 +95,7 @@ This endpoint creates a new address.
 HTTP Request
 ------------
 
-``POST http://example.com/api/v2/addresses``
+``POST http://example.com/api/v1/addresses``
 
 Request Parameters
 ------------------

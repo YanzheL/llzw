@@ -7,22 +7,25 @@ Product Entity Definition
 Properties
 ----------
 
-==================  ========  ==================================================================================================
-Parameter           Type      Description
-==================  ========  ==================================================================================================
-id                  Integer   Product ID
-seller              String    Username of seller
-name                String    Name of this product
-introduction        String    Introduction of this product
-mainImageFiles      String[]  Hash values of product main images (max = 9). These files should be uploaded first.
-createdAt           Date      Creation time
-updatedAt           Date      Update time
-price               Float     Price
-ca                  String    Certificate authority name
-certId              String    Qualification certificate id
-caFile              String    Certificate file hash value, this file should be uploaded first, and its type must be image or PDF
-valid               Boolean   Valid flag
-==================  ========  ==================================================================================================
+==================  ===========  ==================================================================================================
+Parameter           Type         Description
+==================  ===========  ==================================================================================================
+id                  Integer      Product ID
+seller              String       Username of seller
+name                String       Name of this product
+introduction        String       Introduction of this product. The content is defined by client's implementation.
+mainImageFiles      String[]     Hash values of product main images (max = 9). These files should be uploaded first.
+createdAt           Date         Creation time
+updatedAt           Date         Update time
+price               Float        Price
+ca                  String       Certificate authority name
+certId              String       Qualification certificate id
+caFile              String       Certificate file hash value, this file should be uploaded first, and its type must be image or PDF
+category            String       Categories of this product, separated by dot.
+feature             String       Features. The content is defined by client's implementation.
+stat                ProductStat  Statistics Info for this product
+valid               Boolean      Valid flag
+==================  ===========  ==================================================================================================
 
 Example JSON Representation
 ---------------------------
@@ -31,7 +34,10 @@ Example JSON Representation
 
    {
      "id": 1,
-     "seller": "USERNAME_OF_SELLER",
+     "seller": {
+       "username": "USERNAME_OF_SELLER",
+       "nickname": "NICKNAME_OF_SELLER"
+     },
      "name": "NAME_OF_THIS_PRODUCT",
      "introduction": "INTRODUCTION_OF_THIS_PRODUCT",
      "mainImageFiles":[
@@ -44,6 +50,10 @@ Example JSON Representation
      "ca": "CNAS",
      "certId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
      "caFile": "28e51044f4a9cbae2bbd3d8a9d8c902ad1455d42208277ac4a913b003038a3dc",
+     "stat"： {
+       "salesLastMonth": 100,
+       "currentStocks": 9999
+     },
      "valid": true
    }
 
@@ -55,7 +65,7 @@ This endpoint retrieves all products.
 HTTP Request
 ------------
 
-``GET http://example.com/api/v2/products``
+``GET http://example.com/api/v1/products``
 
 Request Parameters
 ------------------
@@ -66,14 +76,16 @@ Parameter        Type     Required Default Description
 page             Integer  False    0       The page index from 0
 size             Integer  False    20      Page size
 valid            Boolean  False    True    Result products should be valid or invalid.
-name             String   False    -       Name of this product. This field is matched in fuzzy mode
-introduction     String   False    -       Introduction of this product. This field is matched in fuzzy mode
+name             String   False    -       Name of this product. This field is matched in fuzzy mode.
+introduction     String   False    -       Introduction of this product. This field is matched in fuzzy mode.
+category         String   False    -       Categories of this product, separated by dot. This field is matched in fuzzy mode.
+feature          String   False    -       Features. This field is matched in fuzzy mode.
 global           String   False    -       Any product that contains this global search criterion in its name or introduction field will be matched
 ================ ======== ======== ======= ========================================================================================================
 
 .. Note::
-   The ``name`` and ``introduction`` fields will be ignored if ``global`` field is present.
-   These two fields can be both present, which means to match products that have the similar content on ``name`` and ``introduction`` field with the provided value.
+   The other fields will be ignored if ``global`` field is present.
+   All other fields except ``global`` can be matched in combination.
 
 
 Response Parameters
@@ -92,7 +104,7 @@ This endpoint retrieves a specific product.
 HTTP Request
 ------------
 
-``GET http://example.com/api/v2/products/<ID>``
+``GET http://example.com/api/v1/products/<ID>``
 
 Path Parameter
 --------------
@@ -119,7 +131,7 @@ This endpoint creates a new product.
 HTTP Request
 ------------
 
-``POST http://example.com/api/v2/products``
+``POST http://example.com/api/v1/products``
 
 Request Parameters
 ------------------
@@ -133,6 +145,8 @@ price            Float    True     -       Price of this product
 ca               String   True     -       Certificate authority name
 certId           String   True     -       Qualification certificate id
 caFile           String   True     -       Hash of uploaded CA file
+category         String   True     -       Categories of this product, separated by dot.
+feature          String   True     -       Features. The content is defined by client's implementation.
 mainImageFiles   String[] False    -       Main image URLs for this product, which can be the HASH value of uploaded images. Max length = 9
 ================ ======== ======== ======= ================================================================================================
 
@@ -159,7 +173,7 @@ This endpoint updates infomation of a specific product.
 HTTP Request
 ------------
 
-``PATCH http://example.com/api/v2/products/<ID>``
+``PATCH http://example.com/api/v1/products/<ID>``
 
 Path Parameter
 --------------
@@ -202,7 +216,7 @@ It will NOT delete it from database.
 HTTP Request
 ------------
 
-``DELETE http://example.com/api/v2/products/<ID>``
+``DELETE http://example.com/api/v1/products/<ID>``
 
 Path Parameter
 --------------

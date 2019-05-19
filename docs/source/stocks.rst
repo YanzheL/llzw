@@ -52,7 +52,7 @@ This endpoint retrieves all stocks that satisfy given parameters
 HTTP Request
 ------------
 
-``GET http://example.com/api/v2/stocks``
+``GET http://example.com/api/v1/stocks``
 
 Request Parameters
 ------------------
@@ -88,7 +88,7 @@ This endpoint retrieves a specific stock with id
 HTTP Request
 ------------
 
-``GET http://example.com/api/v2/stocks/<ID>``
+``GET http://example.com/api/v1/stocks/<ID>``
 
 Path Parameter
 --------------
@@ -118,7 +118,7 @@ This endpoint creates a new product.
 HTTP Request
 ------------
 
-``POST http://example.com/api/v2/stocks``
+``POST http://example.com/api/v1/stocks``
 
 Request Parameters
 ------------------
@@ -156,7 +156,7 @@ It will NOT delete it from database.
 HTTP Request
 ------------
 
-``DELETE http://example.com/api/v2/stocks/<ID>``
+``DELETE http://example.com/api/v1/stocks/<ID>``
 
 Path Parameter
 --------------

@@ -24,12 +24,8 @@ public class RestApiResponse<T> implements RestApiResponseMessage {
 
   protected RestApiErrorMessage error;
 
-  public RestApiResponse() {
-    this.timestamp = new Date();
-  }
-
   public RestApiResponse(boolean success, T data, RestApiErrorMessage error) {
-    this();
+    this.timestamp = new Date();
     this.success = success;
     this.data = data;
     this.error = error;

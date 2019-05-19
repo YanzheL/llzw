@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.validation.constraints.Positive;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -78,5 +79,10 @@ public class Order extends BaseEntity {
 
   public boolean belongsToCustomer(User customer) {
     return this.customer.getUsername().equals(customer.getUsername());
+  }
+
+  @PrePersist
+  public void prePersist() {
+    stock.getProduct().getStat().setSalesOutDated(true);
   }
 }

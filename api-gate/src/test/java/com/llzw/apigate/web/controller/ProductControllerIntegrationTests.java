@@ -69,7 +69,8 @@ public class ProductControllerIntegrationTests extends ApiGateApplicationTests {
     uploadPngBySeller();
     ProductCreateDto dto = new ProductCreateDto();
     dto.setName("auto test 1");
-    dto.setIntroduction("Hello world");
+    dto.setIntroduction(
+        ".............:::::::::::;;;;;;;;;;;;;;;::...............................................:::::::::::::::::::::::::::::....................");
     dto.setMainImageFiles(Collections
         .singletonList("b0339ffc5e42a813380a0da98b1a0fdf449195a430f497b041b80dfe98915e29"));
     dto.setPrice(1234.56f);
@@ -84,6 +85,7 @@ public class ProductControllerIntegrationTests extends ApiGateApplicationTests {
         .andDo(print())
         .andExpect(status().isCreated())
         .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data.valid").value(true))
         .andReturn();
     RestApiResponse response = objectMapper
         .readValue(result.getResponse().getContentAsString(), RestApiResponse.class);
@@ -98,6 +100,35 @@ public class ProductControllerIntegrationTests extends ApiGateApplicationTests {
     MvcResult result = mvc.perform(
         get("/api/v1/products")
             .param("global", "Macbook 4")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data").isArray())
+        .andReturn();
+  }
+
+  @Test
+  @Order(2)
+  public void searchProductsByCategory() throws Exception {
+    MvcResult result = mvc.perform(
+        get("/api/v1/products")
+            .param("category", "food.meat")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data").isArray())
+        .andReturn();
+  }
+
+  @Test
+  @Order(2)
+  public void searchProductsByCategoryAndFeature() throws Exception {
+    MvcResult result = mvc.perform(
+        get("/api/v1/products")
+            .param("category", "food.meat")
+            .param("feature", "包邮")
     )
         .andDo(print())
         .andExpect(status().isOk())

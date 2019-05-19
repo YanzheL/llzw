@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface ProductService {
 
-  boolean updateValid(Long id, User seller) throws RestApiException;
+  boolean invalidate(Long id, User seller) throws RestApiException;
 
   Product create(ProductCreateDto dto, User seller) throws RestApiException;
 
@@ -21,4 +21,6 @@ public interface ProductService {
   Optional<Product> findById(Long id);
 
   List<Product> search(Pageable pageable, ProductSearchDto example) throws RestApiException;
+
+  Product save(Product product);
 }

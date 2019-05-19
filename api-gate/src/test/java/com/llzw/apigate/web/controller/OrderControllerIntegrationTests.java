@@ -1,5 +1,6 @@
 package com.llzw.apigate.web.controller;
 
+import static org.hamcrest.number.OrderingComparison.greaterThan;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -66,6 +67,13 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
         .readValue(result.getResponse().getContentAsString(), RestApiResponse.class);
     Map<String, String> order = (Map<String, String>) response.getData();
     testUUID = UUID.fromString(order.get("id"));
+    result = mvc.perform(
+        get(apiBasePath + "/products/1")
+    )
+        .andDo(print())
+        .andExpect(jsonPath("$.data.stat.salesLastMonth").value(greaterThan(0)))
+        .andReturn()
+    ;
   }
 
   @WithUserDetails("test_user_customer_username_0")

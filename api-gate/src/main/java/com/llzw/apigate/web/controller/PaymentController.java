@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+// @RepositoryRestController is fucking not working as expected, referenced issue: https://jira.spring.io/browse/DATAREST-972
+// @RestController creates duplicate endpoints with and without base-path. The same issue as described above.
 @Validated
 @Controller
 @ResponseBody
@@ -89,5 +91,10 @@ public class PaymentController {
     } catch (RestApiException e) {
       LOGGER.warn(e.getType());
     }
+  }
+
+  @GetMapping("/verify/{id:\\d+}")
+  public ResponseEntity verify(@PathVariable(value = "id") Long id) throws RestApiException {
+    return RestResponseEntityFactory.success(paymentService.verify(id));
   }
 }

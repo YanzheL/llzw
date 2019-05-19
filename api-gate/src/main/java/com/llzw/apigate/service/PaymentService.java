@@ -16,4 +16,6 @@ public interface PaymentService {
 
   boolean verify(Payment payment) throws RestApiException;
 
+  boolean verify(Long paymentId) throws RestApiException;
+
 }

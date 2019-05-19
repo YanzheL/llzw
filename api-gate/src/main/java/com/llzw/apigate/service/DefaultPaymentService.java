@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class SimplePaymentService implements PaymentService {
+public class DefaultPaymentService implements PaymentService {
 
   private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
@@ -69,15 +69,12 @@ public class SimplePaymentService implements PaymentService {
 
   @Override
   public Payment retry(Long paymentId) throws RestApiException {
-    Optional<Payment> paymentOptional = paymentRepository.findById(paymentId);
-    if (!paymentOptional.isPresent()) {
-      throw new RestDependentEntityNotFoundException(
-          String.format("Target payment <%s> does not exist", paymentId));
-    }
-    Payment payment = paymentOptional.get();
+    Payment payment = paymentRepository.findById(paymentId)
+        .orElseThrow(() -> new RestDependentEntityNotFoundException(
+            String.format("Payment <%s> does not exist", paymentId)));
     if (payment.isConfirmed()) {
       throw new RestPaymentException(
-          String.format("Target payment <%s> is already confirmed", paymentId));
+          String.format("Payment <%s> is already confirmed", paymentId));
     }
     String orderString = vendor.pay(payment);
     payment.setOrderString(orderString);
@@ -100,12 +97,9 @@ public class SimplePaymentService implements PaymentService {
       LOGGER.warn(String.format("Unexpected payment status <%s>", trade_status));
       return false;
     }
-
-    Optional<Payment> paymentOptional = paymentRepository.findByOrderId(orderId);
-    if (!paymentOptional.isPresent()) {
-      throw new RestDependentEntityNotFoundException("Target payment does not exist.");
-    }
-    Payment payment = paymentOptional.get();
+    Payment payment = paymentRepository.findByOrderId(orderId)
+        .orElseThrow(() -> new RestDependentEntityNotFoundException(
+            String.format("Target Payment for Order <%s> does not exist", orderId)));
     Order targetOrder = payment.getOrder();
     if (Math.abs(payment.getTotalAmount() - targetOrder.getTotalAmount()) > 0.001) {
       throw new RestPaymentException("Payment amount mismatch");
@@ -123,10 +117,7 @@ public class SimplePaymentService implements PaymentService {
   public boolean verify(Payment payment) throws RestApiException {
     try {
       Map<String, String> result = vendor.query(payment.getOrder().getId().toString());
-      String tradeStatue = result.get("trade_status");
-      if (tradeStatue.equals("TRADE_SUCCESS") || tradeStatue.equals("TRADE_FINISHED")) {
-        return true;
-      }
+      verify(result);
     } catch (RestTradeNotFoundPaymentVendorException e) {
       Date expire = calculateExpireDate(payment.getCreatedAt(), 15);
       if (new Date().after(expire)) {
@@ -135,5 +126,13 @@ public class SimplePaymentService implements PaymentService {
       return false;
     }
     return false;
+  }
+
+  @Override
+  public boolean verify(Long paymentId) throws RestApiException {
+    Payment payment = paymentRepository.findById(paymentId)
+        .orElseThrow(() -> new RestDependentEntityNotFoundException(
+            String.format("Payment <%s> does not exist", paymentId)));
+    return verify(payment);
   }
 }

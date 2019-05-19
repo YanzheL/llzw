@@ -8,10 +8,12 @@ import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.entity.Product;
+import com.llzw.apigate.persistence.entity.ProductStat;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.ProductCreateDto;
 import com.llzw.apigate.web.dto.ProductSearchDto;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -27,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class SimpleProductService implements ProductService {
+public class DefaultProductService implements ProductService {
 
   @Setter(onMethod_ = @Autowired)
   private ProductRepository productRepository;
@@ -35,11 +37,14 @@ public class SimpleProductService implements ProductService {
   @Setter(onMethod_ = @Autowired)
   private FileStorageService fileStorageService;
 
+  @Setter(onMethod_ = @Autowired)
+  protected ProductStatisticsService productStatisticsService;
+
   @Value("${spring.data.rest.base-path}")
   private String apiBasePath;
 
   @Override
-  public boolean updateValid(Long id, User seller) throws RestApiException {
+  public boolean invalidate(Long id, User seller) throws RestApiException {
     Product product = productRepository.findById(id)
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
             String.format("Product <%s> does not exist", id)));
@@ -63,11 +68,7 @@ public class SimpleProductService implements ProductService {
     product.setSeller(seller);
     product.setValid(true);
     BeanUtils.copyProperties(dto, product);
-//    product.setName(dto.getName());
-//    product.setIntroduction(dto.getIntroduction());
-//    product.setPrice(dto.getPrice());
-//    product.setCaId(dto.getCaId());
-//    product.setCaFile(dto.getCaFile());
+    product.setStat(new ProductStat());
     List<String> mainImageFiles = dto.getMainImageFiles();
     if (mainImageFiles != null) {
       mainImageFiles.stream()
@@ -97,7 +98,9 @@ public class SimpleProductService implements ProductService {
 
   @Override
   public Optional<Product> findById(Long id) {
-    return productRepository.findById(id);
+    Optional<Product> product = productRepository.findById(id);
+    product.ifPresent(productStatisticsService::updateStat);
+    return product;
   }
 
   @Override
@@ -110,8 +113,7 @@ public class SimpleProductService implements ProductService {
       result = productRepository.searchByNameOrIntroductionWithCustomQuery(global);
     } else if (nameQueryString != null || introductionQueryString != null) {
       Product example = new Product();
-      example.setName(nameQueryString);
-      example.setIntroduction(introductionQueryString);
+      BeanUtils.copyProperties(dto, example, "global");
       result = productRepository.searchByExample(example);
     } else {
       result = productRepository.findAll(pageable).getContent();
@@ -119,6 +121,7 @@ public class SimpleProductService implements ProductService {
     if (!dto.isValid()) {
       result = result.stream().filter(Product::isValid).collect(Collectors.toList());
     }
+    result.forEach(productStatisticsService::updateStat);
     return result;
   }
 
@@ -130,16 +133,25 @@ public class SimpleProductService implements ProductService {
    */
   private List<String> searchFilePaths(String body) {
     Pattern pattern = Pattern.compile(apiBasePath + "/files/([a-z0-9]{64})");
-    UrlDetector parser = new UrlDetector(body, UrlDetectorOptions.Default);
-    List<Url> found = parser.detect();
-    List<String> paths = new ArrayList<>();
-    for (Url url : found) {
-      String path = url.getPath();
-      Matcher matcher = pattern.matcher(path);
-      if (matcher.matches()) {
-        paths.add(matcher.group(1));
+    try {
+      UrlDetector parser = new UrlDetector(body, UrlDetectorOptions.Default);
+      List<Url> found = parser.detect();
+      List<String> paths = new ArrayList<>();
+      for (Url url : found) {
+        String path = url.getPath();
+        Matcher matcher = pattern.matcher(path);
+        if (matcher.matches()) {
+          paths.add(matcher.group(1));
+        }
       }
+      return paths;
+    } catch (Exception e) {
+      return Collections.emptyList();
     }
-    return paths;
+  }
+
+  @Override
+  public Product save(Product product) {
+    return productRepository.save(product);
   }
 }

@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class SimpleUserService implements UserService {
+public class DefaultUserService implements UserService {
 
   @Setter(onMethod_ = @Autowired)
   private SessionRegistry sessionRegistry;

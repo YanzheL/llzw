@@ -1,11 +1,15 @@
 package com.llzw.apigate.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,7 +27,6 @@ import lombok.Setter;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.TermVector;
-import org.springframework.transaction.annotation.Transactional;
 
 @Indexed
 @Entity
@@ -39,7 +42,6 @@ public class Product extends BaseEntity {
   @Setter(AccessLevel.NONE)
   protected Long id;
 
-  @Setter()
   @NonNull
   protected boolean valid;
 
@@ -48,6 +50,14 @@ public class Product extends BaseEntity {
   @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
   @JsonIdentityReference(alwaysAsId = true)
   protected User seller;
+
+  @JsonGetter("seller")
+  public Map<String, String> getSellerMeta() {
+    Map<String, String> res = new HashMap<>();
+    res.put("username", seller.getUsername());
+    res.put("nickname", seller.getNickname());
+    return res;
+  }
 
   @Column(nullable = false)
   @NonNull
@@ -78,7 +88,13 @@ public class Product extends BaseEntity {
   @NonNull
   protected String caId;
 
-  @Transactional
+  protected String category;
+
+  protected String feature;
+
+  @Embedded
+  protected ProductStat stat;
+
   public boolean belongsToSeller(User seller) {
     return this.seller.getUsername().equals(seller.getUsername());
   }

@@ -29,6 +29,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+// @RepositoryRestController is fucking not working as expected, referenced issue: https://jira.spring.io/browse/DATAREST-972
+// @RestController creates duplicate endpoints with and without base-path. The same issue as described above.
 @Validated
 @Controller
 @ResponseBody
@@ -56,7 +58,7 @@ public class ProductController {
   @PatchMapping(value = "/{id:\\d+}")
   public ResponseEntity update(
       @PathVariable(value = "id") Long id,
-      @Valid ProductCreateDto productCreateDto
+      @Valid @RequestBody ProductCreateDto productCreateDto
   ) throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
@@ -96,6 +98,6 @@ public class ProductController {
   public ResponseEntity invalidate(@PathVariable(value = "id") Long id) throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    return RestResponseEntityFactory.success(productService.updateValid(id, currentUser));
+    return RestResponseEntityFactory.success(productService.invalidate(id, currentUser));
   }
 }
