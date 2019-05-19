@@ -14,7 +14,7 @@ import lombok.Data;
 public class ProductCreateDto {
 
   @NotNull(message = "the name of the product can't be empty")
-  @Size(min = 1, max = 30, message = "Length should between 1 to 30")
+  @Size(min = 1, max = 255, message = "Length should between 1 to 255")
   protected String name;
 
   @NotNull(message = "introduction can't be empty")

@@ -58,7 +58,7 @@ public class ProductController {
   @PatchMapping(value = "/{id:\\d+}")
   public ResponseEntity update(
       @PathVariable(value = "id") Long id,
-      @Valid ProductCreateDto productCreateDto
+      @Valid @RequestBody ProductCreateDto productCreateDto
   ) throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
