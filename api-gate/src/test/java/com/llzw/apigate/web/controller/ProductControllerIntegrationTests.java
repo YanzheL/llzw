@@ -69,7 +69,8 @@ public class ProductControllerIntegrationTests extends ApiGateApplicationTests {
     uploadPngBySeller();
     ProductCreateDto dto = new ProductCreateDto();
     dto.setName("auto test 1");
-    dto.setIntroduction("Hello world");
+    dto.setIntroduction(
+        ".............:::::::::::;;;;;;;;;;;;;;;::...............................................:::::::::::::::::::::::::::::....................");
     dto.setMainImageFiles(Collections
         .singletonList("b0339ffc5e42a813380a0da98b1a0fdf449195a430f497b041b80dfe98915e29"));
     dto.setPrice(1234.56f);

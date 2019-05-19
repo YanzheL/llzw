@@ -12,6 +12,7 @@ import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.ProductCreateDto;
 import com.llzw.apigate.web.dto.ProductSearchDto;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -129,16 +130,20 @@ public class DefaultProductService implements ProductService {
    */
   private List<String> searchFilePaths(String body) {
     Pattern pattern = Pattern.compile(apiBasePath + "/files/([a-z0-9]{64})");
-    UrlDetector parser = new UrlDetector(body, UrlDetectorOptions.Default);
-    List<Url> found = parser.detect();
-    List<String> paths = new ArrayList<>();
-    for (Url url : found) {
-      String path = url.getPath();
-      Matcher matcher = pattern.matcher(path);
-      if (matcher.matches()) {
-        paths.add(matcher.group(1));
+    try {
+      UrlDetector parser = new UrlDetector(body, UrlDetectorOptions.Default);
+      List<Url> found = parser.detect();
+      List<String> paths = new ArrayList<>();
+      for (Url url : found) {
+        String path = url.getPath();
+        Matcher matcher = pattern.matcher(path);
+        if (matcher.matches()) {
+          paths.add(matcher.group(1));
+        }
       }
+      return paths;
+    } catch (Exception e) {
+      return Collections.emptyList();
     }
-    return paths;
   }
 }
