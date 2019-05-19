@@ -17,6 +17,10 @@ public class JpaSearchSpecificationFactory {
     return specifications;
   }
 
+  public static <T> Specification<T> of(JpaSearchCriterion criterion) {
+    return new JpaSearchSpecification<>(criterion);
+  }
+
   public static <T> Specification<T> and(List<JpaSearchCriterion> criteria) {
     List<Specification<T>> specifications = of(criteria);
     Specification<T> cur = null;
