@@ -42,7 +42,6 @@ public class Product extends BaseEntity {
   @Setter(AccessLevel.NONE)
   protected Long id;
 
-  @Setter()
   @NonNull
   protected boolean valid;
 

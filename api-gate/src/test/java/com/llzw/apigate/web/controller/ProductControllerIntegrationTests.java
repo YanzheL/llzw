@@ -85,6 +85,7 @@ public class ProductControllerIntegrationTests extends ApiGateApplicationTests {
         .andDo(print())
         .andExpect(status().isCreated())
         .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data.valid").value(true))
         .andReturn();
     RestApiResponse response = objectMapper
         .readValue(result.getResponse().getContentAsString(), RestApiResponse.class);

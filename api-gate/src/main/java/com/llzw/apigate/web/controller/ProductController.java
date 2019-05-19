@@ -98,6 +98,6 @@ public class ProductController {
   public ResponseEntity invalidate(@PathVariable(value = "id") Long id) throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    return RestResponseEntityFactory.success(productService.updateValid(id, currentUser));
+    return RestResponseEntityFactory.success(productService.invalidate(id, currentUser));
   }
 }

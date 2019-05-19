@@ -44,7 +44,7 @@ public class DefaultProductService implements ProductService {
   private String apiBasePath;
 
   @Override
-  public boolean updateValid(Long id, User seller) throws RestApiException {
+  public boolean invalidate(Long id, User seller) throws RestApiException {
     Product product = productRepository.findById(id)
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
             String.format("Product <%s> does not exist", id)));
