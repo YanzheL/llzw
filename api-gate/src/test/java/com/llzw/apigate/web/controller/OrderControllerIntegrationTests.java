@@ -120,6 +120,7 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
     mvc.perform(
         get(apiBasePath + "/orders")
             .param("stockId", "12")
+            .param("customerId", "test_user_customer_username_0")
     )
         .andDo(print())
         .andExpect(status().isOk())

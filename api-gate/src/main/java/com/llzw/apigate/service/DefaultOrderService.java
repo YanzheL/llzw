@@ -4,11 +4,9 @@ import com.llzw.apigate.message.error.RestAccessDeniedException;
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
 import com.llzw.apigate.message.error.RestEntityNotFoundException;
-import com.llzw.apigate.message.error.RestInvalidParameterException;
 import com.llzw.apigate.message.error.RestRejectedByEntityException;
 import com.llzw.apigate.persistence.dao.AddressRepository;
 import com.llzw.apigate.persistence.dao.OrderRepository;
-import com.llzw.apigate.persistence.dao.customquery.JpaSearchSpecificationFactory;
 import com.llzw.apigate.persistence.entity.Address;
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Product;
@@ -16,14 +14,16 @@ import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.OrderSearchDto;
 import com.llzw.apigate.web.dto.OrderShipDto;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
+import javax.persistence.criteria.Predicate;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -76,17 +76,52 @@ public class DefaultOrderService implements OrderService {
   @Override
   public List<Order> search(OrderSearchDto example, User relatedUser, Pageable pageable)
       throws RestApiException {
-    try {
-      // Result orders may contain other user's order, so we should filter them out.
-      return orderRepository
-          .findAll(JpaSearchSpecificationFactory.fromExample(example), pageable)
-          .getContent().stream()
-          .filter(o -> o.isValid() == example.isValid())
-          .filter(o -> o.belongsToUser(relatedUser))
-          .collect(Collectors.toList());
-    } catch (IllegalAccessException e) {
-      throw new RestInvalidParameterException(e.getMessage());
-    }
+    // Result orders may contain other user's order, so we should filter them out.
+    return orderRepository
+        .findAll(
+            makeSpec(example, relatedUser),
+            pageable
+        )
+        .getContent()
+        ;
+  }
+
+  private Specification<Order> makeSpec(OrderSearchDto dto, User relatedUser) {
+    Specification<Order> specification = (root, criteriaQuery, criteriaBuilder) -> {
+      List<Predicate> expressions = new ArrayList<>();
+      if (dto.getStockId() != null) {
+        expressions.add(
+            criteriaBuilder.isMember(
+                dto.getStockId(), root.get("stocks"))
+        );
+      }
+      if (dto.getCustomerId() != null) {
+        expressions.add(criteriaBuilder.equal(
+            root.get("customer").<String>get("username"), dto.getCustomerId()
+        ));
+      }
+      if (dto.getTrackingId() != null) {
+        expressions.add(criteriaBuilder.equal(
+            root.get("trackingId"), dto.getTrackingId()
+        ));
+      }
+      expressions.add(
+          criteriaBuilder.equal(
+              root.get("valid"), dto.isValid()
+          )
+      );
+      Predicate expression = null;
+      for (Predicate expr : expressions) {
+        if (expression == null) {
+          expression = expr;
+        } else {
+          expression = criteriaBuilder.and(expression, expr);
+        }
+      }
+      return expression;
+    };
+    specification.and(Order.belongsToUserSpec(relatedUser));
+    return specification;
   }
 
   @Override
