@@ -115,6 +115,21 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
 
   @WithUserDetails("test_user_customer_username_0")
   @Test
+  @Order(2)
+  public void searchOrdersByCustomer() throws Exception {
+    mvc.perform(
+        get(apiBasePath + "/orders")
+            .param("stockId", "12")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data[0].id").value(testUUID.toString()))
+    ;
+  }
+
+  @WithUserDetails("test_user_customer_username_0")
+  @Test
   public void getNonExistOrderByCustomer() throws Exception {
     mvc.perform(
         get(apiBasePath + "/orders/c7537a95-1aae-4dfe-a97f-1a41241da367")
