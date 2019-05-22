@@ -4,5 +4,4 @@ jdk:
   - openjdk11
 script:
   - cd api-gate
-  - ./mvnw install -Dspring.profiles.active=test
-  - ./mvnw package -Dspring.profiles.active=test
+  - ./mvnw package -Dspring.profiles.active=test -Dlogging.level.org.hibernate.SQL=INFO -e
