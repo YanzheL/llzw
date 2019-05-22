@@ -43,6 +43,7 @@ public class DefaultStockService implements StockService {
     stock.setProducedAt(producedAt);
     stock.setShelfLife(shelfLife);
     stock.setTotalQuantity(totalQuantity);
+    stock.setCurrentQuantity(totalQuantity);
     stock.setTrackingId(trackingId);
     stock.setCarrierName(carrierName);
     stock.setValid(true);
