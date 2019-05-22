@@ -22,6 +22,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -76,6 +77,18 @@ public class Order extends BaseEntity {
   protected boolean paid;
 
   protected boolean valid;
+
+  public static Specification<Order> belongsToUserSpec(User user) {
+    return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.or(
+        criteriaBuilder.equal(
+            root.get("product").<User>get("seller").<String>get("username"),
+            user.getUsername()
+        ),
+        criteriaBuilder.equal(
+            root.get("customerId").<String>get("username"), user.getUsername()
+        )
+    );
+  }
 
   public boolean belongsToSeller(User seller) {
     return product.getSeller().getUsername().equals(seller.getUsername());
