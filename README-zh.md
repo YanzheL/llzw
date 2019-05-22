@@ -22,7 +22,7 @@
 
 ## 前置条件
 
-- **JRE 运行时:** 8 或更高
+- **JRE 运行时:** 9 或更高
 - **MySQL:** 8 或更高, 运行在 [localhost:3306](localhost:3306),  否则你将需要编辑位于 [application-dev.yml](api-gate/src/main/resources/application-dev.yml) 的配置文件。
 
 ## 开始使用
@@ -35,7 +35,7 @@
 
 #### 从源码编译
 
-为了编译项目源码， 你需要一个有效的JDK开发环境， 版本8或更高。
+为了编译项目源码， 你需要一个有效的JDK开发环境， 版本9或更高。
 
 下载项目源码
 
