@@ -74,11 +74,11 @@ public class MockEntityFactory {
     if (id != null) {
       setId(order, id);
     }
-    order.setStock(stock);
+    order.setProduct(stock.getProduct());
+    order.setStocks(Collections.singletonList(stock));
     order.setQuantity(10);
     order.setTotalAmount(1000.123f);
     order.setCustomer(customer);
-//    order.setCreatedAt(new Date());
     order.setValid(true);
     order.setAddress(
         new AddressBean(
@@ -104,7 +104,7 @@ public class MockEntityFactory {
     stock.setTotalQuantity(100000);
     stock.setCurrentQuantity(100000);
     stock.setInboundedAt(inboundedAt);
-//    stock.setCreatedAt(new Date());
+//    stocks.setCreatedAt(new Date());
     stock.setValid(true);
     return stock;
   }

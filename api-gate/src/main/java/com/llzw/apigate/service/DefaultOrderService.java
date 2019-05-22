@@ -56,13 +56,14 @@ public class DefaultOrderService implements OrderService {
     if (!address.belongsToUser(customer)) {
       throw new RestAccessDeniedException("You do not have access to this entity");
     }
-    Stock stock = stockService.getAvailableStockForProduct(product, quantity)
-        .orElseThrow(() -> new RestDependentEntityNotFoundException(
-            "Cannot find an available stock specifies that quantity"));
-    stock.decreaseCurrentQuantity(quantity);
-    stock = stockService.save(stock);
+    List<Stock> stocks = stockService.lockStocksForProduct(product, quantity);
+    if (stocks.isEmpty()) {
+      throw new RestDependentEntityNotFoundException(
+          "Cannot find an available stocks specifies that quantity");
+    }
     Order order = new Order();
-    order.setStock(stock);
+    order.setProduct(product);
+    order.setStocks(stocks);
     order.setAddress(address);
     order.setCustomer(customer);
     order.setTotalAmount(product.getPrice());
@@ -123,7 +124,7 @@ public class DefaultOrderService implements OrderService {
 
   @Override
   public int countOrdersAfter(Product product, Date date) {
-    return orderRepository.countAllByStock_ProductAndCreatedAtAfter(product, date);
+    return orderRepository.countAllByProductAndCreatedAtAfter(product, date);
   }
 
   @Override
@@ -132,7 +133,6 @@ public class DefaultOrderService implements OrderService {
     Order order = orderRepository.findById(UUID.fromString(id))
         .orElseThrow(() -> new RestEntityNotFoundException(
             String.format("Order <%s> does not exist", id)));
-    String seller = order.getStock().getProduct().getSeller().getUsername();
     if (!order.belongsToUser(relatedUser)) {
       throw new RestAccessDeniedException("Current user does not have access to this order");
     }
