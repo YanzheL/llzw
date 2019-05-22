@@ -1,5 +1,7 @@
 language: java
 sudo: false
+jdk:
+  - openjdk11
 script:
   - cd api-gate
   - ./mvnw install -Dspring.profiles.active=test
