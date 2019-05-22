@@ -4,8 +4,8 @@ import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.User;
-import com.llzw.apigate.web.dto.OrderPatchDto;
 import com.llzw.apigate.web.dto.OrderSearchDto;
+import com.llzw.apigate.web.dto.OrderShipDto;
 import java.util.Date;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +22,7 @@ public interface OrderService {
 
   Order cancel(String id, User relatedUser) throws RestApiException;
 
-  Order patch(String id, OrderPatchDto dto, User relatedUser) throws RestApiException;
+  Order patch(String id, OrderShipDto dto, User relatedUser) throws RestApiException;
 
   Order deliveryConfirm(String id, User relatedUser) throws RestApiException;
 

@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.llzw.apigate.ApiGateApplicationTests;
 import com.llzw.apigate.message.RestApiResponse;
 import com.llzw.apigate.web.dto.OrderCreateDto;
-import com.llzw.apigate.web.dto.OrderPatchDto;
+import com.llzw.apigate.web.dto.OrderShipDto;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
@@ -175,13 +175,12 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
   @WithUserDetails("test_user_seller_username_0")
   @Test
   public void PatchOrderBySeller() throws Exception {
-    OrderPatchDto dto = new OrderPatchDto();
+    OrderShipDto dto = new OrderShipDto();
     dto.setCarrierName("SF-Express");
     dto.setShippingTime(new Date());
-    dto.setRemark("Test");
     dto.setTrackingId("12345678");
     mvc.perform(
-        patch(apiBasePath + "/orders/" + testUUID.toString() + "/SELLER_PATCH")
+        patch(apiBasePath + "/orders/" + testUUID.toString() + "/SHIP")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(dto))
     )
@@ -191,16 +190,32 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
     ;
   }
 
+  @WithUserDetails("test_user_seller_username_0")
+  @Test
+  public void PatchOrderBySellerWithPartialInfo() throws Exception {
+    OrderShipDto dto = new OrderShipDto();
+    dto.setCarrierName("SF-Express");
+    dto.setShippingTime(new Date());
+    mvc.perform(
+        patch(apiBasePath + "/orders/" + testUUID.toString() + "/SHIP")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(dto))
+    )
+        .andDo(print())
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$.success").value(false))
+    ;
+  }
+
   @WithUserDetails("test_user_customer_username_0")
   @Test
   public void PatchOrderByCustomer() throws Exception {
-    OrderPatchDto dto = new OrderPatchDto();
+    OrderShipDto dto = new OrderShipDto();
     dto.setCarrierName("SF-Express");
     dto.setShippingTime(new Date());
-    dto.setRemark("Test");
     dto.setTrackingId("12345678");
     mvc.perform(
-        patch(apiBasePath + "/orders/" + testUUID.toString() + "/SELLER_PATCH")
+        patch(apiBasePath + "/orders/" + testUUID.toString() + "/SHIP")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(dto))
     )

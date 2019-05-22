@@ -6,8 +6,8 @@ import com.llzw.apigate.message.error.RestUnsupportedOperationException;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.OrderService;
 import com.llzw.apigate.web.dto.OrderCreateDto;
-import com.llzw.apigate.web.dto.OrderPatchDto;
 import com.llzw.apigate.web.dto.OrderSearchDto;
+import com.llzw.apigate.web.dto.OrderShipDto;
 import javax.validation.Valid;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,16 +98,16 @@ public class OrderController {
   public ResponseEntity patch(
       @PathVariable(value = "id") String id,
       @PathVariable(value = "action") String action,
-      @RequestBody(required = false) OrderPatchDto orderPatchDto
+      @Valid @RequestBody(required = false) OrderShipDto orderShipDto
   ) throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     switch (action) {
       case "DELIVERY_CONFIRM":
         return RestResponseEntityFactory.success(orderService.deliveryConfirm(id, currentUser));
-      case "SELLER_PATCH":
+      case "SHIP":
         return RestResponseEntityFactory
-            .success(orderService.patch(id, orderPatchDto, currentUser));
+            .success(orderService.patch(id, orderShipDto, currentUser));
       default:
         throw new RestUnsupportedOperationException(
             String.format("Action <%s> unsupported", action));

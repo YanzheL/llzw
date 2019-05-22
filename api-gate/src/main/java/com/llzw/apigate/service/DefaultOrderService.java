@@ -14,8 +14,8 @@ import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
-import com.llzw.apigate.web.dto.OrderPatchDto;
 import com.llzw.apigate.web.dto.OrderSearchDto;
+import com.llzw.apigate.web.dto.OrderShipDto;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -130,7 +130,7 @@ public class DefaultOrderService implements OrderService {
 
   @Override
   @PreAuthorize("hasRole('SELLER')")
-  public Order patch(String id, OrderPatchDto dto, User relatedUser) throws RestApiException {
+  public Order patch(String id, OrderShipDto dto, User relatedUser) throws RestApiException {
 //    Order order = get(id, relatedUser);
     Order order = orderRepository.findById(UUID.fromString(id))
         .orElseThrow(() -> new RestEntityNotFoundException(
