@@ -118,15 +118,16 @@ public class DefaultPaymentService implements PaymentService {
   public boolean verify(Payment payment) throws RestApiException {
     try {
       Map<String, String> result = vendor.query(payment.getOrder().getId().toString());
-      verify(result);
+      return verify(result);
     } catch (RestTradeNotFoundPaymentVendorException e) {
+      LOGGER.warn(
+          String.format("RestTradeNotFoundPaymentVendorException, Payment<%d>", payment.getId()));
       Date expire = calculateExpireDate(payment.getCreatedAt(), 15);
       if (new Date().after(expire)) {
         paymentRepository.delete(payment);
       }
       return false;
     }
-    return false;
   }
 
   @Override

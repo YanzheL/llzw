@@ -104,6 +104,7 @@ public class PaymentController {
    * @param allRequestParams All params posted from vendor.
    */
   @PostMapping("/verify")
+  @GetMapping("/verify")
   public void verify(@RequestParam Map<String, String> allRequestParams) {
     try {
       paymentService.verify(allRequestParams);
