@@ -4,13 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.validation.constraints.Positive;
@@ -19,6 +22,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -47,10 +51,15 @@ public class Order extends BaseEntity {
   protected AddressBean address;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "stockId")
+  @JoinColumn(name = "productId")
   @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
   @JsonIdentityReference(alwaysAsId = true)
-  protected Stock stock;
+  protected Product product;
+
+  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+  @JsonIdentityReference(alwaysAsId = true)
+  protected List<Stock> stocks;
 
   protected String trackingId;
 
@@ -69,8 +78,20 @@ public class Order extends BaseEntity {
 
   protected boolean valid;
 
+  public static Specification<Order> belongsToUserSpec(User user) {
+    return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.or(
+        criteriaBuilder.equal(
+            root.get("product").<User>get("seller").<String>get("username"),
+            user.getUsername()
+        ),
+        criteriaBuilder.equal(
+            root.get("customerId").<String>get("username"), user.getUsername()
+        )
+    );
+  }
+
   public boolean belongsToSeller(User seller) {
-    return stock.getProduct().getSeller().getUsername().equals(seller.getUsername());
+    return product.getSeller().getUsername().equals(seller.getUsername());
   }
 
   public boolean belongsToUser(User user) {
@@ -83,6 +104,6 @@ public class Order extends BaseEntity {
 
   @PrePersist
   public void prePersist() {
-    stock.getProduct().getStat().setSalesOutDated(true);
+    product.getStat().setSalesOutDated(true);
   }
 }

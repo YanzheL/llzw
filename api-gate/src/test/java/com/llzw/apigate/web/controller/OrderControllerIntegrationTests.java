@@ -54,7 +54,7 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
   public void createOrderByCustomer() throws Exception {
     OrderCreateDto dto = new OrderCreateDto();
     dto.setProductId(1L);
-    dto.setQuantity(10);
+    dto.setQuantity(431);
     dto.setAddressId(11L);
     dto.setRemark("Test");
     MvcResult result = mvc.perform(
@@ -65,6 +65,7 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
         .andDo(print())
         .andExpect(status().isCreated())
         .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data.stocks.length()").value(5))
         .andReturn();
     RestApiResponse response = objectMapper
         .readValue(result.getResponse().getContentAsString(), RestApiResponse.class);
@@ -83,7 +84,7 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
   @Test
   public void createOrderWithNonExistProductIdByCustomer() throws Exception {
     OrderCreateDto dto = new OrderCreateDto();
-    dto.setProductId(100L);
+    dto.setProductId(1000L);
     dto.setQuantity(10);
     dto.setAddressId(1L);
     dto.setRemark("Test");
@@ -109,6 +110,22 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.success").value(true))
         .andExpect(jsonPath("$.data.id").value(testUUID.toString()))
+    ;
+  }
+
+  @WithUserDetails("test_user_customer_username_0")
+  @Test
+  @Order(2)
+  public void searchOrdersByCustomer() throws Exception {
+    mvc.perform(
+        get(apiBasePath + "/orders")
+            .param("stockId", "12")
+            .param("customerId", "test_user_customer_username_0")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data[0].id").value(testUUID.toString()))
     ;
   }
 

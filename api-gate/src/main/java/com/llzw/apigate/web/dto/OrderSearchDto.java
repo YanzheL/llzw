@@ -8,8 +8,6 @@ public class OrderSearchDto {
 
   protected String customerId;
 
-  protected Long addressId;
-
   protected Long stockId;
 
   @Size(max = 30, message = "Length cannot exceed 30")

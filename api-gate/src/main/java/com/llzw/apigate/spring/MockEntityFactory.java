@@ -56,8 +56,9 @@ public class MockEntityFactory {
     );
     product.setStat(new ProductStat());
     product.setSeller(seller);
-    product.setName(String.format("Macau Food %d", i));
-    product.setIntroduction(String.format("Welcome to Macau Morpheus Hotel! %d", i));
+    product.setName(String.format("Macau Food %d by %s", i, seller.getUsername()));
+    product.setIntroduction(
+        String.format("Welcome to Macau Morpheus Hotel! %d by %s", i, seller.getUsername()));
     product.setPrice(i + 10000);
     product.setCa(String.format("test_product_ca_%d", i));
     product.setCaFile(String.format("test_product_caFile_%d", i));
@@ -74,11 +75,11 @@ public class MockEntityFactory {
     if (id != null) {
       setId(order, id);
     }
-    order.setStock(stock);
+    order.setProduct(stock.getProduct());
+    order.setStocks(Collections.singletonList(stock));
     order.setQuantity(10);
     order.setTotalAmount(1000.123f);
     order.setCustomer(customer);
-//    order.setCreatedAt(new Date());
     order.setValid(true);
     order.setAddress(
         new AddressBean(
@@ -92,7 +93,7 @@ public class MockEntityFactory {
     return order;
   }
 
-  public static Stock makeStock(Long id, Product product, Date inboundedAt)
+  public static Stock makeStock(Long id, Product product, Date inboundedAt, int quantity)
       throws NoSuchFieldException, IllegalAccessException {
     Stock stock = new Stock();
     if (id != null) {
@@ -101,10 +102,10 @@ public class MockEntityFactory {
     stock.setProduct(product);
     stock.setProducedAt(new Date());
     stock.setShelfLife(365);
-    stock.setTotalQuantity(100000);
-    stock.setCurrentQuantity(100000);
+    stock.setTotalQuantity(quantity);
+    stock.setCurrentQuantity(quantity);
     stock.setInboundedAt(inboundedAt);
-//    stock.setCreatedAt(new Date());
+//    stocks.setCreatedAt(new Date());
     stock.setValid(true);
     return stock;
   }

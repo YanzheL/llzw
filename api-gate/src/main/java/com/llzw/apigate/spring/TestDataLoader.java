@@ -15,6 +15,7 @@ import com.llzw.apigate.persistence.entity.Role;
 import com.llzw.apigate.persistence.entity.Role.RoleType;
 import com.llzw.apigate.persistence.entity.User;
 import java.util.Date;
+import java.util.List;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -95,24 +96,28 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
       User seller = userRepository
           .findByUsername(String.format("test_user_seller_username_%d", i))
           .orElseThrow(() -> new Exception("Test product seller not found"));
-      productRepository.save(MockEntityFactory.makeTestProduct(null, i, seller));
+      for (int j = 0; j < 10; ++j) {
+        productRepository.save(MockEntityFactory.makeTestProduct(null, j, seller));
+      }
     }
   }
 
   private void initStocks() throws Exception {
     for (int i = 0; i < 10; ++i) {
-      Product product = productRepository.findById((long) (i + 1))
-          .orElseThrow(() -> new Exception("product not found"));
-      stockRepository.save(
-          MockEntityFactory.makeStock(null, product, null)
-      );
-    }
-    for (int i = 0; i < 10; ++i) {
-      Product product = productRepository.findById((long) (i + 1))
-          .orElseThrow(() -> new Exception("product not found"));
-      stockRepository.save(
-          MockEntityFactory.makeStock(null, product, new Date())
-      );
+      List<Product> products = productRepository
+          .findAllBySellerUsername(String.format("test_user_seller_username_%d", i));
+      for (Product product : products) {
+        for (int j = 0; j < 10; ++j) {
+          stockRepository.save(
+              MockEntityFactory.makeStock(null, product, null, 100)
+          );
+        }
+        for (int j = 0; j < 10; ++j) {
+          stockRepository.save(
+              MockEntityFactory.makeStock(null, product, new Date(), 100)
+          );
+        }
+      }
     }
   }
 

@@ -10,5 +10,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface OrderRepository
     extends PagingAndSortingRepository<Order, UUID>, JpaSpecificationExecutor<Order> {
 
-  int countAllByStock_ProductAndCreatedAtAfter(Product product, Date date);
+  int countAllByProductAndCreatedAtAfter(Product product, Date date);
 }

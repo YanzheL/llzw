@@ -13,14 +13,17 @@ import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.StockSearchDto;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class DefaultStockService implements StockService {
 
   @Setter(onMethod_ = @Autowired)
@@ -40,6 +43,7 @@ public class DefaultStockService implements StockService {
     stock.setProducedAt(producedAt);
     stock.setShelfLife(shelfLife);
     stock.setTotalQuantity(totalQuantity);
+    stock.setCurrentQuantity(totalQuantity);
     stock.setTrackingId(trackingId);
     stock.setCarrierName(carrierName);
     stock.setValid(true);
@@ -50,7 +54,7 @@ public class DefaultStockService implements StockService {
   public List<Stock> search(User owner, StockSearchDto dto,
       PageRequest pageRequest) throws RestApiException {
     try {
-      // Results may contain other user's stock, so we should filter them out.
+      // Results may contain other user's stocks, so we should filter them out.
       return stockRepository
           .findAll(
               JpaSearchSpecificationFactory.fromExample(dto),
@@ -77,11 +81,31 @@ public class DefaultStockService implements StockService {
   }
 
   @Override
-  public Optional<Stock> getAvailableStockForProduct(Product product, int quantity)
+  public List<Stock> lockStocksForProduct(Product product, int quantity)
       throws RestApiException {
-    return stockRepository
-        .findFirstByProductAndInboundedAtNotNullAndValidTrueAndCurrentQuantityGreaterThanEqualOrderByInboundedAt(
-            product, quantity);
+    AtomicReference<Integer> lockedItems = new AtomicReference<>();
+    lockedItems.set(0);
+    try (Stream<Stock> stockStream = stockRepository
+        .findByProductAndInboundedAtNotNullAndValidTrueOrderByInboundedAt(product)) {
+      return stockStream
+          .takeWhile(stock -> {
+            int current = lockedItems.get();
+            int remain = quantity - current;
+            if (current >= quantity) {
+              return false;
+            }
+            if (stock.getCurrentQuantity() >= remain) {
+              stock.decreaseCurrentQuantity(remain);
+              lockedItems.set(current + remain);
+            } else {
+              lockedItems.set(current + stock.getCurrentQuantity());
+              stock.setCurrentQuantity(0);
+            }
+            return true;
+          })
+          .map(stockRepository::save)
+          .collect(Collectors.toList());
+    }
   }
 
   @Override
