@@ -59,8 +59,14 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
         <executions>
           <execution>
+            <configuration>
+              <additionalProperties>
+                <encoding.source>UTF-8</encoding.source>
+              </additionalProperties>
+            </configuration>
             <goals>
               <goal>repackage</goal>
+              <goal>build-info</goal>
             </goals>
           </execution>
         </executions>
