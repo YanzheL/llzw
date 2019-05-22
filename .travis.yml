@@ -4,4 +4,7 @@ jdk:
   - openjdk11
 script:
   - cd api-gate
-  - ./mvnw package -Dspring.profiles.active=test -Dlogging.level.org.hibernate.SQL=INFO -e
+  - ./mvnw package \
+    -Dspring.profiles.active=test \
+    -Dlogging.level.org.hibernate.SQL=INFO \
+    -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
