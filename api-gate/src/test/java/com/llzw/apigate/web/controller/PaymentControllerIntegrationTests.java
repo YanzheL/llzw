@@ -158,4 +158,60 @@ public class PaymentControllerIntegrationTests extends ApiGateApplicationTests {
         .andExpect(jsonPath("$.data").value(false))
         .andReturn();
   }
+
+  @WithUserDetails("test_user_customer_username_0")
+  @Test
+  @org.junit.jupiter.api.Order(2)
+  public void getByOrderIdByCustomer() throws Exception {
+    MvcResult result = mvc.perform(
+        get(apiBasePath + "/payments?orderId=" + testUUID.toString())
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data.id").value(1))
+        .andReturn();
+  }
+
+  @WithUserDetails("test_user_customer_username_0")
+  @Test
+  @org.junit.jupiter.api.Order(2)
+  public void getByIdByCustomer() throws Exception {
+    MvcResult result = mvc.perform(
+        get(apiBasePath + "/payments/1")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data.id").value(1))
+        .andReturn();
+  }
+
+  @WithUserDetails("test_user_seller_username_0")
+  @Test
+  @org.junit.jupiter.api.Order(2)
+  public void getByOrderIdBySeller() throws Exception {
+    MvcResult result = mvc.perform(
+        get(apiBasePath + "/payments?orderId=" + testUUID.toString())
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data.id").value(1))
+        .andReturn();
+  }
+
+  @WithUserDetails("test_user_seller_username_0")
+  @Test
+  @org.junit.jupiter.api.Order(2)
+  public void getByIdBySeller() throws Exception {
+    MvcResult result = mvc.perform(
+        get(apiBasePath + "/payments/1")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data.id").value(1))
+        .andReturn();
+  }
 }
