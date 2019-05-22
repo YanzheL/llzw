@@ -188,7 +188,37 @@ This endpoint confirms delivery of an order.
 HTTP Request
 ------------
 
-``PATCH http://example.com/api/v1/orders/<ID>``
+``PATCH http://example.com/api/v1/orders/<ID>/DELIVERY_CONFIRM``
+
+Path Parameter
+--------------
+
+========= ======== ===========
+Parameter Required Description
+========= ======== ===========
+ID        True     Order ID
+========= ======== ===========
+
+Response Parameters
+-------------------
+=========== ======== ==============================
+Parameter   Type     Description
+=========== ======== ==============================
+data        Order    The modified Order object
+=========== ======== ==============================
+
+.. Attention::
+   Remember — You must be authenticated with ``CUSTOMER`` role before using this API
+
+Update an Order
+===============
+
+This endpoint updates shipment details of an order.
+
+HTTP Request
+------------
+
+``PATCH http://example.com/api/v1/orders/<ID>/SHIP``
 
 Path Parameter
 --------------
@@ -202,11 +232,16 @@ ID        True     Order ID
 Request Parameters
 ------------------
 
-=========== ======= ======== ======= ========================================
-Parameter   Type    Required Default Description
-=========== ======= ======== ======= ========================================
-action      String  True     -       Should be ``DELIVERY_CONFIRM``
-=========== ======= ======== ======= ========================================
+============ ======= ======== ======= ========================================
+Parameter    Type    Required Default Description
+============ ======= ======== ======= ========================================
+trackingId   String  True     -       Tracking ID from shipment carrier
+carrierName  String  True     -       Shipment carrier name
+shippingTime String  True     -       Time of shipping
+============ ======= ======== ======= ========================================
+
+.. Note::
+   Example date string format: ``"2000-10-31T01:30:00.000-05:00"``
 
 Response Parameters
 -------------------
@@ -217,4 +252,4 @@ data        Order    The modified Order object
 =========== ======== ==============================
 
 .. Attention::
-   Remember — You must be authenticated with ``CUSTOMER`` role before using this API
+   Remember — You must be authenticated with ``SELLER`` role before using this API
