@@ -62,6 +62,7 @@ public class DefaultPaymentService implements PaymentService {
     payment.setDescription(description);
     payment.setTotalAmount(targetOrder.getTotalAmount());
     payment.setStatus(PaymentStatusType.PENDING);
+    payment.setValid(true);
     payment = paymentRepository.save(payment);
     String orderString = vendor.pay(payment);
     payment.setOrderString(orderString);
@@ -83,34 +84,16 @@ public class DefaultPaymentService implements PaymentService {
   }
 
   @Override
-  public boolean verify(Map<String, String> params) throws RestApiException {
+  public boolean verifyFromVendor(Map<String, String> params) throws RestApiException {
     if (!vendor.verifySignature(params)) {
       return false;
     }
-    //商户订单号
     String orderId = params.get("out_trade_no");
-    //支付宝交易号
-    String trade_no = params.get("trade_no");
-    //交易状态
-    String trade_status = params.get("trade_status");
-
-    if (!(trade_status.equals("TRADE_SUCCESS") || trade_status.equals("TRADE_FINISHED"))) {
-      LOGGER.warn(String.format("Unexpected payment status <%s>", trade_status));
-      return false;
-    }
+    String tradeNo = params.get("trade_no");
     Payment payment = paymentRepository.findByOrderId(UUID.fromString(orderId))
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
             String.format("Target Payment for Order <%s> does not exist", orderId)));
-    Order targetOrder = payment.getOrder();
-    if (Math.abs(payment.getTotalAmount() - targetOrder.getTotalAmount()) > 0.001) {
-      throw new RestPaymentException("Payment amount mismatch");
-    }
-    payment.setConfirmed(true);
-    payment.setConfirmedAt(new Date());
-    payment.setVendorTradeId(trade_no);
-    payment.setStatus(PaymentStatusType.CONFIRMED);
-    targetOrder.setPaid(true);
-    paymentRepository.save(payment);
+    updateStatus(payment, tradeNo);
     return true;
   }
 
@@ -118,7 +101,14 @@ public class DefaultPaymentService implements PaymentService {
   public boolean verify(Payment payment) throws RestApiException {
     try {
       Map<String, String> result = vendor.query(payment.getOrder().getId().toString());
-      return verify(result);
+      String tradeNo = result.get("trade_no");
+      if (isSuccess(result)) {
+        if (!payment.isConfirmed()) {
+          updateStatus(payment, tradeNo);
+        }
+        return true;
+      }
+      return false;
     } catch (RestTradeNotFoundPaymentVendorException e) {
       LOGGER.warn(
           String.format("RestTradeNotFoundPaymentVendorException, Payment<%d>", payment.getId()));
@@ -158,5 +148,32 @@ public class DefaultPaymentService implements PaymentService {
       throw new RestAccessDeniedException("You do not have access to this entity");
     }
     return payment;
+  }
+
+  private Payment updateStatus(Payment payment, String tradeNo) throws RestApiException {
+    Order targetOrder = payment.getOrder();
+    if (Math.abs(payment.getTotalAmount() - targetOrder.getTotalAmount()) > 0.001) {
+      throw new RestPaymentException("Payment amount mismatch");
+    }
+    payment.setConfirmed(true);
+    payment.setConfirmedAt(new Date());
+    payment.setVendorTradeId(tradeNo);
+    payment.setStatus(PaymentStatusType.CONFIRMED);
+    targetOrder.setPaid(true);
+    return paymentRepository.save(payment);
+  }
+
+  private boolean isSuccess(Map<String, String> params) {
+    //商户订单号
+    String orderId = params.get("out_trade_no");
+    //支付宝交易号
+    String tradeNo = params.get("trade_no");
+    //交易状态
+    String trade_status = params.get("trade_status");
+    if (!(trade_status.equals("TRADE_SUCCESS") || trade_status.equals("TRADE_FINISHED"))) {
+      LOGGER.warn(String.format("Unexpected payment status <%s>", trade_status));
+      return false;
+    }
+    return true;
   }
 }

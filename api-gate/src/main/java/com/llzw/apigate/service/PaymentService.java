@@ -12,7 +12,7 @@ public interface PaymentService {
 
   Payment retry(Long paymentId) throws RestApiException;
 
-  boolean verify(Map<String, String> params) throws RestApiException;
+  boolean verifyFromVendor(Map<String, String> params) throws RestApiException;
 
   boolean verify(Payment payment) throws RestApiException;
 
