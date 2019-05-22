@@ -16,7 +16,8 @@ createdAt          Date        Creation time
 updatedAt          Date        Update time
 customer           String      Customer username who creates this order
 address            AddressBean Associated Address object of this order
-stock              Integer     The actual stock id of this order
+product            Integer     Parent product id
+stocks             Integer[]   The related stocks of this order
 trackingId         String      Shipment tracking id
 carrierName        String      Carrier name
 totalAmount        Float       Total amount
@@ -45,7 +46,8 @@ Example JSON Representation
        "address": "Jianguo Avenue",
        "zip": "100000"
      },
-     "stock": 23333,
+     "product": 1,
+     "stocks": [11, 12, 13, 14, 15],
      "trackingId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
      "carrierName": "SF-Express",
      "totalAmount": 500.00,
