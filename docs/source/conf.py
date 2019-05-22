@@ -22,6 +22,7 @@ project = 'LLZW'
 copyright = '2019, Yanzhe Lee, Xinye Wanyan'
 author = 'Yanzhe Lee, Xinye Wanyan'
 
+language = 'en'
 
 # -- General configuration ---------------------------------------------------
 
@@ -33,6 +34,8 @@ source_suffix = '.rst'
 extensions = [
     # 'recommonmark'
 ]
+
+# locale_dirs = ['_locale']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

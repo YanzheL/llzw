@@ -2,11 +2,11 @@ package com.llzw.apigate.web.controller;
 
 import com.llzw.apigate.message.RestResponseEntityFactory;
 import com.llzw.apigate.message.error.RestApiException;
-import com.llzw.apigate.message.error.RestUnsupportedOperationException;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.OrderService;
 import com.llzw.apigate.web.dto.OrderCreateDto;
 import com.llzw.apigate.web.dto.OrderSearchDto;
+import com.llzw.apigate.web.dto.OrderShipDto;
 import javax.validation.Valid;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,18 +93,24 @@ public class OrderController {
   }
 
   @PreAuthorize("hasRole('CUSTOMER')")
-  @PatchMapping(value = "/{id:[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}}")
-  public ResponseEntity deliveryConfirm(
-      @PathVariable(value = "id") String id,
-      @RequestParam(value = "action") String action
+  @PatchMapping(value = "/{id:[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}}/DELIVERY_CONFIRM")
+  public ResponseEntity patch(
+      @PathVariable(value = "id") String id
   ) throws RestApiException {
-    if (!action.equals("DELIVERY_CONFIRM")) {
-      throw new RestUnsupportedOperationException(String.format("Action <%s> unsupported", action));
-    }
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    return RestResponseEntityFactory.success(
-        orderService.deliveryConfirm(id, currentUser)
-    );
+    return RestResponseEntityFactory.success(orderService.deliveryConfirm(id, currentUser));
+  }
+
+  @PreAuthorize("hasRole('SELLER')")
+  @PatchMapping(value = "/{id:[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}}/SHIP")
+  public ResponseEntity patch(
+      @PathVariable(value = "id") String id,
+      @Valid @RequestBody OrderShipDto orderShipDto
+  ) throws RestApiException {
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    return RestResponseEntityFactory
+        .success(orderService.patch(id, orderShipDto, currentUser));
   }
 }

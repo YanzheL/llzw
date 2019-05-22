@@ -70,7 +70,7 @@ public class Order extends BaseEntity {
   protected boolean valid;
 
   public boolean belongsToSeller(User seller) {
-    return stock.product.seller.getUsername().equals(seller.getUsername());
+    return stock.getProduct().getSeller().getUsername().equals(seller.getUsername());
   }
 
   public boolean belongsToUser(User user) {

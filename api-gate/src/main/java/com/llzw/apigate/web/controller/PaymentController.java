@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -63,6 +64,25 @@ public class PaymentController {
     return RestResponseEntityFactory.success(payment, HttpStatus.CREATED);
   }
 
+  @PreAuthorize("hasAnyRole('CUSTOMER','SELLER')")
+  @GetMapping("/{id:\\d+}")
+  public ResponseEntity get(@PathVariable(value = "id") Long paymentId) throws RestApiException {
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    return RestResponseEntityFactory
+        .success(paymentService.findById(currentUser, paymentId));
+  }
+
+  @PreAuthorize("hasAnyRole('CUSTOMER','SELLER')")
+  @GetMapping
+  public ResponseEntity getByOrderId(@RequestParam(value = "orderId") String orderId)
+      throws RestApiException {
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    return RestResponseEntityFactory
+        .success(paymentService.findByOrderId(currentUser, orderId));
+  }
+
   /**
    * Re-obtain order string for a specific payment. No authentication required here.
    *
@@ -84,10 +104,10 @@ public class PaymentController {
    *
    * @param allRequestParams All params posted from vendor.
    */
-  @PostMapping("/verify")
+  @RequestMapping(value = "/verify", method = {RequestMethod.POST, RequestMethod.GET})
   public void verify(@RequestParam Map<String, String> allRequestParams) {
     try {
-      paymentService.verify(allRequestParams);
+      paymentService.verifyFromVendor(allRequestParams);
     } catch (RestApiException e) {
       LOGGER.warn(e.getType());
     }

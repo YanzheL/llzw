@@ -15,11 +15,13 @@ import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.OrderSearchDto;
+import com.llzw.apigate.web.dto.OrderShipDto;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.Setter;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -122,5 +124,19 @@ public class DefaultOrderService implements OrderService {
   @Override
   public int countOrdersAfter(Product product, Date date) {
     return orderRepository.countAllByStock_ProductAndCreatedAtAfter(product, date);
+  }
+
+  @Override
+  public Order patch(String id, OrderShipDto dto, User relatedUser) throws RestApiException {
+//    Order order = get(id, relatedUser);
+    Order order = orderRepository.findById(UUID.fromString(id))
+        .orElseThrow(() -> new RestEntityNotFoundException(
+            String.format("Order <%s> does not exist", id)));
+    String seller = order.getStock().getProduct().getSeller().getUsername();
+    if (!order.belongsToUser(relatedUser)) {
+      throw new RestAccessDeniedException("Current user does not have access to this order");
+    }
+    BeanUtils.copyProperties(dto, order);
+    return orderRepository.save(order);
   }
 }

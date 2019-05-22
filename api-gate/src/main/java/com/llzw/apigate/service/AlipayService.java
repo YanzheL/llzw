@@ -74,7 +74,7 @@ public class AlipayService implements PaymentVendorService {
   public boolean verifySignature(Map<String, String> params) {
     try {
       boolean signVerified = AlipaySignature
-          .rsaCheckV2(params, properties.alipayPublicKey, properties.charset, properties.signType);
+          .rsaCheckV1(params, properties.alipayPublicKey, properties.charset, properties.signType);
       return signVerified;
     } catch (AlipayApiException e) {
       LOGGER.warn(e.getErrMsg());
