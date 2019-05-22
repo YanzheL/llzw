@@ -63,6 +63,25 @@ public class PaymentController {
     return RestResponseEntityFactory.success(payment, HttpStatus.CREATED);
   }
 
+  @PreAuthorize("hasAnyRole('CUSTOMER','SELLER')")
+  @GetMapping("/{id:\\d+}")
+  public ResponseEntity get(@PathVariable(value = "id") Long paymentId) throws RestApiException {
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    return RestResponseEntityFactory
+        .success(paymentService.findById(currentUser, paymentId));
+  }
+
+  @PreAuthorize("hasAnyRole('CUSTOMER','SELLER')")
+  @GetMapping
+  public ResponseEntity getByOrderId(@RequestParam(value = "orderId") String orderId)
+      throws RestApiException {
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    return RestResponseEntityFactory
+        .success(paymentService.findByOrderId(currentUser, orderId));
+  }
+
   /**
    * Re-obtain order string for a specific payment. No authentication required here.
    *

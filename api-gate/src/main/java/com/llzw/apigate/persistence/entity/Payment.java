@@ -80,4 +80,8 @@ public class Payment extends BaseEntity {
     TIMEOUT,
     INVALID
   }
+
+  public boolean belongsToUser(User user) {
+    return payer.getUsername().equals(user.getUsername()) || order.belongsToUser(user);
+  }
 }

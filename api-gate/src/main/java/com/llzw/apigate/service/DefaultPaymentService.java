@@ -1,5 +1,6 @@
 package com.llzw.apigate.service;
 
+import com.llzw.apigate.message.error.RestAccessDeniedException;
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
 import com.llzw.apigate.message.error.RestPaymentException;
@@ -87,7 +88,7 @@ public class DefaultPaymentService implements PaymentService {
       return false;
     }
     //商户订单号
-    Long orderId = Long.valueOf(params.get("out_trade_no"));
+    String orderId = params.get("out_trade_no");
     //支付宝交易号
     String trade_no = params.get("trade_no");
     //交易状态
@@ -97,7 +98,7 @@ public class DefaultPaymentService implements PaymentService {
       LOGGER.warn(String.format("Unexpected payment status <%s>", trade_status));
       return false;
     }
-    Payment payment = paymentRepository.findByOrderId(orderId)
+    Payment payment = paymentRepository.findByOrderId(UUID.fromString(orderId))
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
             String.format("Target Payment for Order <%s> does not exist", orderId)));
     Order targetOrder = payment.getOrder();
@@ -134,5 +135,27 @@ public class DefaultPaymentService implements PaymentService {
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
             String.format("Payment <%s> does not exist", paymentId)));
     return verify(payment);
+  }
+
+  @Override
+  public Payment findById(User user, Long id) throws RestApiException {
+    Payment payment = paymentRepository.findById(id)
+        .orElseThrow(() -> new RestDependentEntityNotFoundException(
+            String.format("Payment <%s> does not exist", id)));
+    if (!payment.belongsToUser(user)) {
+      throw new RestAccessDeniedException("You do not have access to this entity");
+    }
+    return payment;
+  }
+
+  @Override
+  public Payment findByOrderId(User user, String orderId) throws RestApiException {
+    Payment payment = paymentRepository.findByOrderId(UUID.fromString(orderId))
+        .orElseThrow(() -> new RestDependentEntityNotFoundException(
+            String.format("No such payment with OrderId <%s>", orderId)));
+    if (!payment.belongsToUser(user)) {
+      throw new RestAccessDeniedException("You do not have access to this entity");
+    }
+    return payment;
   }
 }

@@ -18,4 +18,8 @@ public interface PaymentService {
 
   boolean verify(Long paymentId) throws RestApiException;
 
+  Payment findByOrderId(User user, String orderId) throws RestApiException;
+
+  Payment findById(User user, Long id) throws RestApiException;
+
 }
