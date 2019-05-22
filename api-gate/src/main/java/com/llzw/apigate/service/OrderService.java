@@ -4,6 +4,7 @@ import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.User;
+import com.llzw.apigate.web.dto.OrderPatchDto;
 import com.llzw.apigate.web.dto.OrderSearchDto;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +21,8 @@ public interface OrderService {
   Order get(String id, User relatedUser) throws RestApiException;
 
   Order cancel(String id, User relatedUser) throws RestApiException;
+
+  Order patch(String id, OrderPatchDto dto, User relatedUser) throws RestApiException;
 
   Order deliveryConfirm(String id, User relatedUser) throws RestApiException;
 

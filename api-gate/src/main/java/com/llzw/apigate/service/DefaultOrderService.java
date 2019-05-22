@@ -14,14 +14,17 @@ import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
+import com.llzw.apigate.web.dto.OrderPatchDto;
 import com.llzw.apigate.web.dto.OrderSearchDto;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.Setter;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -109,6 +112,7 @@ public class DefaultOrderService implements OrderService {
   }
 
   @Override
+  @PreAuthorize("hasRole('CUSTOMER')")
   public Order deliveryConfirm(String id, User relatedUser) throws RestApiException {
     Order order = get(id, relatedUser);
     if (order.isDeliveryConfirmed()) {
@@ -122,5 +126,20 @@ public class DefaultOrderService implements OrderService {
   @Override
   public int countOrdersAfter(Product product, Date date) {
     return orderRepository.countAllByStock_ProductAndCreatedAtAfter(product, date);
+  }
+
+  @Override
+  @PreAuthorize("hasRole('SELLER')")
+  public Order patch(String id, OrderPatchDto dto, User relatedUser) throws RestApiException {
+//    Order order = get(id, relatedUser);
+    Order order = orderRepository.findById(UUID.fromString(id))
+        .orElseThrow(() -> new RestEntityNotFoundException(
+            String.format("Order <%s> does not exist", id)));
+    String seller = order.getStock().getProduct().getSeller().getUsername();
+    if (!order.belongsToUser(relatedUser)) {
+      throw new RestAccessDeniedException("Current user does not have access to this order");
+    }
+    BeanUtils.copyProperties(dto, order);
+    return orderRepository.save(order);
   }
 }

@@ -6,6 +6,7 @@ import com.llzw.apigate.message.error.RestUnsupportedOperationException;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.OrderService;
 import com.llzw.apigate.web.dto.OrderCreateDto;
+import com.llzw.apigate.web.dto.OrderPatchDto;
 import com.llzw.apigate.web.dto.OrderSearchDto;
 import javax.validation.Valid;
 import lombok.Setter;
@@ -92,19 +93,24 @@ public class OrderController {
     );
   }
 
-  @PreAuthorize("hasRole('CUSTOMER')")
-  @PatchMapping(value = "/{id:[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}}")
-  public ResponseEntity deliveryConfirm(
+  @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
+  @PatchMapping(value = "/{id:[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}}/{action:[A-Z_]+}")
+  public ResponseEntity patch(
       @PathVariable(value = "id") String id,
-      @RequestParam(value = "action") String action
+      @PathVariable(value = "action") String action,
+      @RequestBody(required = false) OrderPatchDto orderPatchDto
   ) throws RestApiException {
-    if (!action.equals("DELIVERY_CONFIRM")) {
-      throw new RestUnsupportedOperationException(String.format("Action <%s> unsupported", action));
-    }
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    return RestResponseEntityFactory.success(
-        orderService.deliveryConfirm(id, currentUser)
-    );
+    switch (action) {
+      case "DELIVERY_CONFIRM":
+        return RestResponseEntityFactory.success(orderService.deliveryConfirm(id, currentUser));
+      case "SELLER_PATCH":
+        return RestResponseEntityFactory
+            .success(orderService.patch(id, orderPatchDto, currentUser));
+      default:
+        throw new RestUnsupportedOperationException(
+            String.format("Action <%s> unsupported", action));
+    }
   }
 }
