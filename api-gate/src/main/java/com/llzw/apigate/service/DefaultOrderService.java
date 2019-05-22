@@ -24,7 +24,6 @@ import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -112,7 +111,6 @@ public class DefaultOrderService implements OrderService {
   }
 
   @Override
-  @PreAuthorize("hasRole('CUSTOMER')")
   public Order deliveryConfirm(String id, User relatedUser) throws RestApiException {
     Order order = get(id, relatedUser);
     if (order.isDeliveryConfirmed()) {
@@ -129,7 +127,6 @@ public class DefaultOrderService implements OrderService {
   }
 
   @Override
-  @PreAuthorize("hasRole('SELLER')")
   public Order patch(String id, OrderShipDto dto, User relatedUser) throws RestApiException {
 //    Order order = get(id, relatedUser);
     Order order = orderRepository.findById(UUID.fromString(id))

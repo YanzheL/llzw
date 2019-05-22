@@ -2,7 +2,6 @@ package com.llzw.apigate.web.controller;
 
 import com.llzw.apigate.message.RestResponseEntityFactory;
 import com.llzw.apigate.message.error.RestApiException;
-import com.llzw.apigate.message.error.RestUnsupportedOperationException;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.service.OrderService;
 import com.llzw.apigate.web.dto.OrderCreateDto;
@@ -93,24 +92,25 @@ public class OrderController {
     );
   }
 
-  @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
-  @PatchMapping(value = "/{id:[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}}/{action:[A-Z_]+}")
+  @PreAuthorize("hasRole('CUSTOMER')")
+  @PatchMapping(value = "/{id:[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}}/DELIVERY_CONFIRM")
   public ResponseEntity patch(
-      @PathVariable(value = "id") String id,
-      @PathVariable(value = "action") String action,
-      @Valid @RequestBody(required = false) OrderShipDto orderShipDto
+      @PathVariable(value = "id") String id
   ) throws RestApiException {
     User currentUser =
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    switch (action) {
-      case "DELIVERY_CONFIRM":
-        return RestResponseEntityFactory.success(orderService.deliveryConfirm(id, currentUser));
-      case "SHIP":
-        return RestResponseEntityFactory
-            .success(orderService.patch(id, orderShipDto, currentUser));
-      default:
-        throw new RestUnsupportedOperationException(
-            String.format("Action <%s> unsupported", action));
-    }
+    return RestResponseEntityFactory.success(orderService.deliveryConfirm(id, currentUser));
+  }
+
+  @PreAuthorize("hasRole('SELLER')")
+  @PatchMapping(value = "/{id:[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}}/SHIP")
+  public ResponseEntity patch(
+      @PathVariable(value = "id") String id,
+      @Valid @RequestBody OrderShipDto orderShipDto
+  ) throws RestApiException {
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    return RestResponseEntityFactory
+        .success(orderService.patch(id, orderShipDto, currentUser));
   }
 }
