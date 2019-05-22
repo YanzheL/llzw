@@ -3,6 +3,7 @@ package com.llzw.apigate.web.controller;
 import static org.hamcrest.number.OrderingComparison.greaterThan;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -11,6 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.llzw.apigate.ApiGateApplicationTests;
 import com.llzw.apigate.message.RestApiResponse;
 import com.llzw.apigate.web.dto.OrderCreateDto;
+import com.llzw.apigate.web.dto.OrderPatchDto;
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeAll;
@@ -130,6 +133,80 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
         .andExpect(status().isForbidden())
         .andExpect(jsonPath("$.success").value(false))
         .andExpect(jsonPath("$.error.type").isNotEmpty())
+    ;
+  }
+
+  @WithUserDetails("test_user_customer_username_0")
+  @Test
+  public void deliveryConfirmByCustomer() throws Exception {
+    mvc.perform(
+        patch(apiBasePath + "/orders/" + testUUID.toString() + "/DELIVERY_CONFIRM")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data.id").value(testUUID.toString()))
+    ;
+  }
+
+  @WithUserDetails("test_user_seller_username_0")
+  @Test
+  public void deliveryConfirmBySeller() throws Exception {
+    mvc.perform(
+        patch(apiBasePath + "/orders/" + testUUID.toString() + "/DELIVERY_CONFIRM")
+    )
+        .andDo(print())
+        .andExpect(status().isForbidden())
+        .andExpect(jsonPath("$.success").value(false))
+    ;
+  }
+
+  @Test
+  public void deliveryConfirmByNoUser() throws Exception {
+    mvc.perform(
+        patch(apiBasePath + "/orders/" + testUUID.toString() + "/DELIVERY_CONFIRM")
+    )
+        .andDo(print())
+        .andExpect(status().isForbidden())
+        .andExpect(jsonPath("$.success").value(false))
+    ;
+  }
+
+  @WithUserDetails("test_user_seller_username_0")
+  @Test
+  public void PatchOrderBySeller() throws Exception {
+    OrderPatchDto dto = new OrderPatchDto();
+    dto.setCarrierName("SF-Express");
+    dto.setShippingTime(new Date());
+    dto.setRemark("Test");
+    dto.setTrackingId("12345678");
+    mvc.perform(
+        patch(apiBasePath + "/orders/" + testUUID.toString() + "/SELLER_PATCH")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(dto))
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+    ;
+  }
+
+  @WithUserDetails("test_user_customer_username_0")
+  @Test
+  public void PatchOrderByCustomer() throws Exception {
+    OrderPatchDto dto = new OrderPatchDto();
+    dto.setCarrierName("SF-Express");
+    dto.setShippingTime(new Date());
+    dto.setRemark("Test");
+    dto.setTrackingId("12345678");
+    mvc.perform(
+        patch(apiBasePath + "/orders/" + testUUID.toString() + "/SELLER_PATCH")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(dto))
+    )
+        .andDo(print())
+        .andExpect(status().isForbidden())
+        .andExpect(jsonPath("$.success").value(false))
     ;
   }
 }
