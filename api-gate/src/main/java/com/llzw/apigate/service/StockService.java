@@ -21,7 +21,7 @@ public interface StockService {
   ) throws RestApiException;
 
   List<Stock> search(User owner, StockSearchDto dto,
-      PageRequest pageRequest) throws RestApiException;
+      PageRequest pageRequest);
 
   Stock findById(User owner, Long id) throws RestApiException;
 

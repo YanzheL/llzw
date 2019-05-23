@@ -4,7 +4,6 @@ import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
 import com.google.common.io.ByteStreams;
 import com.llzw.apigate.message.error.RestApiException;
-import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
 import com.llzw.apigate.message.error.RestInternalServerException;
 import com.llzw.apigate.message.error.RestInvalidParameterException;
 import com.llzw.apigate.persistence.dao.FileMetaDataRepository;
@@ -135,12 +134,15 @@ public class UniqueHashFileStorageService implements FileStorageService {
   }
 
   @Override
-  public void increaseReferenceCount(String path) throws RestApiException {
-    FileMetaData fileMetaData = fileMetaDataRepository.findByHash(path)
-        .orElseThrow(() -> new RestDependentEntityNotFoundException(
-            String.format("File <%s> does not exist", path)));
+  public boolean increaseReferenceCount(String path) {
+    Optional<FileMetaData> fileMetaDataOptional = fileMetaDataRepository.findByHash(path);
+    if (fileMetaDataOptional.isPresent()) {
+      return false;
+    }
+    FileMetaData fileMetaData = fileMetaDataOptional.get();
     fileMetaData.increaseReferenceCount();
     fileMetaDataRepository.save(fileMetaData);
+    return true;
   }
 
   private void createBasePathIfNotExist() {
