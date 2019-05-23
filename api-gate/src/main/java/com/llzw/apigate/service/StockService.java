@@ -7,7 +7,6 @@ import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.StockSearchDto;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.domain.PageRequest;
 
 public interface StockService {
@@ -26,8 +25,7 @@ public interface StockService {
 
   Stock findById(User owner, Long id) throws RestApiException;
 
-  Optional<Stock> getAvailableStockForProduct(Product product, int quantity)
-      throws RestApiException;
+  List<Stock> lockStocksForProduct(Product product, int quantity) throws RestApiException;
 
   int countAvailableStocks(Product product);
 

@@ -22,7 +22,7 @@ Current project status: **Still in development**
 
 ## Prerequisites
 
-- **JRE Runtime:** 8 or later
+- **JRE Runtime:** 9 or later
 - **MySQL:** 8 or later, running on [localhost:3306](localhost:3306),  otherwise you should modify related information in [application-dev.yml](api-gate/src/main/resources/application-dev.yml)
 
 ## Getting Started
@@ -35,7 +35,7 @@ Follow the intructions on [Release Page](https://github.com/YanzheL/llzw/release
 
 #### From Source
 
-To compile the source, you need a valid JDK environment with version 8 or later.
+To compile the source, you need a valid JDK environment with version 9 or later.
 
 Clone this project
 

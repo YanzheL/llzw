@@ -19,6 +19,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,6 +73,13 @@ public class Stock extends BaseEntity {
   @Transactional
   public boolean belongsToSeller(User seller) {
     return product.getSeller().getUsername().equals(seller.getUsername());
+  }
+
+  public static Specification<Stock> belongsToSellerSpec(User user) {
+    return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(
+        root.get("product").<User>get("seller").<String>get("username"),
+        user.getUsername()
+    );
   }
 
   public boolean decreaseCurrentQuantity(int quantity) {

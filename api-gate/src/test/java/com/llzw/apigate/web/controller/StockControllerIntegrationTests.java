@@ -78,7 +78,7 @@ public class StockControllerIntegrationTests extends ApiGateApplicationTests {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.success").value(true))
-        .andExpect(jsonPath("$.data.length()").value(2L))
+        .andExpect(jsonPath("$.data.length()").value(20))
         .andReturn();
   }
 

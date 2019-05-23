@@ -1,6 +1,7 @@
 language: java
 sudo: false
+jdk:
+  - openjdk11
 script:
   - cd api-gate
-  - ./mvnw install -Dspring.profiles.active=test
-  - ./mvnw package -Dspring.profiles.active=test
+  - ./mvnw package -Dspring.profiles.active=test -Dlogging.level.org.hibernate.SQL=INFO -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
