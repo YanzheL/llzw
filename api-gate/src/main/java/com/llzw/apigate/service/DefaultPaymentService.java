@@ -1,5 +1,6 @@
 package com.llzw.apigate.service;
 
+import com.llzw.apigate.message.error.RestAccessDeniedException;
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
 import com.llzw.apigate.message.error.RestPaymentException;

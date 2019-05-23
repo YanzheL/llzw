@@ -158,4 +158,18 @@ public class DefaultOrderService implements OrderService {
         )
         ;
   }
+
+  @Override
+  public Order patch(String id, OrderShipDto dto, User relatedUser) throws RestApiException {
+//    Order order = get(id, relatedUser);
+    Order order = orderRepository.findById(UUID.fromString(id))
+        .orElseThrow(() -> new RestEntityNotFoundException(
+            String.format("Order <%s> does not exist", id)));
+    String seller = order.getStock().getProduct().getSeller().getUsername();
+    if (!order.belongsToUser(relatedUser)) {
+      throw new RestAccessDeniedException("Current user does not have access to this order");
+    }
+    BeanUtils.copyProperties(dto, order);
+    return orderRepository.save(order);
+  }
 }
