@@ -35,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
 
-  protected UUID testUUID = UUID.randomUUID();
+  protected UUID testUUID;
 
   // 创建一个用于测试的mvc客户端，然后这个mvc客户端可以用来发起请求
   @BeforeAll
@@ -125,6 +125,7 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data.length()").value(1))
         .andExpect(jsonPath("$.data[0].id").value(testUUID.toString()))
     ;
   }
@@ -155,6 +156,7 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
 
   @WithUserDetails("test_user_customer_username_0")
   @Test
+  @Order(2)
   public void deliveryConfirmByCustomer() throws Exception {
     mvc.perform(
         patch(apiBasePath + "/orders/" + testUUID.toString() + "/DELIVERY_CONFIRM")
@@ -168,6 +170,7 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
 
   @WithUserDetails("test_user_seller_username_0")
   @Test
+  @Order(2)
   public void deliveryConfirmBySeller() throws Exception {
     mvc.perform(
         patch(apiBasePath + "/orders/" + testUUID.toString() + "/DELIVERY_CONFIRM")
@@ -179,6 +182,7 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
   }
 
   @Test
+  @Order(2)
   public void deliveryConfirmByNoUser() throws Exception {
     mvc.perform(
         patch(apiBasePath + "/orders/" + testUUID.toString() + "/DELIVERY_CONFIRM")
@@ -191,6 +195,7 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
 
   @WithUserDetails("test_user_seller_username_0")
   @Test
+  @Order(2)
   public void PatchOrderBySeller() throws Exception {
     OrderShipDto dto = new OrderShipDto();
     dto.setCarrierName("SF-Express");
@@ -209,6 +214,7 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
 
   @WithUserDetails("test_user_seller_username_0")
   @Test
+  @Order(2)
   public void PatchOrderBySellerWithPartialInfo() throws Exception {
     OrderShipDto dto = new OrderShipDto();
     dto.setCarrierName("SF-Express");
@@ -226,6 +232,7 @@ public class OrderControllerIntegrationTests extends ApiGateApplicationTests {
 
   @WithUserDetails("test_user_customer_username_0")
   @Test
+  @Order(2)
   public void PatchOrderByCustomer() throws Exception {
     OrderShipDto dto = new OrderShipDto();
     dto.setCarrierName("SF-Express");
