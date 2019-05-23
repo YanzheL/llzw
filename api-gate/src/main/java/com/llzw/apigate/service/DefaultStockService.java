@@ -58,8 +58,7 @@ public class DefaultStockService implements StockService {
   }
 
   @Override
-  public List<Stock> search(User owner, StockSearchDto dto,
-      PageRequest pageRequest) throws RestApiException {
+  public List<Stock> search(User owner, StockSearchDto dto, PageRequest pageRequest) {
     return stockRepository
         .findAll(
             makeSpec(dto, owner),
@@ -81,8 +80,7 @@ public class DefaultStockService implements StockService {
   }
 
   @Override
-  public List<Stock> lockStocksForProduct(Product product, int quantity)
-      throws RestApiException {
+  public List<Stock> lockStocksForProduct(Product product, int quantity) {
     AtomicReference<Integer> lockedItems = new AtomicReference<>();
     lockedItems.set(0);
     try (Stream<Stock> stockStream = stockRepository
@@ -119,7 +117,8 @@ public class DefaultStockService implements StockService {
   }
 
   private Specification<Stock> makeSpec(StockSearchDto dto, User relatedUser) {
-    Specification<Stock> specification = (root, criteriaQuery, criteriaBuilder) -> {
+    Specification<Stock> specification = Stock.belongsToSellerSpec(relatedUser);
+    specification.and((root, criteriaQuery, criteriaBuilder) -> {
       List<Predicate> expressions = new ArrayList<>();
       if (dto.getProductId() != null) {
         expressions.add(criteriaBuilder.equal(
@@ -131,24 +130,25 @@ public class DefaultStockService implements StockService {
             root.get("carrierName"), dto.getCarrierName()
         ));
       }
-      if (dto.getShelfLife() != null) {
-        expressions.add(criteriaBuilder.equal(
-            root.get("shelfLife"), dto.getShelfLife()
-        ));
-      }
       if (dto.getTrackingId() != null) {
         expressions.add(criteriaBuilder.equal(
             root.get("trackingId"), dto.getTrackingId()
         ));
       }
-      expressions.add(
-          criteriaBuilder.equal(
-              root.get("valid"), dto.isValid()
-          )
-      );
-      return expressions.stream().reduce(criteriaBuilder::and).get();
-    };
-    specification.and(Stock.belongsToSellerSpec(relatedUser));
+      if (dto.getShelfLife() != null) {
+        expressions.add(criteriaBuilder.equal(
+            root.get("shelfLife"), dto.getShelfLife()
+        ));
+      }
+      if (dto.getValid() != null) {
+        expressions.add(
+            criteriaBuilder.equal(
+                root.get("valid"), dto.getValid()
+            )
+        );
+      }
+      return expressions.stream().reduce(criteriaBuilder::and).orElse(null);
+    });
     return specification;
   }
 }

@@ -71,8 +71,7 @@ public class DefaultOrderService implements OrderService {
   }
 
   @Override
-  public List<Order> search(OrderSearchDto example, User relatedUser, Pageable pageable)
-      throws RestApiException {
+  public List<Order> search(OrderSearchDto example, User relatedUser, Pageable pageable) {
     // Result orders may contain other user's order, so we should filter them out.
     return orderRepository
         .findAll(
@@ -126,32 +125,36 @@ public class DefaultOrderService implements OrderService {
   }
 
   private Specification<Order> makeSpec(OrderSearchDto dto, User relatedUser) {
-    Specification<Order> specification = (root, criteriaQuery, criteriaBuilder) -> {
-      List<Predicate> expressions = new ArrayList<>();
-      if (dto.getStockId() != null) {
-        expressions.add(
-            criteriaBuilder.isMember(
-                dto.getStockId(), root.get("stocks"))
-        );
-      }
-      if (dto.getCustomerId() != null) {
-        expressions.add(criteriaBuilder.equal(
-            root.get("customer").<String>get("username"), dto.getCustomerId()
-        ));
-      }
-      if (dto.getTrackingId() != null) {
-        expressions.add(criteriaBuilder.equal(
-            root.get("trackingId"), dto.getTrackingId()
-        ));
-      }
-      expressions.add(
-          criteriaBuilder.equal(
-              root.get("valid"), dto.isValid()
-          )
-      );
-      return expressions.stream().reduce(criteriaBuilder::and).get();
-    };
-    specification.and(Order.belongsToUserSpec(relatedUser));
+    Specification<Order> specification = Order.belongsToUserSpec(relatedUser);
+    specification.and(
+        (root, criteriaQuery, criteriaBuilder) -> {
+          List<Predicate> expressions = new ArrayList<>();
+          if (dto.getStockId() != null) {
+            expressions.add(
+                criteriaBuilder.isMember(
+                    dto.getStockId(), root.get("stocks"))
+            );
+          }
+          if (dto.getCustomerId() != null) {
+            expressions.add(criteriaBuilder.equal(
+                root.get("customer").<String>get("username"), dto.getCustomerId()
+            ));
+          }
+          if (dto.getTrackingId() != null) {
+            expressions.add(criteriaBuilder.equal(
+                root.get("trackingId"), dto.getTrackingId()
+            ));
+          }
+          if (dto.getValid() != null) {
+            expressions.add(
+                criteriaBuilder.equal(
+                    root.get("valid"), dto.getValid()
+                )
+            );
+          }
+          return expressions.stream().reduce(criteriaBuilder::and).orElse(null);
+        }
+    );
     return specification;
   }
 }
