@@ -13,22 +13,22 @@ public class RestResponseEntityFactory {
     return new ResponseEntity<>(message, status);
   }
 
-  public static ResponseEntity success(final Object data) {
-    return ResponseEntity.ok(new RestApiResponse(true, data, null));
+  public static <T> ResponseEntity success(T data) {
+    return ResponseEntity.ok(new RestApiResponse<>(true, data, null));
   }
 
-  public static ResponseEntity success(final Object data, HttpStatus status) {
-    return new ResponseEntity<>(new RestApiResponse(true, data, null), status);
+  public static <T> ResponseEntity success(T data, HttpStatus status) {
+    return new ResponseEntity<>(new RestApiResponse<>(true, data, null), status);
   }
 
   public static ResponseEntity<Object> error(RestApiErrorMessage error) {
     return new ResponseEntity<>(
-        new RestApiResponse(false, null, error),
+        new RestApiResponse<>(false, null, error),
         error.suggestHttpStatus()
     );
   }
 
   public static ResponseEntity<Object> error(RestApiErrorMessage error, HttpStatus status) {
-    return new ResponseEntity<>(new RestApiResponse(false, null, error), status);
+    return new ResponseEntity<>(new RestApiResponse<>(false, null, error), status);
   }
 }
