@@ -84,7 +84,7 @@ public class StockControllerIntegrationTests extends ApiGateApplicationTests {
 
   @WithUserDetails("test_user_seller_username_0")
   @Test
-  public void searchStockByProductand() throws Exception {
+  public void searchStockByProductId() throws Exception {
     MvcResult result = mvc.perform(
         get("/api/v1/stocks")
             .param("productId", "1")
