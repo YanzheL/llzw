@@ -42,7 +42,6 @@ public class Product extends BaseEntity {
   @Setter(AccessLevel.NONE)
   protected Long id;
 
-  @NonNull
   protected boolean valid;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -73,7 +72,6 @@ public class Product extends BaseEntity {
   protected String introduction;
 
   @Column(nullable = false)
-  @NonNull
   protected float price;
 
   @Column(nullable = false, length = 50)

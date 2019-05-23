@@ -54,15 +54,12 @@ public class Stock extends BaseEntity {
   protected Date inboundedAt;
 
   @Column(nullable = false)
-  @NonNull
   protected int shelfLife;
 
   @Column(nullable = false)
-  @NonNull
   protected int totalQuantity;
 
   @Column(nullable = false)
-  @NonNull
   protected int currentQuantity;
 
   @Column(length = 50)
