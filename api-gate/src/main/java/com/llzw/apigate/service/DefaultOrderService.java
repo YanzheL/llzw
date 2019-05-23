@@ -86,44 +86,6 @@ public class DefaultOrderService implements OrderService {
         ;
   }
 
-  private Specification<Order> makeSpec(OrderSearchDto dto, User relatedUser) {
-    Specification<Order> specification = (root, criteriaQuery, criteriaBuilder) -> {
-      List<Predicate> expressions = new ArrayList<>();
-      if (dto.getStockId() != null) {
-        expressions.add(
-            criteriaBuilder.isMember(
-                dto.getStockId(), root.get("stocks"))
-        );
-      }
-      if (dto.getCustomerId() != null) {
-        expressions.add(criteriaBuilder.equal(
-            root.get("customer").<String>get("username"), dto.getCustomerId()
-        ));
-      }
-      if (dto.getTrackingId() != null) {
-        expressions.add(criteriaBuilder.equal(
-            root.get("trackingId"), dto.getTrackingId()
-        ));
-      }
-      expressions.add(
-          criteriaBuilder.equal(
-              root.get("valid"), dto.isValid()
-          )
-      );
-      Predicate expression = null;
-      for (Predicate expr : expressions) {
-        if (expression == null) {
-          expression = expr;
-        } else {
-          expression = criteriaBuilder.and(expression, expr);
-        }
-      }
-      return expression;
-    };
-    specification.and(Order.belongsToUserSpec(relatedUser));
-    return specification;
-  }
-
   @Override
   public Order get(String id, User relatedUser) throws RestApiException {
     Order order = orderRepository.findById(UUID.fromString(id))
@@ -173,5 +135,43 @@ public class DefaultOrderService implements OrderService {
     }
     BeanUtils.copyProperties(dto, order);
     return orderRepository.save(order);
+  }
+
+  private Specification<Order> makeSpec(OrderSearchDto dto, User relatedUser) {
+    Specification<Order> specification = (root, criteriaQuery, criteriaBuilder) -> {
+      List<Predicate> expressions = new ArrayList<>();
+      if (dto.getStockId() != null) {
+        expressions.add(
+            criteriaBuilder.isMember(
+                dto.getStockId(), root.get("stocks"))
+        );
+      }
+      if (dto.getCustomerId() != null) {
+        expressions.add(criteriaBuilder.equal(
+            root.get("customer").<String>get("username"), dto.getCustomerId()
+        ));
+      }
+      if (dto.getTrackingId() != null) {
+        expressions.add(criteriaBuilder.equal(
+            root.get("trackingId"), dto.getTrackingId()
+        ));
+      }
+      expressions.add(
+          criteriaBuilder.equal(
+              root.get("valid"), dto.isValid()
+          )
+      );
+      Predicate expression = null;
+      for (Predicate expr : expressions) {
+        if (expression == null) {
+          expression = expr;
+        } else {
+          expression = criteriaBuilder.and(expression, expr);
+        }
+      }
+      return expression;
+    };
+    specification.and(Order.belongsToUserSpec(relatedUser));
+    return specification;
   }
 }

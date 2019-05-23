@@ -3,22 +3,23 @@ package com.llzw.apigate.service;
 import com.llzw.apigate.message.error.RestAccessDeniedException;
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
-import com.llzw.apigate.message.error.RestInvalidParameterException;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.dao.StockRepository;
-import com.llzw.apigate.persistence.dao.customquery.JpaSearchSpecificationFactory;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.web.dto.StockSearchDto;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javax.persistence.criteria.Predicate;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,19 +54,12 @@ public class DefaultStockService implements StockService {
   @Override
   public List<Stock> search(User owner, StockSearchDto dto,
       PageRequest pageRequest) throws RestApiException {
-    try {
-      // Results may contain other user's stocks, so we should filter them out.
-      return stockRepository
-          .findAll(
-              JpaSearchSpecificationFactory.fromExample(dto),
-              pageRequest
-          )
-          .getContent().stream()
-          .filter(o -> o.belongsToSeller(owner))
-          .collect(Collectors.toList());
-    } catch (IllegalAccessException e) {
-      throw new RestInvalidParameterException(e.getMessage());
-    }
+    return stockRepository
+        .findAll(
+            makeSpec(dto, owner),
+            pageRequest
+        )
+        .getContent();
   }
 
   @Override
@@ -116,5 +110,48 @@ public class DefaultStockService implements StockService {
   @Override
   public Stock save(Stock stock) {
     return stockRepository.save(stock);
+  }
+
+  private Specification<Stock> makeSpec(StockSearchDto dto, User relatedUser) {
+    Specification<Stock> specification = (root, criteriaQuery, criteriaBuilder) -> {
+      List<Predicate> expressions = new ArrayList<>();
+      if (dto.getProductId() != null) {
+        expressions.add(criteriaBuilder.equal(
+            root.get("product").<Long>get("id"), dto.getProductId()
+        ));
+      }
+      if (dto.getCarrierName() != null) {
+        expressions.add(criteriaBuilder.equal(
+            root.get("carrierName"), dto.getCarrierName()
+        ));
+      }
+      if (dto.getShelfLife() != null) {
+        expressions.add(criteriaBuilder.equal(
+            root.get("shelfLife"), dto.getShelfLife()
+        ));
+      }
+      if (dto.getTrackingId() != null) {
+        expressions.add(criteriaBuilder.equal(
+            root.get("trackingId"), dto.getTrackingId()
+        ));
+      }
+      expressions.add(
+          criteriaBuilder.equal(
+              root.get("valid"), dto.isValid()
+          )
+      );
+      Predicate expression = null;
+//      expressions.stream().reduce()
+      for (Predicate expr : expressions) {
+        if (expression == null) {
+          expression = expr;
+        } else {
+          expression = criteriaBuilder.and(expression, expr);
+        }
+      }
+      return expression;
+    };
+    specification.and(Stock.belongsToSellerSpec(relatedUser));
+    return specification;
   }
 }

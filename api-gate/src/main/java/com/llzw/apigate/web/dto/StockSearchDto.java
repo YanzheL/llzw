@@ -16,5 +16,5 @@ public class StockSearchDto {
   @Size(max = 30, message = "Length cannot exceed 30")
   protected String carrierName;
 
-  Boolean valid;
+  boolean valid = true;
 }
