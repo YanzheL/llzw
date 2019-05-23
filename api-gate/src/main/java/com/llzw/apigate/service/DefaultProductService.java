@@ -59,7 +59,7 @@ public class DefaultProductService implements ProductService {
   }
 
   @Override
-  public Product create(ProductCreateDto dto, User seller) throws RestApiException {
+  public Product create(ProductCreateDto dto, User seller) {
     fileStorageService.increaseReferenceCount(dto.getCaFile());
     String introduction = dto.getIntroduction();
     List<String> paths = searchFilePaths(introduction);
@@ -108,7 +108,7 @@ public class DefaultProductService implements ProductService {
   }
 
   @Override
-  public List<Product> search(Pageable pageable, ProductSearchDto dto) throws RestApiException {
+  public List<Product> search(Pageable pageable, ProductSearchDto dto) {
     String nameQueryString = dto.getName();
     String introductionQueryString = dto.getName();
     String global = dto.getGlobal();
