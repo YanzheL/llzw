@@ -95,7 +95,7 @@ public class DefaultOrderService implements OrderService {
     Order order = get(id, relatedUser);
     if (order.getShippingTime() != null) {
       throw new RestRejectedByEntityException(
-          String.format("Order <%d> has already been shipped", id));
+          String.format("Order <%s> has already been shipped", id));
     }
     order.setValid(false);
     return orderRepository.save(order);
@@ -106,7 +106,7 @@ public class DefaultOrderService implements OrderService {
     Order order = get(id, relatedUser);
     if (order.isDeliveryConfirmed()) {
       throw new RestRejectedByEntityException(
-          String.format("Order <%d> has already been confirmed", id));
+          String.format("Order <%s> has already been confirmed", id));
     }
     order.setDeliveryConfirmed(true);
     return orderRepository.save(order);

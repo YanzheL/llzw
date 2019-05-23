@@ -11,6 +11,7 @@ import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
+@SuppressWarnings("unchecked")
 public class ProductSearchableRepositoryImpl implements ProductSearchableRepository {
 
   private static boolean indexed = false;

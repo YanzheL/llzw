@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 // @RepositoryRestController is fucking not working as expected, referenced issue: https://jira.spring.io/browse/DATAREST-972
 // @RestController creates duplicate endpoints with and without base-path. The same issue as described above.
 @Controller
-@RequestMapping({"${server.error.path:${error.path:/error}}"})
+@RequestMapping({"${server.error.path:${error.path:/error}"})
 public class CustomServletErrorController extends AbstractErrorController {
 
   public CustomServletErrorController(ErrorAttributes errorAttributes) {

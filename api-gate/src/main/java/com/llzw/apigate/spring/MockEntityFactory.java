@@ -81,13 +81,14 @@ public class MockEntityFactory {
     order.setTotalAmount(1000.123f);
     order.setCustomer(customer);
     order.setValid(true);
+    String suffix = id == null ? "XXX" : id.toString().subSequence(0, 4).toString();
     order.setAddress(
         new AddressBean(
-            String.format("Province_%s", id.toString().subSequence(0, 4)),
-            String.format("City_%s", id.toString().subSequence(0, 4)),
-            String.format("District_%s", id.toString().subSequence(0, 4)),
-            String.format("Address_%s", id.toString().subSequence(0, 4)),
-            String.format("000000", id.toString().subSequence(0, 4))
+            String.format("Province_%s", suffix),
+            String.format("City_%s", suffix),
+            String.format("District_%s", suffix),
+            String.format("Address_%s", suffix),
+            "000000"
         )
     );
     return order;

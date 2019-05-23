@@ -73,9 +73,8 @@ public class AlipayService implements PaymentVendorService {
   @Override
   public boolean verifySignature(Map<String, String> params) {
     try {
-      boolean signVerified = AlipaySignature
+      return AlipaySignature
           .rsaCheckV1(params, properties.alipayPublicKey, properties.charset, properties.signType);
-      return signVerified;
     } catch (AlipayApiException e) {
       LOGGER.warn(e.getErrMsg());
       return false;
@@ -85,9 +84,8 @@ public class AlipayService implements PaymentVendorService {
   @Override
   public Map<String, String> query(String orderId) throws RestApiException {
     AlipayTradeQueryRequest alipayRequest = new AlipayTradeQueryRequest();
-    String outTradeNo = orderId;
     AlipayTradeQueryModel model = new AlipayTradeQueryModel();
-    model.setOutTradeNo(outTradeNo);
+    model.setOutTradeNo(orderId);
     alipayRequest.setBizModel(model);
     try {
       AlipayTradeQueryResponse response = alipayClient.execute(alipayRequest);
