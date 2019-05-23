@@ -6,9 +6,9 @@ import lombok.Data;
 @Data
 public class StockSearchDto {
 
-  Long productId;
+  protected Long productId;
 
-  Integer shelfLife;
+  protected Integer shelfLife;
 
   @Size(max = 30, message = "Length cannot exceed 30")
   protected String trackingId;
@@ -16,5 +16,5 @@ public class StockSearchDto {
   @Size(max = 30, message = "Length cannot exceed 30")
   protected String carrierName;
 
-  boolean valid = true;
+  protected Boolean valid;
 }

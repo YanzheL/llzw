@@ -13,5 +13,5 @@ public class OrderSearchDto {
   @Size(max = 30, message = "Length cannot exceed 30")
   protected String trackingId;
 
-  protected boolean valid = true;
+  protected Boolean valid;
 }
