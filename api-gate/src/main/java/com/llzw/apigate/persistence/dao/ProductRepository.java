@@ -16,4 +16,6 @@ public interface ProductRepository
   List<Product> findAllBySellerUsername(String username);
 
   Optional<Product> findByIdAndSeller(Long id, User user);
+
+  List<Product> findAllByValid(boolean valid);
 }

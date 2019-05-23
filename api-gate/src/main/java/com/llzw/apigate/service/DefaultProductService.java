@@ -118,11 +118,12 @@ public class DefaultProductService implements ProductService {
       if (!dto.isValid()) {
         result = result.stream().filter(Product::isValid).collect(Collectors.toList());
       }
-    } else {
+    } else if (nameQueryString != null || introductionQueryString != null) {
       Product example = new Product();
-      example.setValid(dto.isValid());
       BeanUtils.copyProperties(dto, example, Utils.getNullPropertyNames(dto));
       result = productRepository.searchByExample(example);
+    } else {
+      result = productRepository.findAllByValid(dto.isValid());
     }
     result.forEach(productStatisticsService::updateStat);
     return result;
