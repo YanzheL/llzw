@@ -8,6 +8,7 @@ import com.llzw.apigate.persistence.dao.RoleRepository;
 import com.llzw.apigate.persistence.dao.UserRepository;
 import com.llzw.apigate.persistence.entity.Role;
 import com.llzw.apigate.persistence.entity.User;
+import com.llzw.apigate.util.Utils;
 import com.llzw.apigate.web.dto.RealNameVerificationDto;
 import com.llzw.apigate.web.dto.UserDto;
 import com.llzw.apigate.web.dto.UserPatchDto;
@@ -109,7 +110,7 @@ public class DefaultUserService implements UserService {
     if (user.isVerified()) {
       return user;
     }
-    BeanUtils.copyProperties(dto, user);
+    BeanUtils.copyProperties(dto, user, Utils.getNullPropertyNames(dto));
     user.setVerified(true);
     return userRepository.save(user);
   }
@@ -123,7 +124,7 @@ public class DefaultUserService implements UserService {
     if (newAvatar != null && fileStorageService.isAcceptablePath(oldAvatar)) {
       fileStorageService.delete(oldAvatar);
     }
-    BeanUtils.copyProperties(userPatchDto, user);
+    BeanUtils.copyProperties(userPatchDto, user, Utils.getNullPropertyNames(userPatchDto));
     if (fileStorageService.isAcceptablePath(newAvatar)) {
       fileStorageService.increaseReferenceCount(newAvatar);
     }

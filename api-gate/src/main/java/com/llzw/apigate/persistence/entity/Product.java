@@ -59,7 +59,6 @@ public class Product extends BaseEntity {
   }
 
   @Column(nullable = false)
-  @NonNull
   @Field(termVector = TermVector.YES)
   protected String name;
 
@@ -67,7 +66,6 @@ public class Product extends BaseEntity {
   protected List<String> mainImageFiles;
 
   @Lob
-  @NonNull
   @Field(termVector = TermVector.YES)
   protected String introduction;
 

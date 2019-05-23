@@ -7,6 +7,7 @@ import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
 import com.llzw.apigate.persistence.dao.AddressRepository;
 import com.llzw.apigate.persistence.entity.Address;
 import com.llzw.apigate.persistence.entity.User;
+import com.llzw.apigate.util.Utils;
 import com.llzw.apigate.web.dto.AddressCreateDto;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -52,7 +53,7 @@ public class AddressController {
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     Address address = new Address();
     address.setOwner(currentUser);
-    BeanUtils.copyProperties(dto, address);
+    BeanUtils.copyProperties(dto, address, Utils.getNullPropertyNames(dto));
     return RestResponseEntityFactory.success(addressRepository.save(address), HttpStatus.CREATED);
   }
 

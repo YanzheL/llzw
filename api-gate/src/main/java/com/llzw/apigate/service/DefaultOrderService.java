@@ -11,6 +11,7 @@ import com.llzw.apigate.persistence.entity.Order;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.Stock;
 import com.llzw.apigate.persistence.entity.User;
+import com.llzw.apigate.util.Utils;
 import com.llzw.apigate.web.dto.OrderSearchDto;
 import com.llzw.apigate.web.dto.OrderShipDto;
 import java.util.ArrayList;
@@ -120,7 +121,7 @@ public class DefaultOrderService implements OrderService {
   @Override
   public Order patch(String id, OrderShipDto dto, User relatedUser) throws RestApiException {
     Order order = get(id, relatedUser);
-    BeanUtils.copyProperties(dto, order);
+    BeanUtils.copyProperties(dto, order, Utils.getNullPropertyNames(dto));
     return orderRepository.save(order);
   }
 

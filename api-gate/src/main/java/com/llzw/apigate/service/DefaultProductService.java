@@ -9,6 +9,7 @@ import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.ProductStat;
 import com.llzw.apigate.persistence.entity.User;
+import com.llzw.apigate.util.Utils;
 import com.llzw.apigate.web.dto.ProductCreateDto;
 import com.llzw.apigate.web.dto.ProductSearchDto;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class DefaultProductService implements ProductService {
     Product product = new Product();
     product.setSeller(seller);
     product.setValid(true);
-    BeanUtils.copyProperties(dto, product);
+    BeanUtils.copyProperties(dto, product, Utils.getNullPropertyNames(dto));
     product.setStat(new ProductStat());
     List<String> mainImageFiles = dto.getMainImageFiles();
     if (mainImageFiles != null) {
@@ -95,7 +96,7 @@ public class DefaultProductService implements ProductService {
         .forEach(fileStorageService::delete);
     newMainImageFiles.stream().filter(o -> !oldMainImageFiles.contains(o))
         .forEach(fileStorageService::increaseReferenceCount);
-    BeanUtils.copyProperties(dto, product);
+    BeanUtils.copyProperties(dto, product, Utils.getNullPropertyNames(dto));
     return productRepository.save(product);
   }
 
@@ -114,15 +115,14 @@ public class DefaultProductService implements ProductService {
     List<Product> result;
     if (global != null) {
       result = productRepository.searchByNameOrIntroductionWithCustomQuery(global);
-    } else if (nameQueryString != null || introductionQueryString != null) {
-      Product example = new Product();
-      BeanUtils.copyProperties(dto, example, "global");
-      result = productRepository.searchByExample(example);
+      if (!dto.isValid()) {
+        result = result.stream().filter(Product::isValid).collect(Collectors.toList());
+      }
     } else {
-      result = productRepository.findAll(pageable).getContent();
-    }
-    if (!dto.isValid()) {
-      result = result.stream().filter(Product::isValid).collect(Collectors.toList());
+      Product example = new Product();
+      example.setValid(dto.isValid());
+      BeanUtils.copyProperties(dto, example, Utils.getNullPropertyNames(dto));
+      result = productRepository.searchByExample(example);
     }
     result.forEach(productStatisticsService::updateStat);
     return result;
