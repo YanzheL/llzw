@@ -85,7 +85,7 @@ public class Order extends BaseEntity {
             user.getUsername()
         ),
         criteriaBuilder.equal(
-            root.get("customerId").<String>get("username"), user.getUsername()
+            root.get("customer").<String>get("username"), user.getUsername()
         )
     );
   }
