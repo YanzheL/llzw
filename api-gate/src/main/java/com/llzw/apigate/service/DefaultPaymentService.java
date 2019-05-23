@@ -1,6 +1,5 @@
 package com.llzw.apigate.service;
 
-import com.llzw.apigate.message.error.RestAccessDeniedException;
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
 import com.llzw.apigate.message.error.RestPaymentException;
@@ -14,7 +13,6 @@ import com.llzw.apigate.persistence.entity.User;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -46,15 +44,12 @@ public class DefaultPaymentService implements PaymentService {
   }
 
   @Override
-  public Payment create(User payer, String orderId,
-      String subject, String description)
+  public Payment create(User payer, String orderId, String subject, String description)
       throws RestApiException {
-    Optional<Order> orderOptional = orderRepository.findById(UUID.fromString(orderId));
-    if (!orderOptional.isPresent()) {
-      throw new RestDependentEntityNotFoundException(
-          String.format("Order <%s> do not exist", orderId));
-    }
-    Order targetOrder = orderOptional.get();
+    Order targetOrder = orderRepository.findById(UUID.fromString(orderId)).orElseThrow(
+        () -> new RestDependentEntityNotFoundException(
+            String.format("Order <%s> do not exist", orderId))
+    );
     Payment payment = new Payment();
     payment.setPayer(payer);
     payment.setOrder(targetOrder);
@@ -124,30 +119,26 @@ public class DefaultPaymentService implements PaymentService {
   public boolean verify(Long paymentId) throws RestApiException {
     Payment payment = paymentRepository.findById(paymentId)
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
-            String.format("Payment <%s> does not exist", paymentId)));
+            String.format("Payment <%d> does not exist", paymentId)));
     return verify(payment);
   }
 
   @Override
   public Payment findById(User user, Long id) throws RestApiException {
-    Payment payment = paymentRepository.findById(id)
+    return paymentRepository.findByIdAndUser(id, user)
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
-            String.format("Payment <%s> does not exist", id)));
-    if (!payment.belongsToUser(user)) {
-      throw new RestAccessDeniedException("You do not have access to this entity");
-    }
-    return payment;
+            String.format(
+                "Payment <%d> does not exist or you do not have access to this entity",
+                id)));
   }
 
   @Override
   public Payment findByOrderId(User user, String orderId) throws RestApiException {
-    Payment payment = paymentRepository.findByOrderId(UUID.fromString(orderId))
+    return paymentRepository.findByOrderIdAndUser(UUID.fromString(orderId), user)
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
-            String.format("No such payment with OrderId <%s>", orderId)));
-    if (!payment.belongsToUser(user)) {
-      throw new RestAccessDeniedException("You do not have access to this entity");
-    }
-    return payment;
+            String.format(
+                "No such payment with OrderId <%s>, or you do not have access to this entity",
+                orderId)));
   }
 
   private Payment updateStatus(Payment payment, String tradeNo) throws RestApiException {

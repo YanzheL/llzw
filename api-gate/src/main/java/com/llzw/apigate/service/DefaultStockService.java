@@ -1,8 +1,8 @@
 package com.llzw.apigate.service;
 
-import com.llzw.apigate.message.error.RestAccessDeniedException;
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
+import com.llzw.apigate.message.error.RestEntityNotFoundException;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.dao.StockRepository;
 import com.llzw.apigate.persistence.entity.Product;
@@ -34,11 +34,17 @@ public class DefaultStockService implements StockService {
   private StockRepository stockRepository;
 
   @Override
-  public Stock create(Long productId, Date producedAt, int shelfLife, int totalQuantity,
+  public Stock create(User owner, Long id,
+      Date producedAt, int shelfLife, int totalQuantity,
       String trackingId, String carrierName) throws RestApiException {
-    Product product = productRepository.findById(productId).orElseThrow(() ->
-        new RestDependentEntityNotFoundException(
-            String.format("Product <%s> do not exist", productId)));
+    Product product = productRepository.findByIdAndSeller(id, owner)
+        .orElseThrow(
+            () -> new RestDependentEntityNotFoundException(
+                String
+                    .format("Product <%s> does not exist or you do not have access to this entity",
+                        id)
+            )
+        );
     Stock stock = new Stock();
     stock.setProduct(product);
     stock.setProducedAt(producedAt);
@@ -64,14 +70,14 @@ public class DefaultStockService implements StockService {
 
   @Override
   public Stock findById(User owner, Long id) throws RestApiException {
-
-    Stock stock = stockRepository.findById(id)
-        .orElseThrow(() -> new RestDependentEntityNotFoundException(
-            String.format("Stock <%s> does not exist", id)));
-    if (!stock.belongsToSeller(owner)) {
-      throw new RestAccessDeniedException("You do not have access to this entity");
-    }
-    return stock;
+    return stockRepository.findByIdAndProductSeller(id, owner)
+        .orElseThrow(
+            () -> new RestEntityNotFoundException(
+                String
+                    .format("Stock <%s> does not exist or you do not have access to this entity",
+                        id)
+            )
+        );
   }
 
   @Override

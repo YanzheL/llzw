@@ -3,9 +3,8 @@ package com.llzw.apigate.service;
 import com.linkedin.urls.Url;
 import com.linkedin.urls.detection.UrlDetector;
 import com.linkedin.urls.detection.UrlDetectorOptions;
-import com.llzw.apigate.message.error.RestAccessDeniedException;
 import com.llzw.apigate.message.error.RestApiException;
-import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
+import com.llzw.apigate.message.error.RestEntityNotFoundException;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.entity.Product;
 import com.llzw.apigate.persistence.entity.ProductStat;
@@ -45,12 +44,14 @@ public class DefaultProductService implements ProductService {
 
   @Override
   public boolean invalidate(Long id, User seller) throws RestApiException {
-    Product product = productRepository.findById(id)
-        .orElseThrow(() -> new RestDependentEntityNotFoundException(
-            String.format("Product <%s> does not exist", id)));
-    if (!product.belongsToSeller(seller)) {
-      throw new RestAccessDeniedException("You do not have access to this entity");
-    }
+    Product product = productRepository.findByIdAndSeller(id, seller)
+        .orElseThrow(
+            () -> new RestEntityNotFoundException(
+                String
+                    .format("Product <%s> does not exist or you do not have access to this entity",
+                        id)
+            )
+        );
     product.setValid(false);
     productRepository.save(product);
     return true;
@@ -80,12 +81,14 @@ public class DefaultProductService implements ProductService {
 
   @Override
   public Product update(ProductCreateDto dto, Long id, User seller) throws RestApiException {
-    Product product = productRepository.findById(id)
-        .orElseThrow(() -> new RestDependentEntityNotFoundException(
-            String.format("Product <%s> does not exist", id)));
-    if (!product.belongsToSeller(seller)) {
-      throw new RestAccessDeniedException("You do not have access to this entity");
-    }
+    Product product = productRepository.findByIdAndSeller(id, seller)
+        .orElseThrow(
+            () -> new RestEntityNotFoundException(
+                String
+                    .format("Product <%s> does not exist or you do not have access to this entity",
+                        id)
+            )
+        );
     List<String> oldMainImageFiles = product.getMainImageFiles();
     List<String> newMainImageFiles = dto.getMainImageFiles();
     oldMainImageFiles.stream().filter(o -> !newMainImageFiles.contains(o))

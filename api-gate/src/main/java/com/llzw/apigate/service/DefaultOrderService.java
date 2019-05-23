@@ -1,6 +1,5 @@
 package com.llzw.apigate.service;
 
-import com.llzw.apigate.message.error.RestAccessDeniedException;
 import com.llzw.apigate.message.error.RestApiException;
 import com.llzw.apigate.message.error.RestDependentEntityNotFoundException;
 import com.llzw.apigate.message.error.RestEntityNotFoundException;
@@ -50,12 +49,10 @@ public class DefaultOrderService implements OrderService {
     Product product = productService.findById(productId)
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
             String.format("Product <%s> does not exist", productId)));
-    Address address = addressRepository.findById(addressId)
+    Address address = addressRepository.findByIdAndOwner(addressId, customer)
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
-            String.format("Address <%s> do not exist", addressId)));
-    if (!address.belongsToUser(customer)) {
-      throw new RestAccessDeniedException("You do not have access to this entity");
-    }
+            String.format("Address <%s> do not exist or you do not have access to this entity",
+                addressId)));
     List<Stock> stocks = stockService.lockStocksForProduct(product, quantity);
     if (stocks.isEmpty()) {
       throw new RestDependentEntityNotFoundException(
@@ -88,13 +85,10 @@ public class DefaultOrderService implements OrderService {
 
   @Override
   public Order get(String id, User relatedUser) throws RestApiException {
-    Order order = orderRepository.findById(UUID.fromString(id))
+    return orderRepository.findByIdAndUser(UUID.fromString(id), relatedUser)
         .orElseThrow(() -> new RestEntityNotFoundException(
-            String.format("Order <%s> does not exist", id)));
-    if (!order.belongsToUser(relatedUser)) {
-      throw new RestAccessDeniedException("Current user does not have access to this order");
-    }
-    return order;
+            String.format("Order <%s> does not exist or you do not have access to this entity", id))
+        );
   }
 
   @Override
@@ -126,13 +120,7 @@ public class DefaultOrderService implements OrderService {
 
   @Override
   public Order patch(String id, OrderShipDto dto, User relatedUser) throws RestApiException {
-//    Order order = get(id, relatedUser);
-    Order order = orderRepository.findById(UUID.fromString(id))
-        .orElseThrow(() -> new RestEntityNotFoundException(
-            String.format("Order <%s> does not exist", id)));
-    if (!order.belongsToUser(relatedUser)) {
-      throw new RestAccessDeniedException("Current user does not have access to this order");
-    }
+    Order order = get(id, relatedUser);
     BeanUtils.copyProperties(dto, order);
     return orderRepository.save(order);
   }

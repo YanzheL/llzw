@@ -12,7 +12,7 @@ import org.springframework.data.domain.PageRequest;
 public interface StockService {
 
   Stock create(
-      Long productId,
+      User owner, Long id,
       Date producedAt,
       int shelfLife,
       int totalQuantity,

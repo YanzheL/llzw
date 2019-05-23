@@ -45,15 +45,16 @@ public class StockController {
   @PostMapping
   public ResponseEntity createStock(@Valid @RequestBody StockCreateDto stockCreateDto)
       throws RestApiException {
+    User currentUser =
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     return RestResponseEntityFactory.success(
-        stockService.create(
+        stockService.create(currentUser,
             stockCreateDto.getProductId(),
             stockCreateDto.getProducedAt(),
             stockCreateDto.getShelfLife(),
             stockCreateDto.getTotalQuantity(),
             stockCreateDto.getTrackingId(),
-            stockCreateDto.getCarrierName()
-        ), HttpStatus.CREATED
+            stockCreateDto.getCarrierName()), HttpStatus.CREATED
     );
   }
 
