@@ -114,16 +114,16 @@ public class DefaultProductService implements ProductService {
     String global = dto.getGlobal();
     List<Product> result;
     if (global != null) {
-      result = productRepository.searchByNameOrIntroductionWithCustomQuery(global);
+      result = productRepository.searchByNameOrIntroductionWithCustomQuery(global, pageable);
       if (!dto.isValid()) {
         result = result.stream().filter(Product::isValid).collect(Collectors.toList());
       }
     } else if (nameQueryString != null || introductionQueryString != null) {
       Product example = new Product();
       BeanUtils.copyProperties(dto, example, Utils.getNullPropertyNames(dto));
-      result = productRepository.searchByExample(example);
+      result = productRepository.searchByExample(example, pageable);
     } else {
-      result = productRepository.findAllByValid(dto.isValid());
+      result = productRepository.findAllByValid(dto.isValid(), pageable);
     }
     result.forEach(productStatisticsService::updateStat);
     return result;

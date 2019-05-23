@@ -2,15 +2,12 @@ package com.llzw.apigate.persistence.dao;
 
 import com.llzw.apigate.persistence.entity.Product;
 import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 public interface ProductSearchableRepository {
 
-  List<Product> searchByNameWithCustomQuery(String text);
+  List<Product> searchByNameOrIntroductionWithCustomQuery(String text, Pageable pageable);
 
-  List<Product> searchByIntroductionWithCustomQuery(String text);
-
-  List<Product> searchByNameOrIntroductionWithCustomQuery(String text);
-
-  List<Product> searchByExample(Object example);
+  List<Product> searchByExample(Object example, Pageable pageable);
 
 }
