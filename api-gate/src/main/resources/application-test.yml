@@ -4,6 +4,7 @@ spring:
     username: sa
     password: sa
   jpa:
+    #    show-sql: true
     hibernate:
       ddl-auto: update
     properties:
@@ -15,6 +16,7 @@ spring:
             directory_provider: ram
             indexBase: /tmp
         enable_lazy_load_no_trans: true
+  #        format_sql: true
   data:
     rest:
       base-path: /api/v1
