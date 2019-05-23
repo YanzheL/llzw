@@ -126,7 +126,7 @@ public class DefaultOrderService implements OrderService {
 
   private Specification<Order> makeSpec(OrderSearchDto dto, User relatedUser) {
     Specification<Order> specification = Order.belongsToUserSpec(relatedUser);
-    specification.and(
+    specification = specification.and(
         (root, criteriaQuery, criteriaBuilder) -> {
           List<Predicate> expressions = new ArrayList<>();
           if (dto.getStockId() != null) {

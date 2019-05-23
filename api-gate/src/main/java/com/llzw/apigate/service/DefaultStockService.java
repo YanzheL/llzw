@@ -118,11 +118,11 @@ public class DefaultStockService implements StockService {
 
   private Specification<Stock> makeSpec(StockSearchDto dto, User relatedUser) {
     Specification<Stock> specification = Stock.belongsToSellerSpec(relatedUser);
-    specification.and((root, criteriaQuery, criteriaBuilder) -> {
+    specification = specification.and((root, criteriaQuery, criteriaBuilder) -> {
       List<Predicate> expressions = new ArrayList<>();
       if (dto.getProductId() != null) {
         expressions.add(criteriaBuilder.equal(
-            root.get("product").<Long>get("id"), dto.getProductId()
+            root.get("product"), dto.getProductId()
         ));
       }
       if (dto.getCarrierName() != null) {
