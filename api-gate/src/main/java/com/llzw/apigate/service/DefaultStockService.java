@@ -117,38 +117,36 @@ public class DefaultStockService implements StockService {
   }
 
   private Specification<Stock> makeSpec(StockSearchDto dto, User relatedUser) {
-    Specification<Stock> specification = Stock.belongsToSellerSpec(relatedUser);
-    specification = specification.and((root, criteriaQuery, criteriaBuilder) -> {
-      List<Predicate> expressions = new ArrayList<>();
-      if (dto.getProductId() != null) {
-        expressions.add(criteriaBuilder.equal(
-            root.get("product"), dto.getProductId()
-        ));
-      }
-      if (dto.getCarrierName() != null) {
-        expressions.add(criteriaBuilder.equal(
-            root.get("carrierName"), dto.getCarrierName()
-        ));
-      }
-      if (dto.getTrackingId() != null) {
-        expressions.add(criteriaBuilder.equal(
-            root.get("trackingId"), dto.getTrackingId()
-        ));
-      }
-      if (dto.getShelfLife() != null) {
-        expressions.add(criteriaBuilder.equal(
-            root.get("shelfLife"), dto.getShelfLife()
-        ));
-      }
-      if (dto.getValid() != null) {
-        expressions.add(
-            criteriaBuilder.equal(
-                root.get("valid"), dto.getValid()
-            )
-        );
-      }
-      return expressions.stream().reduce(criteriaBuilder::and).orElse(null);
-    });
-    return specification;
+    return Stock.belongsToSellerSpec(relatedUser)
+        .and((root, criteriaQuery, criteriaBuilder) -> {
+          List<Predicate> expressions = new ArrayList<>();
+          if (dto.getProductId() != null) {
+            expressions.add(criteriaBuilder.equal(
+                root.get("product"), dto.getProductId()
+            ));
+          }
+          if (dto.getCarrierName() != null) {
+            expressions.add(criteriaBuilder.equal(
+                root.get("carrierName"), dto.getCarrierName()
+            ));
+          }
+          if (dto.getTrackingId() != null) {
+            expressions.add(criteriaBuilder.equal(
+                root.get("trackingId"), dto.getTrackingId()
+            ));
+          }
+          if (dto.getShelfLife() != null) {
+            expressions.add(criteriaBuilder.equal(
+                root.get("shelfLife"), dto.getShelfLife()
+            ));
+          }
+          if (dto.getValid() != null) {
+            expressions.add(
+                criteriaBuilder.equal(root.get("valid"), dto.getValid())
+            );
+          }
+          return expressions.stream().reduce(criteriaBuilder::and).orElse(null);
+        })
+        ;
   }
 }

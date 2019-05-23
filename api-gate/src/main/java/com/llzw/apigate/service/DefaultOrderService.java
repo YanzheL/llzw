@@ -125,36 +125,36 @@ public class DefaultOrderService implements OrderService {
   }
 
   private Specification<Order> makeSpec(OrderSearchDto dto, User relatedUser) {
-    Specification<Order> specification = Order.belongsToUserSpec(relatedUser);
-    specification = specification.and(
-        (root, criteriaQuery, criteriaBuilder) -> {
-          List<Predicate> expressions = new ArrayList<>();
-          if (dto.getStockId() != null) {
-            expressions.add(
-                criteriaBuilder.isMember(
-                    dto.getStockId(), root.get("stocks"))
-            );
-          }
-          if (dto.getCustomerId() != null) {
-            expressions.add(criteriaBuilder.equal(
-                root.get("customer").<String>get("username"), dto.getCustomerId()
-            ));
-          }
-          if (dto.getTrackingId() != null) {
-            expressions.add(criteriaBuilder.equal(
-                root.get("trackingId"), dto.getTrackingId()
-            ));
-          }
-          if (dto.getValid() != null) {
-            expressions.add(
-                criteriaBuilder.equal(
-                    root.get("valid"), dto.getValid()
-                )
-            );
-          }
-          return expressions.stream().reduce(criteriaBuilder::and).orElse(null);
-        }
-    );
-    return specification;
+    return Order.belongsToUserSpec(relatedUser)
+        .and(
+            (root, criteriaQuery, criteriaBuilder) -> {
+              List<Predicate> expressions = new ArrayList<>();
+              if (dto.getStockId() != null) {
+                expressions.add(
+                    criteriaBuilder.isMember(
+                        dto.getStockId(), root.get("stocks"))
+                );
+              }
+              if (dto.getCustomerId() != null) {
+                expressions.add(criteriaBuilder.equal(
+                    root.get("customer").<String>get("username"), dto.getCustomerId()
+                ));
+              }
+              if (dto.getTrackingId() != null) {
+                expressions.add(criteriaBuilder.equal(
+                    root.get("trackingId"), dto.getTrackingId()
+                ));
+              }
+              if (dto.getValid() != null) {
+                expressions.add(
+                    criteriaBuilder.equal(
+                        root.get("valid"), dto.getValid()
+                    )
+                );
+              }
+              return expressions.stream().reduce(criteriaBuilder::and).orElse(null);
+            }
+        )
+        ;
   }
 }
