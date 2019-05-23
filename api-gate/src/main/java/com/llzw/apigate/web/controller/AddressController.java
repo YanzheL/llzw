@@ -9,7 +9,6 @@ import com.llzw.apigate.persistence.entity.Address;
 import com.llzw.apigate.persistence.entity.User;
 import com.llzw.apigate.util.Utils;
 import com.llzw.apigate.web.dto.AddressCreateDto;
-import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
@@ -88,7 +87,6 @@ public class AddressController {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
     return RestResponseEntityFactory.success(
         addressRepository.findAllByOwner(currentUser, pageRequest)
-            .collect(Collectors.toList())
     );
   }
 }
