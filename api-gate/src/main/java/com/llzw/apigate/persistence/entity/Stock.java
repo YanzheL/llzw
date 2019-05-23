@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -92,5 +93,12 @@ public class Stock extends BaseEntity {
   @PrePersist
   public void prePersist() {
     product.getStat().setStocksOutDated(true);
+  }
+
+  @PreUpdate
+  public void preUpdate() {
+    if (currentQuantity == 0) {
+      valid = false;
+    }
   }
 }
