@@ -161,15 +161,7 @@ public class DefaultOrderService implements OrderService {
               root.get("valid"), dto.isValid()
           )
       );
-      Predicate expression = null;
-      for (Predicate expr : expressions) {
-        if (expression == null) {
-          expression = expr;
-        } else {
-          expression = criteriaBuilder.and(expression, expr);
-        }
-      }
-      return expression;
+      return expressions.stream().reduce(criteriaBuilder::and).get();
     };
     specification.and(Order.belongsToUserSpec(relatedUser));
     return specification;

@@ -140,16 +140,7 @@ public class DefaultStockService implements StockService {
               root.get("valid"), dto.isValid()
           )
       );
-      Predicate expression = null;
-//      expressions.stream().reduce()
-      for (Predicate expr : expressions) {
-        if (expression == null) {
-          expression = expr;
-        } else {
-          expression = criteriaBuilder.and(expression, expr);
-        }
-      }
-      return expression;
+      return expressions.stream().reduce(criteriaBuilder::and).get();
     };
     specification.and(Stock.belongsToSellerSpec(relatedUser));
     return specification;
