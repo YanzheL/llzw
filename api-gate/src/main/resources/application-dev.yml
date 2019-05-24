@@ -41,3 +41,5 @@ logging:
 
 server:
   port: 8981
+  error:
+    path: /api/v1/error
