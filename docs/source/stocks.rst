@@ -127,12 +127,15 @@ Request Parameters
 Parameter     Type    Required Default Description
 ============= ======= ======== ======= ===============================
 productId     String  True     -       Parent product ID
-producedAt    Date    True     -       The producing date
+producedAt    String  True     -       The producing date
 shelfLife     Integer True     -       Shelf-Life of this stock
 totalQuantity Integer True     -       Total quantity of stock
-trackingId    String  False    null    Tracking ID of this shipment
-carrierName   String  False    null    Carrier Name of this shipment
+trackingId    String  True     -       Tracking ID of this shipment
+carrierName   String  True     -       Carrier Name of this shipment
 ============= ======= ======== ======= ===============================
+
+.. Note::
+   Example date string format: ``"2000-10-31T01:30:00.000-05:00"``
 
 Response Parameters
 -------------------
