@@ -40,7 +40,7 @@ Example JSON Representation
      },
      "name": "NAME_OF_THIS_PRODUCT",
      "introduction": "INTRODUCTION_OF_THIS_PRODUCT",
-     "mainImageFiles":[
+     "mainImageFiles": [
        "1dd4984b0d118569da8620fe67e7fd4bd2889bb316d5ee40ba914eb65f19107d",
        "d0673d4e73e191cc5ba3588f9eac52f7c15e4cba3fc3c229f47ea85d959f97b0"
      ],
@@ -162,7 +162,6 @@ data        Product   The created Product object
    Remember — You must be authenticated with ``SELLER`` role before using this API
 
 .. Note::
-   In this case, you are going to submit a list of objects, which means that you may need to prepare your request in JSON format.
    The order of ``mainImageFiles`` will be preserved.
 
 Update a Specific Product
@@ -203,7 +202,6 @@ mainImageFiles   String[] False    -       Main image URLs for this product, whi
    Remember — You must be authenticated with ``SELLER`` role before using this API
 
 .. Note::
-   In this case, you are going to submit a list of objects, which means that you may need to prepare your request in JSON format.
    The order of ``mainImageFiles`` will be updated to the same as you requested (if present).
 
 Invalidate a Specific Product
