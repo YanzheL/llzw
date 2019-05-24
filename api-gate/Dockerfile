@@ -1,11 +1,18 @@
+FROM maven:3-jdk-13 AS builder
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN mvn package -DskipTests
+
 FROM openjdk:13-alpine
 
 LABEL maintainer="Yanzhe Lee"
 
 WORKDIR /usr/src/app/
 
-RUN apk add curl \
-    && curl -L -o api-gate.jar $(curl -s https://api.github.com/repos/YanzheL/llzw/releases | grep browser_download_url | head -n 1 | cut -d '"' -f 4)
+COPY --from=builder /usr/src/app/target/*.jar .
 
 EXPOSE 8981
 
