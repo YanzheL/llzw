@@ -12,7 +12,7 @@ LABEL maintainer="Yanzhe Lee"
 
 WORKDIR /usr/src/app/
 
-COPY --from=builder /usr/src/app/target/*.jar .
+COPY --from=builder /usr/src/app/target/*.jar ./api-gate.jar
 
 EXPOSE 8981
 
