@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -42,6 +43,9 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
   private UserDetailsService userDetailsService;
 
   private AuthenticationFailureHandler failureHandler = new SimpleUrlAuthenticationFailureHandler();
+
+  @Value("${spring.data.rest.base-path}")
+  protected String apiBasePath;
 
   @Autowired
   public RestSecurityConfig() {
@@ -83,7 +87,7 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
 //        .permitAll()
         .and()
         .formLogin()
-        .loginPage("/login") // 设
+        .loginPage(apiBasePath + "/login") // 设
         .successHandler(successHandler)
         .failureHandler(failureHandler)
         //        .authenticationDetailsSource(authenticationDetailsSource)
