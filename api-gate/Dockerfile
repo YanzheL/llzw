@@ -9,4 +9,4 @@ RUN apk add curl \
 
 EXPOSE 8981
 
-CMD [ "java", "-server", "-XX:+HeapDumpOnOutOfMemoryError", "-Xmx500m", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseZGC", "-Dspring.profiles.active=test", "-jar",  "api-gate.jar" ]
+CMD [ "java", "-server", "-XX:+HeapDumpOnOutOfMemoryError", "-Xmx500m", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseZGC", "-Dspring.profiles.active=test", "-jar", "api-gate.jar" ]

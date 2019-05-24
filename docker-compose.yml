@@ -1,0 +1,29 @@
+version: "3.6"
+services:
+  db:
+    image: mariadb
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: always
+    volumes:
+      - maria_db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: HITllzw-dev!
+    ports:
+      - "8906:3306"
+  backend:
+    image: leeyanzhe/llzw-api-gate
+    # build: api-gate
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/llzw_dev?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: HITllzw-dev!
+    command: [ "java", "-server", "-XX:+HeapDumpOnOutOfMemoryError", "-Xmx500m", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseZGC", "-jar", "api-gate.jar" ]
+    ports:
+      - "8981:8981"
+    depends_on:
+      - db
+
+volumes:
+  maria_db:
