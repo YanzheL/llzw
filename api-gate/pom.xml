@@ -287,5 +287,5 @@
       <url>https://repo.spring.io/milestone</url>
     </repository>
   </repositories>
-  <version>1.0.0-rc1</version>
+  <version>0.6.1-SNAPSHOT</version>
 </project>
