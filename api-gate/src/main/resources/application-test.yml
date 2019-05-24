@@ -39,7 +39,7 @@ llzw:
     load-users: true
     load-products: true
     load-stocks: true
-    load-addresses-: true
+    load-addresses: true
 
 logging:
   level:

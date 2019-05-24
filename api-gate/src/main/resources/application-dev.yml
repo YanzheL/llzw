@@ -35,7 +35,7 @@ alipay:
 llzw:
   test:
     load-users: true
-    load-addresses-: true
+    load-addresses: true
 
 logging:
   level:
