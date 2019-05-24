@@ -30,7 +30,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     environment:
-      - VIRTUAL_HOST=abc.example.com
+      - VIRTUAL_HOST=llzw.hitnslab.com
       - SSL_POLICY=Mozilla-Modern
       - HTTPS_METHOD=noredirect
     depends_on:
