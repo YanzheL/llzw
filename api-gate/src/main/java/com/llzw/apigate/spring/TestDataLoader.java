@@ -1,9 +1,6 @@
 package com.llzw.apigate.spring;
 
 import com.llzw.apigate.persistence.dao.AddressRepository;
-import com.llzw.apigate.persistence.dao.FileMetaDataRepository;
-import com.llzw.apigate.persistence.dao.OrderRepository;
-import com.llzw.apigate.persistence.dao.PaymentRepository;
 import com.llzw.apigate.persistence.dao.ProductRepository;
 import com.llzw.apigate.persistence.dao.RoleRepository;
 import com.llzw.apigate.persistence.dao.StockRepository;
@@ -28,22 +25,24 @@ import org.springframework.transaction.annotation.Transactional;
 public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent>, Ordered {
 
   private static boolean alreadySetup = false;
+
   @Setter(onMethod_ = @Autowired)
   private AddressRepository addressRepository;
-  @Setter(onMethod_ = @Autowired)
-  private FileMetaDataRepository fileMetaDataRepository;
-  @Setter(onMethod_ = @Autowired)
-  private OrderRepository orderRepository;
-  @Setter(onMethod_ = @Autowired)
-  private PaymentRepository paymentRepository;
+
   @Setter(onMethod_ = @Autowired)
   private ProductRepository productRepository;
+
   @Setter(onMethod_ = @Autowired)
   private StockRepository stockRepository;
+
   @Setter(onMethod_ = @Autowired)
   private UserRepository userRepository;
+
   @Setter(onMethod_ = @Autowired)
   private RoleRepository roleRepository;
+
+  @Setter(onMethod_ = @Autowired)
+  private TestDataProperties testDataProperties;
 
   @Override
   public int getOrder() {
@@ -70,6 +69,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
   }
 
   private void initUsers() throws Exception {
+    if (!testDataProperties.loadUsers) {
+      return;
+    }
     Role sellerRole = roleRepository.findByRole(RoleType.ROLE_SELLER)
         .orElseThrow(() -> new Exception("Seller role not found"));
     Role customerRole = roleRepository.findByRole(RoleType.ROLE_CUSTOMER)
@@ -92,6 +94,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
   }
 
   private void initProducts() throws Exception {
+    if (!testDataProperties.loadProducts) {
+      return;
+    }
     for (int i = 0; i < 10; ++i) {
       User seller = userRepository
           .findByUsername(String.format("test_user_seller_username_%d", i))
@@ -103,6 +108,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
   }
 
   private void initStocks() throws Exception {
+    if (!testDataProperties.loadStocks) {
+      return;
+    }
     for (int i = 0; i < 10; ++i) {
       List<Product> products = productRepository
           .findAllBySellerUsername(String.format("test_user_seller_username_%d", i));
@@ -122,6 +130,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
   }
 
   private void initAddresses() throws Exception {
+    if (!testDataProperties.loadAddresses) {
+      return;
+    }
     for (int i = 0; i < 10; ++i) {
       User seller = userRepository
           .findByUsername(String.format("test_user_seller_username_%d", i))
