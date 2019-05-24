@@ -10,9 +10,13 @@ Simple full-stack shopping site powered by [Spring](https://spring.io/) and [Ang
 
 This is a Spring demo site designated for beginners, which is also my course project of ***Software Engineering*** at HIT.
 
-Current project status: **Still in development**
+**Current project status:**
 
-## Continuous build status
+Frontend: Will be published to this repo once finished.
+
+Backend: Preparing for release.
+
+## Status of Continuous Integration and Automatic Testing
 
 | Branch     | Status                                                    |
 | ---------- | --------------------------------------------------------- |
@@ -27,13 +31,50 @@ Current project status: **Still in development**
 
 ## Getting Started
 
-Two options
+Three options
 
-#### Use Prebuilt JAR Package
+Backend service will listen on [localhost:8981](localhost:8981) by default
+
+### Use Prebuilt JAR Package
 
 Follow the intructions on [Release Page](https://github.com/YanzheL/llzw/releases)
 
-#### From Source
+### Use Our Offical Docker Image
+
+You should have docker environment installed before using this option.
+
+Two options
+
+- Run a single service
+
+  Pull our official image for api backend
+
+  ```shell
+  docker pull leeyanzhe/llzw-api-gate
+  ```
+
+  Run
+
+  ```shell
+  docker run -d -p "8981:8981" leeyanzhe/llzw-api-gate
+  ```
+
+- Run the production services bundle (Backend only, for now)
+
+  Pull this git repository
+
+  ```shell
+  git clone https://github.com/YanzheL/llzw.git
+  ```
+
+  Enter the project directory and bring up the whole services bundle
+
+  ```shell
+  cd llzw
+  docker-compose up -d --build
+  ```
+
+### From Source
 
 To compile the source, you need a valid JDK environment with version 9 or later.
 
@@ -41,13 +82,6 @@ Clone this project
 
 ```shell
 git clone https://github.com/YanzheL/llzw.git
-```
-
-Install maven dependencies
-
-```shell
-cd api-gate
-./mvnw install -DskipTests
 ```
 
 Build the package
@@ -70,8 +104,19 @@ java "-Dspring.profiles.active=test" -jar target/*.jar
 
 ## Features
 
-* RESTful API Backend, integrated with spring security
+* RESTful API Backend
+
 * Angular Single Page Application
+
+* Travis CI Continuous Integration and Automatic Testing
+
+* Docker Integration
+
+  Every commit to `master` and `dev` branch will trigger automatic builds on DockerHub, which produces [Our Latest Docker Image](https://hub.docker.com/r/leeyanzhe/llzw-api-gate)
+
+  `latest` image tag targets for `dev` branch
+
+  `stable` image tag targets for `master` branch
 
 ## Documentation
 

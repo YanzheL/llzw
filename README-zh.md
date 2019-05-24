@@ -10,7 +10,11 @@
 
 这是我的一个 ***软件工程*** 课程设计项目。
 
-当前项目状态: **仍在开发**
+**当前项目状态:**
+
+前端: 将会发布在此仓库中，当前端开发完毕时
+
+后端: 准备发布
 
 ## 持续集成与自动化测试状态
 
@@ -29,11 +33,48 @@
 
 两种选择
 
-#### 使用预编译的JAR包
+后端服务默认将会监听在[localhost:8981](localhost:8981)
+
+### 使用预编译的JAR包
 
 请按照 [发布页面](https://github.com/YanzheL/llzw/releases) 所描述的步骤进行
 
-#### 从源码编译
+### 使用Docker镜像
+
+你需要预先安装好Docker环境
+
+两种选择
+
+- 运行单个服务
+
+  拉取镜像
+
+  ```shell
+  docker pull leeyanzhe/llzw-api-gate
+  ```
+
+  运行
+
+  ```shell
+  docker run -d -p "8981:8981" leeyanzhe/llzw-api-gate
+  ```
+
+- 运行整个系统 (目前暂时只有后端服务)
+
+  下载项目源码
+
+  ```shell
+  git clone https://github.com/YanzheL/llzw.git
+  ```
+
+  进入项目目录并启动整个服务包
+
+  ```shell
+  cd llzw
+  docker-compose up -d --build
+  ```
+
+### 从源码编译
 
 为了编译项目源码， 你需要一个有效的JDK开发环境， 版本9或更高。
 
@@ -41,13 +82,6 @@
 
 ```shell
 git clone https://github.com/YanzheL/llzw.git
-```
-
-安装Maven依赖
-
-```shell
-cd api-gate
-./mvnw install -DskipTests
 ```
 
 编译JAR包
@@ -70,8 +104,19 @@ java "-Dspring.profiles.active=test" -jar target/*.jar
 
 ## 特性
 
-* RESTful API 后端, 并使用Spring Security模块
+* RESTful API 后端
+
 * Angular 单页面应用
+
+* Travis CI 持续集成与自动化测试
+
+* Docker Hub自动构建
+
+  每次 `master` 和 `dev` 分支的提交都会自动触发DockerHub的镜像自动构建, 使[我们的Docker镜像](https://hub.docker.com/r/leeyanzhe/llzw-api-gate)始终保持最新版本
+
+  `latest` 镜像标签对应 `dev` 分支
+
+  `stable` 镜像标签对应 `master` 分支
 
 ## 文档
 
