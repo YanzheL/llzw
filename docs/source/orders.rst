@@ -71,16 +71,18 @@ HTTP Request
 Request Parameters
 ------------------
 
-=========== ======= ======== ======= =================================
-Parameter   Type    Required Default Description
-=========== ======= ======== ======= =================================
-page        Integer False    0       The page index from 0
-size        Integer False    20      Page size
-customerId  String  False    -       Username of the customer
-trackingId  String  False    -       Tracking ID of a shipped order
-stockId     Integer False    -       The stock ID it belongs to
-valid       Boolean False    True    Valid flag
-=========== ======= ======== ======= =================================
+================= ======= ======== ======= =============================================
+Parameter         Type    Required Default Description
+================= ======= ======== ======= =============================================
+page              Integer False    0       The page index from 0
+size              Integer False    20      Page size
+customerId        String  False    -       Username of the customer
+trackingId        String  False    -       Tracking ID of a shipped order
+stockId           Integer False    -       The stock ID it belongs to
+valid             Boolean False    -       Valid flag
+deliveryConfirmed Boolean False    -       Whether the delivery is confirmed by customer
+paid              Boolean False    -       Whether the order is paid
+================= ======= ======== ======= =============================================
 
 Response Parameters
 -------------------

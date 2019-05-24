@@ -153,6 +153,20 @@ public class DefaultOrderService implements OrderService {
                     )
                 );
               }
+              if (dto.getPaid() != null) {
+                expressions.add(
+                    criteriaBuilder.equal(
+                        root.get("paid"), dto.getPaid()
+                    )
+                );
+              }
+              if (dto.getDeliveryConfirmed() != null) {
+                expressions.add(
+                    criteriaBuilder.equal(
+                        root.get("deliveryConfirmed"), dto.getDeliveryConfirmed()
+                    )
+                );
+              }
               return expressions.stream().reduce(criteriaBuilder::and).orElse(null);
             }
         )

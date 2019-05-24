@@ -1,5 +1,6 @@
 package com.llzw.apigate.web.controller;
 
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -96,15 +97,30 @@ public class ProductControllerIntegrationTests extends ApiGateApplicationTests {
 
   @Test
   @Order(2)
-  public void getProducts() throws Exception {
+  public void searchByGlobal() throws Exception {
     MvcResult result = mvc.perform(
         get("/api/v1/products")
-            .param("global", "Macbook 4")
+            .param("global", "Macau")
     )
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.success").value(true))
         .andExpect(jsonPath("$.data").isArray())
+        .andExpect(jsonPath("$.data.length()").value(lessThan(21)))
+        .andReturn();
+  }
+
+  @Test
+  @Order(2)
+  public void getProducts() throws Exception {
+    MvcResult result = mvc.perform(
+        get("/api/v1/products")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.data").isArray())
+        .andExpect(jsonPath("$.data.length()").value(lessThan(21)))
         .andReturn();
   }
 
@@ -119,6 +135,7 @@ public class ProductControllerIntegrationTests extends ApiGateApplicationTests {
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.success").value(true))
         .andExpect(jsonPath("$.data").isArray())
+        .andExpect(jsonPath("$.data.length()").value(lessThan(21)))
         .andReturn();
   }
 

@@ -48,7 +48,7 @@ public class UserControllerIntegrationTests extends ApiGateApplicationTests {
   @Test
   public void loginSeller() throws Exception {
     mvc.perform(
-        post("/login")
+        post(apiBasePath + "/login")
             .param("username", "test_user_seller_username_0")
             .param("password", "test_user_seller_PASSWORD_0")
     )
@@ -60,7 +60,7 @@ public class UserControllerIntegrationTests extends ApiGateApplicationTests {
   @Test
   public void loginCustomer() throws Exception {
     mvc.perform(
-        post("/login")
+        post(apiBasePath + "/login")
             .param("username", "test_user_customer_username_0")
             .param("password", "test_user_customer_PASSWORD_0")
     )

@@ -10,6 +10,7 @@ import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
+import org.springframework.data.domain.Pageable;
 
 @SuppressWarnings("unchecked")
 public class ProductSearchableRepositoryImpl implements ProductSearchableRepository {
@@ -19,38 +20,24 @@ public class ProductSearchableRepositoryImpl implements ProductSearchableReposit
   @PersistenceContext
   private EntityManager entityManager;
 
-  public List<Product> searchByNameWithCustomQuery(String text) {
-    init();
-    Query query = getQueryBuilder()
-        .simpleQueryString()
-        .onFields("name")
-        .matching(text)
-        .createQuery();
-    return getJpaQuery(query).getResultList();
-  }
-
-  public List<Product> searchByIntroductionWithCustomQuery(String text) {
-    init();
-    Query query = getQueryBuilder()
-        .simpleQueryString()
-        .onFields("introduction")
-        .matching(text)
-        .createQuery();
-    return getJpaQuery(query).getResultList();
-  }
-
-  public List<Product> searchByNameOrIntroductionWithCustomQuery(String text) {
+  public List<Product> searchByNameOrIntroductionWithCustomQuery(String text,
+      Pageable pageable) {
     init();
     Query combinedQuery = getQueryBuilder()
         .simpleQueryString()
         .onFields("name", "introduction")
         .matching(text)
         .createQuery();
-    return getJpaQuery(combinedQuery).getResultList();
+    int page = pageable.getPageNumber();
+    int size = pageable.getPageSize();
+    return getJpaQuery(combinedQuery)
+        .setFirstResult(page * size)
+        .setMaxResults(size)
+        .getResultList();
   }
 
   @Override
-  public List<Product> searchByExample(Object example) {
+  public List<Product> searchByExample(Object example, Pageable pageable) {
     init();
     Query query = getQueryBuilder()
         .moreLikeThis()
@@ -58,8 +45,12 @@ public class ProductSearchableRepositoryImpl implements ProductSearchableReposit
         .comparingAllFields()
         .toEntity(example)
         .createQuery();
+    int page = pageable.getPageNumber();
+    int size = pageable.getPageSize();
     return getJpaQuery(query)
         .setProjection(ProjectionConstants.THIS)
+        .setFirstResult(page * size)
+        .setMaxResults(size)
         .getResultList();
   }
 
