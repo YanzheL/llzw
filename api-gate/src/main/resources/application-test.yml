@@ -46,6 +46,6 @@ logging:
 #              BasicBinder: TRACE
 
 server:
-  port: 8980
+  port: 8981
   error:
     path: /api/v1/error
