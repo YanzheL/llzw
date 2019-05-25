@@ -48,6 +48,7 @@ public class DefaultStockService implements StockService {
     Stock stock = new Stock();
     stock.setProduct(product);
     stock.setProducedAt(producedAt);
+    stock.setInboundedAt(producedAt); //  For test
     stock.setShelfLife(shelfLife);
     stock.setTotalQuantity(totalQuantity);
     stock.setCurrentQuantity(totalQuantity);
