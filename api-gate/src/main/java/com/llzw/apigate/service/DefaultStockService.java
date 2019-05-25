@@ -108,7 +108,8 @@ public class DefaultStockService implements StockService {
 
   @Override
   public int countAvailableStocks(Product product) {
-    return stockRepository.countAllByProductAndInboundedAtNotNullAndValidTrue(product);
+    Integer count = stockRepository.countByProductAndInboundedAtNotNullAndValidTrue(product);
+    return count == null ? 0 : count;
   }
 
   @Override

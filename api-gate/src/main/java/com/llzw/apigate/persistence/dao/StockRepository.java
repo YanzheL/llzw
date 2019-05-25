@@ -13,7 +13,7 @@ public interface StockRepository
     extends PagingAndSortingRepository<Stock, Long>, JpaSpecificationExecutor<Stock> {
 
   @Query("SELECT SUM(s.currentQuantity) FROM Stock s WHERE s.product = ?1 AND s.inboundedAt IS NOT NULL AND s.valid = true")
-  int countAllByProductAndInboundedAtNotNullAndValidTrue(Product product);
+  Integer countByProductAndInboundedAtNotNullAndValidTrue(Product product);
 
   // SELECT * FROM stocks
   // WHERE product == ?1 AND inbounded_at IS NOT NULL AND valid = true AND current_quantity > ?2
