@@ -2,7 +2,7 @@ version: "3.6"
 services:
   db:
     image: mariadb
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --character-set-server=utf8mb4
+    command: --character-set-server=utf8mb4
     restart: always
     volumes:
       - maria_db:/var/lib/mysql
