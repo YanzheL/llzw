@@ -1,5 +1,7 @@
 # LLZW Web Front
 
+##### Language: English | [中文文档](README-zh.md)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.0.
 
 ## Getting Started
@@ -25,3 +27,7 @@ Codes in this directory are commited by
 [@ZhangTong1999](https://github.com/ZhangTong1999)
 
 (They are not familiar with git, so I created the PR of `web-dev` branch on their behalf)
+
+## Acknowledgements
+
+This project uses a UI template provided by [Embryo](https://iron-network.gitbook.io/embryo)
