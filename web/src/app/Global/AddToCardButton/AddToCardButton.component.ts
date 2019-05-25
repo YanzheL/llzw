@@ -1,22 +1,23 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
-  selector: 'embryo-AddToCardButton',
-  templateUrl: './AddToCardButton.component.html',
-  styleUrls: ['./AddToCardButton.component.scss']
+    selector: 'embryo-AddToCardButton',
+    templateUrl: './AddToCardButton.component.html',
+    styleUrls: ['./AddToCardButton.component.scss']
 })
 export class AddToCardButtonComponent implements OnInit {
 
-   @Input() product : any ;
+    @Input() product: any;
 
-   @Output() addToCart: EventEmitter<any> = new EventEmitter();
+    @Output() addToCart: EventEmitter<any> = new EventEmitter();
 
-   constructor() { }
+    constructor() {
+    }
 
-   ngOnInit() {
-   }
+    ngOnInit() {
+    }
 
-   public addToCartProduct(product:any) {
-      this.addToCart.emit(product);
-   }
+    public addToCartProduct(product: any) {
+        this.addToCart.emit(product);
+    }
 }

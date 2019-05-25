@@ -1,17 +1,16 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 
-import { HttpClient } from '@angular/common/http';
-
+import {HttpClient} from '@angular/common/http';
 // RxJS
-import { Observable, Subject, of } from 'rxjs';
+import {Observable, of} from 'rxjs';
 //import { Observable, forkJoin, BehaviorSubject, of } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import {mergeMap} from 'rxjs/operators';
 
-import { ApiResponse } from '../_models/api.response';
-import { apiUrl, environment } from '../../../../../llzw-environments/environment';
+import {ApiResponse} from '../_models/api.response';
+import {apiUrl} from '../../../../../llzw-environments/environment';
 
-import { Payment } from '../_models/payment.model';
+import {Payment} from '../_models/payment.model';
 
 const BASE_URL = apiUrl + '/payments/';  // 中文
 
@@ -22,47 +21,46 @@ const BASE_URL = apiUrl + '/payments/';  // 中文
 @Injectable()
 export class PaymentService {
 
-	constructor(private http: HttpClient) {
-	}
-
-
-  getAll(): Observable<any> {
-
-    let myapiUrl = apiUrl; //加个变量 是因为 TypeScript 会对常量比较 报错
-
-    if (myapiUrl === 'api' || (myapiUrl === "http://localhost:3000"))
-
-      return this.http.get(BASE_URL); //假数据服务时 直接返回
-
-    else {
-      return this.http.get(BASE_URL).pipe(
-        mergeMap(res => {
-          const result = res['data']; //真实数据服务时 返回数据需要去壳data[]
-          return of(result);
-        })
-      );
+    constructor(private http: HttpClient) {
     }
 
-  }
+
+    getAll(): Observable<any> {
+
+        let myapiUrl = apiUrl; //加个变量 是因为 TypeScript 会对常量比较 报错
+
+        if (myapiUrl === 'api' || (myapiUrl === "http://localhost:3000"))
+
+            return this.http.get(BASE_URL); //假数据服务时 直接返回
+
+        else {
+            return this.http.get(BASE_URL).pipe(
+                mergeMap(res => {
+                    const result = res['data']; //真实数据服务时 返回数据需要去壳data[]
+                    return of(result);
+                })
+            );
+        }
+
+    }
 
 
+    getById(id: number): Observable<ApiResponse> {
+        return this.http.get<ApiResponse>(BASE_URL + id);
+    }
 
-	getById(id: number): Observable<ApiResponse> {
-		return this.http.get<ApiResponse>(BASE_URL + id);
-	}
+    create(payment: Payment): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(BASE_URL, payment);
+    }
 
-	create(payment: Payment): Observable<ApiResponse> {
-		return this.http.post<ApiResponse>(BASE_URL, payment);
-	}
-
-	update(payment: Payment): Observable<ApiResponse> {
-		return this.http.put<ApiResponse>(BASE_URL + payment.id, payment);
-	}
+    update(payment: Payment): Observable<ApiResponse> {
+        return this.http.put<ApiResponse>(BASE_URL + payment.id, payment);
+    }
 
 
-	deleteById(id: number): Observable<ApiResponse> {
-		return this.http.delete<ApiResponse>(BASE_URL + id);
-	}
+    deleteById(id: number): Observable<ApiResponse> {
+        return this.http.delete<ApiResponse>(BASE_URL + id);
+    }
 
 }
 
@@ -113,9 +111,6 @@ export class PaymentService {
 }
 
 */
-
-
-
 
 
 /*

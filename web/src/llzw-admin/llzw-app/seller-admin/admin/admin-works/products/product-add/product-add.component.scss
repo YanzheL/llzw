@@ -13,7 +13,6 @@
 }
 
 
-
 //拖拽上传
 #box9834 {
   width: 80%;
@@ -28,7 +27,6 @@
 #box9834 img {
   width: 500px;
 }
-
 
 
 // mat-list-item {
@@ -46,7 +44,7 @@
 // }
 
 
-@media screen and (min-width:1200px) {
+@media screen and (min-width: 1200px) {
 
   #demo_info,
   #demo_imgs {
@@ -55,7 +53,7 @@
     /* Magic! */
 
     #ch1 {
-        width: 990px;
+      width: 990px;
       margin: auto;
 
       /* Magic! */
@@ -63,10 +61,10 @@
         width: 990px;
         margin: auto;
         /* Magic! */
-        .chanshu{
-            // 以下两行设定让div中单行文字垂直居中。
-            height: 28px;
-            line-height: 28px;
+        .chanshu {
+          // 以下两行设定让div中单行文字垂直居中。
+          height: 28px;
+          line-height: 28px;
         }
       }
     }

@@ -1,47 +1,47 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {EmbryoService} from '../../Services/Embryo.service';
 
 @Component({
-  selector: 'embryo-HeaderCart',
-  templateUrl: './HeaderCart.component.html',
-  styleUrls: ['./HeaderCart.component.scss']
+    selector: 'embryo-HeaderCart',
+    templateUrl: './HeaderCart.component.html',
+    styleUrls: ['./HeaderCart.component.scss']
 })
 export class HeaderCartComponent implements OnInit, OnChanges {
 
-   @Input() cartProducts : any;
-   @Input() count        : any;
-   @Input() currency     : string;
+    @Input() cartProducts: any;
+    @Input() count: any;
+    @Input() currency: string;
 
-   mobWidth : any;
-   mobScreenSize : number = 767;
+    mobWidth: any;
+    mobScreenSize: number = 767;
 
-   @Output() removeProductData : EventEmitter<any> = new EventEmitter();
+    @Output() removeProductData: EventEmitter<any> = new EventEmitter();
 
-   hiddenBadge = true;
+    hiddenBadge = true;
 
-   constructor(public embryoService: EmbryoService) {
-      this.mobWidth = window.screen.width;
-   }
+    constructor(public embryoService: EmbryoService) {
+        this.mobWidth = window.screen.width;
+    }
 
-   ngOnInit() {
-   }
+    ngOnInit() {
+    }
 
-   ngOnChanges() {
-      if(this.count && this.count != 0) {
-         this.hiddenBadge = false;
-      } else {
-         this.hiddenBadge = true;
-      }
-   }
+    ngOnChanges() {
+        if (this.count && this.count != 0) {
+            this.hiddenBadge = false;
+        } else {
+            this.hiddenBadge = true;
+        }
+    }
 
-   public confirmationPopup(product:any) {
-      this.removeProductData.emit(product);
-   }
+    public confirmationPopup(product: any) {
+        this.removeProductData.emit(product);
+    }
 
-   public calculatePrice(product) {
-      let total = null;
-      total = product.price*product.quantity;
-      return total;
-   }
+    public calculatePrice(product) {
+        let total = null;
+        total = product.price * product.quantity;
+        return total;
+    }
 
 }

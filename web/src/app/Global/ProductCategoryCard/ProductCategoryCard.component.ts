@@ -1,19 +1,20 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'embryo-ProductCategoryCard',
-  templateUrl: './ProductCategoryCard.component.html',
-  styleUrls: ['./ProductCategoryCard.component.scss']
+    selector: 'embryo-ProductCategoryCard',
+    templateUrl: './ProductCategoryCard.component.html',
+    styleUrls: ['./ProductCategoryCard.component.scss']
 })
 export class ProductCategoryCardComponent implements OnInit {
 
-   @Input() productCategory : any;
+    @Input() productCategory: any;
 
-   @Input() totalProducts : any;
+    @Input() totalProducts: any;
 
-   constructor() { }
+    constructor() {
+    }
 
-   ngOnInit() {
-   }
+    ngOnInit() {
+    }
 
 }

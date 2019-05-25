@@ -1,55 +1,58 @@
 <p>
-  stock-edit works!
+    stock-edit works!
 </p>
 
 
 <mat-sidenav-container class="h-100">
-  <div fxLayout="row" fxLayoutAlign="center center" class="h-100">
+    <div class="h-100" fxLayout="row" fxLayoutAlign="center center">
 
-    <!-- <form [formGroup]="stockForm" (ngSubmit)="onSubmit(stockForm.value)" fxFlex="90" fxFlex.gt-sm="30" fxFlex.sm="60" class="mat-elevation-z6"> -->
+        <!-- <form [formGroup]="stockForm" (ngSubmit)="onSubmit(stockForm.value)" fxFlex="90" fxFlex.gt-sm="30" fxFlex.sm="60" class="mat-elevation-z6"> -->
 
-    <form [formGroup]="stockForm" (ngSubmit)="onSubmit()" fxFlex="90" fxFlex.gt-sm="30" fxFlex.sm="60"
-      class="mat-elevation-z6">
+        <form (ngSubmit)="onSubmit()" [formGroup]="stockForm" class="mat-elevation-z6" fxFlex="90" fxFlex.gt-sm="30"
+              fxFlex.sm="60">
 
-      <app-content-header [icon]="'exit_to_app'" [title]="'Edit Stock'" [hideBreadcrumb]="true" [hasBgImage]="true"
-        [class]="'py-4'">
-      </app-content-header>
+            <app-content-header [class]="'py-4'" [hasBgImage]="true" [hideBreadcrumb]="true"
+                                [icon]="'exit_to_app'"
+                                [title]="'Edit Stock'">
+            </app-content-header>
 
-      <div class="p-3">
+            <div class="p-3">
 
-        <!-- <mat-form-field class="w-100">
-            <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
-            <input matInput placeholder="id" formControlName="id" id="id">
-            <mat-error *ngIf="stockForm.controls.id.errors?.required">ID is required</mat-error>
-                  </mat-form-field> -->
+                <!-- <mat-form-field class="w-100">
+                    <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+                    <input matInput placeholder="id" formControlName="id" id="id">
+                    <mat-error *ngIf="stockForm.controls.id.errors?.required">ID is required</mat-error>
+                          </mat-form-field> -->
 
-        <mat-form-field class="w-100">
-          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
-          <input matInput placeholder="Parent Order ID" formControlName="orderId">
-          <mat-error *ngIf="stockForm.controls.orderId.errors?.required">OrderId is required</mat-error>
-        </mat-form-field>
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="orderId" matInput placeholder="Parent Order ID">
+                    <mat-error *ngIf="stockForm.controls.orderId.errors?.required">OrderId is required</mat-error>
+                </mat-form-field>
 
-        <mat-form-field class="w-100">
-          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
-          <input matInput placeholder="Subject of this stock" formControlName="subject">
-          <mat-error *ngIf="stockForm.controls.subject.errors?.required">ID is required</mat-error>
-        </mat-form-field>
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="subject" matInput placeholder="Subject of this stock">
+                    <mat-error *ngIf="stockForm.controls.subject.errors?.required">ID is required</mat-error>
+                </mat-form-field>
 
 
-        <mat-form-field class="w-100">
-          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
-          <input matInput placeholder="Total Amount" formControlName="totalAmount">
-          <mat-error *ngIf="stockForm.controls.totalAmount.errors?.required">Total Amount is required</mat-error>
-        </mat-form-field>
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="totalAmount" matInput placeholder="Total Amount">
+                    <mat-error *ngIf="stockForm.controls.totalAmount.errors?.required">Total Amount is required
+                    </mat-error>
+                </mat-form-field>
 
-        <mat-form-field class="w-100">
-          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
-          <input matInput placeholder="Description" formControlName="description">
-        </mat-form-field>
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="description" matInput placeholder="Description">
+                </mat-form-field>
 
-        <button mat-raised-button color="primary" class="mat-elevation-z6 w-100 mt-3" type="submit">Create</button>
+                <button class="mat-elevation-z6 w-100 mt-3" color="primary" mat-raised-button type="submit">Create
+                </button>
 
-      </div>
-    </form>
-  </div>
+            </div>
+        </form>
+    </div>
 </mat-sidenav-container>

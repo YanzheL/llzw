@@ -1,55 +1,56 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 
 @Component({
-  selector: 'embryo-WishList',
-  templateUrl: './WishList.component.html',
-  styleUrls: ['./WishList.component.scss']
+    selector: 'embryo-WishList',
+    templateUrl: './WishList.component.html',
+    styleUrls: ['./WishList.component.scss']
 })
 export class WishListComponent implements OnInit, OnChanges {
 
-   @Input() wishListProducts : any;
+    @Input() wishListProducts: any;
 
-   @Input() count        : number;
+    @Input() count: number;
 
-   @Input() currency      : string;
+    @Input() currency: string;
 
-   @Output() removeWishListData : EventEmitter<any> = new EventEmitter();
+    @Output() removeWishListData: EventEmitter<any> = new EventEmitter();
 
-   @Output() addAllWishlistToCart : EventEmitter<any> = new EventEmitter();
+    @Output() addAllWishlistToCart: EventEmitter<any> = new EventEmitter();
 
-   @Output() addToCart: EventEmitter<any> = new EventEmitter();
+    @Output() addToCart: EventEmitter<any> = new EventEmitter();
 
-   hiddenBadge = true;
+    hiddenBadge = true;
 
-   constructor() { }
+    constructor() {
+    }
 
-   ngOnInit() {
-   }
+    ngOnInit() {
+    }
 
-   ngOnChanges() {
-      if(this.count && this.count != 0) {
-         this.hiddenBadge = false;
-      } else {
-         this.hiddenBadge = true;
-      }
-   }
+    ngOnChanges() {
+        if (this.count && this.count != 0) {
+            this.hiddenBadge = false;
+        } else {
+            this.hiddenBadge = true;
+        }
+    }
 
-   public confirmationPopup(product:any) {
-      this.removeWishListData.emit(product);
-   }
+    public confirmationPopup(product: any) {
+        this.removeWishListData.emit(product);
+    }
 
-   public addAllToCart() {
-      this.addAllWishlistToCart.emit(this.wishListProducts);
-   }
+    public addAllToCart() {
+        this.addAllWishlistToCart.emit(this.wishListProducts);
+    }
 
-   public calculatePrice(product) {
-      let total = null;
-      total = product.price*product.quantity;
-      return total;
-   }
+    public calculatePrice(product) {
+        let total = null;
+        total = product.price * product.quantity;
+        return total;
+    }
 
-   public addToCartProduct(product) {
-      this.addToCart.emit(product);
-   }
+    public addToCartProduct(product) {
+        this.addToCart.emit(product);
+    }
 
 }

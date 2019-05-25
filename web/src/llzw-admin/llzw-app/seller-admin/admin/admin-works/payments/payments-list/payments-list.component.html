@@ -18,130 +18,131 @@
 } -->
 <mat-sidenav-container class="h-100">
 
-  <app-content-header [icon]="'exit_to_app'" [title]="'Payments'" [hideBreadcrumb]="true" [hasBgImage]="true"
-    [class]="'py-4'">
-  </app-content-header>
+    <app-content-header [class]="'py-4'" [hasBgImage]="true" [hideBreadcrumb]="true" [icon]="'exit_to_app'"
+                        [title]="'Payments'">
+    </app-content-header>
 
 
-  <ng-container ktPortletTools>
-    <div class="p-2">
-      <button [routerLink]="['./add']" mat-raised-button color="primary" matTooltip="Create new payment">New
-        payment</button>
+    <ng-container ktPortletTools>
+        <div class="p-2">
+            <button [routerLink]="['./add']" color="primary" mat-raised-button matTooltip="Create new payment">New
+                payment
+            </button>
+        </div>
+    </ng-container>
+
+
+    <div class="p-3">
+        <mat-table [dataSource]="payments_rows">
+            <!-- User name Definition -->
+            <ng-container cdkColumnDef="id">
+                <mat-header-cell *cdkHeaderCellDef> Payment ID</mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.id}} </mat-cell>
+            </ng-container>
+
+            <!-- Age Definition -->
+            <ng-container cdkColumnDef="order">
+                <mat-header-cell *cdkHeaderCellDef> Parent Order ID</mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.order}} </mat-cell>
+            </ng-container>
+
+            <!-- Title Definition -->
+            <ng-container cdkColumnDef="createdAt">
+                <mat-header-cell *cdkHeaderCellDef> Creation time</mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.createdAt}} </mat-cell>
+            </ng-container>
+
+            <!-- Title Definition -->
+            <ng-container cdkColumnDef="updatedAt">
+                <mat-header-cell *cdkHeaderCellDef> Update time</mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.updatedAt}} </mat-cell>
+            </ng-container>
+
+            <!-- Title Definition -->
+            <ng-container cdkColumnDef="payer">
+                <mat-header-cell *cdkHeaderCellDef> Username of payer</mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.payer}} </mat-cell>
+            </ng-container>
+
+            <!-- Title Definition -->
+            <ng-container cdkColumnDef="subject">
+                <mat-header-cell *cdkHeaderCellDef> Subject of this payment</mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.subject}} </mat-cell>
+            </ng-container>
+
+            <!-- Title Definition -->
+            <ng-container cdkColumnDef="description">
+                <mat-header-cell *cdkHeaderCellDef> Description</mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.description}} </mat-cell>
+            </ng-container>
+
+            <!-- Title Definition -->
+            <ng-container cdkColumnDef="totalAmount">
+                <mat-header-cell *cdkHeaderCellDef> Total amount</mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.totalAmount}} </mat-cell>
+            </ng-container>
+
+            <!-- Title Definition -->
+            <ng-container cdkColumnDef="status">
+                <mat-header-cell *cdkHeaderCellDef> Status</mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.status}} </mat-cell>
+            </ng-container>
+
+            <!-- Title Definition -->
+            <ng-container cdkColumnDef="confirmedAt">
+                <mat-header-cell *cdkHeaderCellDef> Payment confirmation time</mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.confirmedAt}} </mat-cell>
+            </ng-container>
+
+            <!-- Title Definition -->
+            <ng-container cdkColumnDef="confirmed">
+                <mat-header-cell *cdkHeaderCellDef> Confirmed</mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.confirmed}} </mat-cell>
+            </ng-container>
+
+            <!-- Title Definition -->
+            <ng-container cdkColumnDef="valid">
+                <mat-header-cell *cdkHeaderCellDef> Valid flag</mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.valid}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef>
+                    Actions
+                </mat-header-cell>
+                <mat-cell *matCellDef="let payment">
+                    <button (click)="editPayment(payment)" color="primary" mat-icon-button matTooltip="Edit payment"
+                            type="button">
+                        <mat-icon>create</mat-icon>
+                    </button>&nbsp;
+                    <button (click)="deletePayment(payment)" color="warn" mat-icon-button matTooltip="Delete payment"
+                            type="button">
+                        <mat-icon>delete</mat-icon>
+                    </button>&nbsp;
+                    <button [matMenuTriggerFor]="menu" mat-icon-button matTooltip="More actions">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item type="button">
+                            <mat-icon>subject</mat-icon>
+                            <span>Remarks</span>
+                        </button>
+                        <button mat-menu-item type="button">
+                            <mat-icon>assignment</mat-icon>
+                            <span>Specifications</span>
+                        </button>
+                    </mat-menu>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Header and Row Declarations -->
+            <mat-header-row
+                    *cdkHeaderRowDef="['id', 'order', 'createdAt', 'updatedAt', 'payer', 'subject', 'description', 'totalAmount', 'status', 'confirmedAt', 'confirmed', 'valid', 'actions']">
+            </mat-header-row>
+            <mat-row
+                    *cdkRowDef="let row; columns: ['id', 'order', 'createdAt', 'updatedAt', 'payer', 'subject', 'description', 'totalAmount', 'status', 'confirmedAt', 'confirmed', 'valid', 'actions']">
+            </mat-row>
+        </mat-table>
     </div>
-  </ng-container>
-
-
-  <div class="p-3">
-    <mat-table [dataSource]="payments_rows">
-      <!-- User name Definition -->
-      <ng-container cdkColumnDef="id">
-        <mat-header-cell *cdkHeaderCellDef> Payment ID </mat-header-cell>
-        <mat-cell *cdkCellDef="let row"> {{row.id}} </mat-cell>
-      </ng-container>
-
-      <!-- Age Definition -->
-      <ng-container cdkColumnDef="order">
-        <mat-header-cell *cdkHeaderCellDef> Parent Order ID </mat-header-cell>
-        <mat-cell *cdkCellDef="let row"> {{row.order}} </mat-cell>
-      </ng-container>
-
-      <!-- Title Definition -->
-      <ng-container cdkColumnDef="createdAt">
-        <mat-header-cell *cdkHeaderCellDef> Creation time </mat-header-cell>
-        <mat-cell *cdkCellDef="let row"> {{row.createdAt}} </mat-cell>
-      </ng-container>
-
-      <!-- Title Definition -->
-      <ng-container cdkColumnDef="updatedAt">
-        <mat-header-cell *cdkHeaderCellDef> Update time </mat-header-cell>
-        <mat-cell *cdkCellDef="let row"> {{row.updatedAt}} </mat-cell>
-      </ng-container>
-
-      <!-- Title Definition -->
-      <ng-container cdkColumnDef="payer">
-        <mat-header-cell *cdkHeaderCellDef> Username of payer </mat-header-cell>
-        <mat-cell *cdkCellDef="let row"> {{row.payer}} </mat-cell>
-      </ng-container>
-
-      <!-- Title Definition -->
-      <ng-container cdkColumnDef="subject">
-        <mat-header-cell *cdkHeaderCellDef> Subject of this payment </mat-header-cell>
-        <mat-cell *cdkCellDef="let row"> {{row.subject}} </mat-cell>
-      </ng-container>
-
-      <!-- Title Definition -->
-      <ng-container cdkColumnDef="description">
-        <mat-header-cell *cdkHeaderCellDef> Description </mat-header-cell>
-        <mat-cell *cdkCellDef="let row"> {{row.description}} </mat-cell>
-      </ng-container>
-
-      <!-- Title Definition -->
-      <ng-container cdkColumnDef="totalAmount">
-        <mat-header-cell *cdkHeaderCellDef> Total amount </mat-header-cell>
-        <mat-cell *cdkCellDef="let row"> {{row.totalAmount}} </mat-cell>
-      </ng-container>
-
-      <!-- Title Definition -->
-      <ng-container cdkColumnDef="status">
-        <mat-header-cell *cdkHeaderCellDef> Status </mat-header-cell>
-        <mat-cell *cdkCellDef="let row"> {{row.status}} </mat-cell>
-      </ng-container>
-
-      <!-- Title Definition -->
-      <ng-container cdkColumnDef="confirmedAt">
-        <mat-header-cell *cdkHeaderCellDef> Payment confirmation time </mat-header-cell>
-        <mat-cell *cdkCellDef="let row"> {{row.confirmedAt}} </mat-cell>
-      </ng-container>
-
-      <!-- Title Definition -->
-      <ng-container cdkColumnDef="confirmed">
-        <mat-header-cell *cdkHeaderCellDef> Confirmed </mat-header-cell>
-        <mat-cell *cdkCellDef="let row"> {{row.confirmed}} </mat-cell>
-      </ng-container>
-
-      <!-- Title Definition -->
-      <ng-container cdkColumnDef="valid">
-        <mat-header-cell *cdkHeaderCellDef> Valid flag </mat-header-cell>
-        <mat-cell *cdkCellDef="let row"> {{row.valid}} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef>
-          Actions
-        </mat-header-cell>
-        <mat-cell *matCellDef="let payment">
-          <button type="button" (click)="editPayment(payment)" mat-icon-button color="primary"
-            matTooltip="Edit payment">
-            <mat-icon>create</mat-icon>
-          </button>&nbsp;
-          <button mat-icon-button color="warn" type="button" (click)="deletePayment(payment)"
-            matTooltip="Delete payment">
-            <mat-icon>delete</mat-icon>
-          </button>&nbsp;
-          <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="More actions">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item type="button">
-              <mat-icon>subject</mat-icon>
-              <span>Remarks</span>
-            </button>
-            <button mat-menu-item type="button">
-              <mat-icon>assignment</mat-icon>
-              <span>Specifications</span>
-            </button>
-          </mat-menu>
-        </mat-cell>
-      </ng-container>
-
-      <!-- Header and Row Declarations -->
-      <mat-header-row
-        *cdkHeaderRowDef="['id', 'order', 'createdAt', 'updatedAt', 'payer', 'subject', 'description', 'totalAmount', 'status', 'confirmedAt', 'confirmed', 'valid', 'actions']">
-      </mat-header-row>
-      <mat-row
-        *cdkRowDef="let row; columns: ['id', 'order', 'createdAt', 'updatedAt', 'payer', 'subject', 'description', 'totalAmount', 'status', 'confirmedAt', 'confirmed', 'valid', 'actions']">
-      </mat-row>
-    </mat-table>
-  </div>
 
 </mat-sidenav-container>

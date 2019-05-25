@@ -1,8 +1,8 @@
-<div  class="img-zoom-container" #container *ngIf="imgSrc">
-    <img id="myimage" [src]="imgSrc" #img>
-    <div  [ngClass]="{'hide': hide}" 
-        id="myresult" 
-        class="img-zoom-result" 
-        #result>
+<div #container *ngIf="imgSrc" class="img-zoom-container">
+    <img #img [src]="imgSrc" id="myimage">
+    <div #result
+         [ngClass]="{'hide': hide}"
+         class="img-zoom-result"
+         id="myresult">
     </div>
 </div>  

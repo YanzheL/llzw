@@ -1,14 +1,13 @@
-
 <embryo-PageTitle heading="Privacy Policy" subHeading="Your information is fully secure with us."></embryo-PageTitle>
-<div class="inner-container section-gap bg-white" *ngIf="privacyPolicyData && privacyPolicyData.length>0">
-  <div class="container">
-    <div class="privacy-page">
-      <mat-card class="mb-5" *ngFor="let privacyPolicy of privacyPolicyData">
-        <h4 class="mb-3" *ngIf="privacyPolicy?.name">
-          {{privacyPolicy?.name}}
-        </h4>
-        <p [innerHTML]="privacyPolicy?.content"></p>
-      </mat-card>
+<div *ngIf="privacyPolicyData && privacyPolicyData.length>0" class="inner-container section-gap bg-white">
+    <div class="container">
+        <div class="privacy-page">
+            <mat-card *ngFor="let privacyPolicy of privacyPolicyData" class="mb-5">
+                <h4 *ngIf="privacyPolicy?.name" class="mb-3">
+                    {{privacyPolicy?.name}}
+                </h4>
+                <p [innerHTML]="privacyPolicy?.content"></p>
+            </mat-card>
+        </div>
     </div>
-  </div>
 </div>

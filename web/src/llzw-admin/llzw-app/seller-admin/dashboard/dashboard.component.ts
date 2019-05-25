@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { AppSettings } from '../../appsettings/app.settings';
-import { Settings } from '../../appsettings/app.settings.model';
+import {AppSettings} from '../../appsettings/app.settings';
+import {Settings} from '../../appsettings/app.settings.model';
 
 @Component({
     selector: 'app-dashboard',
@@ -13,9 +13,11 @@ export class DashboardComponent implements OnInit {
     public icons = ['home', 'person', 'alarm', 'work', 'mail', 'favorite'];
     public colors = ['accent', 'primary', 'warn'];
     public settings: Settings;
+
     constructor(public appSettings: AppSettings) {
         this.settings = this.appSettings.settings;
     }
+
     ngOnInit() {
     }
 }

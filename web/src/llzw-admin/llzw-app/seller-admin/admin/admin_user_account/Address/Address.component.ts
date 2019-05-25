@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-Address',
-  templateUrl: './Address.component.html',
-  styleUrls: ['./Address.component.scss']
+    selector: 'app-Address',
+    templateUrl: './Address.component.html',
+    styleUrls: ['./Address.component.scss']
 })
 export class AddressComponent implements OnInit {
 
-  constructor() { }
+    constructor() {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
 }

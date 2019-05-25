@@ -1,19 +1,16 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-
-
-
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 // RxJS
-import { Observable, Subject, of } from 'rxjs';
+import {Observable, of} from 'rxjs';
 //import { Observable, forkJoin, BehaviorSubject, of } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import {mergeMap} from 'rxjs/operators';
 
-import { ApiResponse } from '../_models/api.response';
-import { apiUrl, environment } from '../../../../../llzw-environments/environment';
+import {ApiResponse} from '../_models/api.response';
+import {apiUrl} from '../../../../../llzw-environments/environment';
 
-import { Stock } from '../_models/stock.model';
+import {Stock} from '../_models/stock.model';
 
 const BASE_URL = apiUrl + '/stocks/';  // 中文
 
@@ -24,127 +21,126 @@ const BASE_URL = apiUrl + '/stocks/';  // 中文
 @Injectable()
 export class StockService {
 
-  constructor(private http: HttpClient) {
-  }
-
-  /*
-	getAll(): Observable<any> {
-		return this.http.get(BASE_URL);
-  }
-*/
-
-  getAll(): Observable<any> {
-    const params = new HttpParams().set("page", "0").set("size", "1000");//方式一：链式语法，set不能分开写
-    //const params = new HttpParams({ fromString: "_page=1&_limit=10" });//方式二：使用 fromString
-    //const params = new HttpParams({ fromObject: { _page: "1", _limit: "10" } });//方式三：使用 fromObject
-    // http.get(url,{params}).subscribe(...)
-    let headers = {
-      headers: new HttpHeaders({
-        //'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'  //这个是不以 json 发送
-        'Content-Type': 'application/json' //以 json 发送 与上面的互斥 不能设此选项
-      }),
-      withCredentials: true, // 重要 跨域需求
-      params
+    constructor(private http: HttpClient) {
     }
 
-    let myapiUrl = apiUrl; //加个变量 是因为 TypeScript 会对常量比较 报错
-
-    if (myapiUrl === 'api' || (myapiUrl === "http://localhost:3000"))
-
-      return this.http.get(BASE_URL); //假数据服务时 直接返回
-
-    else {
-      return this.http.get(BASE_URL, headers).pipe(
-        mergeMap(res => {
-          const result = res['data']; //真实数据服务时 返回数据需要去壳data[]
-          return of(result);
-        })
-      );
+    /*
+      getAll(): Observable<any> {
+          return this.http.get(BASE_URL);
     }
-
-  }
-
-
-
-  /*
-
-  	findStocks(queryParams: QueryParamsModel): Observable<QueryResultsModel> {
-		return this.getAllStocks().pipe(
-			mergeMap(res => {
-				const result = this.httpUtils.baseFilter(res, queryParams, ['status', 'condition']);
-				return of(result);
-			})
-		);
-	}
-
-
   */
 
-  getById(id: number): Observable<ApiResponse> {
+    getAll(): Observable<any> {
+        const params = new HttpParams().set("page", "0").set("size", "1000");//方式一：链式语法，set不能分开写
+        //const params = new HttpParams({ fromString: "_page=1&_limit=10" });//方式二：使用 fromString
+        //const params = new HttpParams({ fromObject: { _page: "1", _limit: "10" } });//方式三：使用 fromObject
+        // http.get(url,{params}).subscribe(...)
+        let headers = {
+            headers: new HttpHeaders({
+                //'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'  //这个是不以 json 发送
+                'Content-Type': 'application/json' //以 json 发送 与上面的互斥 不能设此选项
+            }),
+            withCredentials: true, // 重要 跨域需求
+            params
+        }
 
-   // const params = new HttpParams().set("page", "0").set("size", "1000");//方式一：链式语法，set不能分开写
-    //const params = new HttpParams({ fromString: "_page=1&_limit=10" });//方式二：使用 fromString
-    //const params = new HttpParams({ fromObject: { _page: "1", _limit: "10" } });//方式三：使用 fromObject
-    // http.get(url,{params}).subscribe(...)
-    let headers = {
-      headers: new HttpHeaders({
-        //'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'  //这个是不以 json 发送
-        'Content-Type': 'application/json' //以 json 发送 与上面的互斥 不能设此选项
-      }),
-      withCredentials: true, // 重要 跨域需求
-     // params
+        let myapiUrl = apiUrl; //加个变量 是因为 TypeScript 会对常量比较 报错
+
+        if (myapiUrl === 'api' || (myapiUrl === "http://localhost:3000"))
+
+            return this.http.get(BASE_URL); //假数据服务时 直接返回
+
+        else {
+            return this.http.get(BASE_URL, headers).pipe(
+                mergeMap(res => {
+                    const result = res['data']; //真实数据服务时 返回数据需要去壳data[]
+                    return of(result);
+                })
+            );
+        }
+
     }
 
-    let myapiUrl = apiUrl; //加个变量 是因为 TypeScript 会对常量比较 报错
 
-    if (myapiUrl === 'api' || (myapiUrl === "http://localhost:3000"))
-      return this.http.get<ApiResponse>(BASE_URL + id);
-    else {
-      return this.http.get<ApiResponse>(BASE_URL + id, headers).pipe(
-        mergeMap(res => {
-          const result = res['data']; //真实数据服务时 返回数据需要去壳data[]
-          return of(result);
-        })
-      );
+    /*
+
+        findStocks(queryParams: QueryParamsModel): Observable<QueryResultsModel> {
+          return this.getAllStocks().pipe(
+              mergeMap(res => {
+                  const result = this.httpUtils.baseFilter(res, queryParams, ['status', 'condition']);
+                  return of(result);
+              })
+          );
+      }
+
+
+    */
+
+    getById(id: number): Observable<ApiResponse> {
+
+        // const params = new HttpParams().set("page", "0").set("size", "1000");//方式一：链式语法，set不能分开写
+        //const params = new HttpParams({ fromString: "_page=1&_limit=10" });//方式二：使用 fromString
+        //const params = new HttpParams({ fromObject: { _page: "1", _limit: "10" } });//方式三：使用 fromObject
+        // http.get(url,{params}).subscribe(...)
+        let headers = {
+            headers: new HttpHeaders({
+                //'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'  //这个是不以 json 发送
+                'Content-Type': 'application/json' //以 json 发送 与上面的互斥 不能设此选项
+            }),
+            withCredentials: true, // 重要 跨域需求
+            // params
+        }
+
+        let myapiUrl = apiUrl; //加个变量 是因为 TypeScript 会对常量比较 报错
+
+        if (myapiUrl === 'api' || (myapiUrl === "http://localhost:3000"))
+            return this.http.get<ApiResponse>(BASE_URL + id);
+        else {
+            return this.http.get<ApiResponse>(BASE_URL + id, headers).pipe(
+                mergeMap(res => {
+                    const result = res['data']; //真实数据服务时 返回数据需要去壳data[]
+                    return of(result);
+                })
+            );
+        }
     }
-  }
 
 
-  // create
-  create(stock: Stock): Observable<ApiResponse> {
-    let headers = {
-      headers: new HttpHeaders({
-        //'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'  //这个是不以 json 发送
-        'Content-Type': 'application/json' //以 json 发送 与上面的互斥 不能设此选项
-      }),
-      withCredentials: true // 重要 跨域需求
+    // create
+    create(stock: Stock): Observable<ApiResponse> {
+        let headers = {
+            headers: new HttpHeaders({
+                //'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'  //这个是不以 json 发送
+                'Content-Type': 'application/json' //以 json 发送 与上面的互斥 不能设此选项
+            }),
+            withCredentials: true // 重要 跨域需求
+        }
+
+        return this.http.post<ApiResponse>(BASE_URL, stock, headers);
     }
 
-    return this.http.post<ApiResponse>(BASE_URL, stock, headers);
-  }
-
-  update(stock: Stock): Observable<ApiResponse> {
-    let headers = {
-      headers: new HttpHeaders({
-        //'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'  //这个是不以 json 发送
-        'Content-Type': 'application/json' //以 json 发送 与上面的互斥 不能设此选项
-      }),
-      withCredentials: true // 重要 跨域需求
+    update(stock: Stock): Observable<ApiResponse> {
+        let headers = {
+            headers: new HttpHeaders({
+                //'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'  //这个是不以 json 发送
+                'Content-Type': 'application/json' //以 json 发送 与上面的互斥 不能设此选项
+            }),
+            withCredentials: true // 重要 跨域需求
+        }
+        return this.http.patch<ApiResponse>(BASE_URL + stock.id, stock, headers);
     }
-    return this.http.patch<ApiResponse>(BASE_URL + stock.id, stock, headers);
-  }
 
 
-  deleteById(id: number): Observable<ApiResponse> {
-    let headers = {
-      headers: new HttpHeaders({
-        //'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'  //这个是不以 json 发送
-        'Content-Type': 'application/json' //以 json 发送 与上面的互斥 不能设此选项
-      }),
-      withCredentials: true // 重要 跨域需求
+    deleteById(id: number): Observable<ApiResponse> {
+        let headers = {
+            headers: new HttpHeaders({
+                //'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'  //这个是不以 json 发送
+                'Content-Type': 'application/json' //以 json 发送 与上面的互斥 不能设此选项
+            }),
+            withCredentials: true // 重要 跨域需求
+        }
+        return this.http.delete<ApiResponse>(BASE_URL + id, headers);
     }
-    return this.http.delete<ApiResponse>(BASE_URL + id, headers);
-  }
 
 }
 
@@ -195,9 +191,6 @@ export class StockService {
 }
 
 */
-
-
-
 
 
 /*

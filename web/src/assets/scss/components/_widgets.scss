@@ -1,5 +1,4 @@
 
-
 .offer-badge .mat-chip {
   top: 50px;
   position: absolute;
@@ -29,6 +28,7 @@
     line-height: 100px;
   }
 }
+
 .image-group {
   img {
     box-shadow: $card-shadow;
@@ -153,17 +153,18 @@
 .download-app-list:first-child {
   border-right: 1px solid #000;
 }
+
 .download-app-list img {
-margin-top:-6px;
+  margin-top: -6px;
 }
 
-@media(max-width:1560px) {
+@media(max-width: 1560px) {
   body .image-group {
     padding-top: 1rem !important;
   }
 }
 
-@media(max-width:1199px) {
+@media(max-width: 1199px) {
   body .image-group {
     padding-top: 0rem !important;
   }
@@ -173,7 +174,7 @@ margin-top:-6px;
   }
 }
 
-@media(max-width:991px) {
+@media(max-width: 991px) {
   .feature-section-v2-list .material-icons {
     font-size: 1.7rem;
   }
@@ -200,7 +201,7 @@ margin-top:-6px;
 }
 
 
-@media(max-width:560px) {
+@media(max-width: 560px) {
   .subscribe-section-v2 {
     padding-left: 2rem !important;
     padding-right: 2rem !important;

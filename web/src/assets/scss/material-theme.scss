@@ -7,9 +7,9 @@
 @include mat-core();
 
 // Define the default theme (same as the example above).
-$my-theme-primary: mat-palette($mat-indigo,800);
-$my-theme-accent:  mat-palette($mat-deep-orange, 500);
-$my-light-theme:   mat-light-theme($my-theme-primary, $my-theme-accent);
+$my-theme-primary: mat-palette($mat-indigo, 800);
+$my-theme-accent: mat-palette($mat-deep-orange, 500);
+$my-light-theme: mat-light-theme($my-theme-primary, $my-theme-accent);
 
 // Include the default theme styles.
 @include angular-material-theme($my-light-theme);
@@ -17,9 +17,9 @@ $my-light-theme:   mat-light-theme($my-theme-primary, $my-theme-accent);
 
 // Define an alternate dark theme.
 $dark-primary: mat-palette($mat-blue-grey);
-$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
-$dark-warn:    mat-palette($mat-deep-orange);
-$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+$dark-accent: mat-palette($mat-amber, A200, A100, A400);
+$dark-warn: mat-palette($mat-deep-orange);
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
 // Include the alternative theme styles inside of a block with a CSS class. You can make this
 // CSS class whatever you want. In this example, any component inside of an element with
@@ -36,17 +36,19 @@ $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 $primary: mat-color($my-theme-primary);
 $accent: mat-color($my-theme-accent);
 
-.primary-color{
+.primary-color {
   color: $primary;
 }
-.primary-bg{
+
+.primary-bg {
   background: $primary;
 }
-.accent-color{
+
+.accent-color {
   color: $accent;
 }
 
-.accent-bg{
+.accent-bg {
   background: $accent;
 }
 

@@ -1,19 +1,16 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-
-
-
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 // RxJS
-import { Observable, Subject, of } from 'rxjs';
+import {Observable, of} from 'rxjs';
 //import { Observable, forkJoin, BehaviorSubject, of } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import {mergeMap} from 'rxjs/operators';
 
-import { ApiResponse } from '../_models/api.response';
-import { apiUrl, environment } from '../../../../../llzw-environments/environment';
+import {ApiResponse} from '../_models/api.response';
+import {apiUrl} from '../../../../../llzw-environments/environment';
 
-import { Product } from '../_models/product.model';
+import {Product} from '../_models/product.model';
 
 const BASE_URL = apiUrl + '/products/';  // 中文
 
@@ -71,7 +68,6 @@ export class ProductService {
             );
         }
     }
-
 
 
     // getById(id: number): Observable<ApiResponse> {
@@ -192,9 +188,6 @@ export class ProductService {
 }
 
 */
-
-
-
 
 
 /*

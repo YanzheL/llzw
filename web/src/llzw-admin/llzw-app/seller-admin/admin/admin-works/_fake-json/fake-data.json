@@ -194,7 +194,6 @@
       "description": "adfasdgasdg"
     }
   ],
-
   "stocks": [
     {
       "id": 1,
@@ -266,7 +265,6 @@
       "valid": true
     }
   ],
-
   "orders": [
     {
       "id": 1,
@@ -381,5 +379,4 @@
       "valid": true
     }
   ]
-
 }

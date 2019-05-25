@@ -1,16 +1,16 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { PaginationPipe} from './pagination/pagination.pipe';
-import { ProfilePicturePipe } from './profilePicture/profilePicture.pipe';
-import { ChatPersonSearchPipe } from './search/chat-person-search.pipe';
-import { UserSearchPipe } from './search/user-search.pipe';
-import { TruncatePipe } from './truncate/truncate.pipe';
-import { MailSearchPipe } from './search/mail-search.pipe';
+import {PaginationPipe} from './pagination/pagination.pipe';
+import {ProfilePicturePipe} from './profilePicture/profilePicture.pipe';
+import {ChatPersonSearchPipe} from './search/chat-person-search.pipe';
+import {UserSearchPipe} from './search/user-search.pipe';
+import {TruncatePipe} from './truncate/truncate.pipe';
+import {MailSearchPipe} from './search/mail-search.pipe';
 
 @NgModule({
-    imports: [ 
-        CommonModule 
+    imports: [
+        CommonModule
     ],
     declarations: [
         PaginationPipe,
@@ -29,4 +29,5 @@ import { MailSearchPipe } from './search/mail-search.pipe';
         MailSearchPipe
     ]
 })
-export class PipesModule { }
+export class PipesModule {
+}

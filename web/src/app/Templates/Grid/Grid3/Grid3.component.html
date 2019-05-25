@@ -1,26 +1,28 @@
-<div fxLayout='row wrap' class="col-gap" *ngIf="blogList && blogList.length>0">
-  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33.33" fxFlex.lg="33.33" fxFlex.xl="33.33" *ngFor="let blog of blogList">
-    <mat-card>
-      <a class="p-link" [routerLink]="['/blogs/detail', blog.id]">
-        <img width="460" height="310" mat-card-image [src]="blog?.image" alt="post">
-      </a>
-      <mat-card-content class="relative">
-        <h5 class="mb-3"><a class="title-link" [routerLink]="['/blogs/detail', blog.id]">{{blog?.name}}</a></h5>
-        <p [innerHTML]="blog?.short_content"></p>
-        <div class="meta-tag">
-          <button class="simple-btn text-muted">
-            <i class="material-icons">person</i> By Admin</button>
-          <button class="simple-btn text-muted">
-            <i class="material-icons">
-              calendar_today
-            </i> {{blog?.author?.post_date}}</button>
-        </div>
-        <div class="m-icon">
-          <button mat-fab [routerLink]="['/blogs/detail', blog.id]">
-            <i class="material-icons"> link </i>
-          </button>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
+<div *ngIf="blogList && blogList.length>0" class="col-gap" fxLayout='row wrap'>
+    <div *ngFor="let blog of blogList" fxFlex.lg="33.33" fxFlex.md="33.33" fxFlex.sm="100" fxFlex.xl="33.33"
+         fxFlex.xs="100">
+        <mat-card>
+            <a [routerLink]="['/blogs/detail', blog.id]" class="p-link">
+                <img [src]="blog?.image" alt="post" height="310" mat-card-image width="460">
+            </a>
+            <mat-card-content class="relative">
+                <h5 class="mb-3"><a [routerLink]="['/blogs/detail', blog.id]" class="title-link">{{blog?.name}}</a></h5>
+                <p [innerHTML]="blog?.short_content"></p>
+                <div class="meta-tag">
+                    <button class="simple-btn text-muted">
+                        <i class="material-icons">person</i> By Admin
+                    </button>
+                    <button class="simple-btn text-muted">
+                        <i class="material-icons">
+                            calendar_today
+                        </i> {{blog?.author?.post_date}}</button>
+                </div>
+                <div class="m-icon">
+                    <button [routerLink]="['/blogs/detail', blog.id]" mat-fab>
+                        <i class="material-icons"> link </i>
+                    </button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
 </div>

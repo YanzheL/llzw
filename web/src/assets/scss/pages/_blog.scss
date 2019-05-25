@@ -57,7 +57,7 @@
   list-style: none;
 }
 
-.commented-wrapper>ul {
+.commented-wrapper > ul {
   padding-left: 0;
 }
 
@@ -80,7 +80,7 @@
   }
 }
 
-@media(max-width:599px) {
+@media(max-width: 599px) {
   .center-holder {
     h2 {
       font-size: 1.5rem;
@@ -99,10 +99,11 @@
     padding-top: 1rem;
   }
 }
-@media all and (-ms-high-contrast:none) {
-     
-   .center-holder{
-         justify-content: flex-start;
-    
+
+@media all and (-ms-high-contrast: none) {
+
+  .center-holder {
+    justify-content: flex-start;
+
   }
 }

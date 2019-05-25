@@ -1,17 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'embryo-Testimonial',
-  templateUrl: './Testimonial.component.html',
-  styleUrls: ['./Testimonial.component.scss']
+    selector: 'embryo-Testimonial',
+    templateUrl: './Testimonial.component.html',
+    styleUrls: ['./Testimonial.component.scss']
 })
 export class TestimonialComponent implements OnInit {
 
-   @Input() data : any;
+    @Input() data: any;
 
-   constructor() { }
+    constructor() {
+    }
 
-   ngOnInit() {
-   }
+    ngOnInit() {
+    }
 
 }

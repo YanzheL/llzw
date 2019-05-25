@@ -1,17 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'embryo-AboutInfo',
-  templateUrl: './AboutInfo.component.html',
-  styleUrls: ['./AboutInfo.component.scss']
+    selector: 'embryo-AboutInfo',
+    templateUrl: './AboutInfo.component.html',
+    styleUrls: ['./AboutInfo.component.scss']
 })
 export class AboutInfoComponent implements OnInit {
 
-   @Input() data : any;
-   
-   constructor() { }
+    @Input() data: any;
 
-   ngOnInit() {
-   }
+    constructor() {
+    }
+
+    ngOnInit() {
+    }
 
 }

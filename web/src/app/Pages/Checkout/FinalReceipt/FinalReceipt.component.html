@@ -1,100 +1,108 @@
-
 <embryo-PageTitle heading="Payment Confirmation"></embryo-PageTitle>
 
-<div class="inner-container" *ngIf="(embryoService.buyUserCartProducts && embryoService.buyUserCartProducts.length>0); else elseBlock">
-  <div class="bg-white final-receipt-page section-gap" *ngIf="userDetails">
-    <div class="final-receipt">
-      <div class="container">
-        <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
-            <mat-card class="pt-0">
-              <div id="payment-receipt">
-              <div class="text-center bg-grey p-5 mat-card-pad-none">
-                <h1>Thank You</h1>
-                <!--<h5 class="mb-4">Payment is successfully processsed and your order is on the way </h5>-->
-                <!--<h6 class="mb-4">Transaction ID:267676GHERT105467</h6>-->
-                <img src="assets/images/checked.png" width="64" height="64" alt="Success">
-              </div>
-              <div class="py-5">
-                <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
-                  <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-                    <h6 >Please Confirm The Order</h6>
-                    <!--<p class="mb-1">Order ID: 2563883628932</p>-->
-                    <!--<p class="mb-1">Order Date: {{todayDate | date:'MMMM d, y'}} </p>-->
-                    <!--<p class="mb-1">Order Total: {{getTotalPrice() | currency:embryoService?.currency}}</p>-->
-                  </div>
-                  <div class="pb-4" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-                    <!--<h6>Ship To</h6>-->
-                    <!--<p class="mb-1 text-capitalize">{{userDetails}}</p>-->
-                    <!--<p class="mb-1 text-capitalize">{{userDetails?.user_details?.first_name}} {{userDetails?.user_details?.last_name}}</p>-->
-                    <!--<p class="mb-1 text-capitalize">{{userDetails?.user_details?.apt}}</p>-->
-                    <!--<p class="mb-1 text-capitalize">{{userDetails?.user_details?.city_state}}</p>-->
-                    <!--<p class="mb-1 text-capitalize">{{userDetails?.user_details?.country}} - {{userDetails?.user_details?.zip_code}}</p>-->
-                    <!--<p class="mb-1">Contact No. {{userDetails?.user_details?.mobile}}</p>-->
-                  </div>
-                </div>
-                <div class="py-4 text-center bg-grey">
-                  <h4>Expected Date of Delivery</h4>
-                  <h3>{{deliveryDate | date:'MMMM d, y'}}</h3>
-                </div>
-                <h4 class="pt-5">Your Ordered Details</h4>
-                <div fxLayout="row wrap" fxLayoutAlign="start center" class="col-gap" *ngFor="let product of embryoService.buyUserCartProducts">
-                  <div fxFlex.xs="20" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-                    <img width="100" [src]="embryoService.baseUrl1+'/files/'+product?.mainImageFiles?.slice(0,1)" alt="cart Image">
-                  </div>
-                  <div fxFlex.xs="30" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-                    <h6>Product Name</h6>
-                    <p class="font-bold">{{product?.name}}</p>
-                  </div>
-                  <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-                    <h6>Quantity</h6>
-                    <p *ngIf="product?.quantity">{{product?.quantity}}</p>
-                    <p *ngIf="!product?.quantity">1</p>
-                  </div>
-                  <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-                    <h6>Price</h6>
-                    <p>{{ calculateProductSinglePrice(product, product?.quantity) | currency:embryoService?.currency}}</p>
-                  </div>
-                </div>
-                <!--<hr class="dark-border spacer">-->
-                <div class="text-right ">
-                  <!--<div>-->
-                    <!--<p>Subtotal</p><span fxFlex></span> {{calculateTotalPrice() | currency:embryoService?.currency}}-->
-                  <!--</div>-->
-                  <!--<div>-->
-                    <!--<p>Shipping</p><span fxFlex></span> {{embryoService.shipping | currency:embryoService?.currency}}-->
-                  <!--</div>-->
-                  <!--<div>-->
-                    <!--<p>Tax(GST)</p><span fxFlex></span> {{embryoService.tax | currency:embryoService?.currency}}-->
-                  <!--</div>-->
-                  <hr class="spacer">
-                  <div class="mb-4">
-                    <h4>Total</h4><span fxFlex></span>
-                    <h4> {{getTotalPrice() | currency:embryoService?.currency}}</h4>
-                  </div>
-                </div>
-              </div>
-              </div>
-              <div class="btn-group">
+<div *ngIf="(embryoService.buyUserCartProducts && embryoService.buyUserCartProducts.length>0); else elseBlock"
+     class="inner-container">
+    <div *ngIf="userDetails" class="bg-white final-receipt-page section-gap">
+        <div class="final-receipt">
+            <div class="container">
+                <div class="col-gap" fxLayout="row wrap" fxLayoutAlign="center center">
+                    <div fxFlex.lg="60" fxFlex.md="60" fxFlex.sm="100" fxFlex.xl="60" fxFlex.xs="100">
+                        <mat-card class="pt-0">
+                            <div id="payment-receipt">
+                                <div class="text-center bg-grey p-5 mat-card-pad-none">
+                                    <h1>Thank You</h1>
+                                    <!--<h5 class="mb-4">Payment is successfully processsed and your order is on the way </h5>-->
+                                    <!--<h6 class="mb-4">Transaction ID:267676GHERT105467</h6>-->
+                                    <img alt="Success" height="64" src="assets/images/checked.png" width="64">
+                                </div>
+                                <div class="py-5">
+                                    <div class="col-gap" fxLayout="row wrap" fxLayoutAlign="none">
+                                        <div fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xl="50"
+                                             fxFlex.xs="100">
+                                            <h6>Please Confirm The Order</h6>
+                                            <!--<p class="mb-1">Order ID: 2563883628932</p>-->
+                                            <!--<p class="mb-1">Order Date: {{todayDate | date:'MMMM d, y'}} </p>-->
+                                            <!--<p class="mb-1">Order Total: {{getTotalPrice() | currency:embryoService?.currency}}</p>-->
+                                        </div>
+                                        <div class="pb-4" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xl="50"
+                                             fxFlex.xs="100">
+                                            <!--<h6>Ship To</h6>-->
+                                            <!--<p class="mb-1 text-capitalize">{{userDetails}}</p>-->
+                                            <!--<p class="mb-1 text-capitalize">{{userDetails?.user_details?.first_name}} {{userDetails?.user_details?.last_name}}</p>-->
+                                            <!--<p class="mb-1 text-capitalize">{{userDetails?.user_details?.apt}}</p>-->
+                                            <!--<p class="mb-1 text-capitalize">{{userDetails?.user_details?.city_state}}</p>-->
+                                            <!--<p class="mb-1 text-capitalize">{{userDetails?.user_details?.country}} - {{userDetails?.user_details?.zip_code}}</p>-->
+                                            <!--<p class="mb-1">Contact No. {{userDetails?.user_details?.mobile}}</p>-->
+                                        </div>
+                                    </div>
+                                    <div class="py-4 text-center bg-grey">
+                                        <h4>Expected Date of Delivery</h4>
+                                        <h3>{{deliveryDate | date:'MMMM d, y'}}</h3>
+                                    </div>
+                                    <h4 class="pt-5">Your Ordered Details</h4>
+                                    <div *ngFor="let product of embryoService.buyUserCartProducts" class="col-gap"
+                                         fxLayout="row wrap"
+                                         fxLayoutAlign="start center">
+                                        <div fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xl="25" fxFlex.xs="20">
+                                            <img [src]="embryoService.baseUrl1+'/files/'+product?.mainImageFiles?.slice(0,1)"
+                                                 alt="cart Image"
+                                                 width="100">
+                                        </div>
+                                        <div fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xl="25" fxFlex.xs="30">
+                                            <h6>Product Name</h6>
+                                            <p class="font-bold">{{product?.name}}</p>
+                                        </div>
+                                        <div fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xl="25" fxFlex.xs="25">
+                                            <h6>Quantity</h6>
+                                            <p *ngIf="product?.quantity">{{product?.quantity}}</p>
+                                            <p *ngIf="!product?.quantity">1</p>
+                                        </div>
+                                        <div fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xl="25" fxFlex.xs="25">
+                                            <h6>Price</h6>
+                                            <p>{{ calculateProductSinglePrice(product, product?.quantity) | currency:embryoService?.currency}}</p>
+                                        </div>
+                                    </div>
+                                    <!--<hr class="dark-border spacer">-->
+                                    <div class="text-right ">
+                                        <!--<div>-->
+                                        <!--<p>Subtotal</p><span fxFlex></span> {{calculateTotalPrice() | currency:embryoService?.currency}}-->
+                                        <!--</div>-->
+                                        <!--<div>-->
+                                        <!--<p>Shipping</p><span fxFlex></span> {{embryoService.shipping | currency:embryoService?.currency}}-->
+                                        <!--</div>-->
+                                        <!--<div>-->
+                                        <!--<p>Tax(GST)</p><span fxFlex></span> {{embryoService.tax | currency:embryoService?.currency}}-->
+                                        <!--</div>-->
+                                        <hr class="spacer">
+                                        <div class="mb-4">
+                                            <h4>Total</h4><span fxFlex></span>
+                                            <h4> {{getTotalPrice() | currency:embryoService?.currency}}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-group">
 
-              <!--<button mat-raised-button color="accent" class="button-lg" type="button" (click)="printDiv()">Download PDF</button>-->
-              <button mat-raised-button color="accent" style="margin: 0 auto;" class="button-lg" type="button" (click)="goToHome()">Confirm</button>
+                                <!--<button mat-raised-button color="accent" class="button-lg" type="button" (click)="printDiv()">Download PDF</button>-->
+                                <button (click)="goToHome()" class="button-lg" color="accent" mat-raised-button
+                                        style="margin: 0 auto;" type="button">Confirm
+                                </button>
+                            </div>
+                        </mat-card>
+                    </div>
+                </div>
             </div>
-            </mat-card>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <ng-template #elseBlock>
-  <div class="section-gap-lg text-center">
-    <div class="mb-4">
-    <img src="assets/images/empty-cart.png" height="128" width="128" alt="cart-empty">
-  </div>
-    <h4> Your Shopping Bag is empty.</h4>
-    <a href="javascript:void(0)" class="primary-color" [routerLink]="['/']">Go for Shopping</a>
-  </div>
+    <div class="section-gap-lg text-center">
+        <div class="mb-4">
+            <img alt="cart-empty" height="128" src="assets/images/empty-cart.png" width="128">
+        </div>
+        <h4> Your Shopping Bag is empty.</h4>
+        <a [routerLink]="['/']" class="primary-color" href="javascript:void(0)">Go for Shopping</a>
+    </div>
 </ng-template>
 

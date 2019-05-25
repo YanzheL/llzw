@@ -1,15 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Router, ActivatedRoute } from '@angular/router';
-
+import {HttpClient} from '@angular/common/http';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MeService} from '../../../../services/services/me.service'
+import {Me} from '../../../../services/models/Me'; // 元气少女
 // RxJS
-import { Observable, Subject, of } from 'rxjs';
-
-import { apiUrl, environment } from '../../../../../llzw-environments/environment';
-
-import { MeService } from '../../../../services/services/me.service'
-import { Me } from '../../../../services/models/Me';  // 元气少女
 
 export class ApiResponse {
     status: number
@@ -35,16 +30,18 @@ export class AccountComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private http: HttpClient,
         public meService: MeService,  // 元气少女
-    ) { 
-            // 元气少女
-    this.meService.getMe()
-    .subscribe(data => {      
-      this.me = data;
-      // setTimeout(() => { this.loadingIndicator = false; }, 1500);
-    });
+    ) {
+        // 元气少女
+        this.meService.getMe()
+            .subscribe(data => {
+                this.me = data;
+                // setTimeout(() => { this.loadingIndicator = false; }, 1500);
+            });
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+    }
+
     /*
   ngOnInit() {
   

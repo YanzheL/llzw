@@ -113,7 +113,7 @@
               "**/node_modules/**"
             ]
           }
-        }, 
+        },
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {

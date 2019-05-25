@@ -1,15 +1,14 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { RouterModule, Routes } from '@angular/router'; // 元气少女
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // 元气少女
+import {RouterModule, Routes} from '@angular/router'; // 元气少女
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'; // 元气少女
+import {UserFormsComponent} from './user-forms.component';
 
-import { UserFormsComponent } from './user-forms.component';
-
-import { SigninComponent } from './signin/signin.component';
-import { SignoutComponent } from './signout/signout.component';
-import { SignupComponent } from './signup/signup.component';
-import { DemitComponent } from './demit/demit.component';
+import {SigninComponent} from './signin/signin.component';
+import {SignoutComponent} from './signout/signout.component';
+import {SignupComponent} from './signup/signup.component';
+import {DemitComponent} from './demit/demit.component';
 
 
 const routes: Routes = [
@@ -24,19 +23,18 @@ const routes: Routes = [
             pathMatch: 'full'
           },
           */
-          /*
-             {
-               path: 'signin',
-               component: SigninComponent
-             },
-             */
+            /*
+               {
+                 path: 'signin',
+                 component: SigninComponent
+               },
+               */
 
-            
+
             {
                 path: 'signin',  // 将 signin 与子路由 loadChildren 挂钩
                 loadChildren: './login/login.module#LoginModule'
             },
-            
 
 
             {
@@ -87,4 +85,5 @@ const routes: Routes = [
     ],
     exports: [RouterModule], // 元气少女
 })
-export class UserFormsModule { }
+export class UserFormsModule {
+}

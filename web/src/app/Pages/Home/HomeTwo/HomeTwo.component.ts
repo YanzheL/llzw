@@ -1,56 +1,57 @@
-import { Component, OnInit } from '@angular/core';
-import { EmbryoService } from '../../../Services/Embryo.service';
+import {Component, OnInit} from '@angular/core';
+import {EmbryoService} from '../../../Services/Embryo.service';
 
 @Component({
-  selector: 'app-HomeTwo',
-  templateUrl: './HomeTwo.component.html',
-  styleUrls: ['./HomeTwo.component.scss']
+    selector: 'app-HomeTwo',
+    templateUrl: './HomeTwo.component.html',
+    styleUrls: ['./HomeTwo.component.scss']
 })
 export class HomeTwoComponent implements OnInit {
 
-   topProducts             : any;
-   lighteningDealsProducts : any;
-   
-   constructor(public embryoService : EmbryoService) { }
+    topProducts: any;
+    lighteningDealsProducts: any;
 
-   ngOnInit() {
-      this.lighteningDeals();
-      this.getProducts();
-   }
+    constructor(public embryoService: EmbryoService) {
+    }
 
-   public lighteningDeals() {
-      this.embryoService.getProducts().valueChanges()
-         .subscribe(res => this.getLighteningDealsResponse(res));
-   }
+    ngOnInit() {
+        this.lighteningDeals();
+        this.getProducts();
+    }
 
-   public getLighteningDealsResponse(res) {
-      let productsArray : any = [];
-      this.lighteningDealsProducts = null;
-      productsArray.push(this.last(res.men));
-      productsArray.push(this.last(res.women));
-      productsArray.push(this.last(res.gadgets));
-      productsArray.push(this.last(res.accessories));
+    public lighteningDeals() {
+        this.embryoService.getProducts().valueChanges()
+            .subscribe(res => this.getLighteningDealsResponse(res));
+    }
 
-      this.lighteningDealsProducts = productsArray;
-   }
+    public getLighteningDealsResponse(res) {
+        let productsArray: any = [];
+        this.lighteningDealsProducts = null;
+        productsArray.push(this.last(res.men));
+        productsArray.push(this.last(res.women));
+        productsArray.push(this.last(res.gadgets));
+        productsArray.push(this.last(res.accessories));
 
-   last(array) {
-      return array[array.length - 1];
-   }
+        this.lighteningDealsProducts = productsArray;
+    }
 
-   public getProducts() {
-      this.embryoService.getProducts().valueChanges()
-         .subscribe(res => this.getProductsResponse(res));
-   }
+    last(array) {
+        return array[array.length - 1];
+    }
 
-   public getProductsResponse(res) {
-      this.topProducts = null;
-      let products = ((res.men.concat(res.women)).concat(res.gadgets)).concat(res.accessories);
-      this.topProducts = products;
-   }
+    public getProducts() {
+        this.embryoService.getProducts().valueChanges()
+            .subscribe(res => this.getProductsResponse(res));
+    }
 
-   public addToCart(value) {
-      this.embryoService.addToCart(value);
-   }
+    public getProductsResponse(res) {
+        this.topProducts = null;
+        let products = ((res.men.concat(res.women)).concat(res.gadgets)).concat(res.accessories);
+        this.topProducts = products;
+    }
+
+    public addToCart(value) {
+        this.embryoService.addToCart(value);
+    }
 
 }

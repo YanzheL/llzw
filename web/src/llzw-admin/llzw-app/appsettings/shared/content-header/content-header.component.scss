@@ -1,50 +1,56 @@
-.content-header{
-    color: #fff!important;
-    text-align: center!important;
-    img{
-        width: 130px!important;
-        height: 130px!important;
-        border-radius: 50%!important;
-    }
-    h1{
-        font-size: 36px!important;
-        font-weight: 400!important;
-        margin: 0!important;
-    }
-    h4{
-        font-size: 16px!important;
-        font-weight: 300!important;
-        max-width: 580px!important;
-        text-align: center!important;
-        margin: 0 auto!important;
-    }
-    &.bg-image{
-        // background-image: url("assets/llzw_annular/img/app/header-bg.png");
-        background-image: url("../../../../../assets/llzw_annular/img/app/header-bg.png");
-        background-blend-mode: overlay;
-        background-size: 300px;
-    }
+.content-header {
+  color: #fff !important;
+  text-align: center !important;
+
+  img {
+    width: 130px !important;
+    height: 130px !important;
+    border-radius: 50% !important;
+  }
+
+  h1 {
+    font-size: 36px !important;
+    font-weight: 400 !important;
+    margin: 0 !important;
+  }
+
+  h4 {
+    font-size: 16px !important;
+    font-weight: 300 !important;
+    max-width: 580px !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
+
+  &.bg-image {
+    // background-image: url("assets/llzw_annular/img/app/header-bg.png");
+    background-image: url("../../../../../assets/llzw_annular/img/app/header-bg.png");
+    background-blend-mode: overlay;
+    background-size: 300px;
+  }
 }
 
 
 @media screen and (min-width: 960px) {
-    .content-header{
-        img{
-            width: 150px;
-            height: 150px;
-        }
-        h1{
-            font-size: 48px;
-        }
-        h4{
-            font-size: 18px;
-        }
-        &.has-bg-image{
-            background-size: 480px;
-        }
+  .content-header {
+    img {
+      width: 150px;
+      height: 150px;
     }
-}
 
+    h1 {
+      font-size: 48px;
+    }
+
+    h4 {
+      font-size: 18px;
+    }
+
+    &.has-bg-image {
+      background-size: 480px;
+    }
+  }
+}
 
 
 // 字体图标 元气少女
@@ -67,20 +73,20 @@
 // }
 
 
-
 .mat-icon-button .mat-icon.mat-icon-lg,
-.mat-icon.mat-icon-lg{
-    font-size: 36px;
-    line-height: 36px;
-    height: 36px;
-    width: 36px;
-    vertical-align: middle;
+.mat-icon.mat-icon-lg {
+  font-size: 36px;
+  line-height: 36px;
+  height: 36px;
+  width: 36px;
+  vertical-align: middle;
 }
+
 .mat-icon-button .mat-icon.mat-icon-xlg,
-.mat-icon.mat-icon-xlg{
-    font-size: 48px !important;
-    line-height: 48px !important;
-    height: 48px !important;
-    width: 48px !important;
-    vertical-align: middle !important;
+.mat-icon.mat-icon-xlg {
+  font-size: 48px !important;
+  line-height: 48px !important;
+  height: 48px !important;
+  width: 48px !important;
+  vertical-align: middle !important;
 }

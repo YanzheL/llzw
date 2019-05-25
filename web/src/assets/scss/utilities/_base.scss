@@ -1,7 +1,8 @@
 *, ::after, ::before {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
-// Basics tags 
+
+// Basics tags
 code {
   padding: 8px;
   background: $body-bg;
@@ -41,7 +42,7 @@ img {
   border-bottom: 2px solid #eceeef;
 }
 
-.table tbody+tbody {
+.table tbody + tbody {
   border-top: 2px solid #eceeef;
 }
 
@@ -62,31 +63,31 @@ img {
   padding-right: 1rem;
 }
 
-@media (min-width:576px) {
+@media (min-width: 576px) {
   .container {
     width: 540px
   }
 }
 
-@media (min-width:768px) {
+@media (min-width: 768px) {
   .container {
     width: 720px
   }
 }
 
-@media (min-width:992px) {
+@media (min-width: 992px) {
   .container {
     width: 960px
   }
 }
 
-@media (min-width:1200px) {
+@media (min-width: 1200px) {
   .container {
     width: 1140px
   }
 }
 
-@media (min-width:1520px) {
+@media (min-width: 1520px) {
   .container {
     width: 1450px
   }
@@ -98,7 +99,7 @@ img {
   margin-left: -15px;
   margin-right: -15px;
 
-  >div {
+  > div {
     padding-left: 1rem;
     padding-right: 1rem;
     margin-bottom: 1rem;
@@ -179,17 +180,17 @@ hr {
 }
 
 //product detail
-@media(max-width:959px) {
+@media(max-width: 959px) {
   .product-detail-content {
     margin-top: 3rem;
   }
 }
 
-@media(max-width:420px) {
+@media(max-width: 420px) {
   .detail-btns {
     button {
       margin-bottom: 1rem;
-      display:block;
+      display: block;
     }
   }
 }
@@ -202,7 +203,7 @@ hr {
   padding: 2rem;
 }
 
-.alt-sec:nth-of-type(2n)>div:first-child {
+.alt-sec:nth-of-type(2n) > div:first-child {
   order: 1;
 }
 
@@ -210,7 +211,8 @@ hr {
 embryo-team {
   width: 100% !important;
 }
-body app-main,body .mat-drawer-content {
-  overflow-x:hidden;
+
+body app-main, body .mat-drawer-content {
+  overflow-x: hidden;
   overflow-y: auto;
 }

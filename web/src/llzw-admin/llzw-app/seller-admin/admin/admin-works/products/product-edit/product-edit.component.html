@@ -3,94 +3,97 @@
 </p> -->
 
 <mat-sidenav-container class="h-100">
-  <div fxLayout="row" fxLayoutAlign="center center" class="h-100">
+    <div class="h-100" fxLayout="row" fxLayoutAlign="center center">
 
-    <!--begin::Form-->
+        <!--begin::Form-->
 
-    <!-- <form *ngIf="productForm" [formGroup]="productForm" (ngSubmit)="onSubmit(productForm.value)" fxFlex="90" fxFlex.gt-sm="30" fxFlex.sm="60" class="mat-elevation-z6"> -->
-    <form [formGroup]="productForm" (ngSubmit)="onSubmit(productForm.value)" fxFlex="90" fxFlex.gt-sm="30"
-      fxFlex.sm="60" class="mat-elevation-z6">
+        <!-- <form *ngIf="productForm" [formGroup]="productForm" (ngSubmit)="onSubmit(productForm.value)" fxFlex="90" fxFlex.gt-sm="30" fxFlex.sm="60" class="mat-elevation-z6"> -->
+        <form (ngSubmit)="onSubmit(productForm.value)" [formGroup]="productForm" class="mat-elevation-z6" fxFlex="90"
+              fxFlex.gt-sm="30" fxFlex.sm="60">
 
-      <!-- [icon]="'{{headerIcon}}'"
-            [title]="'{{headerTitle}}'" -->
-      <app-content-header [icon]="'border_color'" [title]="'Edit Product'" [hideBreadcrumb]="true" [hasBgImage]="true"
-        [class]="'py-4'">
-      </app-content-header>
-
-
-      <div class="p-4">
-
-        <!-- name 必须 -->
-        <mat-form-field class="w-100">
-          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
-          <input matInput placeholder="Name of this product" formControlName="name">
-          <mat-error *ngIf="productForm.controls.name.errors?.required">Name is required</mat-error>
-          <!-- <mat-error *ngIf="productForm.controls.name.hasError('minlength')">Name isn't long enough, minimum of 4 characters</mat-error> -->
-          <!-- <mat-error *ngIf="productForm.controls.name.hasError('invalidName')">Name 包含特殊字符</mat-error> -->
-          <mat-error *ngIf="productForm.controls.name.hasError('invalidInfo')">
-            {{productForm.controls.name.errors['invalidInfo']}}</mat-error>
-        </mat-form-field>
-
-        <!-- valid 必须 -->
-        <mat-checkbox id="promotion" type="checkbox" color="primary" formControlName="valid">
-          {{productForm.controls.valid.value?"商品上架":"商品下架"}}</mat-checkbox>
-
-        <!-- price 必须 -->
-        <mat-form-field class="w-100">
-          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
-          <input matInput placeholder="Price of this product" formControlName="price">
-          <mat-error *ngIf="productForm.controls.price.errors?.required">价格不能为空</mat-error>
-          <mat-error *ngIf="productForm.controls.price.hasError('invalidInfo')">
-            {{productForm.controls.price.errors['invalidInfo']}}</mat-error>
-        </mat-form-field>
+            <!-- [icon]="'{{headerIcon}}'"
+                  [title]="'{{headerTitle}}'" -->
+            <app-content-header [class]="'py-4'" [hasBgImage]="true" [hideBreadcrumb]="true"
+                                [icon]="'border_color'"
+                                [title]="'Edit Product'">
+            </app-content-header>
 
 
-        <!-- seller 必须 不是前端填写 -->
-        <!-- <mat-form-field class="w-100">
-          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
-          <input matInput placeholder="seller" formControlName="seller">
-          <mat-error *ngIf="productForm.controls.seller.errors?.required">seller is required</mat-error>
-        </mat-form-field> -->
+            <div class="p-4">
 
-        <!-- introduction 必须 -->
-        <mat-form-field class="w-100">
-          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
-          <input matInput placeholder="Introduction of this product" formControlName="introduction">
-          <mat-error *ngIf="productForm.controls.introduction.errors?.required">introduction is required</mat-error>
-        </mat-form-field>
+                <!-- name 必须 -->
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="name" matInput placeholder="Name of this product">
+                    <mat-error *ngIf="productForm.controls.name.errors?.required">Name is required</mat-error>
+                    <!-- <mat-error *ngIf="productForm.controls.name.hasError('minlength')">Name isn't long enough, minimum of 4 characters</mat-error> -->
+                    <!-- <mat-error *ngIf="productForm.controls.name.hasError('invalidName')">Name 包含特殊字符</mat-error> -->
+                    <mat-error *ngIf="productForm.controls.name.hasError('invalidInfo')">
+                        {{productForm.controls.name.errors['invalidInfo']}}</mat-error>
+                </mat-form-field>
 
+                <!-- valid 必须 -->
+                <mat-checkbox color="primary" formControlName="valid" id="promotion" type="checkbox">
+                    {{productForm.controls.valid.value ? "商品上架" : "商品下架"}}</mat-checkbox>
 
-        <!-- ca 必须 -->
-        <mat-form-field class="w-100">
-          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
-          <input matInput placeholder="Certificate authority name" formControlName="ca">
-          <mat-error *ngIf="productForm.controls.ca.errors?.required">ca 不能为空</mat-error>
-          <mat-error *ngIf="productForm.controls.ca.hasError('invalidInfo')">
-            {{productForm.controls.ca.errors['invalidInfo']}}</mat-error>
-        </mat-form-field>
-
-        <!-- caFile 必须 本身已校验非空 -->
-        <mat-form-field class="w-100">
-          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
-          <input matInput placeholder="caFile" formControlName="caFile">
-          <mat-error *ngIf="productForm.controls.caFile.errors?.required">caFile 不能为空</mat-error>
-          <mat-error *ngIf="productForm.controls.caFile.hasError('invalidInfo')">
-            {{productForm.controls.caFile.errors['invalidInfo']}}</mat-error>
-        </mat-form-field>
-
-        <!-- caId 必须 -->
-        <mat-form-field class="w-100">
-          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
-          <input matInput placeholder="Qualification certificate id" formControlName="caId">
-          <mat-error *ngIf="productForm.controls.caId.errors?.required">caId 不能为空</mat-error>
-          <mat-error *ngIf="productForm.controls.caId.hasError('invalidInfo')">
-            {{productForm.controls.caId.errors['invalidInfo']}}</mat-error>
-        </mat-form-field>
-
-        <button mat-raised-button color="primary" class="mat-elevation-z6 w-100 mt-3" type="submit">Create</button>
-      </div>
-    </form>
+                <!-- price 必须 -->
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="price" matInput placeholder="Price of this product">
+                    <mat-error *ngIf="productForm.controls.price.errors?.required">价格不能为空</mat-error>
+                    <mat-error *ngIf="productForm.controls.price.hasError('invalidInfo')">
+                        {{productForm.controls.price.errors['invalidInfo']}}</mat-error>
+                </mat-form-field>
 
 
-  </div>
+                <!-- seller 必须 不是前端填写 -->
+                <!-- <mat-form-field class="w-100">
+                  <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+                  <input matInput placeholder="seller" formControlName="seller">
+                  <mat-error *ngIf="productForm.controls.seller.errors?.required">seller is required</mat-error>
+                </mat-form-field> -->
+
+                <!-- introduction 必须 -->
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="introduction" matInput placeholder="Introduction of this product">
+                    <mat-error *ngIf="productForm.controls.introduction.errors?.required">introduction is required
+                    </mat-error>
+                </mat-form-field>
+
+
+                <!-- ca 必须 -->
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="ca" matInput placeholder="Certificate authority name">
+                    <mat-error *ngIf="productForm.controls.ca.errors?.required">ca 不能为空</mat-error>
+                    <mat-error *ngIf="productForm.controls.ca.hasError('invalidInfo')">
+                        {{productForm.controls.ca.errors['invalidInfo']}}</mat-error>
+                </mat-form-field>
+
+                <!-- caFile 必须 本身已校验非空 -->
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="caFile" matInput placeholder="caFile">
+                    <mat-error *ngIf="productForm.controls.caFile.errors?.required">caFile 不能为空</mat-error>
+                    <mat-error *ngIf="productForm.controls.caFile.hasError('invalidInfo')">
+                        {{productForm.controls.caFile.errors['invalidInfo']}}</mat-error>
+                </mat-form-field>
+
+                <!-- caId 必须 -->
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="caId" matInput placeholder="Qualification certificate id">
+                    <mat-error *ngIf="productForm.controls.caId.errors?.required">caId 不能为空</mat-error>
+                    <mat-error *ngIf="productForm.controls.caId.hasError('invalidInfo')">
+                        {{productForm.controls.caId.errors['invalidInfo']}}</mat-error>
+                </mat-form-field>
+
+                <button class="mat-elevation-z6 w-100 mt-3" color="primary" mat-raised-button type="submit">Create
+                </button>
+            </div>
+        </form>
+
+
+    </div>
 </mat-sidenav-container>

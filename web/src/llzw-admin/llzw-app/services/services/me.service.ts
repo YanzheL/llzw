@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router, ActivatedRoute } from '@angular/router';
-// import 'rxjs/operator/map';
-
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {ActivatedRoute, Router} from '@angular/router';
 // RxJS
-import { Observable, pipe, Subject, of } from 'rxjs'; //pipe 可以单独使用
+import {Observable, of} from 'rxjs'; //pipe 可以单独使用
 //import { Observable, forkJoin, BehaviorSubject, of } from 'rxjs';
-import { map, mergeMap, tap, catchError, retry } from 'rxjs/operators';
+import {catchError, mergeMap, retry} from 'rxjs/operators';
 
 
-import { apiUrl, environment } from '../../../llzw-environments/environment';
+import {apiUrl} from '../../../llzw-environments/environment';
 
-import { Me } from '../models/Me';
+import {Me} from '../models/Me';
+
+// import 'rxjs/operator/map';
 
 export class ApiResponse {
     status: number
@@ -26,9 +26,10 @@ const BASE_URL = apiUrl + '/users/me';  // 中文
 export class MeService {
 
     constructor(private http: HttpClient,
-        public router: Router,
-        private activatedRoute: ActivatedRoute,
-    ) { }
+                public router: Router,
+                private activatedRoute: ActivatedRoute,
+    ) {
+    }
 
     // login(data) {
     //     data = { email: 'admin@example.com', password: 'Test@123' };

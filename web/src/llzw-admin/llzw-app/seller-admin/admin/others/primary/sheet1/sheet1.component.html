@@ -1,65 +1,64 @@
 <p>
-  sheet1 works!
+    sheet1 works!
 </p>
 
 
-
-<form [formGroup]="user" (ngSubmit)="onSubmit(user)">
-  <label>
-    <span>电子邮件地址</span>
-    <input type="text" formControlName="email" placeholder="请输入您的 email 地址">
-  </label>
-  <div *ngIf="user.get('email').hasError('required') && user.get('email').touched" class="error">
-    email 是必填项
-  </div>
-  <div *ngIf="user.get('email').hasError('pattern') && user.get('email').touched" class="error">
-    email 格式不正确
-  </div>
-  <div>
+<form (ngSubmit)="onSubmit(user)" [formGroup]="user">
     <label>
-      <span>密码</span>
-      <input type="password" formControlName="password" placeholder="请输入您的密码">
+        <span>电子邮件地址</span>
+        <input formControlName="email" placeholder="请输入您的 email 地址" type="text">
     </label>
-    <div *ngIf="user.get('password').hasError('required') && user.get('password').touched" class="error">
-      密码是必填项
+    <div *ngIf="user.get('email').hasError('required') && user.get('email').touched" class="error">
+        email 是必填项
     </div>
-    <label>
-      <span>确认密码</span>
-      <input type="password" formControlName="repeat" placeholder="请再次输入密码">
-    </label>   
-    <div *ngIf="user.get('repeat').hasError('required') && user.get('repeat').touched" class="error">
-      确认密码是必填项
+    <div *ngIf="user.get('email').hasError('pattern') && user.get('email').touched" class="error">
+        email 格式不正确
     </div>
-    <div *ngIf="user.hasError('validateEqual') && user.get('repeat').touched" class="error">
-      确认密码和密码不一致
+    <div>
+        <label>
+            <span>密码</span>
+            <input formControlName="password" placeholder="请输入您的密码" type="password">
+        </label>
+        <div *ngIf="user.get('password').hasError('required') && user.get('password').touched" class="error">
+            密码是必填项
+        </div>
+        <label>
+            <span>确认密码</span>
+            <input formControlName="repeat" placeholder="请再次输入密码" type="password">
+        </label>
+        <div *ngIf="user.get('repeat').hasError('required') && user.get('repeat').touched" class="error">
+            确认密码是必填项
+        </div>
+        <div *ngIf="user.hasError('validateEqual') && user.get('repeat').touched" class="error">
+            确认密码和密码不一致
+        </div>
     </div>
-  </div>
-  <div formGroupName="address">
-    <label>
-      <span>省份</span>
-      <select formControlName="province">
-        <option value="">请选择省份</option>
-        <option [value]="province" *ngFor="let province of provinces">{{province}}</option>
-      </select>
-    </label>
-    <label>
-      <span>城市</span>
-      <select formControlName="city">
-        <option value="">请选择城市</option>
-        <option [value]="city" *ngFor="let city of (cities$ | async)">{{city}}</option>
-      </select>
-    </label>
-    <label>
-      <span>区县</span>
-      <select formControlName="area">
-        <option value="">请选择区县</option>
-        <option [value]="area" *ngFor="let area of (areas$ | async)">{{area}}</option>
-      </select>
-    </label>
-    <label>
-      <span>地址</span>
-      <input type="text" formControlName="addr">
-    </label>
-  </div>
-  <button type="submit" [disabled]="user.invalid">注册</button>
+    <div formGroupName="address">
+        <label>
+            <span>省份</span>
+            <select formControlName="province">
+                <option value="">请选择省份</option>
+                <option *ngFor="let province of provinces" [value]="province">{{province}}</option>
+            </select>
+        </label>
+        <label>
+            <span>城市</span>
+            <select formControlName="city">
+                <option value="">请选择城市</option>
+                <option *ngFor="let city of (cities$ | async)" [value]="city">{{city}}</option>
+            </select>
+        </label>
+        <label>
+            <span>区县</span>
+            <select formControlName="area">
+                <option value="">请选择区县</option>
+                <option *ngFor="let area of (areas$ | async)" [value]="area">{{area}}</option>
+            </select>
+        </label>
+        <label>
+            <span>地址</span>
+            <input formControlName="addr" type="text">
+        </label>
+    </div>
+    <button [disabled]="user.invalid" type="submit">注册</button>
 </form>

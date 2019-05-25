@@ -1,17 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'embryo-Grid3',
-  templateUrl: './Grid3.component.html',
-  styleUrls: ['./Grid3.component.scss']
+    selector: 'embryo-Grid3',
+    templateUrl: './Grid3.component.html',
+    styleUrls: ['./Grid3.component.scss']
 })
 export class Grid3Component implements OnInit {
 
-   @Input() blogList : any;
+    @Input() blogList: any;
 
-   constructor() { }
+    constructor() {
+    }
 
-   ngOnInit() {
-   }
+    ngOnInit() {
+    }
 
 }

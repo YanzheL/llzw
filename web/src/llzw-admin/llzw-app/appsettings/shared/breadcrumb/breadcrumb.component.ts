@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router, ActivatedRouteSnapshot, UrlSegment, NavigationEnd } from "@angular/router";
-import { Title } from '@angular/platform-browser';
-import { AppSettings } from '../../app.settings';
-import { Settings } from '../../app.settings.model';
-import { MenuService } from '../../../bodypage/theme/components/menu/menu.service'; // 元气少女
+import {Component} from '@angular/core';
+import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router, UrlSegment} from "@angular/router";
+import {Title} from '@angular/platform-browser';
+import {AppSettings} from '../../app.settings';
+import {Settings} from '../../app.settings.model';
+import {MenuService} from '../../../bodypage/theme/components/menu/menu.service'; // 元气少女
 
 
 @Component({
     selector: 'app-breadcrumb',
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
-    providers: [ MenuService ]
+    providers: [MenuService]
 })
 export class BreadcrumbComponent {
 
@@ -21,11 +21,12 @@ export class BreadcrumbComponent {
     }[] = [];
 
     public settings: Settings;
+
     constructor(public appSettings: AppSettings,
-        public router: Router,
-        public activatedRoute: ActivatedRoute,
-        public title: Title,
-        private menuService: MenuService // 元气少女
+                public router: Router,
+                public activatedRoute: ActivatedRoute,
+                public title: Title,
+                private menuService: MenuService // 元气少女
     ) {
         this.settings = this.appSettings.settings;
         this.router.events.subscribe(event => {
@@ -39,6 +40,12 @@ export class BreadcrumbComponent {
                 this.title.setTitle(this.settings.name + this.pageTitle);
             }
         })
+    }
+
+    public closeSubMenus() {
+        if (this.settings.menu === "vertical") {
+            this.menuService.closeAllSubMenus(); // 元气少女
+        }
     }
 
     private parseRoute(node: ActivatedRouteSnapshot) {
@@ -59,12 +66,6 @@ export class BreadcrumbComponent {
         }
         if (node.firstChild) {
             this.parseRoute(node.firstChild);
-        }
-    }
-
-    public closeSubMenus() {
-        if (this.settings.menu === "vertical") {
-             this.menuService.closeAllSubMenus(); // 元气少女
         }
     }
 

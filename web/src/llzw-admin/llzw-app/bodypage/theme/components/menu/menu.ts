@@ -1,4 +1,4 @@
-import { Menu } from './menu.model';
+import {Menu} from './menu.model';
 
 export const verticalMenuItems = [
     new Menu(1, '办公室', '/seller/dashboard', null, 'dashboard', null, false, 0),

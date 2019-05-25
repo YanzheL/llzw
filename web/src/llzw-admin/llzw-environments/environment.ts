@@ -2,15 +2,16 @@
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
-import { seller_apiUrl } from '../../environments/environment'
+import {seller_apiUrl} from '../../environments/environment'
+
 export const environment = {
-	production: false,
-	// apiUrl: 'http://localhost:8081/api/v1_0_0',
+    production: false,
+    // apiUrl: 'http://localhost:8081/api/v1_0_0',
 
-	isMockEnabled: false, // You have to switch this, when your real back-end is done
+    isMockEnabled: false, // You have to switch this, when your real back-end is done
 
-	authTokenKey: 'authce9d77b308c149d5992a80073637e4d5',
-	siteName: 'LLZW 商务'
+    authTokenKey: 'authce9d77b308c149d5992a80073637e4d5',
+    siteName: 'LLZW 商务'
 };
 
 

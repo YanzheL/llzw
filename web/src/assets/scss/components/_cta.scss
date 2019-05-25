@@ -69,29 +69,30 @@
     }
   }
 }
-@media(max-width:991px){
-   .cta-content h2 {
-      font-size: 38px;
-      line-height: 39px;
-   }
-   .download-app-list:first-child{
-      border:none !important;
-   }
+
+@media(max-width: 991px) {
+  .cta-content h2 {
+    font-size: 38px;
+    line-height: 39px;
+  }
+  .download-app-list:first-child {
+    border: none !important;
+  }
 }
 
-@media(max-width:767px){
-   .cta-content h4 {
-      display: none;
-   }
+@media(max-width: 767px) {
+  .cta-content h4 {
+    display: none;
+  }
 }
 
-@media(max-width:478px){
-   .cta-content i {
-      display: none;
-   }
-   .cta-content h2 {
-      font-size: 21px;
-      line-height: 23px;
-   }
+@media(max-width: 478px) {
+  .cta-content i {
+    display: none;
+  }
+  .cta-content h2 {
+    font-size: 21px;
+    line-height: 23px;
+  }
 }
 

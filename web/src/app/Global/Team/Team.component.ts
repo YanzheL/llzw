@@ -1,17 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'embryo-Team',
-  templateUrl: './Team.component.html',
-  styleUrls: ['./Team.component.scss']
+    selector: 'embryo-Team',
+    templateUrl: './Team.component.html',
+    styleUrls: ['./Team.component.scss']
 })
 export class TeamComponent implements OnInit {
 
-   @Input() data : any;
+    @Input() data: any;
 
-   constructor() { }
+    constructor() {
+    }
 
-   ngOnInit() {
-   }
+    ngOnInit() {
+    }
 
 }

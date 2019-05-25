@@ -1,30 +1,34 @@
 <div *ngFor="let menu of parentMenu" class="menu-item">
-    <a *ngIf="menu.routerLink && !menu.hasSubMenu" mat-button 
-        fxLayout="row" [fxLayoutAlign]="(settings.menuType=='default') ? 'start center' : 'center center'"
-        [routerLink]="[menu.routerLink]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}"
-        [matTooltip]="menu.title" matTooltipPosition="after" [matTooltipDisabled]="(settings.menuType=='mini') ? 'false' : 'true'"
-        (click)="onClick(menu.id)" [id]="'menu-item-'+menu.id">
+    <a (click)="onClick(menu.id)" *ngIf="menu.routerLink && !menu.hasSubMenu"
+       [fxLayoutAlign]="(settings.menuType=='default') ? 'start center' : 'center center'" [id]="'menu-item-'+menu.id"
+       [matTooltipDisabled]="(settings.menuType=='mini') ? 'false' : 'true'" [matTooltip]="menu.title"
+       [routerLinkActiveOptions]="{exact:true}"
+       [routerLink]="[menu.routerLink]" fxLayout="row"
+       mat-button
+       matTooltipPosition="after" routerLinkActive="active-link">
         <mat-icon class="menu-icon">{{menu.icon}}</mat-icon>
         <span class="menu-title">{{menu.title}}</span>
     </a>
-    <a *ngIf="menu.href && !menu.subMenu" mat-button 
-        fxLayout="row" [fxLayoutAlign]="(settings.menuType=='default') ? 'start center' : 'center center'"
-        [attr.href]="menu.href || ''" [attr.target]="menu.target || ''"
-        [matTooltip]="menu.title" matTooltipPosition="after" [matTooltipDisabled]="(settings.menuType=='mini') ? 'false' : 'true'"
-        (click)="onClick(menu.id)" [id]="'menu-item-'+menu.id">
+    <a (click)="onClick(menu.id)" *ngIf="menu.href && !menu.subMenu"
+       [attr.href]="menu.href || ''" [attr.target]="menu.target || ''"
+       [fxLayoutAlign]="(settings.menuType=='default') ? 'start center' : 'center center'" [id]="'menu-item-'+menu.id"
+       [matTooltipDisabled]="(settings.menuType=='mini') ? 'false' : 'true'" [matTooltip]="menu.title"
+       fxLayout="row"
+       mat-button matTooltipPosition="after">
         <mat-icon class="menu-icon">{{menu.icon}}</mat-icon>
         <span class="menu-title">{{menu.title}}</span>
     </a>
-    <a *ngIf="menu.hasSubMenu" mat-button 
-        fxLayout="row" [fxLayoutAlign]="(settings.menuType=='default') ? 'start center' : 'center center'"
-        [matTooltip]="menu.title" matTooltipPosition="after" [matTooltipDisabled]="(settings.menuType=='mini') ? 'false' : 'true'"
-        (click)="onClick(menu.id)" [id]="'menu-item-'+menu.id">
+    <a (click)="onClick(menu.id)" *ngIf="menu.hasSubMenu"
+       [fxLayoutAlign]="(settings.menuType=='default') ? 'start center' : 'center center'" [id]="'menu-item-'+menu.id"
+       [matTooltipDisabled]="(settings.menuType=='mini') ? 'false' : 'true'" [matTooltip]="menu.title"
+       fxLayout="row"
+       mat-button matTooltipPosition="after">
         <mat-icon class="menu-icon">{{menu.icon}}</mat-icon>
         <span class="menu-title">{{menu.title}}</span>
         <mat-icon class="menu-expand-icon transition-2">arrow_drop_down</mat-icon>
     </a>
 
-    <div *ngIf="menu.hasSubMenu" class="sub-menu" [id]="'sub-menu-'+menu.id">
+    <div *ngIf="menu.hasSubMenu" [id]="'sub-menu-'+menu.id" class="sub-menu">
         <app-vertical-menu [menuItems]="menuItems" [menuParentId]="menu.id"></app-vertical-menu>
     </div>
 </div>

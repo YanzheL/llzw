@@ -1,9 +1,9 @@
 <div class="app-popup">
-   <div class="app-popup-content text-center">
-      <div class="mb-4">
-         <h4>{{message}}</h4>
-      </div>
-      <button mat-raised-button color="accent" class="mr-3" (click)="dialogRef.close('yes')">Yes</button>
-      <button mat-raised-button color="accent" class="mr-3" (click)="dialogRef.close()">No</button>
-   </div>
+    <div class="app-popup-content text-center">
+        <div class="mb-4">
+            <h4>{{message}}</h4>
+        </div>
+        <button (click)="dialogRef.close('yes')" class="mr-3" color="accent" mat-raised-button>Yes</button>
+        <button (click)="dialogRef.close()" class="mr-3" color="accent" mat-raised-button>No</button>
+    </div>
 </div>

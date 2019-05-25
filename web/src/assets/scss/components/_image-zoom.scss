@@ -1,9 +1,10 @@
 
-body .img-zoom-container{
-	position: relative !important;
+body .img-zoom-container {
+  position: relative !important;
 }
-@media(max-width:959px){
-	#myresult{
-		display: none;
-	  }
+
+@media(max-width: 959px) {
+  #myresult {
+    display: none;
+  }
 }

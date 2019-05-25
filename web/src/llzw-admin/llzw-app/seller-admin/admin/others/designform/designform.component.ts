@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'm-designform',
-  templateUrl: './designform.component.html',
-  styleUrls: ['./designform.component.scss']
+    selector: 'm-designform',
+    templateUrl: './designform.component.html',
+    styleUrls: ['./designform.component.scss']
 })
 export class DesignformComponent implements OnInit {
 
-  constructor() { }
+    constructor() {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
 }

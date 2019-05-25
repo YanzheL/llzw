@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { usernamelValidator, passwordlValidator, emailValidator, matchingPasswords } from '../../../../appsettings/utils/app-validators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 // RxJS
-import { Observable, Subject, of } from 'rxjs';
+import {Observable} from 'rxjs';
 
-import { AppSettings } from '../../../../appsettings/app.settings';
-import { Settings } from '../../../../appsettings/app.settings.model';
+import {AppSettings} from '../../../../appsettings/app.settings';
+import {Settings} from '../../../../appsettings/app.settings.model';
 
-import { apiUrl, environment } from '../../../../../llzw-environments/environment';
+import {apiUrl} from '../../../../../llzw-environments/environment';
 
 const BASE_URL = apiUrl + '/../../login';  // 中文 为真 8081/api/login 否则 apiUrl + '/../../login'
 export class ApiResponse {
@@ -88,7 +87,7 @@ export class LoginComponent implements OnInit {
         };
 
         let request = 'username=' + this.form.controls.username.value + '&password=' + this.form.controls.password.value + '&rememberMe=' + this.form.controls.rememberMe.value;
-       
+
         // const request = JSON.stringify(
         //     { email: this.form.controls.username.value, password: this.form.controls.password.value }
         // );
@@ -98,19 +97,18 @@ export class LoginComponent implements OnInit {
     }
 
     getMe(): Observable<ApiResponse> {
-        
+
         let BASE_URL = apiUrl + '/users/me';
 
         let headers = {
-            headers: new HttpHeaders({                
+            headers: new HttpHeaders({
                 //'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'  //这个是不以 json 发送
                 'Content-Type': 'application/json' //以 json 发送 与上面的互斥
             }),
-           withCredentials: true // 重要 跨域需求
+            withCredentials: true // 重要 跨域需求
         };
-        return this.http.get<ApiResponse>(BASE_URL,  headers);
+        return this.http.get<ApiResponse>(BASE_URL, headers);
     }
-
 
 
     // public onSubmit(values: Object): void {

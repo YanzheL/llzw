@@ -45,21 +45,24 @@
   .noUi-connect {
     background: $accent;
   }
+
   .noUi-horizontal {
     height: 8px;
   }
+
   .noUi-handle::after, .noUi-handle::before {
-   
+
     height: 7px;
     width: 2px;
-   
+
     left: 13px;
     top: 6px;
   }
+
   .noUi-horizontal .noUi-handle {
     width: 22px;
     height: 18px;
-    
+
   }
 }
 
@@ -130,7 +133,7 @@ body .ais-RatingMenu-starIcon {
   padding-left: 1rem;
 }
 
-ul.ais-HierarchicalMenu-list>ais-hierarchical-menu-item {
+ul.ais-HierarchicalMenu-list > ais-hierarchical-menu-item {
   position: relative;
 
   &:before {
@@ -149,38 +152,43 @@ ais-hierarchical-menu-item {
   .ais-HierarchicalMenu-link {
     font-weight: bold;
   }
+
   .ais-HierarchicalMenu-list--child a {
     font-weight: normal;
   }
-   .ais-HierarchicalMenu-list--child {
+
+  .ais-HierarchicalMenu-list--child {
     padding-top: 1rem;
     display: block;
   }
 }
-.ais-HierarchicalMenu-count,.ais-RefinementList-count,.ais-RatingMenu-count {
-	background:rgba(0,0,0,0.4);
-	padding: 0.2rem 0.3rem;
-	color: #fff;
-	margin: 0.3rem;
+
+.ais-HierarchicalMenu-count, .ais-RefinementList-count, .ais-RatingMenu-count {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.2rem 0.3rem;
+  color: #fff;
+  margin: 0.3rem;
   border-radius: 3px;
   font-size: 0.8rem;
 }
 
 
 ais-stats {
-	text-align: right;
-	font-weight: bold;
+  text-align: right;
+  font-weight: bold;
 }
-.algolia-main-list{
-   .ais-SortBy select,ais-hits-per-page select{
-      width: 150px;
-      border: 1px solid #eee;
-      height: 40px;
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
-   }
-   ais-panel,ais-hits-per-page{
-      display: inline-block;
-      margin-right:0.5rem;
-   }
+
+.algolia-main-list {
+  .ais-SortBy select, ais-hits-per-page select {
+    width: 150px;
+    border: 1px solid #eee;
+    height: 40px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  ais-panel, ais-hits-per-page {
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
 }

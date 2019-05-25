@@ -1,56 +1,60 @@
 <div class="p-4">
-  <!-- <p>
-    llzw account works!
-  </p> -->
-  <div class="inner-container">
-    <div class="bg-white final-receipt-page section-gap">
-      <div class="account-info">
-        <div class="container">
-          <div>
-            <div fxLayoutAlign="flex-start">
-              <div class="login-user-img">
-                <!-- <img src="assets/images/user-4.jpg" width="70" alt="Active User"> -->
-                <!-- <img src="{{userImgUrl}}" width="70" alt="Active User"> -->
-                <img src="{{me.avatar}}" width="70" alt="Active User">
-              </div>
-              <div class="px-3">
-                <h4>Hi, {{me.nickname}}</h4>
-                <div class="text-muted text-xl">{{me.email}}</div>
-              </div>
-            </div>
-          </div>
-          <div fxLayout="row wrap" class="col-gap">
-            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="user-nav-list">
-              <mat-list role="list">
-                <mat-list-item role="listitem"> <a [routerLink]="['/account/order-history']"
-                    routerLinkActive="tab-active">
-                    <i class="material-icons">history</i>
-                    <span> Order History</span> </a></mat-list-item>
-                <mat-list-item role="listitem"> <a [routerLink]="['./profile']" routerLinkActive="tab-active">
+    <!-- <p>
+      llzw account works!
+    </p> -->
+    <div class="inner-container">
+        <div class="bg-white final-receipt-page section-gap">
+            <div class="account-info">
+                <div class="container">
+                    <div>
+                        <div fxLayoutAlign="flex-start">
+                            <div class="login-user-img">
+                                <!-- <img src="assets/images/user-4.jpg" width="70" alt="Active User"> -->
+                                <!-- <img src="{{userImgUrl}}" width="70" alt="Active User"> -->
+                                <img alt="Active User" src="{{me.avatar}}" width="70">
+                            </div>
+                            <div class="px-3">
+                                <h4>Hi, {{me.nickname}}</h4>
+                                <div class="text-muted text-xl">{{me.email}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-gap" fxLayout="row wrap">
+                        <div class="user-nav-list" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="100" fxFlex.xl="20"
+                             fxFlex.xs="100">
+                            <mat-list role="list">
+                                <mat-list-item role="listitem"><a [routerLink]="['/account/order-history']"
+                                                                  routerLinkActive="tab-active">
+                                    <i class="material-icons">history</i>
+                                    <span> Order History</span> </a></mat-list-item>
+                                <mat-list-item role="listitem"><a [routerLink]="['./profile']"
+                                                                  routerLinkActive="tab-active">
                     <span><i class="material-icons">
                         account_circle
                       </i> Profile</span> </a></mat-list-item>
-                <mat-list-item role="listitem"> <a [routerLink]="['/account/address']" routerLinkActive="tab-active"><i
-                      class="material-icons">
-                      location_on
-                    </i> <span>Addresses</span> </a></mat-list-item>
-                <mat-list-item role="listitem"> <a [routerLink]="['/account/cards']" routerLinkActive="tab-active"><i
-                      class="material-icons">
-                      credit_card
-                    </i> <span>Saved Cards</span> </a></mat-list-item>
-              </mat-list>
+                                <mat-list-item role="listitem"><a [routerLink]="['/account/address']"
+                                                                  routerLinkActive="tab-active"><i
+                                        class="material-icons">
+                                    location_on
+                                </i> <span>Addresses</span> </a></mat-list-item>
+                                <mat-list-item role="listitem"><a [routerLink]="['/account/cards']"
+                                                                  routerLinkActive="tab-active"><i
+                                        class="material-icons">
+                                    credit_card
+                                </i> <span>Saved Cards</span> </a></mat-list-item>
+                            </mat-list>
+                        </div>
+                        <div class="user-content-wrapper" fxFlex.lg="80" fxFlex.md="80" fxFlex.sm="100" fxFlex.xl="80"
+                             fxFlex.xs="100">
+                            <div class="tab-container">
+                                <router-outlet></router-outlet>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80"
-              class="user-content-wrapper">
-              <div class="tab-container">
-                <router-outlet></router-outlet>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 
 </div>
 

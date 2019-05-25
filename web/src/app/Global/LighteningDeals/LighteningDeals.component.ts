@@ -1,17 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'embryo-LighteningDeals',
-  templateUrl: './LighteningDeals.component.html',
-  styleUrls: ['./LighteningDeals.component.scss']
+    selector: 'embryo-LighteningDeals',
+    templateUrl: './LighteningDeals.component.html',
+    styleUrls: ['./LighteningDeals.component.scss']
 })
 export class LighteningDealsComponent implements OnInit {
 
-   @Input() lighteningDeals : any;
+    @Input() lighteningDeals: any;
 
-   constructor() { }
+    constructor() {
+    }
 
-   ngOnInit() {
-   }
+    ngOnInit() {
+    }
 
 }
