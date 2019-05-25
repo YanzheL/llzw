@@ -1,0 +1,35 @@
+.llzwbody {
+
+  // angular.json => "styles"
+  @import '~@swimlane/ngx-datatable/release/themes/material.css';
+  @import '~@swimlane/ngx-datatable/release/assets/icons.css';
+  @import '~angular-calendar/css/angular-calendar.css';
+  @import '~dragula/dist/dragula.min.css';
+
+  // 原 styles.component.scss 开始
+
+  // 以下2行 在 index.html 加载
+  //@import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i');
+  // @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+  @import url('https://cdn.quilljs.com/1.2.2/quill.snow.css');
+  @import url('https://cdn.quilljs.com/1.2.2/quill.bubble.css');
+
+  // indigo-pink, deeppurple-amber, purple-green and pink-bluegrey.
+  @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+
+  @import "../../llzw-admin/llzw-app/bodypage/theme/styles/base";
+  @import "../../llzw-admin/llzw-app/bodypage/theme/styles/spaces";
+  @import "../../llzw-admin/llzw-app/bodypage/theme/styles/libs-override";
+  @import "../../llzw-admin/llzw-app/bodypage/theme/styles/theme";
+  @import "../../llzw-admin/llzw-app/bodypage/theme/styles/gradients";
+  @import "../../llzw-admin/llzw-app/bodypage/theme/styles/rtl";
+
+
+  .app .menu-item .mat-button .menu-icon {
+    // height: 38px;
+    // width: 38px;
+    height: unset;
+    width: unset;
+  }
+}

@@ -1,0 +1,54 @@
+<ng-container *ngIf="(mobWidth >= mobScreenSize) else elseButtonBlock">
+    <button [matBadgeHidden]="hiddenBadge" [matMenuTriggerFor]="viewdropmenu" mat-mini-fab matBadge="{{count}}"
+            matBadgeColor="accent" matBadgePosition="after">
+        <i class="material-icons notranslate">
+            shopping_cart
+        </i>
+    </button>
+
+    <mat-menu #viewdropmenu="matMenu">
+        <ng-container *ngIf="(cartProducts && cartProducts.length > 0); else elseBlock">
+            <div class="drop-wrap">
+                <div *ngFor="let product of cartProducts;" class="cart-menu-list p-2" fxFlex="row wrap"
+                     fxLayoutAlign="start center">
+                    <div fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xl="25" fxFlex.xs="25"><a
+                            href="javascript:void(0);"><img
+                            [src]="embryoService.baseUrl1+'/files/'+product?.mainImageFiles?.slice(0,1)" alt="cart-image"
+                            width="60"></a></div>
+                    <div class="px-2" fxFlex.lg="75" fxFlex.md="75" fxFlex.sm="75" fxFlex.xl="75" fxFlex.xs="75">
+                        <h6 class="mb-0"><a href="javascript:void(0);">{{product?.name}}</a></h6>
+                        <span>{{calculatePrice(product) | currency:currency }}</span>
+                    </div>
+                    <div class="cart-menu-action" fxFlex.lg="35" fxFlex.md="35" fxFlex.sm="35" fxFlex.xl="35"
+                         fxFlex.xs="35">
+                        <button (click)="confirmationPopup(product)" color="primary" mat-mini-fab mat-raised-button><i
+                                class="material-icons">
+                            remove_shopping_cart
+                        </i></button>
+                        <button [routerLink]="['/cart']" color="primary" mat-mini-fab mat-raised-button><i
+                                class="material-icons">
+                            edit
+                        </i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-menu px-3 pb-2 pt-2">
+                <button [routerLink]="['/checkout']" class="w-100" color="accent" mat-raised-button>Checkout</button>
+            </div>
+        </ng-container>
+        <ng-template #elseBlock>
+            <div class="cart-menu-list p-2" fxLayoutAlign="center center">
+                No Product Found.
+            </div>
+        </ng-template>
+    </mat-menu>
+</ng-container>
+
+<ng-template #elseButtonBlock>
+    <button [matBadgeHidden]="hiddenBadge" [routerLink]="['/cart']" mat-mini-fab matBadge="{{count}}"
+            matBadgeColor="accent" matBadgePosition="after">
+        <i class="material-icons notranslate">
+            shopping_cart
+        </i>
+    </button>
+</ng-template>

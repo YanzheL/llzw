@@ -1,0 +1,22 @@
+<div class="favorites-container" fxLayout="row" fxLayoutAlign="center center">
+    <div *ngIf="favorites" class="" fxLayout="row" fxLayoutAlign="center center">
+        <div *ngFor="let favorite of favorites" [matTooltip]="favorite.title" class="mx-1" matTooltipPosition="below">
+            <a *ngIf="favorite.href" [attr.href]="favorite.href" [attr.target]="favorite.target" mat-icon-button>
+                <mat-icon>{{favorite.icon}}</mat-icon>
+            </a>
+            <a *ngIf="favorite.routerLink" [routerLink]="[favorite.routerLink]" mat-icon-button>
+                <mat-icon>{{favorite.icon}}</mat-icon>
+            </a>
+        </div>
+    </div>
+    <mat-form-field matTooltip="Click to add/remove shortcut" matTooltipPosition="below">
+        <mat-select [(value)]="favorites" multiple placeholder="Select favorite">
+            <mat-option *ngFor="let item of menuItems" [value]="item">
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <span>{{item.title}}</span>
+                    <mat-icon class="secondary-text-color">{{item.icon}}</mat-icon>
+                </div>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>

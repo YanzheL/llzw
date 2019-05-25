@@ -36,4 +36,4 @@
 .DS_Store
 Thumbs.db
 
-.editorconfig
+._*

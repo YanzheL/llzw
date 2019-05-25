@@ -1,0 +1,96 @@
+#file_h3_mat_icon {
+  height: 48px;
+  font-size: 32px;
+  width: 32px;
+  //vertical-align: middle;
+}
+
+#file_h4_mat_icon {
+  height: 36px;
+  font-size: 24px;
+  width: 24px;
+  //vertical-align: middle;
+}
+
+
+//拖拽上传
+#box9834 {
+  width: 80%;
+  height: 55%;
+  position: absolute;
+  left: 10%;
+  top: 20%;
+  //margin: 0 auto;
+  border: 4px dashed #666;
+}
+
+#box9834 img {
+  width: 500px;
+}
+
+
+// mat-list-item {
+//   float: right !important;
+// }
+
+
+// mat-list-item.list-horizontal {
+//   padding: 0;
+//   .mat-list-item {
+//     display: inline-block;
+//     height: auto;
+//     width: auto;
+//   }
+// }
+
+
+@media screen and (min-width: 1200px) {
+
+  #demo_info,
+  #demo_imgs {
+    width: 1000px;
+    margin: auto;
+    /* Magic! */
+
+    #ch1 {
+      width: 990px;
+      margin: auto;
+
+      /* Magic! */
+      #ch2 {
+        width: 990px;
+        margin: auto;
+        /* Magic! */
+        .chanshu {
+          // 以下两行设定让div中单行文字垂直居中。
+          height: 28px;
+          line-height: 28px;
+        }
+      }
+    }
+
+    #title {
+      margin: auto;
+      /* Magic! */
+    }
+
+    #img1 {
+      margin: auto;
+
+      /* Magic! */
+      #img2 {
+        margin: auto;
+        /* Magic! */
+      }
+    }
+  }
+
+  #content,
+  .div1 {
+    width: 730px;
+  }
+
+  #secondary {
+    width: 310px
+  }
+}

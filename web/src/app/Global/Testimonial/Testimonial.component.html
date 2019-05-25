@@ -1,0 +1,15 @@
+<div *ngIf="data" class="container">
+    <div class="block-title text-center">
+        <h2 class="text-inverse">{{data?.name}}</h2>
+    </div>
+    <div class="col-gap" fxLayout="row wrap" fxLayoutAlign="center center">
+        <div fxFlex.lg="40" fxFlex.md="50" fxFlex.sm="100" fxFlex.xl="40" fxFlex.xs="100">
+            <div class="testi-card-v2 mb-4">
+                <img [src]="data.image" alt="team-image" class="round-corner" height="200" width="200">
+            </div>
+            <h4 class="text-inverse mb-0">{{data?.name}}</h4>
+            <p class="text-inverse">{{data?.designation}}</p>
+            <p class="text-inverse testi-content">{{data?.description}} </p>
+        </div>
+    </div>
+</div>

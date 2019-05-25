@@ -1,0 +1,37 @@
+<embryo-PageTitle heading="Frequently Asked Question"
+                  subHeading="We explained the basics question in this section."></embryo-PageTitle>
+<div *ngIf="faqData" class="inner-container section-gap pb-0 bg-white">
+    <div class="container">
+        <div class="faq-page">
+            <div class="block-title">
+                <h2 class="mb-1">{{faqData?.heading}}</h2>
+                <p>{{faqData?.content}}</p>
+            </div>
+            <div *ngIf="faqData?.faqs && (faqData.faqs).length>0" class="section-gap">
+                <mat-accordion>
+                    <mat-expansion-panel *ngFor="let faq of faqData.faqs">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <h5>{{faq?.ques}}</h5>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>{{faq?.ans}}</p>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+    <div class="cta-v1 section-gap">
+        <div class="container">
+            <div class="text-center" fxLayout='row wrap' fxLayoutAlign="center center">
+                <div fxFlex.lg="50" fxFlex.md="60" fxFlex.sm="100" fxFlex.xl="50" fxFlex.xs="100">
+                    <h2 class="font-bold text-inverse mb-4"> {{faqData?.can_get_answer?.heading}}</h2>
+                    <h6 class="text-inverse mb-4">{{faqData?.can_get_answer?.content}}</h6>
+                    <button [routerLink]="['/contact']" class="button-lg" color="accent" mat-raised-button>Submit
+                        Reqest
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

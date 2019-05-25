@@ -1,0 +1,16 @@
+<a (click)="onItemSelected(item)" [ngClass]="{'active': item.state ? router.isActive(item.state, true): false, 'expanded': expanded}"
+   mat-list-item>
+    <mat-icon>{{item.icon}}</mat-icon>
+    {{item.name | translate}}
+    <span *ngIf="item.children && item.children.length" fxFlex>
+    <span fxFlex></span>
+    <mat-icon [@indicatorRotate]="expanded ? 'expanded': 'collapsed'">
+      expand_more
+    </mat-icon>
+  </span>
+</a>
+<div *ngIf="expanded" class="responsive-menu-side">
+    <embryo-SidebarMenu *ngFor="let child of item.children" [depth]="depth+1" [item]="child">
+    </embryo-SidebarMenu>
+</div>
+

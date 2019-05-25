@@ -1,0 +1,129 @@
+import {Component, HostListener, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+
+import {NavigationEnd, Router} from '@angular/router';
+import {PerfectScrollbarConfigInterface, PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
+import {AppSettings} from './appsettings/app.settings';
+import {Settings} from './appsettings/app.settings.model';
+import {rotate} from './bodypage/theme/utils/app-animation';
+import {MenuService} from './bodypage/theme/components/menu/menu.service';
+
+@Component({
+    selector: 'app-llzw-app',
+    templateUrl: './llzw-app.component.html',
+    styleUrls: ['./llzw-app.component.scss'],
+    animations: [rotate],
+    providers: [MenuService],
+    // encapsulation: ViewEncapsulation.None
+
+})
+export class LlzwAppComponent implements OnInit {
+    @ViewChild('sidenav') sidenav: any;
+    @ViewChild('backToTop') backToTop: any;
+    @ViewChildren(PerfectScrollbarDirective) pss: QueryList<PerfectScrollbarDirective>;
+
+    public optionsPsConfig: PerfectScrollbarConfigInterface = {};
+    public settings: Settings;
+    public showSidenav: boolean = false;
+    public showInfoContent: boolean = false;
+    public toggleSearchBar: boolean = false;
+    public menus = ['vertical', 'horizontal'];
+    public menuOption: string;
+    public menuTypes = ['default', 'compact', 'mini'];
+    public menuTypeOption: string;
+    private defaultMenu: string; // declared for return default menu when window resized
+
+    constructor(
+        public appSettings: AppSettings,
+        public router: Router,
+        private menuService: MenuService
+    ) {
+        this.settings = this.appSettings.settings;
+    }
+
+    ngOnInit() {
+        this.optionsPsConfig.wheelPropagation = false;
+        if (window.innerWidth <= 960) {
+            this.settings.menu = 'vertical';
+            this.settings.sidenavIsOpened = false;
+            this.settings.sidenavIsPinned = false;
+        }
+        this.menuOption = this.settings.menu;
+        this.menuTypeOption = this.settings.menuType;
+        this.defaultMenu = this.settings.menu;
+    }
+
+    ngAfterViewInit() {
+        setTimeout(() => {
+            this.settings.loadingSpinner = false
+        }, 300);
+        this.backToTop.nativeElement.style.display = 'none';
+        this.router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                this.scrollToTop();
+            }
+            if (window.innerWidth <= 960) {
+                this.sidenav.close();
+            }
+        });
+        if (this.settings.menu === 'vertical') {
+            this.menuService.expandActiveSubMenu(this.menuService.getVerticalMenuItems());
+        }
+    }
+
+    public toggleSidenav() {
+        this.sidenav.toggle();
+    }
+
+    public chooseMenu() {
+        this.settings.menu = this.menuOption;
+        this.defaultMenu = this.menuOption;
+        if (this.menuOption == 'horizontal') {
+            this.settings.fixedSidenav = false;
+        }
+        this.router.navigate(['/']);
+    }
+
+    public chooseMenuType() {
+        this.settings.menuType = this.menuTypeOption;
+    }
+
+    public changeTheme(theme) {
+        this.settings.theme = theme;
+    }
+
+    public closeInfoContent(showInfoContent) {
+        this.showInfoContent = !showInfoContent;
+    }
+
+    @HostListener('window:resize')
+    public onWindowResize(): void {
+        if (window.innerWidth <= 960) {
+            this.settings.sidenavIsOpened = false;
+            this.settings.sidenavIsPinned = false;
+            this.settings.menu = 'vertical';
+        } else {
+            (this.defaultMenu == 'horizontal') ? this.settings.menu = 'horizontal' : this.settings.menu = 'vertical'
+            this.settings.sidenavIsOpened = true;
+            this.settings.sidenavIsPinned = true;
+        }
+    }
+
+    public onPsScrollY(event) {
+        (event.target.scrollTop > 300) ? this.backToTop.nativeElement.style.display = 'flex' : this.backToTop.nativeElement.style.display = 'none';
+    }
+
+    public scrollToTop() {
+        this.pss.forEach(ps => {
+            if (ps.elementRef.nativeElement.id === 'main') {
+                ps.scrollToTop(0, 250);
+            }
+        });
+    }
+
+    public closeSubMenus() {
+        if (this.settings.menu === "vertical") {
+            this.menuService.closeAllSubMenus();
+        }
+    }
+
+}

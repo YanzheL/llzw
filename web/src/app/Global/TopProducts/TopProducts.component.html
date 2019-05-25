@@ -1,0 +1,40 @@
+<div *ngIf="randomSortProducts && randomSortProducts.length > 0" class="section-gap">
+    <div class="container">
+        <div class="w-100 " fxLayoutAlign="space-between">
+            <div class="block-title">
+                <h3>Top Products</h3>
+            </div>
+            <a [routerLink]="['/products']">View All</a>
+        </div>
+        <div class="col-gap" fxLayout="row wrap">
+            <ng-container *ngFor="let product of randomSortProducts; let i=index">
+                <div *ngIf="i < gridLength" fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="50" fxFlex.xl="25" fxFlex.xs="100">
+                    <mat-card class="box-shadow-md p-4">
+                        <a href="javascript:void(0)">
+                            <img [src]="product.image" alt="Photo">
+                        </a>
+                        <mat-card-content class="pt-3">
+                            <p class="text-muted mb-0"><a href="javascript:void(0)">{{product?.category}}</a></p>
+                            <h5><a href="javascript:void(0)"> {{product?.name}}</a></h5>
+                            <div fxLayoutAlign="space-between">
+                                <p class="accent-color">{{product?.price | currency:currency}}</p>
+                            </div>
+                            <button (click)="addToCartProduct(product)" *ngIf="product.status == 0" class="button-grey"
+                                    mat-raised-button>Add TO Cart
+                            </button>
+                            <button *ngIf="product.status == 1" [routerLink]="['/cart']" class="button-grey"
+                                    mat-raised-button>View Cart
+                            </button>
+                        </mat-card-content>
+                        <div class="offer-badge">
+                            <mat-chip color="accent" selected>20% off</mat-chip>
+                        </div>
+                    </mat-card>
+                </div>
+            </ng-container>
+        </div>
+        <a (click)="extendGridStructure(true)" *ngIf="(gridLength < 12)" class="btn btn-block transparent-btn">Show
+            All</a>
+        <a (click)="extendGridStructure(false)" *ngIf="(gridLength != 4)" class="btn btn-block transparent-btn">Less</a>
+    </div>
+</div>

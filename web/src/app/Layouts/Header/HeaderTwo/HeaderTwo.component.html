@@ -1,0 +1,76 @@
+<mat-toolbar class="header-v2" color="primary">
+    <mat-toolbar-row class="header-v2-top">
+        <div class="container">
+            <div fxLayout="row wrap">
+                <div class="logo-site" fxFlex.lg="25%" fxFlex.md="35" fxFlex.sm="50" fxFlex.xl="25%" fxFlex.xs="50">
+                    <embryo-AppLogo></embryo-AppLogo>
+                </div>
+                <div class="align-center" fxFlex.lg="60%" fxFlex.md="40" fxFlex.sm="60" fxFlex.sm.hdie fxFlex.xl="60%"
+                     fxHide.sm="true" fxHide.xs="true">
+
+                    <div class="search-v2">
+                        <form action="">
+                            <input placeholder="Enter a keyword to search" type="text">
+                        </form>
+                    </div>
+                </div>
+                <div fxFlex.lg="15%" fxFlex.md="25" fxFlex.sm="50" fxFlex.xl="15%" fxFlex.xs="50">
+                    <span fxFlex></span>
+                    <div class="list-flex user-tool">
+                        <embryo-HeaderCart (removeProductData)="openConfirmationPopup($event)"
+                                           [cartProducts]="embryoService?.localStorageCartProducts"
+                                           [count]="embryoService?.navbarCartCount"
+                                           [currency]="embryoService?.currency"></embryo-HeaderCart>
+
+                        <embryo-WishList (addAllWishlistToCart)="addAllWishlistToCart($event)"
+                                         (addToCart)="addToCart($event)"
+                                         (removeWishListData)="openWishlistConfirmationPopup($event)"
+                                         [count]="embryoService?.navbarWishlistProdCount"
+                                         [currency]="embryoService?.currency"
+                                         [wishListProducts]="embryoService?.localStorageWishlist"></embryo-WishList>
+                        <embryo-HeaderUserProfileDropdown></embryo-HeaderUserProfileDropdown>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="header-v2-bottom main-menu-wrap">
+        <div class="container">
+            <div class="header-v2-bottom-inner">
+                <embryo-Menu></embryo-Menu>
+
+            </div>
+        </div>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="responsive-bar relative">
+        <div class="container">
+            <div fxLayoutAlign="space-between">
+
+                <button (click)="toggleSidebar()" class="responsive-toggle" mat-icon-button>
+                    <i class="material-icons">menu</i>
+                </button>
+                <div>
+                    <div class="search-box-bar">
+                        <button (click)="toggleSearch()" mat-mini-fab type="button">
+                            <i class="material-icons notranslate">
+                                search
+                            </i>
+                        </button>
+                    </div>
+                    <div class="search-form">
+                        <form>
+                            <input placeholder="Search and hit enter" type="text">
+                            <button (click)="toggleSearch()" class="close-btn" mat-fab type="button">
+                                <i class="material-icons">
+                                    close
+                                </i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+<embryo-FixedHeader></embryo-FixedHeader>
+ 

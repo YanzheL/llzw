@@ -1,0 +1,51 @@
+<p>
+    login works!
+</p>
+
+<mat-sidenav-container class="h-100">
+    <div class="h-100" fxLayout="row" fxLayoutAlign="center center">
+        <form (ngSubmit)="onSubmit()" [formGroup]="form" class="mat-elevation-z6" fxFlex="90" fxFlex.gt-sm="30"
+              fxFlex.sm="60">
+
+            <app-content-header
+                    [class]="'py-4'"
+                    [hasBgImage]="true"
+                    [hideBreadcrumb]="true"
+                    [icon]="'exit_to_app'"
+                    [title]="'Login'">
+            </app-content-header>
+
+            <div class="p-3">
+                <a class="w-100" color="accent" mat-button routerLink="/register">Don't have an account? Sign up
+                    now!</a>
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="username" matInput placeholder="username">
+                    <mat-error *ngIf="form.controls.username.errors?.required">Full Name is required</mat-error>
+                    <!-- <mat-error *ngIf="form.controls.username.hasError('minlength')">Full Name isn't long enough, minimum of 3 characters</mat-error> -->
+                    <mat-error
+                            *ngIf="form.controls.username.hasError('invalidInfo')">{{form.controls.username.errors['invalidInfo']}}</mat-error>
+                </mat-form-field>
+
+                <!-- <mat-form-field class="w-100">
+                      <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">mail</mat-icon>
+                      <input matInput placeholder="Email" formControlName="email">
+                      <mat-error *ngIf="form.controls.email.errors?.required">Email is required</mat-error>
+                      <mat-error *ngIf="form.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
+                  </mat-form-field> -->
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>lock</mat-icon>
+                    <!-- <input matInput type="password" placeholder="Password" formControlName="password"> -->
+                    <input formControlName="password" matInput placeholder="Password">
+                    <mat-error *ngIf="form.controls.password.errors?.required">Password is required</mat-error>
+                    <mat-error
+                            *ngIf="form.controls.password.hasError('invalidInfo')">{{form.controls.password.errors['invalidInfo']}}</mat-error>
+                </mat-form-field>
+                <mat-slide-toggle class="my-2" formControlName="rememberMe">Keep me signed in</mat-slide-toggle>
+                <button class="mat-elevation-z6 w-100 mt-3" color="primary" mat-raised-button type="submit">SIGN IN
+                </button>
+            </div>
+        </form>
+    </div>
+</mat-sidenav-container>

@@ -1,0 +1,72 @@
+<div class="sidebar-panel" fxLayout="column">
+    <nav class="app-side-nav">
+        <div class="">
+            <div class="side-cart-head mb-3">
+                <div class="mb-3"><i class="material-icons">
+                    shopping_cart
+                </i></div>
+                <h5 *ngIf="(embryoService.localStorageCartProducts && embryoService.localStorageCartProducts.length>0); else elseCartBlock;">
+                    You have {{embryoService.localStorageCartProducts.length}} items in your cart</h5>
+                <ng-template #elseCartBlock>
+                    <div class="section-gap-lg text-center">
+                        <div class="mb-4">
+                            <img alt="cart-empty" height="128" src="assets/images/empty-cart.png" width="128">
+                        </div>
+                        <h4> Your Shopping Bag is empty.</h4>
+                        <a class="primary-color" href="javascript:void(0);">Go for Shopping</a>
+                    </div>
+                </ng-template>
+            </div>
+
+            <div *ngIf="embryoService.localStorageCartProducts && embryoService.localStorageCartProducts.length>0"
+                 class="side-cart-wrapper">
+                <div *ngFor="let product of embryoService.localStorageCartProducts" class="side-cart-list px-3">
+                    <div fxLayoutAlign="center center">
+                        <div fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xl="25" fxFlex.xs="25">
+                            <img [src]="product?.image" alt="cart img" width="80">
+                        </div>
+                        <div class="px-3" fxFlex.lg="55" fxFlex.md="55" fxFlex.sm="55" fxFlex.xl="55" fxFlex.xs="55">
+                            <h6 class="mb-1">{{product?.name}}</h6>
+                            <p class="mb-0">
+                                <span>{{product?.quantity}}</span>
+                            </p>
+                            <p class="font-bold">{{calculateProductSinglePrice(product, product?.quantity) | currency:embryoService?.currency}}</p>
+                        </div>
+                        <div class="side-cart-actions text-center px-2" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xl="20"
+                             fxFlex.xs="20">
+                            <a (click)="removeProduct(product)" href="javascript:void(0)"><i class="material-icons">
+                                remove_shopping_cart
+                            </i></a>
+                            <a (click)="embryoService.paymentSidenavOpen=false" [routerLink]="['/cart']"><i
+                                    class="material-icons">
+                                edit
+                            </i></a>
+                        </div>
+                    </div>
+                    <hr class="spacer">
+                </div>
+                <div class="px-3 text-right">
+                    <div>
+                        <p>Subtotal</p><span fxFlex></span> {{calculateTotalPrice() | currency:embryoService?.currency}}
+                    </div>
+                    <div>
+                        <p>Shipping</p><span
+                            fxFlex></span> {{embryoService.shipping | currency:embryoService?.currency}}
+                    </div>
+                    <div>
+                        <p>Tax(GST)</p><span fxFlex></span> {{embryoService.tax | currency:embryoService?.currency}}
+                    </div>
+                    <hr class="spacer">
+                    <div class="mb-4">
+                        <h4>Total</h4><span fxFlex></span>
+                        <h4> {{getTotalPrice() | currency:embryoService?.currency}}</h4>
+                    </div>
+                </div>
+            </div>
+            <hr class="spacer">
+        </div>
+    </nav>
+</div>
+
+
+

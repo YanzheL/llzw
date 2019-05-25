@@ -1,0 +1,724 @@
+<!-- <p>
+  product-add works!
+</p>
+ -->
+
+
+<app-content-header [class]="'pb-4'" [hasBgImage]="true" [hideBreadcrumb]="false" [icon]="'card_membership'"
+                    [title]="'添加商品'"></app-content-header>
+
+
+<mat-divider></mat-divider>
+
+<div class="p-2" fxLayout="column" fxLayout.gt-sm="row wrap">
+    <div class="p-2" fxFlex="30">
+
+        <mat-card class="custom-card">
+
+            <mat-card-header class="bg-primary p-1" fxLayoutAlign="space-between center">
+                <mat-card-title class="m-0">
+                    <h4>商品主要信息</h4>
+                </mat-card-title>
+                <button mat-icon-button>
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+            </mat-card-header>
+
+            <!-- <form [formGroup]="productForm" (ngSubmit)="onSubmit()" fxFlex="90" fxFlex.gt-sm="30" fxFlex.sm="60"
+                      class="mat-elevation-z6"> -->
+
+            <form (ngSubmit)="onSubmit()" [formGroup]="productForm">
+
+                <div class="p-3">
+
+                    <!-- <mat-form-field class="w-100">
+                            <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+                            <input matInput placeholder="id" formControlName="id" id="id">
+                            <mat-error *ngIf="productForm.controls.id.errors?.required">ID is required</mat-error>
+                                  </mat-form-field> -->
+
+                    <!-- name 必须 -->
+                    <mat-form-field class="w-100">
+                        <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                        <input formControlName="name" matInput placeholder="商品名称">
+                        <mat-error *ngIf="productForm.controls.name.errors?.required">Name is required</mat-error>
+                        <!-- <mat-error *ngIf="productForm.controls.name.hasError('minlength')">Name isn't long enough, minimum of 4 characters</mat-error> -->
+                        <!-- <mat-error *ngIf="productForm.controls.name.hasError('invalidName')">Name 包含特殊字符</mat-error> -->
+                        <mat-error *ngIf="productForm.controls.name.hasError('invalidInfo')">
+                            {{productForm.controls.name.errors['invalidInfo']}}</mat-error>
+                    </mat-form-field>
+
+                    <!-- valid 必须 -->
+                    <mat-checkbox color="primary" formControlName="valid" id="promotion" type="checkbox">
+                        {{productForm.controls.valid.value ? "商品上架" : "商品下架"}}</mat-checkbox>
+
+                    <!-- price 必须 -->
+                    <mat-form-field class="w-100">
+                        <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                        <input formControlName="price" matInput placeholder="价格">
+                        <mat-error *ngIf="productForm.controls.price.errors?.required">价格不能为空</mat-error>
+                        <mat-error *ngIf="productForm.controls.price.hasError('invalidInfo')">
+                            {{productForm.controls.price.errors['invalidInfo']}}</mat-error>
+                    </mat-form-field>
+
+
+                    <!-- seller 必须 但是 不是前端填写 -->
+                    <!-- <mat-form-field class="w-100">
+                      <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+                      <input matInput placeholder="seller" formControlName="seller">
+                      <mat-error *ngIf="productForm.controls.seller.errors?.required">seller is required</mat-error>
+                    </mat-form-field> -->
+
+                    <!-- introduction 必须 -->
+
+                    <!-- <mat-form-field class="w-100">
+                      <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+                      <input matInput placeholder="Introduction of this product" formControlName="introduction">
+                      <mat-error *ngIf="productForm.controls.introduction.errors?.required">introduction is required</mat-error>
+                    </mat-form-field> -->
+
+                    <!-- category 分类 -->
+                    <mat-form-field class="w-100">
+                        <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                        <input formControlName="category" matInput placeholder="商品类别">
+                        <!-- <mat-error *ngIf="productForm.controls.category.errors?.required">category 不能为空</mat-error>
+                        <mat-error *ngIf="productForm.controls.category.hasError('invalidInfo')">
+                          {{productForm.controls.category.errors['invalidInfo']}}</mat-error> -->
+                    </mat-form-field>
+
+                    <!-- numberToSell 上架数 -->
+                    <mat-form-field class="w-100">
+                        <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                        <input formControlName="numberToSell" matInput placeholder="上架数">
+                        <!-- <mat-error *ngIf="productForm.controls.numberToSell.errors?.required">numberToSell 不能为空</mat-error>
+                        <mat-error *ngIf="productForm.controls.numberToSell.hasError('invalidInfo')">
+                          {{productForm.controls.numberToSell.errors['invalidInfo']}}</mat-error> -->
+                    </mat-form-field>
+
+                    <!-- numberSelled 历史成交 -->
+                    <mat-form-field class="w-100">
+                        <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                        <input formControlName="numberSelled" matInput placeholder="历史成交">
+                        <!-- <mat-error *ngIf="productForm.controls.numberSelled.errors?.required">numberSelled 不能为空</mat-error>
+                        <mat-error *ngIf="productForm.controls.numberSelled.hasError('invalidInfo')">
+                          {{productForm.controls.numberSelled.errors['invalidInfo']}}</mat-error> -->
+                    </mat-form-field>
+
+                    <!-- feature 卖点标签 -->
+                    <mat-form-field class="w-100">
+                        <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                        <input formControlName="feature" matInput placeholder="卖点标签">
+                        <!-- <mat-error *ngIf="productForm.controls.feature.errors?.required">caId 不能为空</mat-error>
+                        <mat-error *ngIf="productForm.controls.feature.hasError('invalidInfo')">
+                          {{productForm.controls.feature.errors['invalidInfo']}}</mat-error> -->
+                    </mat-form-field>
+
+                    <!-- caIsOk 必须 -->
+                    <mat-checkbox [disabled]="true" color="primary" formControlName="caIsOk" id="promotion1"
+                                  type="checkbox">
+                        {{productForm.controls.caIsOk.value ? "CA证书已上传" : "CA证书还未上传，此项必须"}}</mat-checkbox>
+
+                    <!-- ca 必须 -->
+                    <!-- <mat-form-field class="w-100">
+                      <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+                      <input matInput placeholder="Certificate authority name" formControlName="ca">
+                      <mat-error *ngIf="productForm.controls.ca.errors?.required">ca 不能为空</mat-error>
+                      <mat-error *ngIf="productForm.controls.ca.hasError('invalidInfo')">
+                        {{productForm.controls.ca.errors['invalidInfo']}}</mat-error>
+                    </mat-form-field> -->
+
+                    <!-- caFile 必须 本身已校验非空 -->
+                    <!-- <mat-form-field class="w-100">
+                      <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+                      <input matInput placeholder="caFile" formControlName="caFile">
+                      <mat-error *ngIf="productForm.controls.caFile.errors?.required">caFile 不能为空</mat-error>
+                      <mat-error *ngIf="productForm.controls.caFile.hasError('invalidInfo')">
+                        {{productForm.controls.caFile.errors['invalidInfo']}}</mat-error>
+                    </mat-form-field> -->
+
+                    <!-- caId 必须 -->
+                    <!-- <mat-form-field class="w-100">
+                      <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+                      <input matInput placeholder="Qualification certificate id" formControlName="caId">
+                      <mat-error *ngIf="productForm.controls.caId.errors?.required">caId 不能为空</mat-error>
+                      <mat-error *ngIf="productForm.controls.caId.hasError('invalidInfo')">
+                        {{productForm.controls.caId.errors['invalidInfo']}}</mat-error>
+                    </mat-form-field> -->
+
+                    <!-- <mat-error *ngIf="productForm.controls.introduction.errors?.required">商品详情不能为空</mat-error> -->
+
+                    <!-- <button mat-raised-button color="primary" class="mat-elevation-z6 w-100 mt-3" type="submit">Create</button> -->
+
+                </div>
+            </form>
+        </mat-card>
+    </div>
+
+    <!-- 中间详情设置 -->
+    <div class="p-2" fxFlex="40">
+        <mat-card class="custom-card">
+            <mat-card-header class="bg-primary p-1" fxLayoutAlign="space-between center">
+                <mat-card-title class="m-0">
+                    <h4>
+                        <mat-icon id="file_h4_mat_icon">add_to_photos</mat-icon>
+                        商品详情设置
+                    </h4>
+                </mat-card-title>
+                <button mat-icon-button>
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+            </mat-card-header>
+
+
+            <form [formGroup]="detailsForm">
+
+
+                <div class="p-2" fxLayout="column" fxLayout.gt-sm="row wrap">
+
+                    <div class="p-2" fxFlex="50">
+
+
+                        <!-- brand -->
+                        <mat-form-field class="w-100">
+                            <input formControlName="brand" matInput placeholder="品牌：">
+                        </mat-form-field>
+
+                        <!-- name -->
+                        <mat-form-field class="w-100">
+                            <input formControlName="name" matInput placeholder="商品名称：">
+                        </mat-form-field>
+
+                        <!-- number -->
+                        <mat-form-field class="w-100">
+                            <input formControlName="number" matInput placeholder="商品编号：">
+                        </mat-form-field>
+
+                        <!-- gross -->
+                        <mat-form-field class="w-100">
+                            <input formControlName="gross" matInput placeholder="商品毛重：">
+                        </mat-form-field>
+
+                        <!-- saveStatus -->
+                        <mat-form-field class="w-100">
+                            <input formControlName="saveStatus" matInput placeholder="保存状态：">
+                        </mat-form-field>
+
+                        <!-- netWeight -->
+                        <mat-form-field class="w-100">
+                            <input formControlName="netWeight" matInput placeholder="重量：">
+                        </mat-form-field>
+
+                        <!-- domesticImport -->
+                        <mat-form-field class="w-100">
+                            <input formControlName="domesticImport" matInput placeholder="国产/进口：">
+                        </mat-form-field>
+
+                        <!-- variety -->
+                        <mat-form-field class="w-100">
+                            <input formControlName="variety" matInput placeholder="饲养方式：">
+                        </mat-form-field>
+
+                    </div>
+
+
+                    <div class="p-2" fxFlex="50">
+
+                        <!-- feedingMethod -->
+                        <mat-form-field class="w-100">
+                            <input formControlName="feedingMethod" matInput placeholder="品种：">
+                        </mat-form-field>
+
+                        <!-- classification -->
+                        <mat-form-field class="w-100">
+                            <input formControlName="classification" matInput placeholder="分类：">
+                        </mat-form-field>
+
+                        <!-- package -->
+                        <mat-form-field class="w-100">
+                            <input formControlName="package" matInput placeholder="包装：">
+                        </mat-form-field>
+
+                        <!-- torageConditions -->
+                        <mat-form-field class="w-100">
+                            <input formControlName="torageConditions" matInput placeholder="贮存条件：">
+                        </mat-form-field>
+
+                        <!-- shelfLife -->
+                        <mat-form-field class="w-100">
+                            <input formControlName="shelfLife" matInput placeholder="保质期：">
+                        </mat-form-field>
+
+                        <!-- netContent -->
+                        <mat-form-field class="w-100">
+                            <input formControlName="netContent" matInput placeholder="净含量：">
+                        </mat-form-field>
+
+                        <!-- packingList -->
+                        <mat-form-field class="w-100">
+                            <input formControlName="packingList" matInput placeholder="包装清单：">
+                        </mat-form-field>
+
+                        <button (click)="detailsForm_demo()" color="primary" mat-raised-button matTooltip="新品上架">填写 demo
+                            数据
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+            <mat-card-content>
+            </mat-card-content>
+
+            <mat-card-actions class="secondary-text-color" fxLayoutAlign="end center">
+
+            </mat-card-actions>
+        </mat-card>
+
+    </div>
+
+    <!-- 右侧主提交窗口 -->
+    <div fxFlex="30" fxLayout="column" fxLayout.gt-sm="row wrap">
+        <div class="p-2" fxFlex="100">
+            <mat-card class="custom-card">
+                <mat-card-header class="bg-primary p-1" fxLayoutAlign="space-between center">
+                    <mat-card-title class="m-0">
+                        <h4>
+                            <mat-icon id="file_h4_mat_icon">add_to_photos</mat-icon>
+                            全自动提交卡
+                        </h4>
+                    </mat-card-title>
+                    <button mat-icon-button>
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </mat-card-header>
+
+                <mat-card-content class="p-3">
+                    <!-- 拖拽上传功能 全自动填写表单 开始 -->
+                    <file-drop (onFileDrop)="autoDropped($event)" dropZoneLabel="将预先编辑的单个商品信息文件夹拖入此处">
+                        <span></span>
+                    </file-drop>
+                    <!-- 拖拽上传功能 结束 -->
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="p-2" fxFlex="100">
+
+            <mat-card class="custom-card">
+                <mat-card-header class="bg-primary p-1" fxLayoutAlign="space-between center">
+                    <mat-card-title class="m-0">
+                        <h4>
+                            <mat-icon id="file_h4_mat_icon">add_to_photos</mat-icon>
+                            CA证书
+                        </h4>
+                    </mat-card-title>
+                    <button mat-icon-button>
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <!-- 内部分组开始 -->
+                    <div fxLayout="column" fxLayout.gt-sm="row wrap">
+
+                        <!-- 分组1 -->
+                        <div fxFlex="100">
+
+                            <form (ngSubmit)="onSubmit()" [formGroup]="productForm">
+                                <div class="p-2">
+                                    <!-- ca图片 必须 -->
+                                    <mat-checkbox [disabled]="true" color="primary" formControlName="caFileIsOk" id="promotion2"
+                                                  type="checkbox">
+                                        {{productForm.controls.caFileIsOk.value ? "CA证书图片已上传" : "CA证书图片还未上传，此项必须"}}
+                                    </mat-checkbox>
+
+                                    <!-- ca 必须 -->
+                                    <mat-form-field class="w-100">
+                                        <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>
+                                            person
+                                        </mat-icon>
+                                        <input formControlName="ca" matInput placeholder="Certificate authority name">
+                                        <mat-error *ngIf="productForm.controls.ca.errors?.required">ca 不能为空
+                                        </mat-error>
+                                        <mat-error *ngIf="productForm.controls.ca.hasError('invalidInfo')">
+                                            {{productForm.controls.ca.errors['invalidInfo']}}</mat-error>
+                                    </mat-form-field>
+
+                                    <!-- caFile 必须 本身已校验非空 -->
+                                    <!-- <mat-form-field class="w-100">
+                                        <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+                                        <input matInput placeholder="caFile" formControlName="caFile">
+                                        <mat-error *ngIf="productForm.controls.caFile.errors?.required">caFile 不能为空</mat-error>
+                                        <mat-error *ngIf="productForm.controls.caFile.hasError('invalidInfo')">
+                                          {{productForm.controls.caFile.errors['invalidInfo']}}</mat-error>
+                                      </mat-form-field> -->
+
+                                    <!-- caId 必须 -->
+                                    <mat-form-field class="w-100">
+                                        <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>
+                                            person
+                                        </mat-icon>
+                                        <input formControlName="caId" matInput
+                                               placeholder="Qualification certificate id">
+                                        <mat-error *ngIf="productForm.controls.caId.errors?.required">caId 不能为空
+                                        </mat-error>
+                                        <mat-error *ngIf="productForm.controls.caId.hasError('invalidInfo')">
+                                            {{productForm.controls.caId.errors['invalidInfo']}}</mat-error>
+                                    </mat-form-field>
+
+                                </div>
+                            </form>
+
+                        </div>
+                        <!-- 分组2 -->
+                        <ng-container *ngIf="productForm.controls['caFile'].value">
+                            <div class="p-2" fxFlex="50">
+                                <!-- 证书图片 -->
+
+                                <mat-card>
+                                    <!-- 证书图片 -->
+                                    <!-- <img src="{{ files_url + '/' + productForm.controls['caFile'].value }}" alt="7"> -->
+                                    <img *ngIf="!caImageFile.isEmptyNewImg && caImageFile.isFromRemote && caImageFile.url"
+                                         alt="7" src="{{ caImageFile.url }}">
+                                    <img *ngIf="!caImageFile.isEmptyNewImg && caImageFile.isFromRemote && !caImageFile.url"
+                                         [src]="caImageFile.localUrl" alt="7">
+
+                                </mat-card>
+                            </div>
+                        </ng-container>
+                        <!-- 分组3 -->
+                        <div class="p-2" fxFle>
+                            <mat-card>
+                                <!-- 拖拽上传功能 开始 -->
+                                <file-drop (onFileDrop)="caFlieDropped($event)" dropZoneLabel="将 CA证书图片 拖入此处">
+                                    <span></span>
+                                </file-drop>
+                                <!-- 拖拽上传功能 结束 -->
+                            </mat-card>
+                        </div>
+                    </div>
+                    <!-- 内部分组结束 -->
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+    </div>
+
+    <div class="p-2" fxFlex="100">
+        <mat-card>
+            <button (click)="onSubmit()" color="primary" mat-raised-button matTooltip="新品上架">新品上架</button>
+        </mat-card>
+    </div>
+
+</div>
+
+<!-- ng-container只是容器，占位 -->
+
+
+<mat-divider></mat-divider>
+
+
+<!-- ================小图=============== -->
+
+<div class="p-2" fxLayout="column" fxLayout.gt-sm="row wrap">
+
+    <!-- 循环显示图片 ng-container是特殊容器，本身不占位 -->
+    <ng-container *ngFor="let myimg of smallImgs; index as i;">
+
+        <div class="p-2" fxFlex="20">
+            <mat-card class="custom-card">
+                <mat-card-header class="bg-primary p-1" fxLayoutAlign="space-between center">
+                    <mat-card-title class="m-0">
+                        <h4>
+                            <mat-icon id="file_h4_mat_icon">filter_{{i < 9 ? i + 1 : "9_plus"}}</mat-icon>
+                            展示图片
+                        </h4>
+                    </mat-card-title>
+                    <button mat-icon-button>
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </mat-card-header>
+
+                <img *ngIf="!myimg.isEmptyNewImg && myimg.isFromRemote && myimg.url" alt="5"
+                     mat-card-image
+                     src="{{ myimg.url }}">
+                <img *ngIf="!myimg.isEmptyNewImg && myimg.isFromRemote && !myimg.url" [src]="myimg.localUrl"
+                     alt="5"
+                     mat-card-image>
+
+                <mat-card-content class="p-3">
+                    <!-- 拖拽上传功能 开始 -->
+                    <!-- ng-container是特殊容器，本身不占位 -->
+                    <ng-container *ngIf="myimg.isEmptyNewImg">
+                        <!-- <img mat-card-image src="{{ dragdockimgsrc }}" alt="5"> -->
+                        <!-- <div id="box9834"   (updateImageCardNum)="i" ></div> -->
+                        <!--目标拖动进入的区域-->
+                        <!-- <div id="target"></div> -->
+                        <!--上传的图片本地预览, 由于html5的安全限制, 没有办法取得本地图片绝对路径，只能另辟蹊径-->
+                        <!-- <img  *ngIf="dragdockimgUrl" mat-card-image [src]="dragdockimgUrl" alt="5"> -->
+                        <file-drop (onFileDrop)="imgs_dropped($event, smallImgs)" dropZoneLabel="将 商品小图片 文件或文件夹拖入此处">
+                            <span></span>
+                        </file-drop>
+                    </ng-container>
+                    <!-- 拖拽上传功能 结束 -->
+
+                </mat-card-content>
+                <mat-divider></mat-divider>
+                <mat-card-actions class="secondary-text-color" fxLayoutAlign="end center">
+
+                    <button (click)="leftInsert(i, smallImgs)" class="m-1 o-hidden" color="accent" mat-mini-fab
+                            matTooltip="Insert">
+                        <mat-icon>create</mat-icon>
+                    </button>&nbsp;
+                    <button (click)="leftMove(i, smallImgs)" class="m-1 o-hidden" color="primary" mat-mini-fab
+                            matTooltip="Move">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>&nbsp;
+                    <button (click)="delete(i, smallImgs)" class="m-1 o-hidden" color="warn" mat-mini-fab
+                            matTooltip="Delete">
+                        <mat-icon>delete</mat-icon>
+                    </button>&nbsp;
+                    <button (click)="rightMove(i, smallImgs)" class="m-1 o-hidden" color="primary" mat-mini-fab
+                            matTooltip="Move">
+                        <mat-icon>arrow_forward</mat-icon>
+                    </button>&nbsp;
+                    <button (click)="rightInsert(i, smallImgs)" class="m-1 o-hidden" color="accent" mat-mini-fab
+                            matTooltip="Insert">
+                        <mat-icon>create</mat-icon>
+                    </button>
+
+                </mat-card-actions>
+            </mat-card>
+        </div>
+
+
+    </ng-container>
+
+</div>
+
+
+<mat-divider></mat-divider>
+
+
+<!-- ================大图=============== -->
+
+
+<div class="p-2" fxLayout="column" fxLayout.gt-sm="row wrap">
+
+    <!-- 循环显示图片 ng-container是特殊容器，本身不占位 -->
+    <ng-container *ngFor="let myimg of bigImgs; index as i;">
+
+        <div class="p-2" fxFlex="25">
+            <mat-card class="custom-card">
+                <mat-card-header class="bg-primary p-1" fxLayoutAlign="space-between center">
+                    <mat-card-title class="m-0">
+                        <h4>
+                            <mat-icon id="file_h4_mat_icon">filter_{{i < 9 ? i + 1 : "9_plus"}}</mat-icon>
+                            详情图片
+                        </h4>
+                    </mat-card-title>
+                    <button mat-icon-button>
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </mat-card-header>
+
+
+                <!-- 以下两行  显示图片 -->
+                <img *ngIf="!myimg.isEmptyNewImg && myimg.isFromRemote && myimg.url" alt="5"
+                     mat-card-image
+                     src="{{ myimg.url }}">
+                <img *ngIf="!myimg.isEmptyNewImg && myimg.isFromRemote && !myimg.url" [src]="myimg.localUrl"
+                     alt="5"
+                     mat-card-image>
+                <mat-card-content class="p-3">
+                    <!-- 拖拽上传功能 开始 -->
+                    <!-- ng-container是特殊容器，本身不占位 -->
+                    <ng-container *ngIf="myimg.isEmptyNewImg">
+                        <!-- <img mat-card-image src="{{ dragdockimgsrc }}" alt="5"> -->
+                        <!-- <div id="box9834"   (updateImageCardNum)="i" ></div> -->
+                        <!--目标拖动进入的区域-->
+                        <!-- <div id="target"></div> -->
+                        <!--上传的图片本地预览, 由于html5的安全限制, 没有办法取得本地图片绝对路径，只能另辟蹊径-->
+                        <!-- <img  *ngIf="dragdockimgUrl" mat-card-image [src]="dragdockimgUrl" alt="5"> -->
+                        <file-drop (onFileDrop)="imgs_dropped($event, bigImgs)" dropZoneLabel="将 商品详情图片 文件或文件夹拖入此处">
+                            <span></span>
+                        </file-drop>
+                    </ng-container>
+                    <!-- 拖拽上传功能 结束 -->
+                </mat-card-content>
+                <mat-divider></mat-divider>
+                <mat-card-actions class="secondary-text-color" fxLayoutAlign="end center">
+
+
+                    <button (click)="leftInsert(i, bigImgs)" class="m-1 o-hidden" color="accent" mat-mini-fab
+                            matTooltip="Insert">
+                        <mat-icon>create</mat-icon>
+                    </button>&nbsp;
+                    <button (click)="leftMove(i, bigImgs)" class="m-1 o-hidden" color="primary" mat-mini-fab
+                            matTooltip="Move">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>&nbsp;
+                    <button (click)="delete(i, bigImgs)" class="m-1 o-hidden" color="warn" mat-mini-fab
+                            matTooltip="Delete">
+                        <mat-icon>delete</mat-icon>
+                    </button>&nbsp;
+                    <button (click)="rightMove(i, bigImgs)" class="m-1 o-hidden" color="primary" mat-mini-fab
+                            matTooltip="Move">
+                        <mat-icon>arrow_forward</mat-icon>
+                    </button>&nbsp;
+                    <button (click)="rightInsert(i, bigImgs)" class="m-1 o-hidden" color="accent" mat-mini-fab
+                            matTooltip="Insert">
+                        <mat-icon>create</mat-icon>
+                    </button>
+
+                </mat-card-actions>
+            </mat-card>
+        </div>
+
+
+    </ng-container>
+
+</div>
+
+
+<mat-divider></mat-divider>
+
+
+<div fxLayout="column" id="demo_info">
+    <h2 fxFlex="100" id="title">{{productForm.controls.name.value}}</h2>
+    <ng-container *ngIf="details.brand">
+        <!-- <ng-container> -->
+        <div class="p-2" id="ch1">
+
+            <mat-tab-group class="demo-tab-group">
+                <mat-tab label="商品介绍">
+
+                    <div fxLayout="column" id="ch2">
+                        <div class="chanshu" fxFlex="100"> 品牌：{{details.brand}}</div>
+                        <div class="chanshu" fxFlex="25"> 商品名称：{{details.name}}</div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div class="chanshu" fxFlex="25"> 商品编号：{{details.number}}</div>
+                            <div class="chanshu" fxFlex="25"> 商品毛重：{{details.gross}}</div>
+                            <div class="chanshu" fxFlex="25"> 保存状态：{{details.saveStatus}}</div>
+                            <div class="chanshu" fxFlex="25"> 重量：{{details.netWeight}}</div>
+                        </div>
+
+                        <div fxLayout="row">
+                            <div class="chanshu" fxFlex="25"> 国产/进口：{{details.domesticImport}}</div>
+                            <div class="chanshu" fxFlex="25"> 饲养方式：{{details.variety}}</div>
+                            <div class="chanshu" fxFlex="25"> 品种：{{details.feedingMethod}}</div>
+                            <div class="chanshu" fxFlex="25"> 分类：{{details.classification}}</div>
+                        </div>
+
+                        <div fxLayout="row">
+                            <div class="chanshu" fxFlex="25"> 包装：{{details.package}}</div>
+                        </div>
+
+                    </div>
+                    <mat-divider></mat-divider>
+
+                    <div class="p-2" fxLayout="column" id="demo_imgs">
+                        <div class="p-2" id="img1">
+
+                            <div *ngFor="let myimg of bigImgs" fxLayout="column" id="img2">
+
+                                <!-- 以下两行  显示图片 -->
+                                <ng-container *ngIf="!myimg.isEmptyNewImg">
+                                    <img *ngIf="!myimg.isEmptyNewImg && myimg.isFromRemote && myimg.url"
+                                         alt="7" src="{{ myimg.url }}">
+                                    <img *ngIf="!myimg.isEmptyNewImg && myimg.isFromRemote && !myimg.url"
+                                         [src]="myimg.localUrl" alt="7">
+                                </ng-container>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </mat-tab>
+
+                <mat-tab label="规格包装">
+
+                    <div fxLayout="column" id="ch2">
+                        <div class="chanshu" fxFlex="100"> 贮存条件：{{details.torageConditions}} </div>
+                        <div class="chanshu" fxFlex="100"> 保质期：{{details.shelfLife}} </div>
+                        <div class="chanshu" fxFlex="100"> 净含量：{{details.netContent}} </div>
+                        <div fxFlex="100"> 包装清单：{{details.packingList}} </div>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                    <div id="shouhou" style="line-height: 20px; font-size: 12px;">
+                        <strong>1、生鲜“优鲜赔”绿色通道</strong><br/>
+                        <p>
+                            生鲜自营商品的破损或腐坏等问题，请在商品签收后48小时内提交“<strong>优鲜赔</strong>”申请，100分钟内审核通过后即享补偿，无需返回商品；非鲜活易腐类商品需上门取件。<br/>
+                        </p>
+                        <strong>2、专业生鲜客服团队—让您售后无忧</strong><br/>
+                        <p>微信在线客服：LLZW-fresh<br/>LLZW生鲜客服电话：400-888-8888<br/>服务时间：09:00-24:00 <br/></p>
+
+                        <strong><a href="//help.jd.com/user/issue/325-931.html" target="_blank">
+                            <font color="red">生鲜商品售后政策</font>
+                        </a></strong><br/>
+                        <p>
+                            注：因厂家会在没有任何提前通知的情况下更改产品包装、产地或者一些附件，LLZW生鲜不能确保客户收到的货物与商城图片、产地、附件说明完全一致。只能确保为原厂正货！并且保证与当时市场上同样主流新品一致。若LLZW生鲜没有及时更新，请大家谅解！
+                        </p>
+                    </div>
+                    <div id="state">
+                        <strong>权利声明：</strong><br/>LLZW上的所有商品信息、客户评价、商品咨询、网友讨论等内容，是LLZW重要的经营资源，未经许可，禁止非法转载使用。
+                        <p><b>注：</b>本站商品信息均来自于合作方，其真实性、准确性和合法性由信息拥有者（合作方）负责。本站不提供任何保证，并不承担任何法律责任。</p>
+                        <br/>
+                        <strong>价格说明：</strong><br/>
+                        <p><b>LLZW价：</b>LLZW价为商品的销售价，是您最终决定是否购买商品的依据。</p>
+                        <p>
+                            <b>划线价：</b>商品展示的划横线价格为参考价，并非原价，该价格可能是品牌专柜标价、商品吊牌价或由品牌供应商提供的正品零售价（如厂商指导价、建议零售价等）或该商品在LLZW平台上曾经展示过的销售价；由于地区、时间的差异性和市场行情波动，品牌专柜标价、商品吊牌价等可能会与您购物时展示的不一致，该价格仅供您参考。
+                        </p>
+                        <p><b>折扣：</b>如无特殊说明，折扣指销售商在原价、或划线价（如品牌专柜标价、商品吊牌价、厂商指导价、厂商建议零售价）等某一价格基础上计算出的优惠比例或优惠金额；如有疑问，您可在购买前联系销售商进行咨询。
+                        </p>
+                        <p><b>异常问题：</b>商品促销信息以商品详情页“促销”栏中的信息为准；商品的具体售价以订单结算页价格为准；如您发现活动商品售价或促销信息有异常，建议购买前先联系销售商咨询。</p>
+                    </div>
+
+                </mat-tab>
+                <mat-tab label="售后保障">
+
+                    <div id="shouhou" style="line-height: 20px; font-size: 12px;">
+                        <strong>1、生鲜“优鲜赔”绿色通道</strong><br/>
+                        <p>
+                            生鲜自营商品的破损或腐坏等问题，请在商品签收后48小时内提交“<strong>优鲜赔</strong>”申请，100分钟内审核通过后即享补偿，无需返回商品；非鲜活易腐类商品需上门取件。<br/>
+                        </p>
+                        <strong>2、专业生鲜客服团队—让您售后无忧</strong><br/>
+                        <p>微信在线客服：LLZW-fresh<br/>LLZW生鲜客服电话：400-888-8888<br/>服务时间：09:00-24:00 <br/></p>
+
+                        <strong><a href="//help.jd.com/user/issue/325-931.html" target="_blank">
+                            <font color="red">生鲜商品售后政策</font>
+                        </a></strong><br/>
+                        <p>
+                            注：因厂家会在没有任何提前通知的情况下更改产品包装、产地或者一些附件，LLZW生鲜不能确保客户收到的货物与商城图片、产地、附件说明完全一致。只能确保为原厂正货！并且保证与当时市场上同样主流新品一致。若LLZW生鲜没有及时更新，请大家谅解！
+                        </p>
+                    </div>
+                    <div id="state">
+                        <strong>权利声明：</strong><br/>LLZW上的所有商品信息、客户评价、商品咨询、网友讨论等内容，是LLZW重要的经营资源，未经许可，禁止非法转载使用。
+                        <p><b>注：</b>本站商品信息均来自于合作方，其真实性、准确性和合法性由信息拥有者（合作方）负责。本站不提供任何保证，并不承担任何法律责任。</p>
+                        <br/>
+                        <strong>价格说明：</strong><br/>
+                        <p><b>LLZW价：</b>LLZW价为商品的销售价，是您最终决定是否购买商品的依据。</p>
+                        <p>
+                            <b>划线价：</b>商品展示的划横线价格为参考价，并非原价，该价格可能是品牌专柜标价、商品吊牌价或由品牌供应商提供的正品零售价（如厂商指导价、建议零售价等）或该商品在LLZW平台上曾经展示过的销售价；由于地区、时间的差异性和市场行情波动，品牌专柜标价、商品吊牌价等可能会与您购物时展示的不一致，该价格仅供您参考。
+                        </p>
+                        <p><b>折扣：</b>如无特殊说明，折扣指销售商在原价、或划线价（如品牌专柜标价、商品吊牌价、厂商指导价、厂商建议零售价）等某一价格基础上计算出的优惠比例或优惠金额；如有疑问，您可在购买前联系销售商进行咨询。
+                        </p>
+                        <p><b>异常问题：</b>商品促销信息以商品详情页“促销”栏中的信息为准；商品的具体售价以订单结算页价格为准；如您发现活动商品售价或促销信息有异常，建议购买前先联系销售商咨询。</p>
+                    </div>
+
+                </mat-tab>
+                <mat-tab label="商品评价"></mat-tab>
+                <mat-tab label="本店好评商品"></mat-tab>
+
+            </mat-tab-group>
+        </div>
+
+    </ng-container>
+</div>

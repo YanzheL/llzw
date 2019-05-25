@@ -1,0 +1,14 @@
+<div *ngIf="data" class="container">
+    <div *ngFor="let singleData of data" class="col-gap alt-sec" fxLayout="row wrap" fxLayoutAlign="center center">
+        <div fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100" fxFlex.xl="50" fxFlex.xs="100">
+            <img [src]="singleData.image" alt="About us" alt="" height="700" width="900">
+        </div>
+        <div class="p-5" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100" fxFlex.xl="50" fxFlex.xs="100">
+            <h2 class="font-bold">
+                {{singleData?.heading}}
+            </h2>
+            <h5 class="font-italic">{{singleData?.sub_heading}}</h5>
+            <p>{{singleData?.content}}</p>
+        </div>
+    </div>
+</div>

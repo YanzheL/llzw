@@ -1,0 +1,74 @@
+<p>
+    products works!
+</p>
+
+
+<mat-sidenav-container class="h-100">
+    <div class="h-100" fxLayout="row" fxLayoutAlign="center center">
+        <form (ngSubmit)="onSubmit(form.value)" [formGroup]="form" class="mat-elevation-z6" fxFlex="90" fxFlex.gt-sm="30"
+              fxFlex.sm="60">
+
+            <div class="p-4">
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="name" matInput placeholder="Name of this product">
+                    <mat-error *ngIf="form.controls.name.errors?.required">Name is required</mat-error>
+                    <!-- <mat-error *ngIf="form.controls.name.hasError('minlength')">Name isn't long enough, minimum of 4 characters</mat-error> -->
+                    <!-- <mat-error *ngIf="form.controls.name.hasError('invalidName')">Name 包含特殊字符</mat-error> -->
+                    <mat-error
+                            *ngIf="form.controls.name.hasError('invalidInfo')">{{form.controls.name.errors['invalidInfo']}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="introduction" matInput placeholder="Introduction of this product">
+                    <mat-error *ngIf="form.controls.introduction.errors?.required">introduction is required</mat-error>
+
+                </mat-form-field>
+
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="price" matInput placeholder="Price of this product">
+                    <mat-error *ngIf="form.controls.price.errors?.required">price is required</mat-error>
+                    <mat-error *ngIf="form.controls.price.hasError('minlength')">price isn't long enough, minimum of 3
+                        characters
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="ca" matInput placeholder="Certificate authority name">
+                    <mat-error *ngIf="form.controls.ca.errors?.required">formControlName is required</mat-error>
+                    <mat-error *ngIf="form.controls.ca.hasError('minlength')">formControlName isn't long enough, minimum
+                        of 3 characters
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="certId" matInput placeholder="Qualification certificate id">
+                    <mat-error *ngIf="form.controls.certId.errors?.required">certId is required</mat-error>
+                    <mat-error *ngIf="form.controls.certId.hasError('minlength')">certId isn't long enough, minimum of 3
+                        characters
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>phone</mat-icon>
+                    <input formControlName="maxDeliveryHours" matInput
+                           placeholder="Max delivery hours allowed of this product">
+                    <mat-error *ngIf="form.controls.maxDeliveryHours.errors?.required">maxDeliveryHours is required
+                    </mat-error>
+                    <mat-error *ngIf="form.controls.maxDeliveryHours.hasError('minlength')">maxDeliveryHours isn't long
+                        enough, minimum of 3 characters
+                    </mat-error>
+                </mat-form-field>
+
+                <button class="mat-elevation-z6 w-100 mt-3" color="primary" mat-raised-button type="submit">Create
+                </button>
+            </div>
+        </form>
+    </div>
+</mat-sidenav-container>
