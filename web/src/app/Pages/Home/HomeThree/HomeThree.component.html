@@ -1,0 +1,75 @@
+<!--<embryo-HomePageThreeSlider [isRTL]="embryoService.isDirectionRtl"></embryo-HomePageThreeSlider>-->
+<!--<embryo-CtaTwo></embryo-CtaTwo>-->
+<!--<embryo-CollectionGallery></embryo-CollectionGallery>-->
+
+<!--<div class="section-gap grey-bg">-->
+   <!--<div class="container">-->
+         <!--<div class="block-title mb-5"> <h3 class="font-light">Shop By Category</h3></div>-->
+         <!--<div fxLayout="row wrap" class="col-gap category-v2-wrapper" *ngIf="categories && (categories.clothing.length>0 && categories.shoes.length>0 && categories.accessories.length>0 && categories.gadgets.length)">-->
+           <!--<embryo-ProductCategoryCard class="mb-4" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25"-->
+             <!--[productCategory]="categories.clothing[1]" [totalProducts]="categories.clothing.length"></embryo-ProductCategoryCard>-->
+           <!--<embryo-ProductCategoryCard class="mb-4" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25"-->
+             <!--[productCategory]="categories.shoes[0]" [totalProducts]="categories.shoes.length"></embryo-ProductCategoryCard>-->
+           <!--<embryo-ProductCategoryCard class="mb-4" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25"-->
+             <!--[productCategory]="categories.accessories[0]" [totalProducts]="categories.accessories.length"></embryo-ProductCategoryCard>-->
+           <!--<embryo-ProductCategoryCard class="mb-4" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25"-->
+             <!--[productCategory]="categories.gadgets[0]" [totalProducts]="categories.gadgets.length"></embryo-ProductCategoryCard>-->
+         <!--</div> -->
+   <!--</div>-->
+<!--</div>-->
+
+<!--<div class="shop-card-wrapper section-gap pt-0 pb-5 grid-card-wrapper tab-sldier-v2" *ngIf="products">-->
+  <!---->
+    <!--<mat-toolbar style="height:270px;background-color:#000" class="section-title-toolbar grid-toolbar">-->
+      <!--<mat-toolbar-row>-->
+         <!--<div class="container">-->
+        <!--<div class="w-100 mb-3">-->
+          <!--<div class="block-title mb-2">-->
+            <!--<h2 class="text-inverse mb-0 text-xxl font-light">New Products</h2>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="mat-tab-toolbar">-->
+          <!--<mat-tab-group [(selectedIndex)]="embryoService.newArrivalSelectedTab">-->
+            <!--<mat-tab label="All"></mat-tab>-->
+            <!--<mat-tab label="Men"></mat-tab>-->
+            <!--<mat-tab label="Women"></mat-tab>-->
+            <!--<mat-tab label="Gadgets"></mat-tab>-->
+          <!--</mat-tab-group>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--</mat-toolbar-row>-->
+    <!--</mat-toolbar>-->
+ <!---->
+  <!--<div class="container">-->
+    <!--<ng-container *ngIf="onNewArrivalsSelectedTab(embryoService.newArrivalSelectedTab)">-->
+      <!--<ngx-slick-carousel *ngIf="embryoService.isDirectionRtl" class="carousel" [config]="rtlSlideConfig">-->
+        <!--<div ngxSlickItem *ngFor="let product of newProductsSliderData">-->
+          <!--<embryo-NewProductsCard [product]="product" (addToCart)="addToCart($event)" [currency]="embryoService.currency"-->
+            <!--(addToWishlist)="addToWishlist($event)"></embryo-NewProductsCard>-->
+        <!--</div>-->
+      <!--</ngx-slick-carousel>-->
+      <!--<ngx-slick-carousel *ngIf="!embryoService.isDirectionRtl" class="carousel" [config]="slideConfig">-->
+        <!--<div ngxSlickItem *ngFor="let product of newProductsSliderData">-->
+          <!--<embryo-NewProductsCard [product]="product" (addToCart)="addToCart($event)" [currency]="embryoService.currency"-->
+            <!--(addToWishlist)="addToWishlist($event)"></embryo-NewProductsCard>-->
+        <!--</div>-->
+      <!--</ngx-slick-carousel>-->
+    <!--</ng-container>-->
+  <!--</div>-->
+<!--</div>-->
+<!--<embryo-CTASingleBanner></embryo-CTASingleBanner>-->
+<!--<div class="section-gap pt-0 shadow-disable">-->
+<!--<div class="container">-->
+  <!--<div  class="w-100">-->
+   <!---->
+    <!--<div class="block-title text-center mb-4"><h3>Top Brands</h3></div>-->
+  <!--</div>-->
+  <!--<embryo-BrandsLogo [isRTL]="embryoService.isDirectionRtl"></embryo-BrandsLogo>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<embryo-SubscribeTwo></embryo-SubscribeTwo>-->
+<!--<embryo-DownloadAppSection></embryo-DownloadAppSection>-->
+
+
+

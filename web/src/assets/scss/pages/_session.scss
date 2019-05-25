@@ -1,0 +1,41 @@
+.sign-in-image {
+  background-image: url("/assets/images/mylogin.jpg");
+  background-size: cover;
+  padding: 18rem 0;
+}
+
+.register-image {
+  background-image: url("/assets/images/myregister.jpg");
+  background-size: cover;
+  padding: 18rem 0;
+}
+
+.thank-you-image {
+  background-image: url("../.../../../assets/images/thank-you.jpg");
+  background-size: cover;
+  padding: 10rem 0;
+  background-position: center center;
+  border-radius: 5px;
+}
+
+.forgot-password-image {
+  background-image: url("/assets/images/forgot-password.jpg");
+  background-size: cover;
+  padding: 18rem 0;
+}
+
+@media(min-width:960px) {
+  .thank-you-card {
+    margin-top: -60px;
+  }
+
+  .form-margin {
+    margin-left: -40px;
+  }
+}
+
+@media(max-width:959px) {
+  .form-img {
+    display: none;
+  }
+}

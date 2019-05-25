@@ -1,0 +1,9 @@
+<div class="section-gap pb-0 pt-5 image-group">
+  <div class="container">
+    <div fxLayout="row wrap" class="col-gap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33" *ngFor="let card of callToActionArray">
+        <a [routerLink]="[card.route]"> <img [src]="card.img_path" alt=""></a>
+      </div>
+    </div>
+  </div>
+</div>

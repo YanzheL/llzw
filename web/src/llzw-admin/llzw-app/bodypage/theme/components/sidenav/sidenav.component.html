@@ -1,0 +1,54 @@
+<div class="sidenav-menu-outer" [perfectScrollbar]="psConfig" [disabled]="settings.fixedSidenavUserContent">
+  <div fxLayout="column" fxLayoutAlign="center center" class="user-block" [class.py-3]="settings.menuType != 'mini'"
+    [class.py-2]="settings.menuType == 'mini'">
+
+    <!-- <button mat-mini-fab class="zlog-in-user" [matMenuTriggerFor]="loginuser"> -->
+        <!-- me.logined ? me.avatar : "../../../../../assets/llzw_annular/img/users/default-user.jpg" -->
+    <button mat-mini-fab class="zlog-in-user" [matMenuTriggerFor]="userMenu">
+      <img id="id_avatar_img"
+        src='{{ me.avatar }}'
+        alt="user-image">
+    </button>
+
+    <!-- assets/img/users/user.jpg -->
+    <h2 *ngIf="settings.menuType != 'mini'" class="mt-2">{{me.nickname }}</h2>
+    <p *ngIf="settings.menuType == 'default'" class="secondary-text-color">{{me.logined ? me.email : "请登录"}}</p>
+
+    <mat-menu #userMenu="matMenu" [overlapTrigger]="false" class="toolbar-dropdown-menu user-menu">
+      <mat-divider></mat-divider>
+      <a mat-menu-item routerLink="/seller/admin/profile">
+        <mat-icon>person</mat-icon>
+        <span>Profile</span>
+      </a>
+      <a mat-menu-item routerLink="/seller/settings">
+        <mat-icon>settings</mat-icon>
+        <span>Settings</span>
+      </a>
+      <a mat-menu-item routerLink="/seller">
+        <mat-icon>lock</mat-icon>
+        <span>Lock screen</span>
+      </a>
+      <a mat-menu-item routerLink="/seller/admin/admin-works/products">
+        <mat-icon>help</mat-icon>
+        <span>Help</span>
+      </a>
+      <mat-divider></mat-divider>
+      <a mat-menu-item routerLink="/session/signin">
+        <mat-icon>power_settings_new</mat-icon>
+        <span>Log out</span>
+      </a>
+
+    </mat-menu>
+
+
+  </div>
+
+
+
+
+
+  <mat-divider></mat-divider>
+  <div id="vertical-menu" [perfectScrollbar]="psConfig" [disabled]="!settings.fixedSidenavUserContent">
+    <app-vertical-menu [menuItems]="menuItems" [menuParentId]="0"></app-vertical-menu>
+  </div>
+</div>

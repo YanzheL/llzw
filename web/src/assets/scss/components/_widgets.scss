@@ -1,0 +1,213 @@
+
+
+.offer-badge .mat-chip {
+  top: 50px;
+  position: absolute;
+  padding: 0.5rem 0.7rem;
+  left: 0;
+}
+
+
+.center-icon {
+  background: #fff;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  text-align: center;
+  line-height: 100px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  margin: 0 auto;
+  top: -50px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+
+  i {
+    font-size: 3rem;
+    line-height: 100px;
+  }
+}
+.image-group {
+  img {
+    box-shadow: $card-shadow;
+    border-radius: 7px;
+  }
+}
+
+
+//type 2 card grid
+.grid-card-v2 {
+  .custom-badge {
+    padding: 0.2rem 0.6rem;
+    border-radius: 5px;
+    background-color: #DE3F3F;
+    box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.17);
+    color: #fff;
+    position: absolute;
+    top: 15px;
+  }
+
+  box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.17);
+
+  .price-tag-v2 {
+    background: #fff;
+    box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.17);
+    display: inline-block;
+    padding: 0.2rem 0.78rem;
+    margin: 0;
+    font-weight: bold;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 1rem;
+    line-height: normal;
+  }
+
+  mat-card-footer.mat-card-footer {
+    padding: 1rem;
+    border-top: 1px solid #eee;
+    margin-top: 1.5rem;
+
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  embryo-addtocardbutton {
+    button.mat-fab.mat-accent {
+      background: $primary;
+    }
+  }
+
+  embryo-rating .br-default .br-selected::after {
+    color: #000 !important;
+  }
+
+  .mat-upper {
+    position: relative;
+  }
+
+  .mat-card-content {
+    h5 {
+      margin-bottom: 0;
+      font-size: 17.36px;
+      font-weight: bold;
+    }
+  }
+
+}
+
+.grid-card-wrapper {
+  .grid-toolbar {
+    padding-top: 3.5rem;
+    border-radius: 0;
+
+    .mat-toolbar-row {
+      display: block;
+
+      .mat-tab-label-content {
+        color: #fff;
+        opacity: 1;
+      }
+
+      .mat-tab-label {
+        opacity: 1;
+
+        font-weight: 400;
+        border-radius: 0;
+      }
+
+      .mat-tab-label-active.mat-tab-label {
+        background: transparent;
+        border-bottom: 1px solid #fff;
+      }
+
+      .mat-tab-group {
+        float: left;
+      }
+    }
+  }
+
+  .mat-card {
+    overflow: hidden;
+  }
+
+  .slick-slider {
+    margin-top: -90px;
+  }
+
+  a.title-link {
+    white-space: nowrap;
+    width: 270px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+  }
+}
+
+.grid-card-v2 .mat-upper {
+  position: relative;
+  margin-top: -16px !important;
+}
+
+//Download App
+.download-app-list:first-child {
+  border-right: 1px solid #000;
+}
+.download-app-list img {
+margin-top:-6px;
+}
+
+@media(max-width:1560px) {
+  body .image-group {
+    padding-top: 1rem !important;
+  }
+}
+
+@media(max-width:1199px) {
+  body .image-group {
+    padding-top: 0rem !important;
+  }
+
+  .cta-content {
+    top: 20%;
+  }
+}
+
+@media(max-width:991px) {
+  .feature-section-v2-list .material-icons {
+    font-size: 1.7rem;
+  }
+
+  .feature-section-v2-list {
+    display: block !important;
+    text-align: center;
+    /* margin: 0 !important; */
+  }
+
+  .feature-section-v2-list .mat-fab {
+    width: 55px;
+    height: 55px;
+    margin-top: 0;
+    margin: 12px auto;
+    text-align: center;
+    display: block;
+  }
+
+  .ml-4.feature-section-v2-content {
+    margin: 0 !important;
+  }
+
+}
+
+
+@media(max-width:560px) {
+  .subscribe-section-v2 {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+
+  .toolbar-title {
+    display: block !important;
+    padding-top: 2rem;
+  }
+}

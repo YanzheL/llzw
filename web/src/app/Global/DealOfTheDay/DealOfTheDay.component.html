@@ -1,0 +1,40 @@
+<div fxLayout='row wrap' class="col-gap" *ngIf="singleProduct">
+   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+     <div class="detail-thumb text-center">
+       <mat-grid-list cols="1" rowHeight="1:1">
+         <mat-grid-tile>
+           <a class="p-link" [routerLink]="['/products', singleProduct?.type, singleProduct?.id]">
+             <img width="626" height="800" [src]="singleProduct?.image" alt="Deal Of The Day">
+           </a>
+         </mat-grid-tile>
+       </mat-grid-list>
+     </div>
+   </div>
+   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+     <div class="detail-content mb-5">
+       <h2 class="font-normal">Deal of the day</h2>
+       <h5 class="font-normal">{{singleProduct?.name}}</h5>
+       <p>
+         <del class="mr-2">{{singleProduct?.price | currency:currency}}</del>
+         <span class="accent-color">Now Only {{singleProduct?.discount_price | currency:currency}}</span>
+       </p>
+       <p>{{singleProduct?.description}}</p>
+       
+       <embryo-TimerCountDown [dateTime]="counterDateTime"></embryo-TimerCountDown>
+       <div>
+         <button mat-raised-button color="accent" [routerLink]="['/products', singleProduct?.type, singleProduct?.id]">Shop Now</button>
+       </div>
+     </div>
+     <mat-grid-list cols="3" rowHeight="1:1" gutterSize="20px" class="mat-gallery-grid">
+       <ng-container *ngFor="let path of singleProduct?.image_gallery; let i=index">
+         <ng-container *ngIf="i < 3">
+            <mat-grid-tile id="{{i}}_img" class="selected_img" [ngClass]="{ 'border-active': i === 0 }">
+              <a class="p-link" href="javascript:void(0)" (click)="getOfferImagePath(path, i)">
+                <img width="626" height="800" alt="deal of the day grid" src="{{path}}" alt="">
+              </a>
+            </mat-grid-tile>
+         </ng-container>
+       </ng-container>
+     </mat-grid-list>
+   </div>
+</div>

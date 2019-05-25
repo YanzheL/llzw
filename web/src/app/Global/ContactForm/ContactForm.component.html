@@ -1,0 +1,24 @@
+<form [formGroup] = "contactForm" (ngSubmit) = "submitForm()">
+   <mat-form-field class="w-100">
+      <input matInput placeholder="First Name" formControlName="first_name">
+   </mat-form-field>
+   <mat-error *ngIf="contactForm.controls['first_name'].hasError('required') && contactForm.controls['first_name'].touched">This field should not be empty.</mat-error>
+   <mat-form-field class="w-100">
+      <input matInput placeholder="Last Name" formControlName="last_name">
+   </mat-form-field>
+   <mat-error *ngIf="contactForm.controls['last_name'].hasError('required') && contactForm.controls['last_name'].touched">This field should not be empty.</mat-error>
+   <mat-form-field class="w-100">
+      <input matInput placeholder="Email" formControlName="email">
+   </mat-form-field>
+   <mat-error *ngIf="contactForm.controls['email'].hasError('required') && contactForm.controls['email'].touched">This field should not be empty.</mat-error>
+   <mat-error *ngIf="contactForm.controls['email'].hasError('pattern') && contactForm.controls['email'].touched && !contactForm.controls['email'].hasError('required')">Please enter a valid email.</mat-error>
+   <mat-form-field class="w-100">
+      <input matInput placeholder="Subject" formControlName="subject">
+   </mat-form-field>
+   <mat-error *ngIf="contactForm.controls['subject'].hasError('required') && contactForm.controls['subject'].touched"> This field should not be empty.</mat-error>
+   <mat-form-field class="w-100">
+      <textarea matInput placeholder="Leave a Message" formControlName="message"></textarea>
+   </mat-form-field>
+   <mat-error *ngIf="contactForm.controls['message'].hasError('required') && contactForm.controls['message'].touched"> This field should not be empty.</mat-error>
+   <button mat-raised-button color="accent" class="button-lg" type="submit">Send Messsage</button>
+</form>

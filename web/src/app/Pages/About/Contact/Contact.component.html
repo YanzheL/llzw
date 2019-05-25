@@ -1,0 +1,41 @@
+
+<embryo-PageTitle heading="Contact Us" subHeading="Share your feedback with us."></embryo-PageTitle>
+<div class="inner-container">
+  <div class="Contact-page" *ngIf="contactInfo">
+    <div class="contact-map">
+      <embryo-Map [address]="contactInfo?.address"></embryo-Map>
+    </div>
+    <div class="contact-info-wrapper">
+      <div class="container">
+        <div class="section-gap">
+          <div fxLayout="row wrap" class="col-gap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+              <div class="block-title ">
+                <h2>Contact Info</h2>
+                <h5 class="text-italic mb-4">{{contactInfo?.info}}</h5> 
+              </div>
+              <div class="mb-4">
+                <h3>Call</h3>
+                  <a href="tel:12345688">{{contactInfo?.call}}</a>
+              </div>
+              <div class="mb-4">
+                <h3>Mail</h3>
+                <a href="mailto:{{contactInfo?.mail}}">{{contactInfo?.mail}}</a>
+              </div>
+              <div class="mb-4">
+                <h3>Address</h3>
+                <p> {{contactInfo?.address}} </p>
+              </div>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+              <div class="block-title ">
+                <h2>Write to Us</h2>
+              </div>
+              <embryo-ContactForm></embryo-ContactForm>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

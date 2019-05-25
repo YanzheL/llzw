@@ -1,0 +1,15 @@
+<button mat-mini-fab class="log-in-user" [matMenuTriggerFor]="loginuser" *ngIf="rootUser">
+  <!--<img src="assets/images/log-in-user.jpg" width="250" height="250" alt="log-in-user">-->
+  <span style="font-size: 18px">{{rootUser.username?.slice(0,2)}}</span>
+</button>
+<button mat-mini-fab class="log-in-user" *ngIf="!rootUser" >
+  <!--<img src="assets/images/log-in-user.jpg" width="250" height="250" alt="log-in-user">-->
+  <a [routerLink]="['/session/signin']">login</a>
+</button>
+<mat-menu #loginuser="matMenu">
+  <button mat-menu-item fxLayoutAlign="start center" [routerLink]="['/account/profile']"><i class="material-icons mr-1">account_circle</i> <span>User Info</span>
+  </button>
+  <!--<button mat-menu-item [routerLink]="['/account/profile']"><i class="material-icons mr-1">settings</i><span>Account</span></button>-->
+  <!--<button mat-menu-item [routerLink]="['/account/profile']"> <i class="material-icons mr-1">local_post_office</i> <span>Messages</span></button>-->
+  <button mat-menu-item><i class="material-icons mr-1">power_settings_new</i><span (click)="logout()">Logout</span></button>
+</mat-menu>

@@ -1,0 +1,67 @@
+<mat-toolbar color="primary" class="header-v2">
+   <mat-toolbar-row class="header-v2-top">
+     <div class="container">
+       <div fxLayout="row wrap">
+         <div class="logo-site" fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="35" fxFlex.lg="25%" fxFlex.xl="25%">
+          <embryo-AppLogo></embryo-AppLogo>
+         </div>
+         <div fxFlex.sm="60" fxHide.xs="true" fxHide.sm="true" fxFlex.md="40" fxFlex.sm.hdie fxFlex.lg="60%" fxFlex.xl="60%" class="align-center">
+            
+            <div class="search-v2">
+               <form action="">
+                  <input type="text" placeholder="Enter a keyword to search">
+               </form>
+            </div>
+         </div>
+         <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="15%" fxFlex.xl="15%">
+       <span fxFlex></span>
+           <div class="list-flex user-tool">
+             <embryo-HeaderCart [currency]="embryoService?.currency" [cartProducts]="embryoService?.localStorageCartProducts" [count]="embryoService?.navbarCartCount" (removeProductData)="openConfirmationPopup($event)"></embryo-HeaderCart>
+ 
+             <embryo-WishList [currency]="embryoService?.currency" [wishListProducts]="embryoService?.localStorageWishlist" [count]="embryoService?.navbarWishlistProdCount" (removeWishListData)="openWishlistConfirmationPopup($event)" (addAllWishlistToCart)="addAllWishlistToCart($event)" (addToCart)="addToCart($event)"></embryo-WishList>
+             <embryo-HeaderUserProfileDropdown></embryo-HeaderUserProfileDropdown>
+           </div>
+         </div>
+       </div>
+     </div>
+   </mat-toolbar-row>
+   <mat-toolbar-row class="header-v2-bottom main-menu-wrap">
+     <div class="container">
+       <div class="header-v2-bottom-inner">
+         <embryo-Menu></embryo-Menu>
+    
+       </div>
+     </div>
+   </mat-toolbar-row>
+   <mat-toolbar-row class="responsive-bar relative">
+         <div class="container">
+           <div fxLayoutAlign="space-between">
+          
+             <button class="responsive-toggle" mat-icon-button (click)="toggleSidebar()">
+               <i class="material-icons">menu</i>
+             </button>
+             <div>
+                 <div class="search-box-bar">
+                   <button type="button" mat-mini-fab (click)="toggleSearch()">
+                     <i class="material-icons notranslate">
+                       search
+                     </i>
+                   </button>
+                 </div>
+                 <div class="search-form">
+                   <form>
+                     <input type="text" placeholder="Search and hit enter">
+                     <button type="button" mat-fab class="close-btn" (click)="toggleSearch()">
+                       <i class="material-icons">
+                         close
+                       </i>
+                     </button>
+                   </form>
+                 </div>
+               </div>
+           </div>
+         </div>
+       </mat-toolbar-row>
+ </mat-toolbar>
+ <embryo-FixedHeader></embryo-FixedHeader>
+ 

@@ -1,0 +1,11 @@
+<div *ngIf="showMap && address">
+   <agm-map [latitude]="mapOptions.lat" [longitude]="mapOptions.lng">
+      <agm-marker [latitude]="mapOptions.lat" [longitude]="mapOptions.lng" [iconUrl]="icon">
+         <agm-info-window>
+            <div>
+               <span>{{address}}</span>
+            </div>
+         </agm-info-window>
+     </agm-marker>
+   </agm-map>
+</div>

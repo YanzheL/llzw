@@ -1,0 +1,82 @@
+<mat-toolbar class="header-v3">
+  <mat-toolbar-row class="header-v3-top">
+    <div class="container">
+      <div fxLayout="row wrap" class="w-100">
+        <div header-v3-top-site fxFlex.md="33%" fxFlex.lg="33%" fxFlex.xl="33%">
+          <div class="header-v3-top-tools">
+            <span>Welcome to our store</span>
+            <embryo-LanguageDropDown></embryo-LanguageDropDown>
+            <embryo-CurrencyDropDown [selectedValue]="embryoService?.currency" (selectedCurrency)="selectedCurrency($event)"></embryo-CurrencyDropDown>
+          </div>
+        </div>
+      </div>
+      <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="50" fxFlex.lg="33%" fxFlex.xl="33%">
+        <span fxFlex></span>
+        <div class="list-flex user-tool header-v3-top-tools">
+          <embryo-HeaderCart [currency]="embryoService?.currency" [cartProducts]="embryoService?.localStorageCartProducts"
+            [count]="embryoService?.navbarCartCount" (removeProductData)="openConfirmationPopup($event)"></embryo-HeaderCart>
+
+          <embryo-WishList [currency]="embryoService?.currency" [wishListProducts]="embryoService?.localStorageWishlist"
+            [count]="embryoService?.navbarWishlistProdCount" (removeWishListData)="openWishlistConfirmationPopup($event)"
+            (addAllWishlistToCart)="addAllWishlistToCart($event)" (addToCart)="addToCart($event)"></embryo-WishList>
+
+          <embryo-HeaderUserProfileDropdown></embryo-HeaderUserProfileDropdown>
+        </div>
+      </div>
+    </div>
+  </mat-toolbar-row>
+  <mat-toolbar-row class="header-v3-middle">
+    <div class="container">
+      <div fxLayout="row wrap" fxLayoutAlign="space-between" class="w-100">
+        <div class="logo-site" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33%" fxFlex.xl="33%">
+          <img src="assets/images/logo-dark.png" alt="" width="224">
+        </div>
+        <div fxShow.xs="false" fxShow.sm="false"   fxFlex.md="50" fxShow.sm="false" fxFlex.lg="40%" fxFlex.xl="33%">
+          <form>
+            <input type="text" placeholder="Search">
+            <button type="button" mat-fab>
+              <i class="material-icons">search</i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </mat-toolbar-row>
+  <mat-toolbar-row class="header-v3-bottom">
+    <div class="container">
+      <div class="header-v1-bottom-inner">
+        <embryo-Menu></embryo-Menu>
+      </div>
+    </div>
+  </mat-toolbar-row>
+  <mat-toolbar-row class="responsive-bar relative">
+    <div class="container">
+      <div fxLayoutAlign="space-between">
+     
+        <button class="responsive-toggle" mat-icon-button (click)="toggleSidebar()">
+          <i class="material-icons">menu</i>
+        </button>
+        <div>
+            <div class="search-box-bar">
+              <button type="button" mat-mini-fab (click)="toggleSearch()">
+                <i class="material-icons notranslate">
+                  search
+                </i>
+              </button>
+            </div>
+            <div class="search-form">
+              <form>
+                <input type="text" placeholder="Search and hit enter">
+                <button type="button" mat-fab class="close-btn" (click)="toggleSearch()">
+                  <i class="material-icons">
+                    close
+                  </i>
+                </button>
+              </form>
+            </div>
+          </div>
+      </div>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+<embryo-FixedHeader></embryo-FixedHeader>

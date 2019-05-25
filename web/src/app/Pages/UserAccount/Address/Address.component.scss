@@ -1,0 +1,19 @@
+.chip {
+  //background-color: #ff41de;
+  height: 35px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 17px;
+  text-align: center;
+  line-height: 35px;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  margin-right: 10px;
+  background: #AAFFA9; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #11FFBD, #AAFFA9); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #11FFBD, #AAFFA9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+table {
+  width: 100%;
+}

@@ -1,0 +1,31 @@
+<mat-card>
+  <h4>Address Infomation</h4>
+  <div fxLayout="row wrap" class="col-gap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+      <h5>Billing Address</h5>
+      <div class="pt-3">
+         <address class="mb-4">
+               2735  Sherman Street<br>
+               Hodour Sheridan Plaza<br>
+               New Jersey<br>
+               Zip - 6739HG1<br>
+               USA<br>
+         </address>
+        <button mat-raised-button color="accent" [routerLink]="['/account/profile/edit']" [queryParams]="{type:'address'}">Edit</button>
+      </div>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+      <h5>Shipping Address</h5>
+      <div class="pt-3">
+         <address class="mb-4">
+               2735  Sherman Street<br>
+               Hodour Sheridan Plaza<br>
+               New Jersey<br>
+               Zip - 6739HG1<br>
+               USA<br>
+         </address>
+        <button mat-raised-button color="accent" [routerLink]="['/account/profile/edit']" [queryParams]="{type:'ship-address'}">Edit</button>
+      </div>
+    </div>
+  </div>
+</mat-card>

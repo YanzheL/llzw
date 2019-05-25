@@ -1,0 +1,162 @@
+<mat-card *ngIf="type == 'info'">
+  <h4> Edit Profile Information</h4>
+  <div fxLayout="row wrap" class="col-gap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+      <form [formGroup] = "info">
+        <div class="example-container">
+          <mat-form-field class="w-100 mb-3">
+            <input matInput placeholder="First Name" formControlName="first_name">
+            <mat-error *ngIf="info.get('first_name').hasError('required') && info.get('first_name').touched">This field should not be empty.</mat-error>
+          </mat-form-field>
+          <mat-form-field class="w-100 mb-3">
+            <input matInput placeholder="Last Name" formControlName="last_name">
+            <mat-error *ngIf="info.get('last_name').hasError('required') && info.get('last_name').touched">This field should not be empty.</mat-error>
+          </mat-form-field>
+          <div class="mb-3">
+            <mat-radio-group formControlName="gender">
+              <mat-radio-button class="mr-2" value="male">Male</mat-radio-button>
+              <mat-radio-button value="female">Female</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div>
+            <mat-form-field class="w-100 mb-3">
+              <input matInput [matDatepicker]="picker" placeholder="Bith Date" formControlName="date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="info.get('date').hasError('required') && info.get('date').touched">This field should not be empty.</mat-error>
+            </mat-form-field>
+          </div>
+          <mat-form-field class="w-100 mb-3">
+            <input matInput placeholder="Mobile No." formControlName="phone_number">
+            <mat-error *ngIf="info.get('phone_number').hasError('required') && info.get('phone_number').touched">This field should not be empty.</mat-error>
+          </mat-form-field>
+          <mat-form-field class="w-100 mb-3">
+            <input matInput placeholder="Location" formControlName="location">
+            <mat-error *ngIf="info.get('location').hasError('required') && info.get('location').touched">This field should not be empty.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
+            <input matInput type="email" placeholder="Email" formControlName="email">
+            <mat-error *ngIf="info.get('email').hasError('required') && info.get('email').touched">This field should not be empty.</mat-error>
+            <mat-error *ngIf="info.get('email').hasError('pattern') && info.get('email').touched">Please enter a valid email.</mat-error>
+          </mat-form-field>
+          <button mat-raised-button color="accent" (click)="submitProfileInfo()">Save</button>
+        </div>
+      </form>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="edit-profile" style="background-image: url(assets/images/user-edit.png)">
+    </div>
+  </div>
+</mat-card>
+
+<mat-card *ngIf="type == 'address' || type == 'ship-address'">
+  <h4 *ngIf="type == 'address'"> Edit Billing Information</h4>
+  <h4 *ngIf="type == 'ship-address'"> Edit Shipping Information</h4>
+  <div fxLayout="row wrap" class="col-gap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+      <form [formGroup] = "address">
+        <div class="example-container">
+          <mat-form-field class="w-100 mb-3">
+            <input matInput placeholder="Address" formControlName="address">
+            <mat-error *ngIf="address.get('address').hasError('required') && address.get('address').touched">This field should not be empty.</mat-error>
+          </mat-form-field>
+          <mat-form-field class="w-100 mb-3">
+            <input matInput placeholder="Buiding Name" formControlName="buiding_name">
+            <mat-error *ngIf="address.get('buiding_name').hasError('required') && address.get('buiding_name').touched">This field should not be empty.</mat-error>
+          </mat-form-field>
+          <mat-form-field class="w-100 mb-3">
+            <input matInput placeholder="Street No." formControlName="street_no">
+            <mat-error *ngIf="address.get('street_no').hasError('required') && address.get('street_no').touched">This field should not be empty.</mat-error>
+          </mat-form-field>
+          <mat-form-field class="w-100 mb-3">
+            <input matInput placeholder="State" formControlName="state">
+            <mat-error *ngIf="address.get('state').hasError('required') && address.get('state').touched">This field should not be empty.</mat-error>
+          </mat-form-field>
+          <mat-form-field class="w-100 mb-3">
+            <input matInput placeholder="Zip Code/Pin Code" formControlName="zip_code">
+            <mat-error *ngIf="address.get('zip_code').hasError('required') && address.get('zip_code').touched">This field should not be empty.</mat-error>
+          </mat-form-field>
+          <mat-form-field class="w-100 mb-3">
+            <input matInput placeholder="Country" formControlName="country">
+            <mat-error *ngIf="address.get('country').hasError('required') && address.get('country').touched">This field should not be empty.</mat-error>
+          </mat-form-field>
+          <button mat-raised-button color="accent" (click)="submitAddress()">Save</button>
+        </div>
+      </form>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="edit-profile" style="background-image: url(assets/images/billing-edit.png)">
+    </div>
+  </div>
+</mat-card>
+
+<mat-card *ngIf="type == 'card' || type == 'add-card'">
+  <h4 *ngIf="type == 'card'"> Edit Card Information</h4>
+  <h4 *ngIf="type == 'add-card'"> Add Card Information</h4>
+  <div fxLayout="row wrap" class="col-gap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+      <form [formGroup] = "card">
+        <div fxLayout="row wrap" class="col-gap">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="70" fxFlex.xl="70">
+            <mat-form-field class="w-100 mb-3">
+              <input matInput placeholder="Card Number" formControlName="card_number">
+              <mat-error *ngIf="card.get('card_number').hasError('required') && card.get('card_number').touched">This field should not be empty.</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="30" fxFlex.xl="30">
+            <mat-form-field class="w-100 mb-3">
+              <input matInput placeholder="CVV" formControlName="cvv">
+              <mat-error *ngIf="card.get('cvv').hasError('required') && card.get('cvv').touched">This field should not be empty.</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+            <mat-form-field class="w-100 mb-3">
+              <input matInput placeholder="Name on Card" formControlName="name">
+              <mat-error *ngIf="card.get('name').hasError('required') && card.get('name').touched">This field should not be empty.</mat-error>
+            </mat-form-field>
+          </div>
+
+          <Label class="pl-3 text-muted">Expiry Date</Label>
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+            <mat-form-field>
+              <mat-select placeholder="Month" formControlName="month">
+                <mat-option value="January">January</mat-option>
+                <mat-option value="February">February</mat-option>
+                <mat-option value="March">March</mat-option>
+                <mat-option value="April">April</mat-option>
+                <mat-option value="May">May</mat-option>
+                <mat-option value="June">June</mat-option>
+                <mat-option value="July">July</mat-option>
+                <mat-option value="August">August</mat-option>
+                <mat-option value="September">September</mat-option>
+                <mat-option value="October">October</mat-option>
+                <mat-option value="November">November</mat-option>
+                <mat-option value="December">December</mat-option>
+              </mat-select>
+              <mat-error *ngIf="card.get('month').hasError('required') && card.get('month').touched">This field should not be empty.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="mx-3">
+                  <mat-select placeholder="Year" formControlName="year">
+                    <mat-option value="2019">2019</mat-option>
+                    <mat-option value="2020">2020</mat-option>
+                    <mat-option value="2021">2021</mat-option>
+                    <mat-option value="2022">2022</mat-option>
+                    <mat-option value="2023">2023</mat-option>
+                    <mat-option value="2024">2024</mat-option>
+                    <mat-option value="2025">2025</mat-option>
+                    <mat-option value="2026">2026</mat-option>
+                    <mat-option value="2027">2027</mat-option>
+                    <mat-option value="2028">2028</mat-option>
+                    <mat-option value="2029">2029</mat-option>
+                    <mat-option value="2030">2030</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="card.get('year').hasError('required') && card.get('year').touched">This field should not be empty.</mat-error>
+                </mat-form-field>
+          </div>
+    </div>
+    <button mat-raised-button color="accent" (click)="submitCard()">Save</button>
+    </form>
+  </div>
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="edit-profile" style="background-image: url(assets/images/card-edit.png)">
+  </div>
+  </div>
+</mat-card>

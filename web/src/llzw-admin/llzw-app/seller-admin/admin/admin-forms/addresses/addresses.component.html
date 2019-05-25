@@ -1,0 +1,50 @@
+<p>
+	addresses works!
+</p>
+
+<mat-sidenav-container class="h-100">
+	<div fxLayout="row" fxLayoutAlign="center center" class="h-100">
+		<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" fxFlex="90" fxFlex.gt-sm="30" fxFlex.sm="60" class="mat-elevation-z6">
+
+			<div class="p-4">
+
+				<mat-form-field class="w-100">
+					<mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+					<input matInput placeholder="Username of the owner" formControlName="owner_id">
+					<mat-error *ngIf="form.controls.owner_id.errors?.required">Username of the owner is required</mat-error>
+				</mat-form-field>
+
+				<mat-form-field class="w-100">
+					<mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+					<input matInput placeholder="Province" formControlName="province">
+					<mat-error *ngIf="form.controls.province.errors?.required">Province is required</mat-error>
+				</mat-form-field>
+
+				<mat-form-field class="w-100">
+					<mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+					<input matInput placeholder="City" formControlName="city">
+					<mat-error *ngIf="form.controls.city.errors?.required">City is required</mat-error>
+				</mat-form-field>
+
+				<mat-form-field class="w-100">
+					<mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+					<input matInput placeholder="District" formControlName="district">
+					<mat-error *ngIf="form.controls.district.errors?.required">District is required</mat-error>
+				</mat-form-field>
+
+				<mat-form-field class="w-100">
+					<mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">phone</mat-icon>
+					<input matInput placeholder="Detailed address" formControlName="address">
+					<mat-error *ngIf="form.controls.address.errors?.required">Detailed address is required</mat-error>
+				</mat-form-field>
+
+				<mat-form-field class="w-100">
+					<mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">phone</mat-icon>
+					<input matInput placeholder="Zip code" formControlName="zip">
+				</mat-form-field>
+
+				<button mat-raised-button color="primary" class="mat-elevation-z6 w-100 mt-3" type="submit">Create</button>
+			</div>
+		</form>
+	</div>
+</mat-sidenav-container>

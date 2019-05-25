@@ -1,0 +1,282 @@
+.rtl-layout a {
+	position: fixed;
+	right: 0;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	background: $primary;
+	z-index: 99;
+	color: #fff;
+	top: 50%;
+	display: block;
+	text-align: center;
+	border-radius: 5px 0 0 5px;
+	border: 2px solid #fff;
+	border-right: 0;
+}
+
+@media(max-width:1279px){
+	[dir="rtl"] .logo-site{
+		text-align: right;
+	}
+}
+[dir="rtl"] {
+   .cart-menu-action {
+      left: 15px;
+      right:auto;
+   }
+   .download-app-list:first-child {
+      border-left: 1px solid #000;
+      border-right:0;
+   }
+   ais-stats {
+      text-align: left;
+   }
+   ais-panel,ais-hits-per-page{
+     margin-left: 0.5rem;
+      margin-right:0rem;
+   }
+   .header-v2 .search-v2 input {
+      padding-right: 2.5rem;
+      padding-left: 0;
+   }
+   .header-v2 .search-v2 form::before {
+      right: 10px;
+      left: auto;
+   }
+   .header-v2 .logo-site{
+      text-align: right;
+   }
+   .aside-banner{
+      margin-right:2rem;
+      margin-left: 0;
+   }
+   .wishlist-icon{
+      right:auto;
+      left:10px;
+   }
+   .header-v3 form input{
+      padding-right: 14px;
+      padding-left: 0;
+   }
+   .header-v3 form button.mat-fab{
+      margin-right: -56px;
+      margin-left: 0px;
+      .header-v3 .header-v3-top-tools > * {
+         display: inline-block;
+         border-left: 1px solid rgba(255, 255, 255, 0.2);
+         padding: 0 10px;
+         line-height: 44px;
+      }
+   }
+	.embryo-fixed-header .logo-site ,.header-v3 .logo-site{
+      text-align: right;.header-v3 .header-v3-top-tools > * {
+         display: inline-block;
+         border-left: 1px solid rgba(255, 255, 255, 0.2);
+         padding: 0 10px;
+         line-height: 44px;
+      }
+   }
+
+   .header-v3 .header-v3-top-tools > * {
+     
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+     
+   }
+   .grid-card-wrapper .grid-toolbar .mat-toolbar-row .mat-tab-group {
+      float: right;
+   }
+	.ais-HierarchicalMenu-list .ais-HierarchicalMenu-list {
+		margin-left: 1em;
+		margin-right: 1em;
+	}
+
+	ul.ais-HierarchicalMenu-list > ais-hierarchical-menu-item::before {
+		left: inherit;
+		right: -15px;
+	}
+	.sidebar-area{
+		left: inherit;
+		right: 0;
+	}
+	.close-btn-sidebar {
+		text-align:left;
+	}
+	.sidebar-area .mat-nav-list .mat-icon {
+		margin-right: 0px;
+		margin-left: 10px;
+	}
+	.app-nav-list .sub-menu li a {
+		text-align: right;
+	}
+	.mega .sub-menu .sub-menu {
+		padding-left: 0;
+		padding-right: 1.5rem;
+		li::before {
+			left: inherit;
+			right: 0;
+		}
+	}
+.feature-list > div {
+	border-left: 2px solid #eee;
+	border-right: 0;
+	&:first-child{
+		border: none;
+	}
+}
+
+
+.close-btn {
+	left: 0px;
+	right: inherit;
+
+}
+.search-box {
+	bottom: -20px;
+	right: inherit;
+	left:0;
+}
+
+.user-content {
+	padding-top: 0.6rem;
+	padding-right: 2rem;
+	padding-left: 0;
+}
+.m-icon {
+	position: absolute;
+	top: -49px;
+	left: -5px;
+	right: inherit;
+	transition: all 0.3s ease-in;
+}
+
+.dropcap {
+	padding:0 0rem 0 1rem;
+	margin: -0.1rem 0 -1rem;
+	float: right;
+}
+
+.bullets-list li::before{
+	left: inherit;
+	right: -15px;
+}
+	.mr-0,
+	.mx-0 {
+		margin-left: 0!important
+	}
+
+	.ml-0,
+	.mx-0 {
+		margin-right: 0!important
+	}
+
+	.mr-1,
+	.mx-1 {
+		margin-left: .25rem!important
+	}
+
+	.ml-1,
+	.mx-1 {
+		margin-left: .25rem!important
+	}
+
+	.mr-2,
+	.mx-2 {
+		margin-left: .5rem!important
+	}
+
+	.ml-2,
+	.mx-2 {
+		margin-right: .5rem!important
+	}
+
+	.mr-3,
+	.mx-3 {
+		margin-left: 1rem!important
+	}
+
+	.ml-3,
+	.mx-3 {
+		margin-right: 1rem!important
+	}
+
+	.mr-4,
+	.mx-4 {
+		margin-left: 1.5rem!important
+	}
+
+	.ml-4,
+	.mx-4 {
+		margin-right: 1.5rem!important
+	}
+
+	.mr-5,
+	.mx-5 {
+		margin-left: 3rem!important
+	}
+
+	.ml-5,
+	.mx-5 {
+		margin-right: 3rem!important
+	}
+
+	.pr-0,
+	.px-0 {
+		padding-left: 0!important
+	}
+
+	.pl-0,
+	.px-0 {
+		padding-right: 0!important
+	}
+
+	.pr-1,
+	.px-1 {
+		padding-left: .25rem!important
+	}
+
+	.pl-1,
+	.px-1 {
+		padding-right: .25rem!important
+	}
+
+	.pr-2,
+	.px-2 {
+		padding-left: .5rem!important
+	}
+
+	.pl-2,
+	.px-2 {
+		padding-right: .5rem!important
+	}
+
+	.pr-3,
+	.px-3 {
+		padding-left: 1rem!important
+	}
+
+	.pl-3,
+	.px-3 {
+		padding-right: 1rem!important
+	}
+
+	.pr-4,
+	.px-4 {
+		padding-left: 1.5rem!important
+	}
+
+	.pl-4,
+	.px-4 {
+		padding-right: 1.5rem!important
+	}
+
+	.pr-5,
+	.px-5 {
+		padding-left: 3rem!important
+	}
+
+	.pl-5,
+	.px-5 {
+		padding-right: 3rem!important
+	}
+}

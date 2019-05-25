@@ -1,0 +1,35 @@
+<ngx-slick-carousel class="carousel" [config]="slideConfig">
+   <div ngxSlickItem *ngFor="let item of homePageOneSlideData">
+      <div class="bannerStyle slider-img-2">
+         <div class="ngx-slider-content">
+            <div class="ngx-slider-inner">
+               <h2>{{item.theTitle}}</h2>
+               <h1>{{item.des}}</h1>
+               <button color="accent" mat-raised-button [routerLink]="[item.to]">Shop Now</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!--<div ngxSlickItem>-->
+      <!--<div class="bannerStyle slider-img-2">-->
+         <!--<div class="ngx-slider-content">-->
+            <!--<div class="ngx-slider-inner">-->
+               <!--<h2>50% Off</h2>-->
+               <!--<h1>Men's Winter Collection</h1>-->
+               <!--<button color="accent" mat-raised-button [routerLink]="['/products/men']">Shop Now</button>-->
+            <!--</div>-->
+         <!--</div>-->
+      <!--</div>-->
+   <!--</div>-->
+   <!--<div ngxSlickItem>-->
+      <!--<div class="bannerStyle slider-img-3">-->
+         <!--<div class="ngx-slider-content">-->
+            <!--<div class="ngx-slider-inner">-->
+               <!--<h2>Today's Special</h2>-->
+               <!--<h1>Sale On Jackets</h1>-->
+               <!--<button color="accent" mat-raised-button [routerLink]="['/products/men']">Shop Now</button>-->
+            <!--</div>-->
+         <!--</div>-->
+     <!--</div>-->
+   <!--</div>-->
+</ngx-slick-carousel>

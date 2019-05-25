@@ -1,0 +1,25 @@
+embryo-rating {
+	.br-default {
+		margin: 0 !important;
+		.br-unit {
+			margin-right: 0;
+			font-size: 14px;
+			height: 10px;
+			width: 13px;
+		}
+	}
+	.br-default .br-selected::after {
+		color: $rating-selected-color !important;
+	}
+	.br-default .br-unit::after {
+		content: "\2605";
+		color: $rating-unselected-color;
+	}
+}
+
+app-reviewpopup embryo-rating .br-default .br-unit {
+	
+	font-size: 34px;
+	height: 40px;
+	width: 35px;
+}

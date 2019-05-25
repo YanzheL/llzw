@@ -1,0 +1,30 @@
+//Subscribe Wrapper
+.subscribe-wrapper {
+
+	h3,
+	p,
+	.mat-form-field-label,
+	input,
+	.mat-form-field.mat-focused .mat-form-field-label,
+	.mat-icon-button {
+		color: #fff;
+	}
+
+	.mat-form-field.mat-focused .mat-form-field-ripple,
+	.mat-form-field-appearance-legacy .mat-form-field-underline {
+		background-color: #ffffff;
+	}
+}
+
+.subscribe-section-v2 {
+
+   .mat-form-field-wrapper *,
+   .mat-form-field.mat-focused.mat-form-field-ripple {
+     color: #fff;
+   }
+ 
+   .mat-form-field-appearance-legacy .mat-form-field-underline,
+   .mat-form-field.mat-focused .mat-form-field-ripple {
+     background: #fff;
+   }
+ }

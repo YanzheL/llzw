@@ -1,0 +1,106 @@
+<ng-container *ngIf="pageTitle">
+<embryo-PageTitle heading="{{pageTitle}}" subHeading="{{subPageTitle}}"></embryo-PageTitle>
+<div class="inner-container section-gap">
+  <div class="container">
+    <!-- Products with free api key  -->
+    <ais-instantsearch
+        [config]="{
+          appId: 'latency',
+          apiKey: '6be0576ff61c053d5f9a3225e2a90f76',
+          indexName: 'ikea'
+        }">
+      <div fxLayout="row wrap"  class="col-gap">
+        <!--<div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="35" fxFlex.lg="25" fxFlex.xl="25">-->
+          <!--<div class="mat-card mb-4">-->
+            <!--<ais-search-box placeholder="Search a product"></ais-search-box>-->
+          <!--</div>-->
+          <!--<div class="mat-card mb-4">-->
+            <!--<div class="facet-category-title">Show results for</div>-->
+            <!--<ais-hierarchical-menu-->
+              <!--[attributes]="['category', 'sub_category', 'sub_sub_category']"-->
+              <!--[sortBy]="['name:asc']"-->
+            <!--&gt;-->
+            <!--</ais-hierarchical-menu>-->
+          <!--</div>-->
+          <!--<div class="mat-card mb-4">-->
+            <!--<ais-panel header="Categories">-->
+              <!--<ais-refinement-list-->
+                <!--attribute="materials"-->
+                <!--operator="or"-->
+                <!--limit="10"-->
+              <!--&gt;-->
+              <!--</ais-refinement-list>-->
+            <!--</ais-panel>-->
+          <!--</div>-->
+          <!--<div class="mat-card mb-4">-->
+              <!--<ais-panel header="Colors">-->
+                <!--<ais-refinement-list-->
+                  <!--attribute="colors"-->
+                  <!--operator="or"-->
+                  <!--limit="10"-->
+                <!--&gt;-->
+                <!--</ais-refinement-list>-->
+              <!--</ais-panel>-->
+            <!--</div>-->
+            <!--<div class="mat-card mb-4">-->
+              <!--<ais-panel header="Prices">-->
+                <!--<ais-range-slider attribute="price" [pips]="true" [tooltips]="true" [min]="0"></ais-range-slider>-->
+              <!--</ais-panel>-->
+            <!--</div>-->
+            <!--<div class="mat-card mb-4">-->
+              <!--<ais-panel header="CUSTOMER RATINGS"></ais-panel>-->
+              <!--<ais-rating-menu attribute="rating" andUpLabel=""></ais-rating-menu>-->
+            <!--</div>-->
+            <!--<div class="mat-card mb-4">-->
+              <!--<ais-clear-refinements buttonLabel="Clear all filters"></ais-clear-refinements>-->
+            <!--</div>-->
+          <!--</div>-->
+
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="algolia-main-list">
+            <!--<div class="mat-card mb-4">-->
+            <!--&lt;!&ndash;<ais-search-box placeholder="Search a product"></ais-search-box>&ndash;&gt;-->
+            <!--</div>-->
+            <!--<ais-stats></ais-stats>-->
+            <!--<ais-panel header="Sort by">-->
+              <!--<ais-sort-by-->
+              <!--[items]="[-->
+                <!--{name: 'ikea', label: 'Featured'},-->
+                <!--{name: 'ikea_price_asc', label: 'Price asc.'},-->
+                <!--{name: 'ikea_price_desc', label: 'Price desc.'}-->
+              <!--]-->
+              <!--">-->
+              <!--</ais-sort-by>-->
+            <!--</ais-panel>-->
+
+            <!--<ais-hits-per-page [items]="[-->
+                <!--{ value: 3, label: '3 per page' },-->
+                <!--{ value: 6, label: '6 per page' },-->
+                <!--{ value: 12, label: '12 per page', default:true}-->
+             <!--]"></ais-hits-per-page>-->
+
+            <!--<ais-hits [transformItems]="transformHits">-->
+              <!--<ng-template let-hits="hits" let-results="results">-->
+                <ng-container *ngIf="(products && products.length>0); else errorBlock">
+                  <embryo-ProductGrid [currency]="embryoService?.currency" [products]="products" (addToCart)="addToCart($event)" (addToWishList)="addToWishList($event)" gridThree=true>
+                  </embryo-ProductGrid>
+                </ng-container>
+                <ng-template #errorBlock>
+                  No Product Found.
+                </ng-template>
+              <!--</ng-template>-->
+            <!--</ais-hits>-->
+            <mat-paginator [(length)]="length"
+                           [(pageSize)]="pageSize"
+                           [pageSizeOptions]="pageSizeOptions"
+                           (page)="change($event)">
+            </mat-paginator>
+<!--<p>length:{{length}}</p>-->
+<!--<p>pageSize:{{pageSize}}</p>-->
+<!--<p>previousPageIndex:{{pageIndex}}</p>-->
+          </div>
+        </div>
+      </ais-instantsearch>
+    </div>
+  </div>
+</ng-container>
+

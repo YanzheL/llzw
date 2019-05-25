@@ -1,0 +1,76 @@
+<p>
+  stock-add works!
+</p>
+
+
+
+<mat-sidenav-container class="h-100">
+  <div fxLayout="row" fxLayoutAlign="center center" class="h-100">
+
+    <!-- <form [formGroup]="stockForm" (ngSubmit)="onSubmit(stockForm.value)" fxFlex="90" fxFlex.gt-sm="30" fxFlex.sm="60" class="mat-elevation-z6"> -->
+
+    <form [formGroup]="stockForm" (ngSubmit)="onSubmit()" fxFlex="90" fxFlex.gt-sm="30" fxFlex.sm="60"
+      class="mat-elevation-z6">
+
+      <app-content-header [icon]="'exit_to_app'" [title]="'货品入库'" [hideBreadcrumb]="true" [hasBgImage]="true"
+        [class]="'py-4'">
+      </app-content-header>
+
+      <div class="p-3">
+
+        <mat-form-field class="w-100" *ngIf="editStockId">
+          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+          <input matInput placeholder="id" formControlName="id" id="id" [readonly]="true">
+          <mat-error *ngIf="stockForm.controls.id.errors?.required">ID is required</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field class="w-100">
+          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+          <input matInput placeholder="商品编号" formControlName="product" [readonly]="isAddFromProductsList">
+          <mat-error *ngIf="stockForm.controls.product.errors?.required">productId is required</mat-error>
+        </mat-form-field>
+
+
+        <!-- 日期选择器 这里做法比较特殊 -->
+        <mat-form-field class="w-100">
+          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+          <input matInput #dateInput class="hidden-date-input" [matDatepicker]="datepicker" formControlName="producedAt"
+            readonly>
+          <input matInput placeholder="Choose a date" class="form-control" (click)="datepicker.open()" [readonly]="true"
+            [value]="fullDate">
+          <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #datepicker disabled="false" (closed)="dateInput.blur()"></mat-datepicker>
+
+        </mat-form-field>
+
+
+        <mat-form-field class="w-100">
+          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+          <input matInput placeholder="保质期" formControlName="shelfLife">
+          <mat-error *ngIf="stockForm.controls.shelfLife.errors?.required">Shelf-Life of this stock is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+          <input matInput placeholder="数量" formControlName="totalQuantity">
+          <mat-error *ngIf="stockForm.controls.totalQuantity.errors?.required">totalQuantity is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+          <input matInput placeholder="运单号" formControlName="trackingId">
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+          <input matInput placeholder="承运商" formControlName="carrierName">
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" class="mat-elevation-z6 w-100 mt-3" type="submit">Create</button>
+
+      </div>
+    </form>
+  </div>
+</mat-sidenav-container>

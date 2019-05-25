@@ -1,0 +1,77 @@
+.shop-card-wrapper .slick-slide{
+   margin-left: 1rem;
+
+   margin-right: 1rem;
+ }
+@media(min-width:991px) {
+  .mat-tab-body-content {
+    overflow: hidden !important;
+  }
+  
+  .shop-card-wrapper {
+	.mat-tab-group {
+		-webkit-box-align: center !important;
+		-ms-flex-align: center !important;
+		align-items: center !important;
+	  }
+    .mat-tab-header-pagination {
+      display: none !important;
+    }
+
+    .mat-tab-header {
+      margin: 0 auto;
+    }
+
+    .mat-tab-nav-bar,
+    .mat-tab-header {
+      border: 0;
+    }
+
+    .mat-tab-group.mat-primary .mat-ink-bar,
+    .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+      background: none;
+    }
+
+    .mat-tab-label {
+      height: 37px;
+      padding: 0 14px;
+      cursor: pointer;
+      min-width: auto;
+      margin: 0 5px;
+      border-radius: 5px;
+
+      .mat-tab-label-content {
+        font-weight: bold !important;
+        text-transform: uppercase;
+      }
+    }
+
+    .mat-tab-label-active.mat-tab-label {
+      background: #fff;
+      color: #000;
+      box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    }
+
+    .mat-tab-list {
+      margin-bottom: 3rem;
+    }
+   
+  }
+}
+@media(max-width:990px){
+	.shop-card-wrapper  .mat-tab-header-pagination {
+		display: flex !important;
+	   }
+}
+
+@media(max-width:767px) {
+  .card-container {
+    .jp-card-container {
+      width: 300px;
+      margin: 0;
+    }
+    .jp-card {
+      min-width: 285px;
+    }
+  }
+}

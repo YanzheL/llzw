@@ -1,0 +1,36 @@
+
+<button mat-mini-fab [matMenuTriggerFor]="viewwishlist" [matBadgeHidden]="hiddenBadge" matBadge="{{count}}" matBadgePosition="after" matBadgeColor="accent">
+  <i class="material-icons notranslate">
+    favorite
+  </i>
+</button>
+
+<mat-menu #viewwishlist="matMenu">
+  <ng-container *ngIf="(wishListProducts && wishListProducts.length > 0); else elseBlock">
+      <div class="drop-wrap">
+    <div class="cart-menu-list p-2" fxLayoutAlign="start center" *ngFor="let product of wishListProducts;">
+      <div> <a href="javascript:void(0);"><img [src]="product?.image" width="60" alt="cart-image"></a> </div>
+      <div class="px-3">
+        <h6 class="mb-0"><a href="javascript:void(0);">{{product?.name}}</a></h6>
+        <span>{{calculatePrice(product) | currency:currency}}</span>
+      </div>
+      <div class="cart-menu-action">
+        <button mat-mini-fab mat-raised-button color="primary" (click)="confirmationPopup(product)"> <i class="material-icons">
+            remove
+          </i> </button>
+        <button mat-mini-fab mat-raised-button color="primary" (click)="addToCartProduct(product)"><i class="material-icons">
+         add_shopping_cart
+          </i></button>
+      </div>
+    </div>
+    </div>
+    <div class="footer-menu px-3 py-2 pb-2">
+      <button mat-raised-button color="accent" class="w-100" (click)="addAllToCart()">Add All To Cart</button>
+    </div>
+  </ng-container>
+  <ng-template #elseBlock>
+    <div class="cart-menu-list p-2" fxLayoutAlign="center center">
+      No Product Found.
+    </div>
+  </ng-template>
+</mat-menu>

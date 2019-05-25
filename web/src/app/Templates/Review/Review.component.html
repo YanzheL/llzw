@@ -1,0 +1,24 @@
+<div fxLayout='row wrap' class="col-gap" *ngIf="userReviews && userReviews.length>0">
+  <ng-container *ngFor="let review of userReviews; let i=index;">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33.33" fxFlex.lg="33.33" fxFlex.xl="33.33" *ngIf="i<3">
+       <div class="testimonial-item">
+         <mat-card class="testimonial-card">
+           <mat-card-content>
+             <p class="user-text">
+               {{review?.comment}}
+             </p>
+           </mat-card-content>
+         </mat-card>
+         <div class="user-content" fxLayoutAlign="start center" fxLayoutGap="20px">
+           <div class="user-thumb">
+             <img [src]="review?.img" alt="user image" height="200" width="200">
+           </div>
+           <div class="user-info">
+             <h6 class="mb-0">{{review?.name}}</h6>
+             <p class="text-md text-muted">{{review?.designation}}</p>
+           </div>
+         </div>
+       </div>
+      </div>
+  </ng-container>
+</div>

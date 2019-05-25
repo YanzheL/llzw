@@ -1,0 +1,104 @@
+.mat-ex-wrapper {
+
+  .header-mat-tab {
+    padding: 3rem 0 1rem 0;
+  }
+
+  .container-mat-tab {
+    padding: 4rem 0;
+  }
+
+  .mat-expansion-panel-header {
+    height: 70px !important;
+    background: $primary;
+
+    * {
+      color: #fff;
+    }
+
+    .mat-expansion-panel-header-description,
+    .mat-expansion-indicator::after {
+      color: #fff;
+    }
+  }
+
+  .mat-expansion-panel-header.mat-expanded:focus,
+  .mat-expansion-panel-header.mat-expanded:hover {
+    background: $primary;
+    color: #fff;
+  }
+
+  .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled="true"]).cdk-keyboard-focused,
+  .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled="true"]).cdk-program-focused,
+  .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled="true"]):hover {
+    background: $primary;
+  }
+}
+
+.checkbox-small {
+  .mat-card {
+    width: 150px;
+  }
+}
+
+.mat-card-pad-none {
+  margin-left: -24px;
+  margin-right: -24px;
+}
+
+
+mat-sidenav.em-sidebar {
+  position: fixed;
+
+}
+
+.side-cart-head {
+  text-align: center;
+  background: $accent;
+  padding: 2rem;
+
+  * {
+    color: #fff;
+  }
+
+  i {
+    font-size: 3rem;
+  }
+}
+
+
+.card-radio {
+  mat-radio-button {
+    display: inline-block;
+    padding: 1rem;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin: 1rem;
+  }
+}
+
+.checkout-option [ng-reflect-disabled="true"],
+.checkout-option [aria-disabled="true"] {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+body .mat-drawer-backdrop {
+  position: fixed !important;
+}
+
+.btn-group {
+  button {
+    margin: 0.5rem;
+  }
+}
+
+@media(min-width:560px) {
+  .btn-group {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+}

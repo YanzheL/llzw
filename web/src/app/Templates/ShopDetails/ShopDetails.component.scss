@@ -1,0 +1,187 @@
+.select-group .mat-form-field {
+	width: 110px;
+}
+
+#file_h3_mat_icon {
+  height: 48px;
+  font-size: 32px;
+  width: 32px;
+  //vertical-align: middle;
+}
+
+#file_h4_mat_icon {
+  height: 36px;
+  font-size: 24px;
+  width: 24px;
+  //vertical-align: middle;
+}
+
+
+
+//拖拽上传
+#box9834 {
+  width: 80%;
+  height: 55%;
+  position: absolute;
+  left: 10%;
+  top: 20%;
+  //margin: 0 auto;
+  border: 4px dashed #666;
+}
+
+#box9834 img {
+  width: 500px;
+}
+
+
+
+// mat-list-item {
+//   float: right !important;
+// }
+
+
+// mat-list-item.list-horizontal {
+//   padding: 0;
+//   .mat-list-item {
+//     display: inline-block;
+//     height: auto;
+//     width: auto;
+//   }
+// }
+
+
+@media screen and (min-width:1200px) {
+
+  #demo_info,
+  #demo_imgs {
+    width: 1000px;
+    margin: auto;
+    /* Magic! */
+
+    #ch1 {
+      width: 990px;
+      margin: auto;
+
+      /* Magic! */
+      #ch2 {
+        width: 990px;
+        margin: auto;
+        /* Magic! */
+        .chanshu{
+          // 以下两行设定让div中单行文字垂直居中。
+          height: 28px;
+          line-height: 28px;
+        }
+      }
+    }
+
+    #title {
+      margin: auto;
+      /* Magic! */
+    }
+
+    #img1 {
+      margin: auto;
+
+      /* Magic! */
+      #img2 {
+        margin: auto;
+        /* Magic! */
+      }
+    }
+  }
+
+  #content,
+  .div1 {
+    width: 730px;
+  }
+
+  #secondary {
+    width: 310px
+  }
+}
+
+.bigimg{
+  margin-top: 25px;
+  border-radius: 25px;
+
+}
+.bigimg:hover{
+  box-shadow: 10px 10px 10px #a1a1a1;
+}
+
+.chipclass1{
+  //background-color: #377aff;
+  height: 35px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 17px;
+  text-align: center;
+  line-height: 35px;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  margin-right: 10px;
+  background: #fc00ff;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #00dbde, #fc00ff);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #00dbde, #fc00ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.chipclass2{
+  //background-color: #35ff13;
+  height: 35px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 17px;
+  text-align: center;
+  line-height: 35px;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  margin-right: 10px;
+  background: #fe8c00;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #f83600, #fe8c00);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #f83600, #fe8c00); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+
+
+}
+.chipclass3{
+  //background-color: #ff4630;
+  height: 35px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 17px;
+  text-align: center;
+  line-height: 35px;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  margin-right: 10px;
+  background: #56CCF2;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #2F80ED, #56CCF2);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #2F80ED, #56CCF2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.chipclass4{
+  //background-color: #ff41de;
+  height: 35px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 17px;
+  text-align: center;
+  line-height: 35px;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  margin-right: 10px;
+  background: #AAFFA9;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #11FFBD, #AAFFA9);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #11FFBD, #AAFFA9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.mycategory{
+  color: orangered;
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 10px;
+}

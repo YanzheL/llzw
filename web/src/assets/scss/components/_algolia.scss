@@ -1,0 +1,186 @@
+.ais-SearchBox {
+  overflow: hidden;
+
+  button {
+    display: none;
+  }
+
+  input {
+    width: 100%;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-bottom: 1px solid $theme-border-color;
+    padding: 10px;
+    font-size: 1rem;
+  }
+}
+
+.ais-Panel-header,
+.facet-category-title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  margin-bottom: 1.5rem;
+}
+
+//category
+.ais-RefinementList-checkbox {
+  margin-right: 0.8rem;
+}
+
+.ais-RefinementList-label {
+  margin-bottom: 1rem;
+  display: block;
+}
+
+//slider
+.ais-RangeSlider {
+  margin-top: 70px;
+
+  margin-bottom: 33px;
+
+  padding: 0 1rem;
+
+  .noUi-connect {
+    background: $accent;
+  }
+  .noUi-horizontal {
+    height: 8px;
+  }
+  .noUi-handle::after, .noUi-handle::before {
+   
+    height: 7px;
+    width: 2px;
+   
+    left: 13px;
+    top: 6px;
+  }
+  .noUi-horizontal .noUi-handle {
+    width: 22px;
+    height: 18px;
+    
+  }
+}
+
+//rating
+.ais-RatingMenu-item {
+  margin-bottom: 1rem;
+}
+
+body .ais-ClearRefinements-button {
+  background: $accent;
+  padding: 0.5rem 1rem;
+  border-radius: 3px;
+  color: #fff;
+  font-weight: bold;
+}
+
+//pagination
+.ais-RatingMenu-count {
+  margin: 0 0.3rem;
+  background: $grey-bg;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.ais-Pagination-list li {
+  display: inline-block;
+
+  font-size: 1.3rem;
+
+  border-radius: 3px;
+}
+
+.ais-Pagination {
+  margin: 1rem 0;
+}
+
+.ais-Pagination-link {
+  width: 33px;
+  height: 33px;
+  display: block;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.ais-Pagination-item--selected {
+  background: $accent;
+  color: #fff;
+}
+
+.ais-RatingMenu-starIcon {
+  fill: $accent;
+}
+
+.ais-RatingMenu-count {
+  margin: 0 1rem;
+}
+
+body .ais-RatingMenu-starIcon {
+  display: block;
+  width: 25px;
+  height: 25px;
+}
+
+//Cat
+.ais-HierarchicalMenu {
+  padding-left: 1rem;
+}
+
+ul.ais-HierarchicalMenu-list>ais-hierarchical-menu-item {
+  position: relative;
+
+  &:before {
+    font-family: 'Material Icons';
+    content: "keyboard_arrow_right";
+    position: absolute;
+    top: 0;
+    left: -15px;
+  }
+}
+
+ais-hierarchical-menu-item {
+  margin-bottom: 1rem;
+  display: block;
+
+  .ais-HierarchicalMenu-link {
+    font-weight: bold;
+  }
+  .ais-HierarchicalMenu-list--child a {
+    font-weight: normal;
+  }
+   .ais-HierarchicalMenu-list--child {
+    padding-top: 1rem;
+    display: block;
+  }
+}
+.ais-HierarchicalMenu-count,.ais-RefinementList-count,.ais-RatingMenu-count {
+	background:rgba(0,0,0,0.4);
+	padding: 0.2rem 0.3rem;
+	color: #fff;
+	margin: 0.3rem;
+  border-radius: 3px;
+  font-size: 0.8rem;
+}
+
+
+ais-stats {
+	text-align: right;
+	font-weight: bold;
+}
+.algolia-main-list{
+   .ais-SortBy select,ais-hits-per-page select{
+      width: 150px;
+      border: 1px solid #eee;
+      height: 40px;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+   }
+   ais-panel,ais-hits-per-page{
+      display: inline-block;
+      margin-right:0.5rem;
+   }
+}

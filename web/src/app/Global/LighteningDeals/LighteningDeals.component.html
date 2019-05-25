@@ -1,0 +1,31 @@
+
+<div class="section-gap pb-0" *ngIf="lighteningDeals">
+  <div class="container">
+    <mat-toolbar color="primary" style="height:220px" class="section-title-toolbar">
+      <mat-toolbar-row>
+        <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
+          <div class="block-title">
+            <h2 class="text-inverse mb-0 text-xxl">Lightening Deals</h2>
+          </div>
+          <a [routerLink]="['/products']" class="text-sm text-uppercase">View All</a>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <div class="shop-card-gap px-4">
+      <div fxLayout="row wrap" class="col-gap">
+        <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" *ngFor="let product of lighteningDeals">
+          <mat-card class="box-shadow-md p-4">
+            <a href="javascript:void(0)">
+              <img [src]="product.image" alt="Product">
+            </a>
+            <mat-card-content class="pt-3">
+              <h5><a [routerLink]="['/products']"> {{product.name}}</a></h5>
+              <p class="text-muted"> <a [routerLink]="['/products']"> {{product.category}} </a></p>
+              <p class="accent-color">UPTO 20% OFF</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

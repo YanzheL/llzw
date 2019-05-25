@@ -1,0 +1,58 @@
+<p>
+	stocks works!
+</p>
+
+<mat-sidenav-container class="h-100">
+	<div fxLayout="row" fxLayoutAlign="center center" class="h-100">
+		<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" fxFlex="90" fxFlex.gt-sm="30" fxFlex.sm="60" class="mat-elevation-z6">
+
+			<div class="p-4">
+
+				<mat-form-field class="w-100">
+					<mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+					<input matInput placeholder="ID of the product it belongs to" formControlName="productId">
+					<mat-error *ngIf="form.controls.productId.errors?.required">productId is required</mat-error>
+					<mat-error *ngIf="form.controls.productId.hasError('invalidInfo')">{{form.controls.productId.errors['invalidInfo']}}</mat-error>
+				</mat-form-field>
+
+
+
+				<mat-form-field class="w-100">
+					<mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+					<input matInput placeholder="The producing date" formControlName="producedAt">
+					<mat-error *ngIf="form.controls.producedAt.errors?.required">producedAt is required</mat-error>
+					<mat-error *ngIf="form.controls.producedAt.hasError('invalidInfo')">{{form.controls.producedAt.errors['invalidInfo']}}</mat-error>
+
+				</mat-form-field>
+
+				<mat-form-field class="w-100">
+					<mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+					<input matInput type="number" placeholder="Shelf-Life of this stock" formControlName="shelfLife">
+					<mat-error *ngIf="form.controls.shelfLife.errors?.required">shelfLife is required</mat-error>
+					<mat-error *ngIf="form.controls.shelfLife.hasError('invalidInfo')">{{form.controls.shelfLife.errors['invalidInfo']}}</mat-error>
+				</mat-form-field>
+
+				<mat-form-field class="w-100">
+					<mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+					<input matInput type="number" placeholder="Total quantity of stock" formControlName="totalQuantity">
+					<mat-error *ngIf="form.controls.totalQuantity.errors?.required">totalQuantity is required</mat-error>
+					<mat-error *ngIf="form.controls.totalQuantity.hasError('invalidInfo')">{{form.controls.totalQuantity.errors['invalidInfo']}}</mat-error>
+				</mat-form-field>
+
+				<mat-form-field class="w-100">
+					<mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+					<input matInput placeholder="Tracking ID of this shipment" formControlName="trackingId">
+					<mat-error *ngIf="form.controls.trackingId.hasError('invalidInfo')">{{form.controls.trackingId.errors['invalidInfo']}}</mat-error>
+				</mat-form-field>
+
+				<mat-form-field class="w-100">
+					<mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+					<input matInput placeholder="Carrier Name of this shipment" formControlName="carrierName">
+					<mat-error *ngIf="form.controls.carrierName.hasError('invalidInfo')">{{form.controls.carrierName.errors['invalidInfo']}}</mat-error>
+				</mat-form-field>
+
+				<button mat-raised-button color="primary" class="mat-elevation-z6 w-100 mt-3" type="submit">Create</button>
+			</div>
+		</form>
+	</div>
+</mat-sidenav-container>

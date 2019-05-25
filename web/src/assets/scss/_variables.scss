@@ -1,0 +1,92 @@
+//Main body
+$body-bg:#f3f3f4;
+$grey-bg:#f3f3f4;
+
+
+//Body color
+
+$font-color: #3A405B;
+
+//$border
+
+$theme-border-color:#d5d5d5;
+
+$html-font-size: 16px;
+$mat-font-family: 'Roboto', sans-serif;
+$font-size-base: 0.875rem !default;
+$font-weight-base: 400 !default;
+$font-weight-medium: 500 !default;
+$font-weight-bold: 600 !default;
+
+//Heading Font Size
+
+$font-size-h1: 3.25rem !default;//52px
+$font-size-h2: 2.813rem !default;//45px
+$font-size-h3: 2.125rem !default;//34px
+$font-size-h4: 1.5rem !default;//24px
+$font-size-h5: 1.25rem !default;//20px
+$font-size-h6: 1rem !default;//16px
+
+
+//Heading Font color
+
+$h1-font-color:rgba(0,0,0,0.87);
+$h2-font-color:rgba(0,0,0,0.87);
+$h3-font-color:rgba(0,0,0,0.87);
+$h4-font-color:rgba(0,0,0,0.87);
+$h5-font-color:rgba(0,0,0,0.87);
+$h6-font-color:rgba(0,0,0,0.87);
+
+$headings-margin-bottom: (1rem / 2) !default;
+$headings-font-family:   inherit !default;
+$headings-font-weight:   500 !default;
+$headings-line-height:   1.1 !default;
+$headings-color:         inherit !default;
+
+
+//Page Title
+
+$page-title-bg-image:url("../images/banner2.jpg");
+$page-title-padding:7rem 0;
+$page-title-align:center;
+$page-title-color:#fff;
+
+//Header
+
+$main-nav-color:#fff;
+
+
+//Sub-menu
+
+$sub-menu-bg:#fff;
+$sub-menu-color:$font-color;
+
+//Responsive Sidebar
+
+$responsive-menu-color:#fff;
+$responsive-sidebar-bg:url("../../assets/images/bg-sidebar.jpg");
+
+
+//Slider images
+
+$slider-1-img:url('../../assets/images/slider-1.jpg');
+$slider-2-img:url('../../assets/images/slider-2.jpg');
+$slider-3-img:url('../../assets/images/slider-3.jpg');
+
+//Pre Loader
+$loader-bg:#fff;
+$loader-color:#283593;
+
+//Footer
+
+$footer-bg:#000000;
+$footer-color:#ffffff;
+
+//rating
+
+$rating-selected-color:#EDB867;
+$rating-unselected-color:#d2d2d2;
+
+//card Shadow
+
+$card-shadow:0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);

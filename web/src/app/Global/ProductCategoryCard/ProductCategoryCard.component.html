@@ -1,0 +1,9 @@
+<div class="category-v2-list" *ngIf="productCategory && totalProducts">
+  <div class="overlay-section-overlay category-v2-list-wrap relative">
+    <img [src]="productCategory.image" alt="category">
+    <div class="category-v2-content">
+      <h4> <a [routerLink]="['/products']" class="text-inverse text-capitalize">{{productCategory.category_type}}</a></h4>
+      <p class="mb-0 text-inverse">{{totalProducts}} Products</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+// Mixin for getting rgba color from hex value
+@mixin background-opacity($color, $opacity: 0.3) {
+	background: rgba($color, $opacity);
+}
+
+
+//Primary rgba Bg Color
+.primary-rgba {
+	@include background-opacity($primary, 0.75);
+}
+
+//Black rgba Bg Color
+.black-rgba {
+	@include background-opacity(#000000, 0.69);
+}
+
+//Pink rgba Bg Color
+.pink-rgba {
+	@include background-opacity(#b73aae, 0.75);
+}
+
+//Pink rgba Bg Color
+.accent-rgba {
+	@include background-opacity($accent, 0.75);
+}
+
+.bg-brown {
+	background-color: #212121;
+}
+
+.bg-white {
+	background: #fff;
+}

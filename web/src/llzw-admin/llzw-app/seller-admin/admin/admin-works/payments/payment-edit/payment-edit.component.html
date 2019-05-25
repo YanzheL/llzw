@@ -1,0 +1,54 @@
+<p>
+  payment-edit works!
+</p>
+
+<mat-sidenav-container class="h-100">
+  <div fxLayout="row" fxLayoutAlign="center center" class="h-100">
+
+    <!-- <form [formGroup]="paymentForm" (ngSubmit)="onSubmit(paymentForm.value)" fxFlex="90" fxFlex.gt-sm="30" fxFlex.sm="60" class="mat-elevation-z6"> -->
+
+    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" fxFlex="90" fxFlex.gt-sm="30" fxFlex.sm="60"
+      class="mat-elevation-z6">
+
+      <app-content-header [icon]="'exit_to_app'" [title]="'Edit Payment'" [hideBreadcrumb]="true" [hasBgImage]="true"
+        [class]="'py-4'">
+      </app-content-header>
+
+      <div class="p-3">
+
+        <!-- <mat-form-field class="w-100">
+            <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+            <input matInput placeholder="id" formControlName="id" id="id">
+            <mat-error *ngIf="paymentForm.controls.id.errors?.required">ID is required</mat-error>
+                  </mat-form-field> -->
+
+        <mat-form-field class="w-100">
+          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+          <input matInput placeholder="Parent Order ID" formControlName="orderId">
+          <mat-error *ngIf="paymentForm.controls.orderId.errors?.required">OrderId is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+          <input matInput placeholder="Subject of this payment" formControlName="subject">
+          <mat-error *ngIf="paymentForm.controls.subject.errors?.required">ID is required</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field class="w-100">
+          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+          <input matInput placeholder="Total Amount" formControlName="totalAmount">
+          <mat-error *ngIf="paymentForm.controls.totalAmount.errors?.required">Total Amount is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">person</mat-icon>
+          <input matInput placeholder="Description" formControlName="description">
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" class="mat-elevation-z6 w-100 mt-3" type="submit">Create</button>
+
+      </div>
+    </form>
+  </div>
+</mat-sidenav-container>

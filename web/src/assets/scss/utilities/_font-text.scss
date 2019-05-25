@@ -1,0 +1,92 @@
+//
+// Text
+//
+// Alignment
+.text-justify {
+	text-align: justify !important;
+}
+
+.text-nowrap {
+	white-space: nowrap !important;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.text-center {
+	text-align: center;
+}
+
+//Text transform classes
+.text-lowercase {
+	text-transform: lowercase !important;
+}
+
+.text-uppercase {
+	text-transform: uppercase !important;
+}
+
+.text-capitalize {
+	text-transform: capitalize !important;
+}
+
+//Text Decoration
+.text-underline {
+	text-decoration: underline;
+}
+
+// Text sizes
+.text-xs {
+	font-size: 50% !important;
+}
+
+.text-sm {
+	font-size: 70% !important;
+}
+
+.text-md {
+	font-size: 80% !important;
+}
+
+.text-lg {
+	font-size: 110% !important;
+}
+
+.text-xl {
+	font-size: 120% !important;
+}
+
+.text-xxl {
+	font-size: 140% !important;
+}
+
+//Font weight
+.font-light {
+	font-weight: 300!important;
+}
+.font-normal {
+	font-weight: 400!important;
+}
+
+.font-medium {
+	font-weight: 500!important;
+}
+
+.font-bold {
+	font-weight: 700!important;
+}
+
+.text-inverse {
+	color: #fff;
+}
+
+//text-muted
+.text-muted {
+	color: rgba(0, 0, 0, 0.38);
+}
+
+//text-italic
+.text-italic {
+	font-style: italic !important;
+}

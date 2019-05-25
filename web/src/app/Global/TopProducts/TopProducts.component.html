@@ -1,0 +1,35 @@
+<div class="section-gap" *ngIf="randomSortProducts && randomSortProducts.length > 0">
+  <div class="container">
+    <div fxLayoutAlign="space-between" class="w-100 ">
+      <div class="block-title">
+        <h3>Top Products</h3>
+      </div>
+      <a [routerLink]="['/products']">View All</a>
+    </div>
+    <div fxLayout="row wrap" class="col-gap">
+      <ng-container *ngFor="let product of randomSortProducts; let i=index">
+      <div *ngIf="i < gridLength" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" >
+        <mat-card class="box-shadow-md p-4">
+          <a href="javascript:void(0)">
+            <img [src]="product.image" alt="Photo">
+          </a>
+          <mat-card-content class="pt-3">
+            <p class="text-muted mb-0"> <a href="javascript:void(0)">{{product?.category}}</a></p>
+            <h5><a href="javascript:void(0)"> {{product?.name}}</a></h5>
+            <div fxLayoutAlign="space-between">
+              <p class="accent-color">{{product?.price | currency:currency}}</p>
+            </div>
+            <button *ngIf="product.status == 0" mat-raised-button class="button-grey" (click)="addToCartProduct(product)">Add TO Cart</button>
+            <button *ngIf="product.status == 1" mat-raised-button class="button-grey" [routerLink]="['/cart']">View Cart</button>
+          </mat-card-content>
+          <div class="offer-badge">
+            <mat-chip color="accent" selected>20% off</mat-chip>
+          </div>
+        </mat-card>
+      </div>
+      </ng-container>
+    </div>
+    <a *ngIf="(gridLength < 12)" class="btn btn-block transparent-btn" (click)="extendGridStructure(true)">Show All</a>
+    <a *ngIf="(gridLength != 4)" class="btn btn-block transparent-btn" (click)="extendGridStructure(false)">Less</a>
+  </div>
+</div>

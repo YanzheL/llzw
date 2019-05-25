@@ -1,0 +1,27 @@
+.user-nav-list{
+   box-shadow:$card-shadow;
+   .mat-list-item-content a i {
+      vertical-align: top;
+      width: 40px;
+      text-align: center;
+   }
+}
+
+.proflie-field span {
+	display: inline-block;
+	width: calc(100% - 150px);
+}
+.proflie-field label {
+	width: 150px;
+	display: inline-block;
+}
+//login-user-img
+
+.login-user-img img{
+   border-radius: 100%;
+  }
+  .edit-profile {
+   background-repeat: no-repeat;
+   background-position: center center;
+   opacity: 0.2;
+ }

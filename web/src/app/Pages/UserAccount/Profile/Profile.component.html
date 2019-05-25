@@ -1,0 +1,27 @@
+<mat-card>
+  <h4 class="chip">详细信息</h4>
+  <div class="pt-3" *ngIf="user_info">
+    <div class="proflie-field mb-3">
+      <label>用户名:</label>
+      <span>{{user_info?.username}}</span>
+    </div>
+    <div class="proflie-field mb-3">
+      <label>用户邮箱:</label>
+      <span>{{user_info?.email}}</span>
+    </div>
+    <div class="proflie-field mb-3">
+      <label>电话号码:</label>
+      <span>{{user_info?.phoneNumber}}</span>
+    </div>
+    <div class="proflie-field mb-3">
+      <label>用户昵称:</label>
+      <span>{{user_info?.nickname}}</span>
+    </div>
+    <div class="proflie-field mb-3">
+      <label>用户角色</label>
+      <span *ngFor="let role of user_info?.roles">{{role}}</span>
+    </div>
+
+    <!--<button mat-raised-button color="accent" [routerLink]="['edit']" [queryParams]="{type:'info'}">Edit</button>-->
+  </div>
+</mat-card>

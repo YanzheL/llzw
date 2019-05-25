@@ -1,0 +1,121 @@
+//SideMenu
+.app-side-nav-list {
+	padding: 0;
+	> li > a {
+		padding: 1rem;
+		display: block;
+		font-size: 1rem;
+	}
+}
+
+@media(max-width:960px) {
+	.sidebar-area {
+		width: 280px;
+		background-image: $responsive-sidebar-bg;
+		background-position: center center;
+		background-size: cover;
+		background-repeat: no-repeat;
+		height: 100%;
+		overflow-x: hidden;
+		overflow-y: auto;
+		display: flex !important;
+		position: fixed !important;
+		top: 0 !important;
+		left: 0;
+		bottom: 0 !important;
+		embryo-sidebarmenu {
+			.mat-list-item {
+				-webkit-transition: .5s cubic-bezier(.35, 0, .25, 1);
+				-moz-transition: .5s cubic-bezier(.35, 0, .25, 1);
+				transition: .5s cubic-bezier(.35, 0, .25, 1);
+				-webkit-transition-property: all;
+				-moz-transition-property: all;
+				transition-property: all;
+			}
+			a.mat-list-item {
+				color:$responsive-menu-color;
+			}
+			.responsive-menu-side {
+				a {
+					color: $responsive-menu-color;
+				}
+			}
+		}
+		.mat-nav-list {
+			width: 100%;
+			.mat-icon {
+				margin-right: 10px;
+			}
+		}
+		.responsive-menu-side {
+			padding-left: 20px;
+		}
+	}
+	headerone .logo-site {
+		text-align: left;
+	}
+	.header-v1 {
+		.container {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+		}
+	}
+	.search-box {
+		bottom: -8px;
+	}
+	.main-menu-wrap {
+		menu {
+			display: none;
+		}
+	}
+	.list-flex {
+		padding: 8px 0;
+	}
+	.search-box {
+		transform: scale(0.8);
+		z-index: 9;
+	}
+}
+
+.cart-menu-action {
+	button {
+		transform: scale(0.8);
+	}
+}
+
+.close-btn-sidebar {
+	text-align: right;
+	padding: 0 1rem;
+	a {
+		display: inline-block;
+		width: 35px;
+		height: 35px;
+		/* color: #fff; */
+		background: #fff;
+		text-align: center;
+		line-height: 48px;
+		border-radius: 3px;
+	}
+}
+
+//Responsive bar
+.responsive-bar{
+    background: $primary;
+    height: 50px;
+    .responsive-toggle.mat-icon-button{
+      color:#fff;
+      align-self: center;
+   }
+}
+@media(min-width:960px){
+   .responsive-bar{
+      display: none !important;
+     
+   }
+}
+@media(max-width:575px){
+   .responsive-bar .container,.header-v2 .container{
+      width: 100%;
+   }
+}

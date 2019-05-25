@@ -1,0 +1,153 @@
+
+<ng-container *ngIf="blogDetails">
+   <div class="blog-img-wrapper relative" [ngStyle]="{'background-image': 'url(' + blogDetails?.banner_img + ')'}">
+    <div class="center-holder">
+       <div class="container">
+          <div fxLayout="row wrap" fxLayoutAlign="center center">
+             <div fxFlex.sm=" 100" fxFlex.xs="100" fxFlex.md="70" fxFlex.lg="70" fxFlex.xl="70">
+                <h5 class="mb-4"> <i class="material-icons">
+                   trending_up
+                   </i> {{blogDetails?.post_type}}
+                </h5>
+                <h2 class="mb-4 text-white"> {{blogDetails?.name}} </h2>
+                <div class="blog-meta mb-3 ">
+                   <a class="mr-3" href="javascript:void(0);">
+                      <!--For modern browsers-->
+                      <i class="material-icons">
+                      account_circle
+                      </i><span class="text-white font-sm">
+                            {{blogDetails?.author?.author_name}}</span>
+                   </a>
+                   <a href="javascript:void(0);"><i class="material-icons">
+                   date_range
+                   </i><span class="text-white font-sm">{{blogDetails?.author?.post_date}}</span></a>
+                </div>
+               
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+ <div class="inner-container bg-white">
+    <div class="container">
+       <div class="blog-detail section-gap">
+          <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
+             <div fxFlex.sm="100" fxFlex.xs="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60" class="mb-4">
+                <div class="blog-content mb-5" [innerHTML]="blogDetails?.content">
+                </div>
+                <div class="tag-n-social mb-4" fxLayoutAlign="space-between">
+                   <div>
+                      <mat-chip-list *ngFor="let tag of blogDetails?.tags">
+                       
+                         <mat-chip color="accent" selected> <a href="javascript:void(0);">{{tag}}</a></mat-chip>
+                      </mat-chip-list>
+                   </div>
+                   <div>
+                      <embryo-SocialShare></embryo-SocialShare>
+                   </div>
+                </div>
+                <div class="blog-nav p-4" fxLayoutAlign="space-between">
+                   <button mat-raised-button color="accent">Prev</button>
+                   <button mat-raised-button color="accent">Next</button>
+                </div>
+                <div class="author-section pt-4 pb-2">
+                   <div class="block-title mb-4">
+                      <h3>About the Author</h3>
+                   </div>
+                   <div fxLayout="row wrap" fxLayoutAlign="start center">
+                      <div class="mb-3" fxFlex.sm="20" fxFlex.xs="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
+                         <img class="round-radius" src="{{blogDetails?.author?.author_img}}" width="150" alt="author detail">
+                      </div>
+                      <div fxFlex.sm="80" fxFlex.xs="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80" class="px-4 mb-3">
+                         <h4>{{blogDetails?.author?.author_name}}</h4>
+                         <p>{{blogDetails?.author?.author_bio}}
+                         </p>
+                      </div>
+                   </div>
+                </div>
+                <hr class="spacer">
+                <div class="blog-comment-section">
+                    <div class="block-title mb-4">
+                        <h3>Comments({{(blogDetails?.user_comments).length}})</h3>
+                     </div>
+                   <div class="commented-wrapper">
+                      <ul>
+                         <li *ngFor="let comment of blogDetails?.user_comments">
+                            <div class="comment-item" fxLayout="row wrap" fxLayoutAlign="center center">
+                               <div class="mb-3" fxFlex.sm="20" fxFlex.xs="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
+                                  <img class="round-radius" [src]="comment.img" width="100" alt="user comment">
+                               </div>
+                               <div fxFlex.sm="80" fxFlex.xs="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80" class="px-4 mb-3">
+                                  <h5>{{comment?.name}}</h5>
+                                  <p> {{comment?.comment}}
+                                  </p>
+                                  <div fxLayoutAlign="space-between">
+                                     <div>
+                                        <a href="javascript:void(0);" class="primary-color font-bold">Replay</a>
+                                     </div>
+                                     <div class="primary-color font-bold">
+                                            {{comment?.date}}
+                                     </div>
+                                  </div>
+                               
+                               </div>
+                            </div>
+                            <ul>
+                               <li *ngFor="let subComment of comment?.sub_comments">
+                                  <div class="comment-item" fxLayout="row wrap" fxLayoutAlign="center center">
+                                     <div class="mb-3" fxFlex.sm="100" fxFlex.xs="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
+                                        <img class="round-radius" [src]="subComment.img" width="100" alt="user comment">
+                                     </div>
+                                     <div fxFlex.sm="100" fxFlex.xs="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80" class="px-4 mb-3">
+                                        <h5>{{subComment?.name}}</h5>
+                                        <p> {{subComment?.comment}}
+                                        </p>
+                                        <div fxLayoutAlign="space-between">
+                                            <div>
+                                               <a href="javascript:void(0);" class="primary-color font-bold">Replay</a>
+                                            </div>
+                                            <div class="primary-color font-bold">
+                                                    {{subComment?.date}}
+                                            </div>
+                                         </div>
+                                       
+                                     </div>
+                                  </div>
+                               </li>
+                              
+                            </ul>
+                         </li>
+                      </ul>
+                   </div>
+                </div>
+                <div class="leave-commet mt-4">
+                   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                      <div class="block-title ">
+                         <h3>Leave Comments</h3>
+                      </div>
+                      <form [formGroup] = "commentForm" (ngSubmit) = "submitForm()">
+                       <mat-form-field class="w-100">
+                          <input matInput placeholder="First Name" formControlName="first_name">
+                       </mat-form-field>
+                       <mat-form-field class="w-100">
+                          <input matInput placeholder="Last Name" formControlName="last_name">
+                       </mat-form-field>
+                       <mat-form-field class="w-100">
+                          <input matInput placeholder="Email" formControlName="email">
+                       </mat-form-field>
+                       <mat-error *ngIf="commentForm.controls['email'].hasError('pattern') && commentForm.controls['email'].touched">Please enter a valid email.</mat-error>
+                       <mat-form-field class="w-100">
+                          <textarea matInput placeholder="Leave a Message" formControlName="message"></textarea>
+                       </mat-form-field>
+                       <button mat-raised-button color="accent" class="button-lg" type="submit">Send Messsage</button>
+                    </form>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+</ng-container>
+ 
+ 

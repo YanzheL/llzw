@@ -1,0 +1,37 @@
+
+<embryo-PageTitle heading="About Us" subHeading="Creative team and wide goals."></embryo-PageTitle>
+<div class="inner-container">
+  <div class="about-page">
+    <div class="about-info bg-white section-gap" *ngIf="aboutInfo">
+      <embryo-AboutInfo [data]="aboutInfo"></embryo-AboutInfo>
+    </div>
+    <div class="about-alt-section bg-grey section-gap" *ngIf="missionVisionData && missionVisionData.length>0">
+      <embryo-MissionVision [data]="missionVisionData"></embryo-MissionVision>
+    </div>
+    <div class="testimonail-v2 text-center section-gap" *ngIf="testimonialData">
+      <embryo-Testimonial [data]="testimonialData"></embryo-Testimonial>
+    </div>
+    <div class="team-section text-center section-gap bg-grey" *ngIf="teamData && teamData.length>0">
+      <div class="container">
+        <div class="block-title text-center">
+          <h2>Meet Our Crew</h2>
+        </div>
+          <embryo-Team fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap" [data]="teamData"></embryo-Team>
+      </div>
+    </div>
+    <div class="about-contact-form bg-white">
+      <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-stretch">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class=" about-contact-bg">
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-5">
+          <div class="about-cobtact-form-inner">
+            <div class="block-title ">
+              <h2>Write to Us</h2>
+            </div>
+            <embryo-ContactForm>
+            </embryo-ContactForm>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

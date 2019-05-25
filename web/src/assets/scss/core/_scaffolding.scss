@@ -1,0 +1,73 @@
+//Scaffolding
+html {
+	font-size: $html-font-size;
+}
+
+@media(max-width:1366px) {
+	html {
+		font-size: $html-font-size - 1;
+	}
+}
+
+@media(max-width:1280px) {
+	html {
+		font-size: $html-font-size - 1;
+	}
+}
+
+@media(max-width:991px) {
+	html {
+		font-size: $html-font-size - 2;
+	}
+}
+
+html,
+body {
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+html body {
+	margin: 0;
+	color: $font-color;
+	padding: 0;
+	font-weight: $font-weight-base;
+	font-size: $font-size-base;
+	line-height: 1.5;
+	font-family: $mat-font-family;
+	background: $body-bg;
+	.mat-card {
+		font-family: $mat-font-family;
+	}
+}
+.mat-toolbar, .mat-toolbar h1, .mat-toolbar h2, .mat-toolbar h3, .mat-toolbar h4, .mat-toolbar h5, .mat-toolbar h6 {
+	font-family: $mat-font-family;
+}
+ 
+
+[tabindex='-1']:focus {
+	outline: none;
+}
+
+body {
+	.mat-card {
+      border-radius: 5px;
+      overflow: hidden;
+	}
+}
+
+select,
+button,
+textarea,
+input {
+	vertical-align: baseline;
+}
+
+p {
+	margin-bottom: 1rem;
+	margin-top: 0;
+	font-size: $font-size-base;
+	color:$font-color;
+}

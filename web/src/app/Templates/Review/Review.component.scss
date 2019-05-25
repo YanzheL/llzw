@@ -1,0 +1,24 @@
+// Testimonial Section
+.user-text {
+    color: rgba(0, 0, 0, 0.54);
+    font-style: italic;
+  }
+  
+  .user-content {
+    padding-top: 0.6rem;
+    padding-left: 2rem;
+  }
+  
+  .testimonial-card.mat-card {
+    padding: 2rem 2rem 5rem 2rem;
+  }
+  
+  .user-thumb {
+    width: 74px;
+    border-radius: 100%;
+    position: relative;
+    top: -60px;
+    img {
+      border-radius: 100%;
+    }
+  }

@@ -1,0 +1,42 @@
+// List (Footer)
+.list-sm.mat-list .mat-list-item {
+	height: 28px;
+	font-size: $font-size-base;
+}
+
+.list-sm.mat-list .mat-list-item .mat-list-item-content {
+	padding: 0;
+}
+
+.no-style {
+	list-style: none;
+	padding-left: 0;
+	padding-right: 0;
+
+	li {
+		margin-bottom: 0.4rem;
+	}
+}
+
+.bullets-list {
+	padding-left: 0;
+	list-style: none;
+
+	li {
+		position: relative;
+		padding-left: 0.8rem;
+		margin-bottom: 0.3rem;
+
+		&:before {
+			content: '';
+			width: 5px;
+			height: 5px;
+			display: inline-block;
+			background:$font-color;
+			border-radius: 100%;
+			position: absolute;
+			top: 46%;
+			left: 2px;
+		}
+	}
+}

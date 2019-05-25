@@ -1,0 +1,14 @@
+<ng-container *ngIf="data">
+   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" *ngFor="let team of data">
+      <div class="team-card mb-4">
+        <img class="round-corner" [src]="team.image" width="200" height="200" alt="team-image">
+      </div>
+      <h4 class="mb-0">
+        {{team.name}}
+      </h4>
+      <p class="mb-4">{{team.designation}}</p>
+      <p class="mb-4">
+        {{team.description}}
+      </p>
+   </div>
+</ng-container>

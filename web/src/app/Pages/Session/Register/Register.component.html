@@ -1,0 +1,67 @@
+<div class="inner-container bg-white section-gap-lg">
+  <div class="container">
+    <div fxLayout='row wrap' fxLayoutAlign="center center">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="70" fxFlex.xl="70">
+        <div fxLayout='row wrap' fxLayoutAlign="center center">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+            <div class="form-img register-image">
+            </div>
+          </div>
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+            <mat-card class="register-form form-margin">
+              <h4>Enter your details</h4>
+              <form>
+                <div class="mb-4">
+                  <mat-form-field class="w-100">
+                    <input matInput type="text" placeholder="Username" [formControl]="username" required>
+                    <div *ngIf="username.invalid && (username.dirty || username.touched)"
+                         class="alert alert-danger">
+                      <div *ngIf="username.errors.required">
+                        Name is required.
+                      </div>
+                    </div>
+                  </mat-form-field>
+                  <mat-form-field class="w-100">
+                    <input matInput type="email" placeholder="Email" [formControl]="email" required>
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                         class="alert alert-danger">
+                      <div *ngIf="email.errors.required">
+                        Please input the right email.
+                      </div>
+                    </div>
+                  </mat-form-field>
+                  <mat-form-field class="w-100">
+                    <input matInput type="tel" placeholder="Phone Number" [formControl]="phoneNumber" required>
+                    <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)"
+                         class="alert alert-danger">
+                      <div *ngIf="phoneNumber.errors.required">
+                        Please input the right phoneNumber.
+                      </div>
+                    </div>
+                  </mat-form-field>
+                  <mat-form-field class="w-100">
+                    <input matInput type="password" placeholder="Enter Password" [formControl]="password" required>
+                  </mat-form-field>
+                </div>
+                <div class="mb-4">
+                  <mat-form-field class="w-100">
+                    <input matInput type="password" placeholder="Retype Password" [formControl]="confirmPassword" required  (focus)="onFocus()" (blur)="onBlur()">
+                    <div *ngIf="!equal"
+                         class="alert alert-danger">
+                      <div style="color: red;font-size: 12px;">
+                        两次密码不一致
+                      </div>
+                    </div>
+                  </mat-form-field>
+                </div>
+                <button color="accent" class="button-lg mb-3" mat-raised-button (click)="onSubmit()">Submit</button>
+              <div> Already have account? then <a class="accent-color" [routerLink]="['/session/signin']">Sign In</a></div>
+              </form>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

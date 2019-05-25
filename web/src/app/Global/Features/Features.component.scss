@@ -1,0 +1,24 @@
+@media(min-width:960px) {
+  .feature-list {
+    >div {
+      border-right: 2px solid #eee;
+
+      &:last-child {
+        border-right: 0;
+      }
+    }
+  }
+}
+@media(max-width:960px){
+   .feature-list{
+      border-bottom: 1px solid #eee;
+     .feature-inner{
+      >div{
+         display:block !important;
+         margin: 0 auto;
+         text-align:center;
+      }
+     }
+   
+   }
+}

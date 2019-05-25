@@ -1,0 +1,27 @@
+<mat-card class="example-card" *ngIf="product">
+   <a class="p-link" [routerLink]="['/products', product?.id]">
+     <img width="626" height="800" mat-card-image [src]="embryoService.baseUrl1+'/files/'+product?.mainImageFiles?.slice(0,1)" alt="Photo">
+   </a>
+   <div class="wishlist-icon {{index}}-wishlist">
+      <a (click)="productAddToWishlist(product, index+'-wishlist')"><i  class="material-icons"> favorite </i></a>
+   </div>
+  <mat-card-content class="product-content relative">
+     <h5><a [routerLink]="['/products', product?.id]" class="title-link">{{product?.name}}</a> </h5>
+     <div>
+        <div fxFlex fxLayoutAlign="space-between">
+           <h6 class="accent-color">{{product?.price | currency: currency}}</h6>
+           <div class="rating-star">
+              <embryo-Rating [rate]="product.rating"></embryo-Rating>
+           </div>
+        </div>
+     </div>
+     <div class="m-icon" *ngIf="checkCartAlready(product)">
+      <embryo-AddToCardButton [product]="product" (addToCart)="addToCartProduct($event)"></embryo-AddToCardButton>
+     </div>
+     <div class="m-icon" *ngIf="!checkCartAlready(product)">
+         <button mat-fab [routerLink]="['/products', product?.id]"><i  class="material-icons"> remove_red_eye </i></button>
+     </div>
+  </mat-card-content>
+</mat-card>
+
+

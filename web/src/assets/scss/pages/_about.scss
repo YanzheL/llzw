@@ -1,0 +1,37 @@
+.about-info h2 {
+  line-height: 1.1;
+  font-size: 3.1rem;
+  font-style: italic;
+  font-size: bold;
+}
+
+.testimonail-v2 {
+  background-image: url("../../assets/images/about-bg.jpg");
+
+  img {
+    width: 130px;
+    margin: 0 auto;
+  }
+
+  .testi-content {
+    font-size: 1.1rem;
+  }
+}
+
+.about-contact-bg {
+  background-image: url("../../assets/images/about-contact.jpg");
+  padding: 10rem 0;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+@media(min-width:560px) {
+  .about-cobtact-form-inner {
+    padding: 3rem;
+  }
+}
+
+.col-stretch {
+  align-items: stretch !important;
+}

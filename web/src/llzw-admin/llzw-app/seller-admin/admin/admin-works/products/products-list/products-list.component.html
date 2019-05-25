@@ -1,0 +1,207 @@
+<!-- <div class="p-2">
+  <p>
+    products-list works!
+  </p>
+
+  <h2>Product List</h2>
+</div> -->
+
+
+<!-- <div *ngFor="let product of products">
+	{{product.id}}
+</div> -->
+
+<!--
+  'id': 1,
+	'valid': true,
+	'seller_id': 'USERNAME_OF_SELLER',
+	'name': 'NAME_OF_THIS_PRODUCT',
+  'introduction': 'INTRODUCTION_OF_THIS_PRODUCT',
+-->
+
+<!-- Products
+Product Entity Definition
+Properties
+Parameter	Type	Description
+id	Integer	Order ID
+sellerId	String	Quantity of this order 13610706688
+name	String	Name of this product
+introduction	String	Introduction of this product
+createdAt	Date	Creation time
+updatedAt	Date	Update time
+price	Float	Price
+ca	String	Certificate authority name
+certId	String	Qualification certificate id
+valid	Boolean	Valid flag -->
+
+<mat-sidenav-container class="h-100">
+
+  <app-content-header [icon]="'exit_to_app'" [title]="'货品列表'" [hideBreadcrumb]="true" [hasBgImage]="true"
+    [class]="'py-4'">
+  </app-content-header>
+
+  <ng-container ktPortletTools>
+    <div class="p-2">
+      <button (click)="newAddProduct()" mat-raised-button color="primary" matTooltip="新品上架">新品上架</button>
+    </div>
+  </ng-container>
+
+  <div class="p-3">
+    <mat-table id="table" [dataSource]="products_rows">
+      <!-- User name Definition -->
+      <ng-container cdkColumnDef="id">
+        <mat-header-cell *cdkHeaderCellDef>商品编号 </mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{row.id}} </mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="addStock">
+        <mat-header-cell *matHeaderCellDef>
+          入库
+        </mat-header-cell>
+        <mat-cell *matCellDef="let product">
+
+          <ng-container *ngIf="product.seller['username'] === me.username">
+            <button type="button" (click)="addStock(product)" mat-icon-button color="primary"
+              matTooltip="进货入库">
+              <mat-icon>create</mat-icon>
+            </button>
+
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+
+
+      <!-- Title Definition -->
+      <ng-container cdkColumnDef="name">
+        <mat-header-cell *cdkHeaderCellDef>商品名称</mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{row.name}} </mat-cell>
+      </ng-container>
+
+      <!-- Title Definition -->
+      <ng-container cdkColumnDef="valid">
+        <mat-header-cell *cdkHeaderCellDef>是否上架</mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{row.valid}} </mat-cell>
+      </ng-container>
+
+      <!-- Title Definition -->
+      <ng-container cdkColumnDef="price">
+        <mat-header-cell *cdkHeaderCellDef>单价</mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{row.price.toFixed(2)}} </mat-cell>
+      </ng-container>
+
+
+      <!-- Age Definition -->
+      <ng-container cdkColumnDef="seller">
+        <mat-header-cell *cdkHeaderCellDef> 卖家</mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{row.seller['nickname']}} </mat-cell>
+      </ng-container>
+
+
+      <!-- Title Definition -->
+      <ng-container cdkColumnDef="introduction">
+        <mat-header-cell *cdkHeaderCellDef> 商品详情 </mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{row.introduction}} </mat-cell>
+      </ng-container>
+
+      <!-- Title Definition -->
+      <ng-container cdkColumnDef="createdAt">
+        <mat-header-cell *cdkHeaderCellDef> 初始上架日期 </mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{row.createdAt | date:'yyyy-MM-dd'}} </mat-cell>
+      </ng-container>
+
+      <!-- Title Definition -->
+      <ng-container cdkColumnDef="updatedAt">
+        <mat-header-cell *cdkHeaderCellDef> 变更日期 </mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{row.updatedAt | date:'yyyy-MM-dd'}} </mat-cell>
+      </ng-container>
+
+
+
+      <!-- Title Definition -->
+      <ng-container cdkColumnDef="ca">
+        <mat-header-cell *cdkHeaderCellDef> CA名称 </mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{row.ca}} </mat-cell>
+      </ng-container>
+
+      <!-- Title Definition -->
+      <ng-container cdkColumnDef="caId">
+        <mat-header-cell *cdkHeaderCellDef> CA编号</mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{row.caId}} </mat-cell>
+      </ng-container>
+
+      <!-- Title Definition -->
+      <!-- <ng-container cdkColumnDef="caFile">
+        <mat-header-cell *cdkHeaderCellDef> caFile </mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{row.caFile}} </mat-cell>
+      </ng-container> -->
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+          操作
+        </mat-header-cell>
+        <mat-cell *matCellDef="let product">
+
+          <ng-container *ngIf="product.seller['username'] === me.username">
+            <button type="button" (click)="editProduct(product)" mat-icon-button color="primary"
+              matTooltip="编辑">
+              <mat-icon>create</mat-icon>
+            </button>&nbsp;
+
+            <button type="button" (click)="duplicateAddProduct(product)" mat-icon-button color="primary"
+              matTooltip="克隆">
+              <mat-icon>file_copy</mat-icon>
+            </button>&nbsp;
+
+            <button mat-icon-button color="warn" type="button" (click)="deleteProduct(product)"
+              matTooltip="删除">
+              <mat-icon>delete</mat-icon>
+            </button>&nbsp;
+            <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="More actions">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item type="button">
+                <mat-icon>subject</mat-icon>
+                <span>Remarks</span>
+              </button>
+              <button mat-menu-item type="button">
+                <mat-icon>assignment</mat-icon>
+                <span>Specifications</span>
+              </button>
+            </mat-menu>
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Header and Row Declarations -->
+
+      <!-- <mat-header-row
+        *cdkHeaderRowDef="['id', 'name', 'valid', 'price', 'seller', 'introduction', 'createdAt', 'updatedAt', 'ca', 'caFile', 'caId', 'actions']">
+      </mat-header-row>
+      <mat-row
+        *cdkRowDef="let row; columns: ['id', 'name', 'valid', 'price', 'seller', 'introduction', 'createdAt', 'updatedAt', 'ca', 'caFile', 'caId', 'actions']">
+      </mat-row> -->
+
+      <mat-header-row
+        *cdkHeaderRowDef="['id', 'addStock', 'name', 'valid', 'price', 'seller', 'createdAt', 'updatedAt', 'ca', 'caId', 'actions']">
+      </mat-header-row>
+      <mat-row
+        *cdkRowDef="let row; columns: ['id', 'addStock', 'name', 'valid', 'price', 'seller', 'createdAt', 'updatedAt', 'ca', 'caId', 'actions']">
+      </mat-row>
+
+
+    </mat-table>
+
+  </div>
+
+</mat-sidenav-container>
+
+
+
+<!-- columnsToDisplay = ['userName', 'age'];
+然后添加mat-header-row并添加mat-row到您的内容mat-table并提供列列表作为输入。
+<tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+请注意，提供给行的列列表可以按任何顺序排列，而不必按照编写列定义的顺序排列。此外，您不一定要包含模板中定义的每个列。
+
+这意味着通过更改提供给行的列列表，您可以轻松地重新排序并动态包含/排除列。 -->

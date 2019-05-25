@@ -1,0 +1,14 @@
+<embryo-PageTitle heading="Terms and Conditions" subHeading="Please read and contact with if you have some issue."></embryo-PageTitle>
+<div class="inner-container section-gap bg-white" *ngIf="termContions && termContions.length >0">
+  <div class="container">
+    <div class="tnc-page">
+      <mat-card class="mb-5" *ngFor="let termcondition of termContions">
+        <h4 class="mb-3" *ngIf="termcondition?.name">
+         {{termcondition?.name}}
+        </h4>
+        <div [innerHTML]="termcondition?.content">
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

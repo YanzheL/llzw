@@ -1,0 +1,12 @@
+.responsive-toggle {
+  display: none;
+}
+
+
+
+@media(max-width:959px) {
+  .responsive-toggle {
+    display: block;
+  }
+}
+
