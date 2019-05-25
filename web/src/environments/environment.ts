@@ -16,7 +16,8 @@ export const environment = {
     // url1: 'http://localhost:8981/api/v1',
     apiHost: api_host,
     apiBasePath: api_base_path,
-    url1: api_host + api_host,  // 后端API
+    // url1: api_host + api_host,  // 后端API
+    url1: 'https://llzw.hitnslab.com/api/v1',  // 后端API
 };
 
 export const seller_apiUrl = environment.url1;
