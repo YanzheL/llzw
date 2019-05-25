@@ -23,6 +23,10 @@ spring:
   # If something weird happens in request mapping, you may need to uncomment this.
   resources:
     add-mappings: false
+  servlet:
+    multipart:
+      max-file-size: 1000MB
+      max-request-size: 1000MB
   profiles:
     include: etc
 
