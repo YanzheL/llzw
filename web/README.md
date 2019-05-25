@@ -2,7 +2,7 @@
 
 ##### Language: English | [中文文档](README-zh.md)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.0.
+This directory contains the web front module of LLZW project.
 
 ## Getting Started
 
