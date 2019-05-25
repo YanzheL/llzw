@@ -1,32 +1,27 @@
-# Embryo
-
-Online Documentation
-https://iron-network.gitbook.io/embryo/
-
-For quick help please send us your query at support@theironnetwork.org
+# LLZW Web Front
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.0.
 
-## Development server
+## Getting Started
+
+### Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+### Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+### Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+## Contributors:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Codes in this directory are commited by
 
-## Running end-to-end tests
+[@windwen](https://github.com/windwen)
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+[@ZhangTong1999](https://github.com/ZhangTong1999)
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+(They are not familiar with git, so I created the PR of `web-dev` branch on their behalf)
