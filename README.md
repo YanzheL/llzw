@@ -12,9 +12,9 @@ This is a Spring demo site designated for beginners, which is also my course pro
 
 **Current project status:**
 
-Frontend: Will be published to this repo once finished.
+Frontend: Releasing.
 
-Backend: Preparing for release.
+Backend: Releasing.
 
 ## Status of Continuous Integration and Automatic Testing
 
