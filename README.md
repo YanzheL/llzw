@@ -122,6 +122,24 @@ java "-Dspring.profiles.active=test" -jar target/*.jar
 
 - [API Documentation](https://llzw.readthedocs.io)
 
+## Contributors:
+
+#### LLZW Front:
+
+Located in `web/` directory
+
+[@windwen](https://github.com/windwen)
+
+[@ZhangTong1999](https://github.com/ZhangTong1999)
+
+#### LLZW Backend and Misc.
+
+Located in `api-gate/` directory together with other misc files.
+
+[Me](https://github.com/YanzheL)
+
+[@WennyXY](https://github.com/WennyXY)
+
 ## License
 
 [Apache License 2.0](LICENSE)
