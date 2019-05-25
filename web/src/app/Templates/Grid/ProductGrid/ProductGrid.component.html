@@ -1,11 +1,9 @@
 <div *ngIf="products && products.length > 0" class="col-gap" fxLayout="row wrap" fxLayoutAlign="none">
-    <div *ngFor="let product of products; let i=index; trackBy: trackByObjectID" fxFlex.lg="{{lg}}" fxFlex.md="50"
-         fxFlex.sm="50" fxFlex.xl="{{xl}}"
+    <div *ngFor="let product of products; let i=index; trackBy: trackByObjectID" fxFlex.lg="{{lg}}" fxFlex.md="50" fxFlex.sm="50" fxFlex.xl="{{xl}}"
          fxFlex.xs="100">
         <mat-card *ngIf="gridLength && (i<gridLength)" class="example-card">
             <a [routerLink]="['/products', product?.id]" class="p-link">
-                <img [src]="embryoService.baseUrl1+'/files/'+product?.mainImageFiles?.slice(0,1)"
-                     alt="Photo of a Shiba Inu" height="800"
+                <img [src]="embryoService.baseUrl1+'/files/'+product?.mainImageFiles?.slice(0,1)" alt="Photo of a Shiba Inu" height="800"
                      mat-card-image
                      width="626">
             </a>
@@ -40,8 +38,7 @@
                      mat-card-image width="626">
             </a>
             <a *ngIf="!product?.id" [routerLink]="['/products/accessories/17']" class="p-link">
-                <img (load)="onLoad()" [ngClass]="{ transparent: !loaded }"
-                     [src]="embryoService.baseUrl1+'/files/'+product?.mainImageFiles[0]"
+                <img (load)="onLoad()" [ngClass]="{ transparent: !loaded }" [src]="embryoService.baseUrl1+'/files/'+product?.mainImageFiles[0]"
                      alt="Photo"
                      height="800" mat-card-image width="626">
             </a>

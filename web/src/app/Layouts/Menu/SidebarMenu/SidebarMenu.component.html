@@ -1,5 +1,4 @@
-<a (click)="onItemSelected(item)"
-   [ngClass]="{'active': item.state ? router.isActive(item.state, true): false, 'expanded': expanded}"
+<a (click)="onItemSelected(item)" [ngClass]="{'active': item.state ? router.isActive(item.state, true): false, 'expanded': expanded}"
    mat-list-item>
     <mat-icon>{{item.icon}}</mat-icon>
     {{item.name | translate}}

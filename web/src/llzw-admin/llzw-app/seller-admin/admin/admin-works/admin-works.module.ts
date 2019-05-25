@@ -14,7 +14,7 @@ import {OrderService} from './_services/order.service';
 import {AdminWorksComponent} from './admin-works.component';
 
 import {ProductsListComponent} from './products/products-list/products-list.component';
-// import { ProductEditComponent } from './products/product-edit/product-edit.component';
+
 import {ProductAddComponent} from './products/product-add/product-add.component';
 
 import {StocksListComponent} from './stocks/stocks-list/stocks-list.component';
@@ -24,17 +24,18 @@ import {StockAddComponent} from './stocks/stock-add/stock-add.component';
 import {NgxTableComponent} from './ngx-table/ngx-table.component';
 
 import {PaymentsListComponent} from './payments/payments-list/payments-list.component';
-import {PaymentEditComponent} from './payments/payment-edit/payment-edit.component';
+
 import {PaymentAddComponent} from './payments/payment-add/payment-add.component';
 
 import {OrdersListComponent} from './orders/orders-list/orders-list.component';
 import {OrderEditComponent} from './orders/order-edit/order-edit.component';
 import {OrderAddComponent} from './orders/order-add/order-add.component';
 
-import {FileDropModule} from 'ngx-file-drop'; //文件拖拽
-import {FlexModule} from '@angular/flex-layout' // 排版
+import {FileDropModule} from 'ngx-file-drop'; // 文件拖拽
 
 // import { HttpClientModule } from '@angular/common/http';  //此处不能导入 否则内部 假数据用不了
+
+// import { FlexModule } from '@angular/flex-layout'; // 排版
 
 
 const routes: Routes = [
@@ -95,10 +96,10 @@ const routes: Routes = [
                 path: 'payments',
                 component: PaymentsListComponent
             },
-            {
-                path: 'payments/edit',
-                component: PaymentEditComponent
-            },
+            // {
+            //   path: 'payments/edit',
+            //   component: PaymentEditComponent
+            // },
             {
                 path: 'payments/add',
                 component: PaymentAddComponent
@@ -118,22 +119,24 @@ const routes: Routes = [
         AdminWorksComponent,
 
         ProductsListComponent,
-        //ProductEditComponent,
+
         ProductAddComponent,
 
         StocksListComponent,
-        //StockEditComponent,
+        // StockEditComponent,
         StockAddComponent,
 
         NgxTableComponent,
 
         PaymentsListComponent,
-        PaymentEditComponent,
+
         PaymentAddComponent,
 
         OrdersListComponent,
         OrderEditComponent,
         OrderAddComponent,
+
+        // FlexModule, // 排版 元气少女 嵌套引用 只能放这儿
 
     ],
     imports: [
@@ -144,14 +147,12 @@ const routes: Routes = [
         RouterModule.forChild(routes), // 元气少女
         FormsModule,
         ReactiveFormsModule,
-        FileDropModule, //文件拖拽
-        FlexModule, // 排版
+        FileDropModule, // 文件拖拽
 
         SharedModule,
         //  HttpClientModule, //此处不能导入 否则内部 假数据用不了
-
-
     ],
+
     exports: [
         RouterModule,
     ],

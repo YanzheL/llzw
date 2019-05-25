@@ -6,7 +6,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms'; // 元气少女
 import {SharedModule} from '../../../../appsettings/shared/shared.module';
 
 import {PrimaryComponent} from './primary.component';
-import {Sheet1Component} from './sheet1/sheet1.component';
+
 import {Sheet2Component} from './sheet2/sheet2.component';
 
 
@@ -20,10 +20,7 @@ const routes: Routes = [
               redirectTo: 'sheet1', // 默认路由
               pathMatch: 'full'
             }, */
-            {
-                path: 'sheet1',
-                component: Sheet1Component
-            },
+
             {
                 path: 'sheet2',
                 component: Sheet2Component
@@ -35,7 +32,7 @@ const routes: Routes = [
 
 @NgModule({
 
-    declarations: [PrimaryComponent, Sheet1Component, Sheet2Component],
+    declarations: [PrimaryComponent, Sheet2Component],
     imports: [
         CommonModule,
 

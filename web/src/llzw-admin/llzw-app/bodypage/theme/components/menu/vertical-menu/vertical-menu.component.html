@@ -1,8 +1,7 @@
 <div *ngFor="let menu of parentMenu" class="menu-item">
     <a (click)="onClick(menu.id)" *ngIf="menu.routerLink && !menu.hasSubMenu"
        [fxLayoutAlign]="(settings.menuType=='default') ? 'start center' : 'center center'" [id]="'menu-item-'+menu.id"
-       [matTooltipDisabled]="(settings.menuType=='mini') ? 'false' : 'true'" [matTooltip]="menu.title"
-       [routerLinkActiveOptions]="{exact:true}"
+       [matTooltipDisabled]="(settings.menuType=='mini') ? 'false' : 'true'" [matTooltip]="menu.title" [routerLinkActiveOptions]="{exact:true}"
        [routerLink]="[menu.routerLink]" fxLayout="row"
        mat-button
        matTooltipPosition="after" routerLinkActive="active-link">

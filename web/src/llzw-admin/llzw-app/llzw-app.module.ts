@@ -20,6 +20,19 @@ import {SharedModule} from './appsettings/shared/shared.module';
 import {HorizontalMenuComponent} from './bodypage/theme/components/menu/horizontal-menu/horizontal-menu.component';
 import {VerticalMenuComponent} from './bodypage/theme/components/menu/vertical-menu/vertical-menu.component';
 import {SidenavComponent} from './bodypage/theme/components/sidenav/sidenav.component';
+import {UserMenuComponent} from './bodypage/theme/components/user-menu/user-menu.component';
+
+
+import {TopInfoContentComponent} from './bodypage/theme/components/top-info-content/top-info-content.component';
+import {FavoritesComponent} from './bodypage/theme/components/favorites/favorites.component';
+import {FullScreenComponent} from './bodypage/theme/components/fullscreen/fullscreen.component';
+import {FlagsMenuComponent} from './bodypage/theme/components/flags-menu/flags-menu.component';
+
+import {ApplicationsComponent} from './bodypage/theme/components/applications/applications.component';
+import {MessagesComponent} from './bodypage/theme/components/messages/messages.component';
+import {MessagesService} from './bodypage/theme/components/messages/messages.service';
+
+
 import {DashboardModule} from './seller-admin/dashboard/dashboard.module';
 import {AdminModule} from './seller-admin/admin/admin.module';
 // import { HttpConfigInterceptor } from './services/interceptor/httpconfig.interceptor'; // 元气少女 拦截器
@@ -34,17 +47,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
 
-// import { UserMenuComponent } from './bodypage/theme/components/user-menu/user-menu.component';
-
-
-// import { TopInfoContentComponent } from './bodypage/theme/components/top-info-content/top-info-content.component';
-// import { FavoritesComponent } from './bodypage/theme/components/favorites/favorites.component';
-// import { FullScreenComponent } from './bodypage/theme/components/fullscreen/fullscreen.component';
-// import { FlagsMenuComponent } from './bodypage/theme/components/flags-menu/flags-menu.component';
-
-// import { ApplicationsComponent } from './bodypage/theme/components/applications/applications.component';
-// import { MessagesComponent } from './bodypage/theme/components/messages/messages.component';
-// import { MessagesService  } from './bodypage/theme/components/messages/messages.service';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
@@ -78,21 +80,22 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         LlzwAppComponent,
-        ErrorDialogComponent,
+
         HorizontalMenuComponent, // 元气少女
         VerticalMenuComponent, // 元气少女
         SidenavComponent, // 元气少女
 
-        // UserMenuComponent,
-        // TopInfoContentComponent,  // 元气少女
-        // FavoritesComponent,
-        // FullScreenComponent,
-        // FlagsMenuComponent,
+        UserMenuComponent,
+        TopInfoContentComponent,  // 元气少女
+        FavoritesComponent,
+        FullScreenComponent,
+        FlagsMenuComponent,
 
-        // ApplicationsComponent,
-        // MessagesComponent,
+        ApplicationsComponent,
+        MessagesComponent,
 
 
+        ErrorDialogComponent, // 元气少女 拦截器
         // DashboardComponent, // 元气少女
 
     ],
@@ -115,12 +118,11 @@ const routes: Routes = [
         AdminModule, // TODO 此处有问题
         FileDropModule, // 元气少女 FileDropModule 从桌面拖拽文件
 
-        // ErrorDialogComponent, // 元气少女 拦截器
 
     ],
     exports: [RouterModule],
     providers: [
-        // MessagesService, // 头部
+        MessagesService, // 头部
 
         MeService, // 元气少女 Me服务
         FileService, // 元气少女 文件上传服务

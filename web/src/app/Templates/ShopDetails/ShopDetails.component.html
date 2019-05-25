@@ -5,30 +5,28 @@
                 <div class="col-gap position-relative" fxLayout='row wrap'>
                     <div fxFlex.lg="50" fxFlex.md=50 fxFlex.sm="100" fxFlex.xl="50" fxFlex.xs="100">
                         <div fxLayout='row wrap'>
-                            <div fxFlex.lg="15" fxFlex.md="15" fxFlex.sm="15" fxFlex.xl="15" fxFlex.xs="15">
+                            <div fxFlex.lg="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xl="30" fxFlex.xs="30">
                                 <div class="product-detail-image-gallery pr-4">
                                     <mat-grid-list cols="1" gutterSize="20px" rowHeight="1:1">
                                         <mat-grid-tile *ngFor="let img of detailData?.mainImageFiles; let i=index">
                                             <div class="product-image-gallery-item">
-                                                <a (mouseenter)="getImagePath(img, i)"
-                                                   [ngClass]="{ 'border-active': i === 0 }"
-                                                   class="p-link" href="javascript:void(0)"
+                                                <a (mouseenter)="getImagePath(base_file_url+'/'+img, i)" [ngClass]="{ 'border-active': i === 0 }"
+                                                   class="p-link"
+                                                   href="javascript:void(0)"
                                                    id="{{i}}_img">
-                                                    <img [src]="embryoService.baseUrl1+'/files/'+img" alt="">
+                                                    <img [src]="base_file_url+'/'+img" alt="">
                                                 </a>
                                             </div>
                                         </mat-grid-tile>
                                     </mat-grid-list>
                                 </div>
                             </div>
-                            <div *ngIf="mainImgPath" class="relative" fxFlex.lg="85" fxFlex.md="85" fxFlex.sm="85"
-                                 fxFlex.xl="85" fxFlex.xs="85">
-                                <embryo-ImgZoom
-                                        [imgSrc]="mainImgPath"
-                                        containerStyle=""
-                                        imgStyle="width:auto; height:auto;"
-                                        lensStyle="width:100px; height:100px"
-                                        resultStyle="background-repeat: no-repeat; z-index: 2; position:absolute;
+                            <div *ngIf="mainImgPath" class="relative" fxFlex.lg="70" fxFlex.md="70" fxFlex.sm="70"
+                                 fxFlex.xl="70"
+                                 fxFlex.xs="70">
+                                <embryo-ImgZoom [imgSrc]="mainImgPath" containerStyle=""
+                                                imgStyle="width:auto; height:auto;"
+                                                lensStyle="width:100px; height:100px" resultStyle="background-repeat: no-repeat; z-index: 2; position:absolute;
                                    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
                                     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); top: 0;left: 100%;">
                                 </embryo-ImgZoom>
@@ -42,8 +40,8 @@
                             <span *ngFor="let cat of category" class="mycategory">{{cat}}</span>
                             <h3>{{detailData?.name}}</h3>
                             <mat-chip-list>
-                                <mat-chip *ngFor="let label of labels; let i=index"
-                                          [class]="chipclass[i]">{{label}}</mat-chip>
+                                <mat-chip *ngFor="let label of labels; let i=index" [class]="chipclass[i]">{{label}}
+                                </mat-chip>
                             </mat-chip-list>
                             <!--<div fxLayoutAlign="start center" class="mb-3">-->
                             <!--<div>-->
@@ -53,47 +51,57 @@
                             <div class="product-detail-price" style="margin-top: 15px;">
                                 <h4 class="accent-color">{{totalPrice | currency:currency}} </h4>
                             </div>
-                            <ul class="no-style mb-4">
-                                <!--<li>-->
-                                <!--<span class="font-medium"> Availablity </span>:-->
-                                <!--<span *ngIf="detailData?.availablity">In Stocks</span>-->
-                                <!--<span *ngIf="!(detailData?.availablity)">Out Of Stocks</span>-->
-                                <!--</li>-->
-                                <li>
-                                    <span class="font-medium">创建时间 </span>: {{detailData?.createdAt}}
-                                </li>
-                                <li>
-                                    <span class="font-medium">更新时间 </span>: {{detailData?.updatedAt}}
-                                </li>
-                                <!--<li>-->
-                                <!--<span class="font-medium">Tags</span>:-->
-                                <!--<ng-container *ngFor="let tag of detailData.tags">{{tag}}</ng-container>-->
-                                <!--</li>-->
-                            </ul>
-                            <div class="short-des">
-                                <p>{{detailData?.introduction}}
-                                </p>
+
+                            <div fxLayout='row wrap'>
+                                <div fxFlex.lg="50" fxFlex.md=50 fxFlex.sm="50" fxFlex.xl="50" fxFlex.xs="50">
+                                    <ul class="no-style mb-4">
+                                        <!--<li>-->
+                                        <!--<span class="font-medium"> Availablity </span>:-->
+                                        <!--<span *ngIf="detailData?.availablity">In Stocks</span>-->
+                                        <!--<span *ngIf="!(detailData?.availablity)">Out Of Stocks</span>-->
+                                        <!--</li>-->
+                                        <li>
+                                            <span class="font-medium">创建时间 </span>: {{detailData?.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}
+                                        </li>
+                                        <li>
+                                            <span class="font-medium">更新时间 </span>: {{detailData?.updatedAt| date:'yyyy-MM-dd HH:mm:ss'}}
+                                        </li>
+                                        <!--<li>-->
+                                        <!--<span class="font-medium">Tags</span>:-->
+                                        <!--<ng-container *ngFor="let tag of detailData.tags">{{tag}}</ng-container>-->
+                                        <!--</li>-->
+                                    </ul>
+                                    <div class="bullets-points">
+                                        <ul class="bullets-list">
+                                            <li>
+
+                                                卖家 : {{ detailData?.seller?.nickname}}
+                                            </li>
+                                            <li>
+                                                证书 : {{detailData?.ca}}
+                                            </li>
+                                            <li>
+                                                证书编号 : {{detailData?.caId}}
+                                            </li>
+
+                                            <!--<li>-->
+                                            <!--currentQuantity : {{stocks?.currentQuantity}}-->
+                                            <!--</li>-->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div fxFlex.lg="50" fxFlex.md=50 fxFlex.sm="50" fxFlex.xl="50" fxFlex.xs="50">
+                                    <img [src]="base_file_url+'/'+detailData?.caFile" alt="" height="200" width="200">
+                                </div>
                             </div>
-                            <div class="bullets-points">
-                                <ul class="bullets-list">
-                                    <li>
-                                        卖家 : {{detailData?.seller}}
-                                    </li>
-                                    <li>
-                                        证书 : {{detailData?.ca}}
-                                    </li>
-                                    <!--<li>-->
-                                    <!--currentQuantity : {{stocks?.currentQuantity}}-->
-                                    <!--</li>-->
-                                </ul>
-                            </div>
+
                             <div class="mb-3 select-group" fxLayoutGap="30px">
                                 <ng-container *ngIf="type == 'men' || type == 'women'">
                                     <mat-form-field>
                                         <mat-select class="product-detail-select" placeholder="Color">
                                             <ng-container *ngFor="let color of colorsArray">
-                                                <mat-option class="product-detail-select"
-                                                            value="{{color}}">{{color}}</mat-option>
+                                                <mat-option class="product-detail-select" value="{{color}}">{{color}}
+                                                </mat-option>
                                             </ng-container>
                                         </mat-select>
                                     </mat-form-field>
@@ -116,11 +124,14 @@
                             </div>
                             <div class="mb-4">
                                 <a (click)="addToWishlist(detailData)" class="text-underline" href="javascript:void(0)">
-                                    Add To Wishlist</a>
+                                    Add
+                                    To
+                                    Wishlist</a>
                             </div>
                             <div class="mb-5 detail-btns">
                                 <button (click)="addToCart(detailData)" class="button-lg mr-3" color="accent"
-                                        mat-raised-button>Add To Cart
+                                        mat-raised-button>Add To
+                                    Cart
                                 </button>
                                 <button (click)="buyNow(detailData)" class="button-lg" mat-raised-button>Buy Now
                                 </button>
@@ -151,24 +162,24 @@
                 <mat-tab label="商品介绍">
 
                     <div fxLayout="column" id="ch2">
-                        <div class="chanshu" fxFlex="100"> 品牌：{{detailData?.brand}}</div>
-                        <div class="chanshu" fxFlex="25"> 商品名称：{{detailData?.name}}</div>
+                        <div class="chanshu" fxFlex="100"> 品牌：{{details?.brand}}</div>
+                        <div class="chanshu" fxFlex="25"> 商品名称：{{details?.name}}</div>
                         <div fxLayout="row" fxLayout.xs="column">
-                            <div class="chanshu" fxFlex="25"> 商品编号：{{detailData?.number}}</div>
-                            <div class="chanshu" fxFlex="25"> 商品毛重：{{detailData?.gross}}</div>
-                            <div class="chanshu" fxFlex="25"> 保存状态：{{detailData?.saveStatus}}</div>
-                            <div class="chanshu" fxFlex="25"> 重量：{{detailData?.netWeight}}</div>
+                            <div class="chanshu" fxFlex="25"> 商品编号：{{details?.number}}</div>
+                            <div class="chanshu" fxFlex="25"> 商品毛重：{{details?.gross}}</div>
+                            <div class="chanshu" fxFlex="25"> 保存状态：{{details?.saveStatus}}</div>
+                            <div class="chanshu" fxFlex="25"> 重量：{{details?.netWeight}}</div>
                         </div>
 
                         <div fxLayout="row">
-                            <div class="chanshu" fxFlex="25"> 国产/进口：{{detailData?.domesticImport}}</div>
-                            <div class="chanshu" fxFlex="25"> 饲养方式：{{detailData?.variety}}</div>
-                            <div class="chanshu" fxFlex="25"> 品种：{{detailData?.feedingMethod}}</div>
-                            <div class="chanshu" fxFlex="25"> 分类：{{detailData?.classification}}</div>
+                            <div class="chanshu" fxFlex="25"> 国产/进口：{{details?.domesticImport}}</div>
+                            <div class="chanshu" fxFlex="25"> 饲养方式：{{details?.variety}}</div>
+                            <div class="chanshu" fxFlex="25"> 品种：{{details?.feedingMethod}}</div>
+                            <div class="chanshu" fxFlex="25"> 分类：{{details?.classification}}</div>
                         </div>
 
                         <div fxLayout="row">
-                            <div class="chanshu" fxFlex="25"> 包装：{{detailData?.package}}</div>
+                            <div class="chanshu" fxFlex="25"> 包装：{{details?.package}}</div>
                         </div>
 
                     </div>
@@ -177,19 +188,14 @@
                     <div class="p-2" fxLayout="column" id="demo_imgs">
                         <div class="p-2" id="img1">
 
+                            <div *ngFor="let myimg of bigImgs" fxLayout="column" id="img2">
 
-                            <!-- 以下两行  显示图片 -->
-                            <ng-container>
-                                <div *ngFor="let img of detailData?.mainImageFiles; let i=index">
-                                    <img [src]="embryoService.baseUrl1+'/files/'+img" alt="" class="bigimg">
-                                </div>
-                            </ng-container>
+                                <!-- 以下两行  显示图片 -->
+                                <ng-container *ngIf="!myimg.isEmptyNewImg">
+                                    <img [src]="myimg.url" alt="7">
+                                </ng-container>
 
-                            <!--<ng-container >-->
-                            <!--<div *ngFor="let img of images; let i=index">-->
-                            <!--<img [src]="img" alt="" class="bigimg">-->
-                            <!--</div>-->
-                            <!--</ng-container>-->
+                            </div>
 
                         </div>
 
@@ -201,11 +207,13 @@
                 <mat-tab label="规格包装">
 
                     <div fxLayout="column" id="ch2">
-                        <div class="chanshu" fxFlex="100"> 贮存条件：{{detailData?.torageConditions}} </div>
-                        <div class="chanshu" fxFlex="100"> 保质期：{{detailData?.shelfLife}} </div>
-                        <div class="chanshu" fxFlex="100"> 净含量：{{detailData?.netContent}} </div>
-                        <div fxFlex="100"> 包装清单：{{detailData?.packingList}} </div>
+                        <div class="chanshu" fxFlex="100"> 贮存条件：{{details?.torageConditions}} </div>
+                        <div class="chanshu" fxFlex="100"> 保质期：{{details?.shelfLife}} </div>
+                        <div class="chanshu" fxFlex="100"> 净含量：{{details?.netContent}} </div>
+                        <div fxFlex="100"> 包装清单：{{details?.packingList}} </div>
                     </div>
+
+                    <mat-divider></mat-divider>
 
                     <div id="shouhou" style="line-height: 20px; font-size: 12px;">
                         <strong>1、生鲜“优鲜赔”绿色通道</strong><br/>
@@ -277,5 +285,3 @@
 
     </ng-container>
 </div>
-
-

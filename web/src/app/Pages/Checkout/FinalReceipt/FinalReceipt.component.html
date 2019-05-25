@@ -40,8 +40,7 @@
                                         <h3>{{deliveryDate | date:'MMMM d, y'}}</h3>
                                     </div>
                                     <h4 class="pt-5">Your Ordered Details</h4>
-                                    <div *ngFor="let product of embryoService.buyUserCartProducts" class="col-gap"
-                                         fxLayout="row wrap"
+                                    <div *ngFor="let product of embryoService.buyUserCartProducts" class="col-gap" fxLayout="row wrap"
                                          fxLayoutAlign="start center">
                                         <div fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xl="25" fxFlex.xs="20">
                                             <img [src]="embryoService.baseUrl1+'/files/'+product?.mainImageFiles?.slice(0,1)"

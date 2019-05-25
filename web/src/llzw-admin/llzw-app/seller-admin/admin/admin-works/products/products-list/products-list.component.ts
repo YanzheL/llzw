@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 
 import {ActivatedRoute, Router} from '@angular/router';
+// Material
+
 import {ProductService} from '../../_services/product.service';
 import {Product} from '../../_models/product.model';
 
 import {MeService} from '../../../../../services/services/me.service';
 import {Me} from '../../../../../services/models/Me'; // 元气少女
-// Material
 @Component({
     selector: 'kt-products-list',
     templateUrl: './products-list.component.html',
@@ -60,7 +61,7 @@ export class ProductsListComponent implements OnInit {
     }
 
     // 以全新方式新建
-    newAddProduct(product: Product): void {
+    newAddProduct(): void {
         window.localStorage.removeItem('operateType');
         window.localStorage.setItem('operateType', '2');
         this.router.navigate(['./add'], {relativeTo: this.activatedRoute});

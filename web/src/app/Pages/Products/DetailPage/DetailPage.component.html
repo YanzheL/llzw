@@ -11,8 +11,7 @@
                     <div class="block-title text-center gap">
                         <h2>You Might Also Like</h2>
                     </div>
-                    <embryo-ProductGrid (addToCart)="addToCart($event)" (addToWishList)="addToWishList($event)"
-                                        [currency]="embryoService?.currency"
+                    <embryo-ProductGrid (addToCart)="addToCart($event)" (addToWishList)="addToWishList($event)" [currency]="embryoService?.currency"
                                         [products]="productsList"
                                         gridLength="4"></embryo-ProductGrid>
                     <div class="text-center mt-4">

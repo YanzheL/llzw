@@ -93,8 +93,7 @@
                     <button (click)="ToPay(order?.id)" *ngIf="!order?.paid" class="button-lg" color="accent"
                             mat-raised-button style="margin: 0 auto;" type="button">去支付
                     </button>
-                    <button (click)="deliveryConfirm(order?.id)" *ngIf="order?.paid && !order?.deliveryConfirmed"
-                            class="button-lg"
+                    <button (click)="deliveryConfirm(order?.id)" *ngIf="order?.paid && !order?.deliveryConfirmed" class="button-lg"
                             color="accent" mat-raised-button style="margin: 0 auto;"
                             type="button">确认收货
                     </button>

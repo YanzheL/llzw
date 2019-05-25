@@ -11,7 +11,7 @@
             <mat-card class="content" perfectScrollbar>
                 <div fxLayout="column" fxLayoutAlign="none">
                     <button *ngFor="let message of messages" mat-button>
-                        <img src="{{ ( message.image || (message.name | profilePicture)) }}" width="50">
+                        <!-- <img src="{{ ( message.image || (message.name | profilePicture)) }}" width="50">    -->
                         <div class="w-100" fxLayout="column" fxLayoutAlign="none">
                             <div fxLayout="row" fxLayoutAlign="space-between start">
                                 <span class="name">{{message.name}}</span>

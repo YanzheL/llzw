@@ -330,8 +330,7 @@
                             <form (ngSubmit)="onSubmit()" [formGroup]="productForm">
                                 <div class="p-2">
                                     <!-- ca图片 必须 -->
-                                    <mat-checkbox [disabled]="true" color="primary" formControlName="caFileIsOk"
-                                                  id="promotion2"
+                                    <mat-checkbox [disabled]="true" color="primary" formControlName="caFileIsOk" id="promotion2"
                                                   type="checkbox">
                                         {{productForm.controls.caFileIsOk.value ? "CA证书图片已上传" : "CA证书图片还未上传，此项必须"}}
                                     </mat-checkbox>

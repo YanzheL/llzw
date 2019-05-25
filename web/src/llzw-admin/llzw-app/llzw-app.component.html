@@ -4,8 +4,7 @@
 
 <div class="llzwbody" id="llzwbody">
 
-    <div [class.compact]="settings.menuType == 'compact'" [class.fixed-footer]="settings.fixedFooter"
-         [class.fixed-header]="settings.fixedHeader" [class.fixed-sidenav]="settings.fixedSidenav"
+    <div [class.compact]="settings.menuType == 'compact'" [class.fixed-footer]="settings.fixedFooter" [class.fixed-header]="settings.fixedHeader" [class.fixed-sidenav]="settings.fixedSidenav"
          [class.horizontal-menu]="settings.menu == 'horizontal'" [class.mini]="settings.menuType == 'mini'"
          [dir]="(settings.rtl) ? 'rtl' : 'ltr'" [ngClass]="settings.theme"
          class="app" id="app">
@@ -16,8 +15,7 @@
 
             <mat-drawer-container class="page-wrapper">
 
-                <mat-drawer #sidenav (closedStart)="showSidenav = !showSidenav"
-                            (openedStart)="showSidenav = !showSidenav"
+                <mat-drawer #sidenav (closedStart)="showSidenav = !showSidenav" (openedStart)="showSidenav = !showSidenav"
                             *ngIf="settings.menu == 'vertical'"
                             [mode]="(settings.sidenavIsPinned) ? 'side' : 'over'"
                             [opened]="settings.sidenavIsOpened" autoFocus="false"
@@ -143,10 +141,9 @@
                             </div>
                             <div fxLayout="row" fxLayoutAlign="space-between center">
                                 <span>Fixed sidenav user content</span>
-                                <mat-slide-toggle
-                                        (change)="settings.fixedSidenavUserContent = !settings.fixedSidenavUserContent"
-                                        [checked]="settings.fixedSidenavUserContent"
-                                        labelPosition="before">
+                                <mat-slide-toggle (change)="settings.fixedSidenavUserContent = !settings.fixedSidenavUserContent"
+                                                  [checked]="settings.fixedSidenavUserContent"
+                                                  labelPosition="before">
                                 </mat-slide-toggle>
                             </div>
                         </div>

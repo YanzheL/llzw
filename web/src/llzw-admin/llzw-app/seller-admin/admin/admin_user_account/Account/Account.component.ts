@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
+// RxJS
+
 import {MeService} from '../../../../services/services/me.service'
 import {Me} from '../../../../services/models/Me'; // 元气少女
-// RxJS
 
 export class ApiResponse {
     status: number

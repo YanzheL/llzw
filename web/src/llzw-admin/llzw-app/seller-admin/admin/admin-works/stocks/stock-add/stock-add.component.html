@@ -34,8 +34,7 @@
                 <!-- 日期选择器 这里做法比较特殊 -->
                 <mat-form-field class="w-100">
                     <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
-                    <input #dateInput [matDatepicker]="datepicker" class="hidden-date-input"
-                           formControlName="producedAt"
+                    <input #dateInput [matDatepicker]="datepicker" class="hidden-date-input" formControlName="producedAt"
                            matInput
                            readonly>
                     <input (click)="datepicker.open()" [readonly]="true" [value]="fullDate" class="form-control"
