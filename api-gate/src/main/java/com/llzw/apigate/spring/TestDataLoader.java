@@ -153,11 +153,11 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
           null,
           seller,
           new AddressBean(
-              String.format("test_province_%d", i),
-              String.format("test_city_%d", i),
-              String.format("test_district_%d", i),
-              String.format("test_address_%d", i),
-              String.format("00000%d", i)
+              "Macau",
+              "Macau",
+              "Taipa",
+              "MUST, Avenida Wai Long",
+              "999078"
           )
       );
       addressRepository.save(address);
@@ -170,11 +170,11 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
           null,
           customer,
           new AddressBean(
-              String.format("test_province_%d", i),
-              String.format("test_city_%d", i),
-              String.format("test_district_%d", i),
-              String.format("test_address_%d", i),
-              String.format("00000%d", i)
+              "Macau",
+              "Macau",
+              "Taipa",
+              "MUST, Avenida Wai Long",
+              "999078"
           )
       );
       addressRepository.save(address);
