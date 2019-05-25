@@ -1,0 +1,62 @@
+.mat-row.highlighted {
+  background: lightblue;
+}
+
+mat-table {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  min-width: 1200px;
+}
+
+.mat-header-cell, .mat-sort-header {
+  background-color: darksalmon;
+}
+
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+  font-size: medium;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.mat-cell {
+  color: green !important;
+}
+
+.mat-column-id {
+  flex: 0 0 80px !important;
+  white-space: unset !important;
+}
+
+.mat-column-name {
+  flex: 0 0 320px !important;
+  white-space: unset !important;
+}
+
+.mat-column-price {
+  flex: 0 0 104px !important;
+  text-align: right !important;
+  white-space: unset !important;
+}
+
+.mat-column-valid {
+  flex: 0 0 64px !important;
+  white-space: unset !important;
+}
+
+.mat-column-seller {
+  flex: 0 0 240px !important;
+  white-space: unset !important;
+}
+
+.mat-column-createdAt {
+  flex: 0 0 96px !important;
+  white-space: unset !important;
+}
+
+.mat-column-updatedAt {
+  flex: 0 0 96px !important;
+  white-space: unset !important;
+}

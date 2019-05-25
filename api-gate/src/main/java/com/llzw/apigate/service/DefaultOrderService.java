@@ -115,7 +115,7 @@ public class DefaultOrderService implements OrderService {
 
   @Override
   public int countOrdersAfter(Product product, Date date) {
-    return orderRepository.countAllByProductAndCreatedAtAfter(product, date);
+    return orderRepository.countByProductAndCreatedAtAfter(product, date);
   }
 
   @Override

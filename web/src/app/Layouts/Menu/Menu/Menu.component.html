@@ -1,0 +1,35 @@
+<!--  Top menu -->
+<nav class="app-nav">
+    <ul class="app-nav-list">
+        <li *ngFor="let item of menuItems.getMainMenu()" [ngClass]="{'mega': item.mega}" class="app-nav-item">
+            <ng-container *ngIf="item.type == 'sub'">
+                <a class="nav-link" routerLinkActive="active-link">
+                    {{item.name | translate}}
+                </a>
+            </ng-container>
+            <a *ngIf="item.type == 'link'" [routerLink]="['/'+item.state]" class="nav-link"
+               routerLinkActive="active-link">
+                {{item.name | translate}}
+            </a>
+            <ul *ngIf="item.children && item.children.length >0 " class="sub-menu">
+                <li *ngFor="let child of item.children">
+                    <a [routerLink]="['/'+child.state]" class="nav-link" routerLinkActive="active-link">
+                        {{child.name | translate}}
+                    </a>
+                    <ul *ngIf="child.children && child.children.length >0" class="sub-menu">
+                        <li *ngFor="let subChild of child.children">
+                            <a (click)="redirectTo(subChild)" *ngIf="subChild.type == 'queryParams'" class="nav-link">
+                                {{subChild.name | translate}}
+                            </a>
+
+                            <a *ngIf="subChild.type == 'link'" [routerLink]="['/'+item.state, child.state]"
+                               class="nav-link">
+                                {{subChild.name | translate}}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>

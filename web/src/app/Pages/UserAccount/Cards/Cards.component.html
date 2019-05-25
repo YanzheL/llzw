@@ -1,0 +1,111 @@
+<!--<div class="inner-container">-->
+<!--<div class="bg-white final-receipt-page section-gap" >-->
+<!--<div class="final-receipt">-->
+<div *ngIf="order && product" class="container">
+    <div class="col-gap" fxLayout="row wrap">
+        <div fxFlex.lg="60" fxFlex.md="60" fxFlex.sm="100" fxFlex.xl="60" fxFlex.xs="100">
+            <mat-card class="pt-0">
+                <div id="payment-receipt">
+                    <div class="text-center bg-grey p-5 mat-card-pad-none">
+                        <h2>{{order?.id}}</h2>
+                        <!--<h5 class="mb-4">Payment is successfully processsed and your order is on the way </h5>-->
+                        <!--<h6 class="mb-4">Transaction ID:267676GHERT105467</h6>-->
+                        <img *ngIf="order?.deliveryConfirmed" alt="Success" height="64" src="assets/images/checked.png"
+                             width="64">
+                    </div>
+                    <div class="py-5">
+                        <div class="col-gap" fxLayout="row wrap" fxLayoutAlign="none">
+                            <div fxFlex.lg="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xl="100" fxFlex.xs="100">
+                                <!--<h6 >Please Confirm The Order</h6>-->
+                                <p class="mb-1">数量: {{order?.quantity}}</p>
+                                <p class="mb-1">创建时间: {{order?.createdAt | date:'MMMM d, y'}}</p>
+                                <p class="mb-1">更新时间: {{order?.updatedAt  | date:'MMMM d, y' }}</p>
+                                <p class="mb-1">
+                                    地址: {{order?.address.province}} {{order?.address.city}} {{order?.address.district}} {{order?.address.address}} {{order?.address.zip}} </p>
+                                <p class="mb-1">trackingId: {{order?.trackingId}} </p>
+                                <p class="mb-1">carrierName: {{order?.carrierName}} </p>
+                                <p class="mb-1">总数量: {{order?.totalAmount}} </p>
+                            </div>
+                            <!--<div class="pb-4" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">-->
+                            <!--<h6>Ship To</h6>-->
+                            <!--<p class="mb-1 text-capitalize">{{userDetails}}</p>-->
+                            <!--<p class="mb-1 text-capitalize">{{userDetails?.user_details?.first_name}} {{userDetails?.user_details?.last_name}}</p>-->
+                            <!--&lt;!&ndash;<p class="mb-1 text-capitalize">{{userDetails?.user_details?.apt}}</p>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<p class="mb-1 text-capitalize">{{userDetails?.user_details?.city_state}}</p>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<p class="mb-1 text-capitalize">{{userDetails?.user_details?.country}} - {{userDetails?.user_details?.zip_code}}</p>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<p class="mb-1">Contact No. {{userDetails?.user_details?.mobile}}</p>&ndash;&gt;-->
+                            <!--</div>-->
+                        </div>
+                        <div class="py-4 text-center bg-grey">
+                            <h4>{{product?.name}}</h4>
+                            <h3>{{deliveryDate | date:'MMMM d, y'}}</h3>
+                        </div>
+                        <!--<h4 class="pt-5">Your Ordered Details</h4>-->
+                        <div class="col-gap" fxLayout="row wrap" fxLayoutAlign="start center">
+                            <div fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xl="25" fxFlex.xs="20">
+                                <img [src]="embryoService.baseUrl1+'/files/'+product?.mainImageFiles?.slice(0,1)"
+                                     alt="cart Image"
+                                     width="100">
+                            </div>
+                            <div fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xl="25" fxFlex.xs="30">
+                                <h6>Seller Name</h6>
+                                <p class="font-bold">{{product?.seller}}</p>
+                            </div>
+                            <div fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xl="25" fxFlex.xs="25">
+                                <h6>Quantity</h6>
+                                <p *ngIf="product?.quantity">{{product?.quantity}}</p>
+                                <p *ngIf="!product?.quantity">1</p>
+                            </div>
+                            <div fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xl="25" fxFlex.xs="25">
+                                <h6>Price</h6>
+                                <p style="color: red">{{product?.price}}.00 ￥</p>
+                            </div>
+                        </div>
+                        <!--<hr class="dark-border spacer">-->
+                        <div class="text-left ">
+                            <!--<div>-->
+                            <!--<p>Subtotal</p><span fxFlex></span> {{calculateTotalPrice() | currency:embryoService?.currency}}-->
+                            <!--</div>-->
+                            <!--<div>-->
+                            <!--<p>Shipping</p><span fxFlex></span> {{embryoService.shipping | currency:embryoService?.currency}}-->
+                            <!--</div>-->
+                            <!--<div>-->
+                            <!--<p>Tax(GST)</p><span fxFlex></span> {{embryoService.tax | currency:embryoService?.currency}}-->
+                            <!--</div>-->
+                            <hr class="spacer">
+                            <div class="mb-4">
+                                <h4>State</h4>
+                                <p>
+                                    <span *ngIf="!order?.paid" style="color: red">是否支付： 未支付</span>
+                                    <span *ngIf="order?.paid" style="color: #1cff3c">是否支付：: 已支付</span>
+                                </p>
+                                <p>
+                                    <span *ngIf="order?.paid && !order?.deliveryConfirmed"
+                                          style="color: red">是否收货：: 未收货</span>
+                                    <span *ngIf="order?.paid && order?.deliveryConfirmed" style="color: #1cff3c">是否收货：: 已确认收货</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-group">
+
+                    <button (click)="ToPay(order?.id)" *ngIf="!order?.paid" class="button-lg" color="accent"
+                            mat-raised-button style="margin: 0 auto;" type="button">去支付
+                    </button>
+                    <button (click)="deliveryConfirm(order?.id)" *ngIf="order?.paid && !order?.deliveryConfirmed" class="button-lg"
+                            color="accent" mat-raised-button style="margin: 0 auto;"
+                            type="button">确认收货
+                    </button>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+
+

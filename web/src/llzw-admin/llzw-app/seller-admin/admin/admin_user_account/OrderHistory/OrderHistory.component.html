@@ -1,0 +1,53 @@
+<mat-card>
+    <h4 class="mb-3">Order History</h4>
+    <table [dataSource]="dataSource" class="w-100" mat-table>
+
+        <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+            <th *matHeaderCellDef mat-header-cell> No.</th>
+            <td *matCellDef="let element" mat-cell> {{element.position}} </td>
+        </ng-container>
+
+        <!-- id Column -->
+        <ng-container matColumnDef="orderid">
+            <th *matHeaderCellDef mat-header-cell> Order Id</th>
+            <td *matCellDef="let element" mat-cell> {{element.orderid}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th *matHeaderCellDef mat-header-cell>Product Name</th>
+            <td *matCellDef="let element" mat-cell> {{element.name}} </td>
+        </ng-container>
+
+        <!-- price Column -->
+        <ng-container matColumnDef="price">
+            <th *matHeaderCellDef mat-header-cell> Price</th>
+            <td *matCellDef="let element" mat-cell> ${{element.price}} </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+            <th *matHeaderCellDef mat-header-cell> Status</th>
+            <td *matCellDef="let element" mat-cell> {{element.status}} </td>
+        </ng-container>
+
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="action">
+            <th *matHeaderCellDef mat-header-cell> Action</th>
+            <td *matCellDef="let element" mat-cell>
+                <a class="accent-color" href="javascript:void"> <i class="material-icons">
+                    remove_red_eye
+                </i></a>
+            </td>
+        </ng-container>
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    </table>
+
+
+</mat-card>

@@ -12,9 +12,11 @@
 
 **当前项目状态:**
 
-前端: 将会发布在此仓库中，当前端开发完毕时
+前端: 即将发布
 
-后端: 准备发布
+后端: 即将发布
+
+**在线演示网站:** [https://llzw.hitnslab.com](https://llzw.hitnslab.com) (国内用户可能无法访问，因为引用了一些Google的JS和图标资源)
 
 ## 持续集成与自动化测试状态
 
@@ -45,7 +47,7 @@
 
 两种选择
 
-- 运行单个服务
+- 运行单个后端服务
 
   拉取镜像
 
@@ -59,7 +61,7 @@
   docker run -d -p "8981:8981" leeyanzhe/llzw-api-gate
   ```
 
-- 运行整个系统 (目前暂时只有后端服务)
+- 运行整个系统
 
   下载项目源码
 
@@ -121,6 +123,24 @@ java "-Dspring.profiles.active=test" -jar target/*.jar
 ## 文档
 
 - [API文档](https://llzw.readthedocs.io)
+
+## 贡献者:
+
+#### LLZW Web 前端:
+
+位于 `web/` 目录
+
+[@windwen](https://github.com/windwen)
+
+[@ZhangTong1999](https://github.com/ZhangTong1999)
+
+#### LLZW 后端和其他辅助代码
+
+位于 `api-gate/` 目录，以及一些其他文件。
+
+[我](https://github.com/YanzheL)
+
+[@WennyXY](https://github.com/WennyXY)
 
 ## 许可证
 

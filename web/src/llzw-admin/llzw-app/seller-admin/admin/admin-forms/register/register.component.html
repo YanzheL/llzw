@@ -1,0 +1,66 @@
+<p>
+    register works!
+</p>
+
+<mat-sidenav-container class="h-100">
+    <div class="h-100" fxLayout="row" fxLayoutAlign="center center">
+        <form (ngSubmit)="onSubmit(form.value)" [formGroup]="form" class="mat-elevation-z6" fxFlex="90" fxFlex.gt-sm="30"
+              fxFlex.sm="60">
+
+            <div class="p-4">
+                <a class="w-100" color="accent" mat-button routerLink="/login">Already have an account? Sign in!</a>
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="username" matInput placeholder="username">
+                    <mat-error *ngIf="form.controls.username.errors?.required">Full Name is required</mat-error>
+                    <!-- <mat-error *ngIf="form.controls.username.hasError('minlength')">Full Name isn't long enough, minimum of 3 characters</mat-error> -->
+                    <mat-error
+                            *ngIf="form.controls.username.hasError('invalidInfo')">{{form.controls.username.errors['invalidInfo']}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>mail</mat-icon>
+                    <input formControlName="email" matInput placeholder="Email">
+                    <mat-error *ngIf="form.controls.email.errors?.required">Email is required</mat-error>
+                    <mat-error *ngIf="form.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>phone</mat-icon>
+                    <input formControlName="phoneNumber" matInput placeholder="phoneNumber">
+                    <mat-error *ngIf="form.controls.phoneNumber.errors?.required">phoneNumber is required</mat-error>
+                    <!-- <mat-error *ngIf="form.controls.phoneNumber.hasError('minlength')">phoneNumber isn't long enough, minimum of 3 characters</mat-error> -->
+                    <mat-error
+                            *ngIf="form.controls.phoneNumber.hasError('invalidInfo')">{{form.controls.phoneNumber.errors['invalidInfo']}}</mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>lock</mat-icon>
+                    <input formControlName="password" matInput minlength="6" placeholder="Password" type="password">
+                    <mat-error *ngIf="form.controls.password.errors?.required">Password is required</mat-error>
+                    <!-- <mat-error *ngIf="form.controls.password.hasError('minlength')">Password isn't long enough, minimum of 6 characters</mat-error> -->
+                    <mat-error
+                            *ngIf="form.controls.password.hasError('invalidInfo')">{{form.controls.password.errors['invalidInfo']}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>lock</mat-icon>
+                    <input formControlName="confirmPassword" matInput placeholder="Confirm Password" type="password">
+                    <mat-error *ngIf="form.controls.confirmPassword.errors?.required">Confirm Password is required
+                    </mat-error>
+                    <mat-error *ngIf="form.controls.confirmPassword.hasError('mismatchedPasswords')">Passwords do not
+                        match
+                    </mat-error>
+                </mat-form-field>
+
+
+                <mat-radio-group aria-label="Role Select" formControlName="role">
+                    <mat-radio-button value="USER">USER</mat-radio-button>
+                    <mat-radio-button value="SELLER">SELLER</mat-radio-button>
+                </mat-radio-group>
+
+                <button class="mat-elevation-z6 w-100 mt-3" color="primary" mat-raised-button type="submit">SIGN UP
+                </button>
+            </div>
+        </form>
+    </div>
+</mat-sidenav-container>

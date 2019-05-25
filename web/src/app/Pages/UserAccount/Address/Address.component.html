@@ -1,0 +1,51 @@
+<button [queryParams]="{type:'address'}" [routerLink]="['/account/profile/edit']" color="accent"
+        mat-raised-button style="position: absolute;right: 25px;z-index: 10">Creat an Address
+</button>
+
+<h4 class="chip">详细地址</h4>
+
+
+<table [dataSource]="dataSource" class="mat-elevation-z8" mat-table>
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+        <th *matHeaderCellDef mat-header-cell> No.</th>
+        <td *matCellDef="let element" mat-cell> {{element.id}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="province">
+        <th *matHeaderCellDef mat-header-cell> 省</th>
+        <td *matCellDef="let element" mat-cell> {{element.province}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="city">
+        <th *matHeaderCellDef mat-header-cell> 市</th>
+        <td *matCellDef="let element" mat-cell> {{element.city}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="district">
+        <th *matHeaderCellDef mat-header-cell> 区</th>
+        <td *matCellDef="let element" mat-cell> {{element.district}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="address">
+        <th *matHeaderCellDef mat-header-cell> 详细地址</th>
+        <td *matCellDef="let element" mat-cell> {{element.address}} </td>
+    </ng-container>
+
+    Symbol Column
+    <ng-container matColumnDef="zip">
+        <th *matHeaderCellDef mat-header-cell> 邮政编码</th>
+        <td *matCellDef="let element" mat-cell> {{element.zip}} </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+</table>

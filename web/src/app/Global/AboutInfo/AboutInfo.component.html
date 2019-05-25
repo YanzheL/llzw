@@ -1,0 +1,15 @@
+<div *ngIf="data" class="container">
+    <div class="col-gap" fxLayout="row wrap" fxLayoutAlign="center center">
+        <div class="p-5" fxFlex.lg="50" fxFlex.md="100" fxFlex.sm="100" fxFlex.xl="50" fxFlex.xs="100">
+            <h2 class="font-bold mb-4">
+                {{data?.heading}}
+            </h2>
+            <h4 class="font-italic font-bold mb-4">{{data?.sub_heading}} </h4>
+            <p class="mb-4">{{data?.content}}</p>
+            <button class="button-lg" color="accent" mat-raised-button>Read More</button>
+        </div>
+        <div fxFlex.lg="50" fxFlex.md="100" fxFlex.sm="100" fxFlex.xl="50" fxFlex.xs="100">
+            <img [src]="data.image" alt="About Us Image" height="700" width="700">
+        </div>
+    </div>
+</div>

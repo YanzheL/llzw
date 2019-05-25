@@ -1,0 +1,10 @@
+
+body .img-zoom-container {
+  position: relative !important;
+}
+
+@media(max-width: 959px) {
+  #myresult {
+    display: none;
+  }
+}

@@ -1,0 +1,46 @@
+<p>
+    orders works!
+</p>
+
+<mat-sidenav-container class="h-100">
+    <div class="h-100" fxLayout="row" fxLayoutAlign="center center">
+        <form (ngSubmit)="onSubmit(form.value)" [formGroup]="form" class="mat-elevation-z6" fxFlex="90" fxFlex.gt-sm="30"
+              fxFlex.sm="60">
+
+            <div class="p-4">
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="product_id" matInput placeholder="ID of the product it belongs to">
+                    <mat-error *ngIf="form.controls.product_id.errors?.required">ID of the product is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="quantity" matInput placeholder="Quantity of this order">
+                    <mat-error *ngIf="form.controls.quantity.errors?.required">Quantity of this order is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="customer_id" matInput
+                           placeholder="Customer username who creates this order">
+                    <mat-error *ngIf="form.controls.customer_id.errors?.required">Customer username is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="address_id" matInput placeholder="Destination address ID from address book">
+                    <mat-error *ngIf="form.controls.address_id.errors?.required">Destination address ID is required
+                    </mat-error>
+                </mat-form-field>
+
+                <button class="mat-elevation-z6 w-100 mt-3" color="primary" mat-raised-button type="submit">Create
+                </button>
+            </div>
+        </form>
+    </div>
+</mat-sidenav-container>

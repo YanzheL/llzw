@@ -1,0 +1,15 @@
+<mat-toolbar class="embryo-fixed-header" color="primary">
+    <mat-toolbar-row>
+        <div class="container">
+            <div fxLayoutAlign="space-between">
+                <div class="logo-site">
+                    <embryo-AppLogo></embryo-AppLogo>
+                </div>
+                <embryo-Menu></embryo-Menu>
+                <button (click)="toggleSidebar()" class="responsive-toggle" mat-icon-button>
+                    <i class="material-icons">menu</i>
+                </button>
+            </div>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

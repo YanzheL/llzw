@@ -1,0 +1,7 @@
+<mat-form-field *ngIf="currencyArray && currencyArray.length > 0">
+    <mat-select (selectionChange)="selectionChange($event)" [(ngModel)]="selectedValue">
+        <mat-option *ngFor="let data of currencyArray" [value]="data.code">
+            <img [src]="data.image" alt="" class="mr-2">{{data.code}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>

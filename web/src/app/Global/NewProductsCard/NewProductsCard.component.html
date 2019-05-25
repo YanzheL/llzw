@@ -1,0 +1,28 @@
+<mat-card *ngIf="product" class="grid-card-v2">
+    <div class="mat-upper">
+        <a [routerLink]="['/products', product?.type, product?.id]" class="p-link">
+            <span *ngIf="product.popular" class="custom-badge">Popular</span>
+            <img [src]="product?.image" alt="Photo" height="800" mat-card-image width="626">
+            <h6 class="price-tag-v2">{{product?.price | currency: currency}}</h6>
+        </a>
+    </div>
+    <mat-card-content class="product-content relative">
+        <h5><a [routerLink]="['/products', product?.type, product?.id]" class="title-link">{{product?.name}}</a></h5>
+        <div class="rating-star">
+            <embryo-Rating [rate]="product.rating"></embryo-Rating>
+        </div>
+        <div class="m-icon">
+            <embryo-AddToCardButton (addToCart)="addToCartProduct($event)" [product]="product"></embryo-AddToCardButton>
+        </div>
+
+
+    </mat-card-content>
+    <mat-card-footer>
+        <div fxLayoutAlign="space-between">
+
+            <div><a (click)="productAddToWishlist(product)"><i class="material-icons"> favorite </i></a></div>
+            <div><a [routerLink]="['/products', product?.type, product?.id]"><i
+                    class="material-icons">remove_red_eye</i></a></div>
+        </div>
+    </mat-card-footer>
+</mat-card>

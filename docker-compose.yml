@@ -2,28 +2,39 @@ version: "3.6"
 services:
   db:
     image: mariadb
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    command: --character-set-server=utf8mb4
     restart: always
     volumes:
       - maria_db:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: HITllzw-dev!
-    # ports:
-    #   - "8906:3306"
+    ports:
+      - "8906:3306"
   backend:
     image: leeyanzhe/llzw-api-gate
     # build: api-gate
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: dev
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/llzw_dev?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: HITllzw-dev!
+      # SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/llzw_dev?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf8
+      # SPRING_DATASOURCE_USERNAME: root
+      # SPRING_DATASOURCE_PASSWORD: HITllzw-dev!
+      SPRING_DATASOURCE_URL: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: sa
     command: [ "java", "-server", "-XX:+HeapDumpOnOutOfMemoryError", "-Xmx500m", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseZGC", "-jar", "api-gate.jar" ]
     ports:
       - "8981:8981"
     depends_on:
       - db
+  web:
+    image: leeyanzhe/llzw-web
+    restart: always
+    environment:
+      API_HOST: https://llzw.hitnslab.com
+      API_BASE_PATH: /api/v1
+    depends_on:
+      - backend
   proxy:
     image: nginx:alpine
     restart: always
@@ -34,7 +45,7 @@ services:
       - SSL_POLICY=Mozilla-Modern
       - HTTPS_METHOD=noredirect
     depends_on:
-      - backend
+      - web
 
 volumes:
   maria_db:

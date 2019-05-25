@@ -1,0 +1,87 @@
+<embryo-PageTitle heading="Here’s what’s in your bag."
+                  subHeading="Our latest news and learning articles."></embryo-PageTitle>
+
+<div *ngIf="(embryoService.localStorageCartProducts && embryoService.localStorageCartProducts.length>0); else elseBlock"
+     class="inner-container bg-white cart-page section-gap">
+    <div class="container">
+        <div class="cart-wrapper">
+            <div class="cart-shop-list mb-5 text-center  card-shadow">
+                <div *ngFor="let product of embryoService.localStorageCartProducts" class="cart-item" fxLayout='row wrap'
+                     fxLayoutAlign="start center">
+                    <div class="cart-product-image" fxFlex.lg="20" fxFlex.md="10" fxFlex.sm="100" fxFlex.xl="20"
+                         fxFlex.xs="100">
+                        <div class="cart-item-thumb">
+                            <a class="p-link" href="javascript:void(0)">
+                                <img [src]="embryoService.baseUrl1+'/files/'+product?.mainImageFiles?.slice(0,1)" alt="cart image" class="card-shadow"
+                                     height="800"
+                                     width="626">
+                            </a>
+                        </div>
+                    </div>
+                    <div fxFlex.lg="80" fxFlex.md="90" fxFlex.sm="100" fxFlex.xl="80" fxFlex.xs="100">
+                        <div class="cart-product-info" fxLayout='row wrap' fxLayoutAlign="center center">
+                            <div fxFlex.lg="40" fxFlex.md="30" fxFlex.sm="40" fxFlex.xl="40" fxFlex.xs="100">
+                                <h5>{{product?.name}}</h5>
+                                <p class="mb-0">Delivery in 3-4 days | Free</p>
+                                <p> 10 Days Replacement Policy</p>
+                            </div>
+                            <div fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xl="20" fxFlex.xs="50">
+                                <mat-form-field class="w-100">
+                                    <input #quantity [value]="getQuantityValue(product)" matInput max="10" min="1"
+                                           placeholder="Quantity" type="number">
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex.lg="20" fxFlex.md="30" fxFlex.sm="40" fxFlex.xl="20" fxFlex.xs="50">
+                                <div class="cart-item-price">
+                                    <h4>{{ calculateProductSinglePrice(product, quantity.value) | currency:embryoService?.currency}}</h4>
+                                </div>
+                            </div>
+                            <div class="close-sm" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="100" fxFlex.xl="20"
+                                 fxFlex.xs="100">
+                                <div class="cart-item-price">
+                                    <a (click)="removeProduct(product)" class="accent-color remove-cart"
+                                       href="javascript:void(0)"><i class="material-icons">
+                                        close
+                                    </i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cart-total" fxLayout='row wrap' fxLayoutAlign="end">
+                <div fxFlex.lg="40" fxFlex.md="40" fxFlex.sm="100" fxFlex.xl="40" fxFlex.xs="100">
+                    <!--<div>-->
+                    <!--<p>Subtotal</p><span fxFlex></span> {{calculateTotalPrice() | currency:embryoService?.currency}}-->
+                    <!--</div>-->
+                    <!--<div>-->
+                    <!--<p>Shipping</p><span fxFlex></span> {{embryoService.shipping | currency:embryoService?.currency}}-->
+                    <!--</div>-->
+                    <!--<div>-->
+                    <!--<p>Tax(GST)</p><span fxFlex></span> {{embryoService.tax | currency:embryoService?.currency}}-->
+                    <!--</div>-->
+                    <hr class="spacer">
+                    <div class="mb-4">
+                        <h4>Total</h4><span fxFlex></span>
+                        <h4> {{getTotalPrice() | currency:embryoService?.currency}}</h4>
+                    </div>
+                    <div><span fxFlex></span>
+                        <button (click)="updateLocalCartProduct()" class="button-lg" color="accent" mat-raised-button>
+                            Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #elseBlock>
+    <div class="section-gap-lg text-center">
+        <div class="mb-4">
+            <img alt="cart-empty" height="128" src="assets/images/empty-cart.png" width="128">
+        </div>
+        <h4> Your Shopping Bag is empty.</h4>
+        <a [routerLink]="['/']" class="primary-color" href="javascript:void(0)">Go for Shopping</a>
+    </div>
+</ng-template>

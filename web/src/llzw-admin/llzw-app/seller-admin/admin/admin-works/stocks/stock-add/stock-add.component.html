@@ -1,0 +1,80 @@
+<p>
+    stock-add works!
+</p>
+
+
+<mat-sidenav-container class="h-100">
+    <div class="h-100" fxLayout="row" fxLayoutAlign="center center">
+
+        <!-- <form [formGroup]="stockForm" (ngSubmit)="onSubmit(stockForm.value)" fxFlex="90" fxFlex.gt-sm="30" fxFlex.sm="60" class="mat-elevation-z6"> -->
+
+        <form (ngSubmit)="onSubmit()" [formGroup]="stockForm" class="mat-elevation-z6" fxFlex="90" fxFlex.gt-sm="30"
+              fxFlex.sm="60">
+
+            <app-content-header [class]="'py-4'" [hasBgImage]="true" [hideBreadcrumb]="true" [icon]="'exit_to_app'"
+                                [title]="'货品入库'">
+            </app-content-header>
+
+            <div class="p-3">
+
+                <mat-form-field *ngIf="editStockId" class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input [readonly]="true" formControlName="id" id="id" matInput placeholder="id">
+                    <mat-error *ngIf="stockForm.controls.id.errors?.required">ID is required</mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input [readonly]="isAddFromProductsList" formControlName="product" matInput placeholder="商品编号">
+                    <mat-error *ngIf="stockForm.controls.product.errors?.required">productId is required</mat-error>
+                </mat-form-field>
+
+
+                <!-- 日期选择器 这里做法比较特殊 -->
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input #dateInput [matDatepicker]="datepicker" class="hidden-date-input" formControlName="producedAt"
+                           matInput
+                           readonly>
+                    <input (click)="datepicker.open()" [readonly]="true" [value]="fullDate" class="form-control"
+                           matInput
+                           placeholder="Choose a date">
+                    <mat-datepicker-toggle [for]="datepicker" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker (closed)="dateInput.blur()" disabled="false"></mat-datepicker>
+
+                </mat-form-field>
+
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="shelfLife" matInput placeholder="保质期">
+                    <mat-error *ngIf="stockForm.controls.shelfLife.errors?.required">Shelf-Life of this stock is
+                        required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="totalQuantity" matInput placeholder="数量">
+                    <mat-error *ngIf="stockForm.controls.totalQuantity.errors?.required">totalQuantity is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="trackingId" matInput placeholder="运单号">
+                </mat-form-field>
+
+                <mat-form-field class="w-100">
+                    <mat-icon class="mat-icon-sm mb-2 mr-2 secondary-text-color" matPrefix>person</mat-icon>
+                    <input formControlName="carrierName" matInput placeholder="承运商">
+                </mat-form-field>
+
+                <button class="mat-elevation-z6 w-100 mt-3" color="primary" mat-raised-button type="submit">Create
+                </button>
+
+            </div>
+        </form>
+    </div>
+</mat-sidenav-container>

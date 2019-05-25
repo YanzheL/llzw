@@ -1,0 +1,19 @@
+.cta-v1 {
+  background-image: url("../../assets/images/offers.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.faq-page {
+  .mat-expansion-panel-header {
+    height: auto !important;
+    padding: 1rem;
+
+    .mat-expansion-panel-header-title {
+      h5 {
+        margin: 0;
+      }
+    }
+  }
+}

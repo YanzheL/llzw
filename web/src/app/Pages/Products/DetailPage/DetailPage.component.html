@@ -1,0 +1,24 @@
+<ng-container *ngIf="singleProduct">
+    <embryo-PageTitle heading="{{singleProduct.name}}"></embryo-PageTitle>
+    <div class="inner-container">
+        <div class="product-detail-page">
+            <embryo-ShopDetails [category]="category" [currency]="embryoService?.currency" [detailData]="singleProduct"
+                                [labels]="labels"></embryo-ShopDetails>
+
+
+            <div *ngIf="productsList && productsList.length>0" class="bg-grey section-gap">
+                <div class="container">
+                    <div class="block-title text-center gap">
+                        <h2>You Might Also Like</h2>
+                    </div>
+                    <embryo-ProductGrid (addToCart)="addToCart($event)" (addToWishList)="addToWishList($event)" [currency]="embryoService?.currency"
+                                        [products]="productsList"
+                                        gridLength="4"></embryo-ProductGrid>
+                    <div class="text-center mt-4">
+                        <button [routerLink]="['/products', type]" mat-raised-button>Show All</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

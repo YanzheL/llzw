@@ -1,0 +1,75 @@
+<div class="inner-container bg-white section-gap-lg">
+    <div class="container">
+        <div fxLayout='row wrap' fxLayoutAlign="center center">
+            <div fxFlex.lg="70" fxFlex.md="80" fxFlex.sm="100" fxFlex.xl="70" fxFlex.xs="100">
+                <div fxLayout='row wrap' fxLayoutAlign="center center">
+                    <div fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100" fxFlex.xl="50" fxFlex.xs="100">
+                        <div class="form-img register-image">
+                        </div>
+                    </div>
+                    <div fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100" fxFlex.xl="50" fxFlex.xs="100">
+                        <mat-card class="register-form form-margin">
+                            <h4>Enter your details</h4>
+                            <form>
+                                <div class="mb-4">
+                                    <mat-form-field class="w-100">
+                                        <input [formControl]="username" matInput placeholder="Username" required
+                                               type="text">
+                                        <div *ngIf="username.invalid && (username.dirty || username.touched)"
+                                             class="alert alert-danger">
+                                            <div *ngIf="username.errors.required">
+                                                Name is required.
+                                            </div>
+                                        </div>
+                                    </mat-form-field>
+                                    <mat-form-field class="w-100">
+                                        <input [formControl]="email" matInput placeholder="Email" required type="email">
+                                        <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                                             class="alert alert-danger">
+                                            <div *ngIf="email.errors.required">
+                                                Please input the right email.
+                                            </div>
+                                        </div>
+                                    </mat-form-field>
+                                    <mat-form-field class="w-100">
+                                        <input [formControl]="phoneNumber" matInput placeholder="Phone Number"
+                                               required type="tel">
+                                        <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)"
+                                             class="alert alert-danger">
+                                            <div *ngIf="phoneNumber.errors.required">
+                                                Please input the right phoneNumber.
+                                            </div>
+                                        </div>
+                                    </mat-form-field>
+                                    <mat-form-field class="w-100">
+                                        <input [formControl]="password" matInput placeholder="Enter Password"
+                                               required type="password">
+                                    </mat-form-field>
+                                </div>
+                                <div class="mb-4">
+                                    <mat-form-field class="w-100">
+                                        <input (blur)="onBlur()" (focus)="onFocus()" [formControl]="confirmPassword"
+                                               matInput placeholder="Retype Password" required
+                                               type="password">
+                                        <div *ngIf="!equal"
+                                             class="alert alert-danger">
+                                            <div style="color: red;font-size: 12px;">
+                                                两次密码不一致
+                                            </div>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                                <button (click)="onSubmit()" class="button-lg mb-3" color="accent" mat-raised-button>
+                                    Submit
+                                </button>
+                                <div> Already have account? then <a [routerLink]="['/session/signin']"
+                                                                    class="accent-color">Sign In</a></div>
+                            </form>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

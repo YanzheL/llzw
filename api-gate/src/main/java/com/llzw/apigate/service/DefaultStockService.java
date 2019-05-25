@@ -48,6 +48,7 @@ public class DefaultStockService implements StockService {
     Stock stock = new Stock();
     stock.setProduct(product);
     stock.setProducedAt(producedAt);
+    stock.setInboundedAt(producedAt); //  For test
     stock.setShelfLife(shelfLife);
     stock.setTotalQuantity(totalQuantity);
     stock.setCurrentQuantity(totalQuantity);
@@ -108,7 +109,8 @@ public class DefaultStockService implements StockService {
 
   @Override
   public int countAvailableStocks(Product product) {
-    return stockRepository.countAllByProductAndInboundedAtNotNullAndValidTrue(product);
+    Integer count = stockRepository.countByProductAndInboundedAtNotNullAndValidTrue(product);
+    return count == null ? 0 : count;
   }
 
   @Override
