@@ -13,7 +13,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface OrderRepository
     extends PagingAndSortingRepository<Order, UUID>, JpaSpecificationExecutor<Order> {
 
-  int countAllByProductAndCreatedAtAfter(Product product, Date date);
+  int countByProductAndCreatedAtAfter(Product product, Date date);
 
   @Query("SELECT o FROM Order o WHERE o.id = ?1 AND (o.product.seller = ?2 OR o.customer = ?2)")
   Optional<Order> findByIdAndUser(UUID id, User user);
