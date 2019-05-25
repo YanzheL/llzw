@@ -77,18 +77,30 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     Role customerRole = roleRepository.findByRole(RoleType.ROLE_CUSTOMER)
         .orElseThrow(() -> new Exception("Customer role not found"));
     for (int i = 0; i < 10; ++i) {
+      String username = String.format("test_user_%s", "seller");
+      if (userRepository.findByUsername(username).isPresent()) {
+        continue;
+      }
       userRepository.save(
-          MockEntityFactory.makeUser(String.format("test_user_%s", "seller"), i, sellerRole)
+          MockEntityFactory.makeUser(username, i, sellerRole)
       );
     }
     for (int i = 0; i < 10; ++i) {
+      String username = String.format("test_user_%s", "customer");
+      if (userRepository.findByUsername(username).isPresent()) {
+        continue;
+      }
       userRepository.save(
-          MockEntityFactory.makeUser(String.format("test_user_%s", "customer"), i, customerRole)
+          MockEntityFactory.makeUser(username, i, customerRole)
       );
     }
     for (int i = 0; i < 10; ++i) {
+      String username = String.format("test_user_%s", "unknown");
+      if (userRepository.findByUsername(username).isPresent()) {
+        continue;
+      }
       userRepository.save(
-          MockEntityFactory.makeUser(String.format("test_user_%s", "unknown"), i, null)
+          MockEntityFactory.makeUser(username, i, null)
       );
     }
   }
