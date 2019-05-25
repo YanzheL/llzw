@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router, ActivatedRoute, Params} from '@angular/router';
+import {Observable, of, Subscription} from 'rxjs';
 
 import {EmbryoService} from '../../../Services/Embryo.service';
+import {PageEvent} from '@angular/material';
 
 @Component({
     selector: 'app-ProductsList',
@@ -17,10 +19,10 @@ export class ProductsListComponent implements OnInit {
     pageTitle: string;
     subPageTitle: string;
     products = [];
-    length = 100;
+    length = 200;
     pageSize = 10;
     pageIndex = 0;
-    pageSizeOptions = [5, 10, 25, 100];
+    pageSizeOptions = [5, 10, 25, 50];
     data = {'page': this.pageIndex, 'size': this.pageSize, 'valid': true};
 
     public subscribers: any = {};
