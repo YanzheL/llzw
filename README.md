@@ -16,6 +16,8 @@ Frontend: Releasing.
 
 Backend: Releasing.
 
+**Online Demo:** [https://llzw.hitnslab.com](https://llzw.hitnslab.com) (It may be blocked by GFW due to some google hosted JS resources)
+
 ## Status of Continuous Integration and Automatic Testing
 
 | Branch     | Status                                                    |
@@ -45,7 +47,7 @@ You should have docker environment installed before using this option.
 
 Two options
 
-- Run a single service
+- Run a single backend service
 
   Pull our official image for api backend
 
@@ -59,7 +61,7 @@ Two options
   docker run -d -p "8981:8981" leeyanzhe/llzw-api-gate
   ```
 
-- Run the production services bundle (Backend only, for now)
+- Run the production services bundle
 
   Pull this git repository
 
