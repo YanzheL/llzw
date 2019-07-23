@@ -101,7 +101,7 @@ public class AlipayService implements PaymentVendorService {
         map.put("total_amount", response.getTotalAmount());
         map.put("trade_status", response.getTradeStatus());
         return map;
-      } else if (subCode.equals("ACQ.TRADE_NOT_EXIST")) {
+      } else if ("ACQ.TRADE_NOT_EXIST".equals(subCode)) {
         throw new RestTradeNotFoundPaymentVendorException(subCode);
       }
       throw new RestPaymentVendorException(subCode);
