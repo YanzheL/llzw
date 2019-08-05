@@ -50,14 +50,6 @@ public class Product extends BaseEntity {
   @JsonIdentityReference(alwaysAsId = true)
   protected User seller;
 
-  @JsonGetter("seller")
-  public Map<String, String> getSellerMeta() {
-    Map<String, String> res = new HashMap<>();
-    res.put("username", seller.getUsername());
-    res.put("nickname", seller.getNickname());
-    return res;
-  }
-
   @Column(nullable = false)
   @Field(termVector = TermVector.YES)
   protected String name;
@@ -90,6 +82,14 @@ public class Product extends BaseEntity {
 
   @Embedded
   protected ProductStat stat;
+  
+  @JsonGetter("seller")
+  public Map<String, String> getSellerMeta() {
+    Map<String, String> res = new HashMap<>();
+    res.put("username", seller.getUsername());
+    res.put("nickname", seller.getNickname());
+    return res;
+  }
 
   public boolean belongsToSeller(User seller) {
     return this.seller.getUsername().equals(seller.getUsername());
