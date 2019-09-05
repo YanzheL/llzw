@@ -1,4 +1,4 @@
-FROM maven:3-jdk-13 AS builder
+FROM maven:3-jdk-14 AS builder
 
 WORKDIR /usr/src/app
 
@@ -6,7 +6,7 @@ COPY . .
 
 RUN mvn package -B -DskipTests -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
 
-FROM openjdk:13-alpine
+FROM openjdk:11-jre-slim
 
 LABEL maintainer="Yanzhe Lee"
 
