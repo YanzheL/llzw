@@ -140,14 +140,15 @@
       <artifactId>junit-jupiter</artifactId>
       <groupId>org.junit.jupiter</groupId>
       <scope>test</scope>
-      <version>5.5.1</version>
+      <version>${junit.jupiter.version}</version>
     </dependency>
-    <!--    <dependency>-->
-    <!--      <groupId>org.junit.vintage</groupId>-->
-    <!--      <artifactId>junit-vintage-engine</artifactId>-->
-    <!--      <version>5.5.1</version>-->
-    <!--      <scope>test</scope>-->
-    <!--    </dependency>-->
+    <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+    <dependency>
+      <artifactId>junit-jupiter-api</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <scope>test</scope>
+      <version>${junit.jupiter.version}</version>
+    </dependency>
     <dependency>
       <artifactId>spring-security-test</artifactId>
       <groupId>org.springframework.security</groupId>
@@ -268,6 +269,7 @@
     <guava.version>28.1-jre</guava.version>
     <java.version>9</java.version>
     <passay.version>1.0</passay.version>
+    <junit.jupiter.version>5.5.1</junit.jupiter.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!--    <tool.proguard.version>6.0.3</tool.proguard.version>-->
   </properties>
