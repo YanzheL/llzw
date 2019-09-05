@@ -15,7 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -46,10 +46,10 @@ public class ProductController {
    */
   @PreAuthorize("hasRole('SELLER')")
   @PostMapping
-  public ResponseEntity create(@Valid @RequestBody ProductCreateDto productCreateDto)
-      throws RestApiException {
-    User currentUser =
-        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+  public ResponseEntity create(
+      @Valid @RequestBody ProductCreateDto productCreateDto,
+      @AuthenticationPrincipal User currentUser
+  ) throws RestApiException {
     return RestResponseEntityFactory
         .success(productService.create(productCreateDto, currentUser), HttpStatus.CREATED);
   }
@@ -58,10 +58,9 @@ public class ProductController {
   @PatchMapping(value = "/{id:\\d+}")
   public ResponseEntity update(
       @PathVariable(value = "id") Long id,
-      @Valid @RequestBody ProductCreateDto productCreateDto
+      @Valid @RequestBody ProductCreateDto productCreateDto,
+      @AuthenticationPrincipal User currentUser
   ) throws RestApiException {
-    User currentUser =
-        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     return RestResponseEntityFactory
         .success(productService.update(productCreateDto, id, currentUser));
   }
@@ -95,9 +94,10 @@ public class ProductController {
    */
   @PreAuthorize("hasRole('SELLER')")
   @DeleteMapping(value = "/{id:\\d+}")
-  public ResponseEntity invalidate(@PathVariable(value = "id") Long id) throws RestApiException {
-    User currentUser =
-        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+  public ResponseEntity invalidate(
+      @PathVariable(value = "id") Long id,
+      @AuthenticationPrincipal User currentUser
+  ) throws RestApiException {
     return RestResponseEntityFactory.success(productService.invalidate(id, currentUser));
   }
 }

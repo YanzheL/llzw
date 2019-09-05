@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -50,10 +50,10 @@ public class PaymentController {
    */
   @PreAuthorize("hasRole('CUSTOMER')")
   @PostMapping
-  public ResponseEntity create(@Valid @RequestBody PaymentCreateDto paymentCreateDto)
-      throws RestApiException {
-    User currentUser =
-        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+  public ResponseEntity create(
+      @Valid @RequestBody PaymentCreateDto paymentCreateDto,
+      @AuthenticationPrincipal User currentUser
+  ) throws RestApiException {
     Payment payment = paymentService
         .create(
             currentUser,
@@ -66,19 +66,20 @@ public class PaymentController {
 
   @PreAuthorize("hasAnyRole('CUSTOMER','SELLER')")
   @GetMapping("/{id:\\d+}")
-  public ResponseEntity get(@PathVariable(value = "id") Long paymentId) throws RestApiException {
-    User currentUser =
-        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+  public ResponseEntity get(
+      @PathVariable(value = "id") Long paymentId,
+      @AuthenticationPrincipal User currentUser
+  ) throws RestApiException {
     return RestResponseEntityFactory
         .success(paymentService.findById(currentUser, paymentId));
   }
 
   @PreAuthorize("hasAnyRole('CUSTOMER','SELLER')")
   @GetMapping
-  public ResponseEntity getByOrderId(@RequestParam(value = "orderId") String orderId)
-      throws RestApiException {
-    User currentUser =
-        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+  public ResponseEntity getByOrderId(
+      @RequestParam(value = "orderId") String orderId,
+      @AuthenticationPrincipal User currentUser
+  ) throws RestApiException {
     return RestResponseEntityFactory
         .success(paymentService.findByOrderId(currentUser, orderId));
   }
@@ -91,8 +92,7 @@ public class PaymentController {
    * payment action on vendor's website.
    */
   @GetMapping("/retry/{id:\\d+}")
-  public ResponseEntity retry(@PathVariable(value = "id") Long paymentId)
-      throws RestApiException {
+  public ResponseEntity retry(@PathVariable(value = "id") Long paymentId) throws RestApiException {
     Payment payment = paymentService.retry(paymentId);
     return RestResponseEntityFactory
         .success(payment.getOrderString());

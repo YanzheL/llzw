@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -50,21 +50,20 @@ public class UserController {
   @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
   @PutMapping(value = "/realNameVerification")
   public ResponseEntity realNameVerification(
-      @Valid @RequestBody RealNameVerificationDto realNameVerificationDto) throws RestApiException {
+      @Valid @RequestBody RealNameVerificationDto realNameVerificationDto,
+      @AuthenticationPrincipal User currentUser
+  ) throws RestApiException {
     LOGGER.debug("Verifying user account with information: {}", realNameVerificationDto);
-    User currentUser =
-        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     return RestResponseEntityFactory.success(
         userService.realNameVerification(currentUser.getUsername(), realNameVerificationDto));
   }
 
   @PutMapping(value = "/updatePassword")
   @PreAuthorize("hasAuthority('OP_MANAGE_PASSWORD')")
-  public ResponseEntity updatePassword(@Valid @RequestBody UpdatePasswordDto updatePasswordDto)
-      throws RestApiException {
+  public ResponseEntity updatePassword(@Valid @RequestBody UpdatePasswordDto updatePasswordDto,
+      @AuthenticationPrincipal User currentUser
+  ) throws RestApiException {
     LOGGER.debug("Verifying user account with information: {}", updatePasswordDto);
-    User currentUser =
-        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     return RestResponseEntityFactory.success(userService.updateUserPassword(
         currentUser.getUsername(),
         updatePasswordDto.getOldPassword(),
@@ -74,20 +73,16 @@ public class UserController {
 
   @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
   @GetMapping(value = "/me")
-  public ResponseEntity getCurrentUserInfo() {
-    User currentUser =
-        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    return RestResponseEntityFactory.success(
-        currentUser
-    );
+  public ResponseEntity getCurrentUserInfo(@AuthenticationPrincipal User currentUser) {
+    return RestResponseEntityFactory.success(currentUser);
   }
 
   @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
   @PatchMapping(value = "/me")
-  public ResponseEntity updateCurrentUserInfo(@Valid @RequestBody UserPatchDto dto)
-      throws RestApiException {
-    User currentUser =
-        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+  public ResponseEntity updateCurrentUserInfo(
+      @Valid @RequestBody UserPatchDto dto,
+      @AuthenticationPrincipal User currentUser
+  ) throws RestApiException {
     return RestResponseEntityFactory.success(
         userService.updateInfo(currentUser.getUsername(), dto)
     );
