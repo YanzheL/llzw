@@ -140,12 +140,12 @@
       <artifactId>junit-jupiter</artifactId>
       <groupId>org.junit.jupiter</groupId>
       <scope>test</scope>
-      <version>5.5.0-M1</version>
+      <version>5.5.1</version>
     </dependency>
     <!--    <dependency>-->
     <!--      <groupId>org.junit.vintage</groupId>-->
     <!--      <artifactId>junit-vintage-engine</artifactId>-->
-    <!--      <version>5.5.0-M1</version>-->
+    <!--      <version>5.5.1</version>-->
     <!--      <scope>test</scope>-->
     <!--    </dependency>-->
     <dependency>
@@ -208,7 +208,7 @@
     <dependency>
       <artifactId>tika-core</artifactId>
       <groupId>org.apache.tika</groupId>
-      <version>1.20</version>
+      <version>1.22</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
     <dependency>
@@ -245,47 +245,15 @@
     <artifactId>spring-boot-starter-parent</artifactId>
     <groupId>org.springframework.boot</groupId>
     <relativePath/>
-    <version>2.2.0.BUILD-SNAPSHOT</version> <!-- lookup parent from repository -->
+    <version>2.1.7.RELEASE</version> <!-- lookup parent from repository -->
   </parent>
 
-  <pluginRepositories>
-    <pluginRepository>
-      <id>spring-snapshots</id>
-      <name>Spring Snapshots</name>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <url>https://repo.spring.io/snapshot</url>
-    </pluginRepository>
-    <pluginRepository>
-      <id>spring-milestones</id>
-      <name>Spring Milestones</name>
-      <url>https://repo.spring.io/milestone</url>
-    </pluginRepository>
-  </pluginRepositories>
-
   <properties>
-    <guava.version>20.0</guava.version>
+    <guava.version>28.1-jre</guava.version>
     <java.version>9</java.version>
     <passay.version>1.0</passay.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!--    <tool.proguard.version>6.0.3</tool.proguard.version>-->
   </properties>
-
-  <repositories>
-    <repository>
-      <id>spring-snapshots</id>
-      <name>Spring Snapshots</name>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <url>https://repo.spring.io/snapshot</url>
-    </repository>
-    <repository>
-      <id>spring-milestones</id>
-      <name>Spring Milestones</name>
-      <url>https://repo.spring.io/milestone</url>
-    </repository>
-  </repositories>
   <version>1.0.0-rc1</version>
 </project>
