@@ -8,8 +8,8 @@ services:
       - maria_db:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: HITllzw-dev!
-    ports:
-      - "8906:3306"
+    # ports:
+    #   - "8906:3306"
   backend:
     image: leeyanzhe/llzw-api-gate
     restart: always
