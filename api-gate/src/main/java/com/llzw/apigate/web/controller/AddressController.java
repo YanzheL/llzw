@@ -18,7 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -47,9 +47,10 @@ public class AddressController {
    */
   @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
   @PostMapping
-  public ResponseEntity createAddress(@Valid @RequestBody AddressCreateDto dto) {
-    User currentUser =
-        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+  public ResponseEntity createAddress(
+      @Valid @RequestBody AddressCreateDto dto,
+      @AuthenticationPrincipal User currentUser
+  ) {
     Address address = new Address();
     address.setOwner(currentUser);
     BeanUtils.copyProperties(dto, address, Utils.getNullPropertyNames(dto));
@@ -61,10 +62,11 @@ public class AddressController {
    */
   @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
   @GetMapping(value = "/{id:\\d+}")
-  public ResponseEntity getSpecificAddress(@PathVariable(value = "id") Long id)
+  public ResponseEntity getSpecificAddress(
+      @PathVariable(value = "id") Long id,
+      @AuthenticationPrincipal User currentUser
+  )
       throws RestApiException {
-    User currentUser =
-        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     Address address = addressRepository.findById(id)
         .orElseThrow(() -> new RestDependentEntityNotFoundException(
             String.format("Address <%s> does not exist", id)));
@@ -81,9 +83,9 @@ public class AddressController {
   @GetMapping
   public ResponseEntity getMyAddresses(
       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
-      @RequestParam(value = "size", required = false, defaultValue = "20") int size) {
-    User currentUser =
-        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+      @RequestParam(value = "size", required = false, defaultValue = "20") int size,
+      @AuthenticationPrincipal User currentUser
+  ) {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
     return RestResponseEntityFactory.success(
         addressRepository.findAllByOwner(currentUser, pageRequest)
