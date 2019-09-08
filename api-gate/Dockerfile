@@ -12,8 +12,8 @@ LABEL maintainer="Yanzhe Lee"
 
 WORKDIR /usr/src/app/
 
-COPY --from=builder /usr/src/app/target/*.jar ./api-gate.jar
+COPY --from=builder /usr/src/app/target/*.jar ./app.jar
 
 EXPOSE 8981
 
-CMD [ "java", "-server", "-XX:+HeapDumpOnOutOfMemoryError", "-Xmx500m", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseZGC", "-Dspring.profiles.active=test", "-jar", "api-gate.jar" ]
+CMD [ "java", "-server", "-XX:+HeapDumpOnOutOfMemoryError", "-Xmx500m", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseZGC", "-Dspring.profiles.active=test", "-jar", "app.jar" ]
