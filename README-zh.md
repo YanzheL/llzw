@@ -16,7 +16,7 @@
 
 后端: 即将发布
 
-**在线演示网站:** [https://llzw.hitnslab.com:8443](https://llzw.hitnslab.com:8443) (国内用户可能无法访问，因为引用了一些Google的JS和图标资源)
+**在线演示网站:** [https://llzw.hitnslab.com](https://llzw.hitnslab.com)
 
 ## 持续集成与自动化测试状态
 

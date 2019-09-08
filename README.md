@@ -16,7 +16,7 @@ Frontend: Releasing.
 
 Backend: Releasing.
 
-**Online Demo:** [https://llzw.hitnslab.com:8443](https://llzw.hitnslab.com:8443) (It may be blocked by GFW due to some google hosted JS resources)
+**Online Demo:** [https://llzw.hitnslab.com](https://llzw.hitnslab.com)
 
 ## Status of Continuous Integration and Automatic Testing
 
