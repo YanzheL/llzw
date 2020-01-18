@@ -21,6 +21,7 @@ services:
       # SPRING_DATASOURCE_URL: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
       # SPRING_DATASOURCE_USERNAME: sa
       # SPRING_DATASOURCE_PASSWORD: sa
+    command: [ "java", "-server", "-XX:+HeapDumpOnOutOfMemoryError", "-Xmx500m", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseZGC", "-Dspring.profiles.active=dev", "-jar", "app.jar" ]
     # ports:
     #   - "8981:8981"
     depends_on:
